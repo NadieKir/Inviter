@@ -1,0 +1,68 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.notification {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+  width: 420px;
+  padding: 20px 35px 20px 25px;
+
+  background: $white-color;
+  box-shadow: 0px 7px 20px $black-shadow-color;
+  border-bottom: 4px solid;
+  border-radius: 4px;
+  
+  // &.success {
+  //   border-color: $green-03-color;
+  // }
+
+  // &.warning {
+  //   border-color: $orange-02-color;
+  // }
+
+  // &.error {
+  //   border-color: $red-02-color;
+  // }
+
+  // &.info {
+  //   border-color: $blue-03-color;
+  // }
+
+  @media (max-width: 570px) {
+    width: 70%;
+  }
+}
+
+.informationWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+
+  // @extend .font-family-primary;
+  // @extend .font-color-dark;
+}
+
+.heading {
+  // @extend .font-weight-bold;
+  // @extend .font-size-s;
+}
+
+.description {
+  // @extend .font-weight-regular;
+  // @extend .font-size-2xs;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 12px;
+  height: 12px;
+}

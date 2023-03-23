@@ -49,37 +49,37 @@
 }
 
 .h1-typography {
-  @include typography-base;
+  @extend .typography-base;
   font-weight: 500;
   font-size: 22px;
 }
 
 .h2-typography {
-  @include typography-base;
+  @extend .typography-base;
   font-weight: 500;
   font-size: 16px;
 }
 
 .h3-typography {
-  @include typography-base;
+  @extend .typography-base;
   font-weight: 500;
   font-size: 13px;
 }
 
 .h4-typography {
-  @include typography-base;
+  @extend .typography-base;
   font-weight: 500;
   font-size: 12px;
 }
 
 .p {
-  @include typography-base;
+  @extend .typography-base;
   font-weight: 300;
   font-size: 12px;
 }
 
 .navigation-typography {
-  @include typography-base;
+  @extend .typography-base;
   font-weight: 500;
   font-size: 14px;
 }

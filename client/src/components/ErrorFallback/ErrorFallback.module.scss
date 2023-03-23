@@ -1,0 +1,22 @@
+@import '~style/typography';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 15px;
+}
+
+.heading {
+  // @extend .font-family-primary;
+  // @extend .font-weight-bold;
+  // @extend .font-size-xl;
+  // @extend .font-color-dark;
+}
+
+.message {
+  // @extend .font-family-primary;
+  // @extend .font-weight-regular;
+  // @extend .font-size-xs;
+  // @extend .font-color-gray-02;
+}
