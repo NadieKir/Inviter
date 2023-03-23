@@ -1,0 +1,12 @@
+@import '~style/variables';
+@import '~style/mixins';
+
+.aside {
+  position: sticky;
+  top: 30px;
+
+  @include base-wrapper();
+  min-width: $nav-container-max-width;
+  height: max-content;
+  margin-left: 30px;
+}

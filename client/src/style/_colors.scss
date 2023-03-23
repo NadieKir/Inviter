@@ -1,6 +1,7 @@
 /* Primary */
 
-$blue-color: linear-gradient(90deg, #2C5FC0 0%, #131896 100%);
+$blue-color: #203DAC;
+$blue-gradient-color: linear-gradient(90deg, #2C5FC0 0%, #131896 100%);
 
 /* Neutral */
 
@@ -12,7 +13,9 @@ $dark-gray-color: #DEDEDE;
 
 /* Shadows */
 
-$black-shadow-color: rgba(184, 184, 184, 0.25);
+$outer-shadow-color: rgba(184, 184, 184, 0.25);
+$inner-button-shadow-color: rgba(19, 12, 91, 0.5);
+$outer-button-shadow-color: rgba(16, 41, 86, 0.2);
 
 /* Additional */
 

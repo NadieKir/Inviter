@@ -1,7 +1,19 @@
 @import '~style/variables';
+@import '~style/mixins';
 
-.container {
-  width: 90%;
+.appWrapper {
+  display: flex;
+  margin: 30px 0;
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mainAppContainer {
+  @include base-wrapper();
   max-width: $app-container-max-width;
-  margin: 70px auto;
+  width: 85%;
 }

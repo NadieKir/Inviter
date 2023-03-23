@@ -10,6 +10,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate replace to="/search" />} />
           <Route path="search" element={<div>search</div>} />
+          <Route path="a" element={<div>a</div>} />
           <Route path="forbidden" element={<ForbiddenPage />} />
           <Route path="not-found" element={<NotFoundPage />} />
           <Route path="*" element={<Navigate replace to="/not-found" />} />

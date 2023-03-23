@@ -1,0 +1,53 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-family: $primary-font-family;
+  font-weight: 600;
+
+  border-radius: 10px;
+  border: none;
+
+  @include smooth-transition();
+  cursor: pointer;
+
+  &.primary {
+    height: 40px;
+
+    font-size: 13px;
+
+    background: $blue-gradient-color;
+    color: $white-color;
+
+    &:hover {
+      box-shadow: $inner-button-shadow;
+    }
+  }
+
+  &.secondary {
+    height: 35px;
+
+    font-size: 12px;
+
+    background: transparent;
+
+    border: 1px solid $blue-color;
+    color: $blue-color;  
+
+    &:hover {
+      box-shadow: $outer-button-shadow;
+    }
+  }
+}
+
+.buttonContent {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}

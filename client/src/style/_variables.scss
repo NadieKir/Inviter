@@ -1,4 +1,10 @@
+@import 'colors.scss';
+
 $app-container-max-width: 1020px;
 $nav-container-max-width: 240px;
 
-$font-family-primary: 'Manrope', sans-serif;
+$primary-font-family: 'Manrope', sans-serif;
+
+$outer-shadow: 0px 3px 8px $outer-shadow-color;
+$inner-button-shadow: inset -2px 2px 8px $inner-button-shadow-color;
+$outer-button-shadow: 1px 1px 4px $outer-button-shadow-color;
