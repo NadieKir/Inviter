@@ -1,0 +1,24 @@
+@import '~normalize.css/normalize.css';
+@import './colors';
+@import './typography';
+@import './mixins';
+@import './variables';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+
+body {
+  background-color: $background-color;
+  overflow-y: scroll;
+}

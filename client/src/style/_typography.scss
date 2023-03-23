@@ -1,0 +1,86 @@
+@import 'colors.scss';
+@import 'variables.scss';
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('../assets/fonts/Manrope-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('../assets/fonts/Manrope-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('../assets/fonts/Manrope-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('../assets/fonts/Manrope-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('../assets/fonts/Manrope-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Utility classes */
+
+.typography-base {
+  font-family: $font-family-primary;
+  color: $black-color;
+}
+
+.h1-typography {
+  @include typography-base;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.h2-typography {
+  @include typography-base;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.h3-typography {
+  @include typography-base;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.h4-typography {
+  @include typography-base;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.p {
+  @include typography-base;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.navigation-typography {
+  @include typography-base;
+  font-weight: 500;
+  font-size: 14px;
+}
+
