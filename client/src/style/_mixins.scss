@@ -5,6 +5,8 @@
   background-color: $white-color;
   border-radius: $border-radius;
   box-shadow: $outer-shadow;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 @mixin smooth-transition($transition-duration: 0.2s) {
