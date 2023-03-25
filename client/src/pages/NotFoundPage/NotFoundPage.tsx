@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
-import styles from './NotFoundPage.module.scss';
 import { Button, ButtonSize } from 'components';
+
+import styles from './NotFoundPage.module.scss';
 
 export const NotFoundPage = () => {
   const navigate = useNavigate();

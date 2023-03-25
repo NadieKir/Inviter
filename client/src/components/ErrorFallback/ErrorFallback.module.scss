@@ -8,15 +8,9 @@
 }
 
 .heading {
-  // @extend .font-family-primary;
-  // @extend .font-weight-bold;
-  // @extend .font-size-xl;
-  // @extend .font-color-dark;
+  @extend .h1-typography;
 }
 
 .message {
-  // @extend .font-family-primary;
-  // @extend .font-weight-regular;
-  // @extend .font-size-xs;
-  // @extend .font-color-gray-02;
+  @extend .p-typography;
 }
