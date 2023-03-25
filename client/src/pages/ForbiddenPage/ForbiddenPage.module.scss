@@ -2,28 +2,34 @@
 @import '~style/typography';
 
 .wrapper {
-   display: flex;
-   flex-direction: column;
-   justify-content: center; 
-   align-items: center;
+  position: relative;
+  top: 50%;
 
-  //  @extend .font-family-secondary;
-  //  @extend .font-weight-medium;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  row-gap: 50px;
 
-  .numbers {
-    // @extend .font-color-blue-02;
-    font-size: 250px;
-    text-shadow: 0px 0px 10px;
+  transform: translateY(-50%);
+}
 
-    @media (max-width: 570px) {
-      font-size: 150px;
-    }
+.numbers {
+  font-size: 250px;
+  line-height: 80%;
+  
+  color: $blue-color;  
+  text-shadow: 0px 0px 10px;
+  
+  user-select: none;
+
+  @media (max-width: 570px) {
+    font-size: 150px;
   }
+}
 
-  .description {
-    // @extend .font-size-l;
-    // @extend .font-color-dark;
-  }
+.heading {
+  @extend .h1-typography;
 }
 
 @keyframes blink {
