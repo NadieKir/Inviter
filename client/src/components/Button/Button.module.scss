@@ -3,7 +3,6 @@
 @import '~style/variables';
 
 .button {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,6 +42,14 @@
     &:hover {
       box-shadow: $outer-button-shadow;
     }
+  }
+
+  &.big {
+    width: 100%;
+  }
+
+  &.small {
+    padding: 0 25px;
   }
 }
 

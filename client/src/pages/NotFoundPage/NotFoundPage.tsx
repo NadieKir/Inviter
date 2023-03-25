@@ -1,16 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import classNames from "classnames";
+import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 
-import styles from "./NotFoundPage.module.scss";
+import styles from './NotFoundPage.module.scss';
+import { Button, ButtonSize } from 'components';
 
 export const NotFoundPage = () => {
   const navigate = useNavigate();
-  const handleGoHome = () => navigate("/");
+  const handleGoHome = () => navigate('/');
 
   return (
     <section className={styles.wrapper}>
-      <h1 className={styles.text}>Страница не найдена</h1>
-
       <div className={styles.picture}>
         <div className={styles.number}>4</div>
         <div className={styles.illustration}>
@@ -20,10 +19,16 @@ export const NotFoundPage = () => {
               <div className={styles.face}>
                 <div className={styles.eyes}>
                   <div className={classNames(styles.eye, styles.eyeLeft)}></div>
-                  <div className={classNames(styles.eye, styles.eyeRight)}></div>
+                  <div
+                    className={classNames(styles.eye, styles.eyeRight)}
+                  ></div>
                 </div>
-                <div className={classNames(styles.cheeks, styles.cheeksLeft)}></div>
-                <div className={classNames(styles.cheeks, styles.cheeksRight)}></div>
+                <div
+                  className={classNames(styles.cheeks, styles.cheeksLeft)}
+                ></div>
+                <div
+                  className={classNames(styles.cheeks, styles.cheeksRight)}
+                ></div>
                 <div className={styles.mouth}></div>
               </div>
             </div>
@@ -32,7 +37,13 @@ export const NotFoundPage = () => {
         <div className={styles.number}>4</div>
       </div>
 
-      <button onClick={handleGoHome}>На главную</button>
+      <div className={styles.textContent}>
+        <h1 className={styles.heading}>Такая страница не найдена</h1>
+
+        <Button size={ButtonSize.Small} onClick={handleGoHome}>
+          На главную
+        </Button>
+      </div>
     </section>
   );
 };

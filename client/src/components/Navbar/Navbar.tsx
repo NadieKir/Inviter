@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 
 import { Button } from 'components';
 
@@ -14,7 +15,6 @@ import people from './assets/people.svg';
 import search from './assets/search.svg';
 import ticket from './assets/ticket.svg';
 import plus from './assets/plus.svg';
-import classNames from 'classnames';
 
 type LinkToNavItem = {
   name: string;
