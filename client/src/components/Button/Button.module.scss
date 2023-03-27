@@ -17,10 +17,6 @@
   cursor: pointer;
 
   &.primary {
-    height: 40px;
-
-    font-size: 13px;
-
     background: $blue-gradient-color;
     color: $white-color;
 
@@ -30,10 +26,6 @@
   }
 
   &.secondary {
-    height: 35px;
-
-    font-size: 12px;
-
     background: transparent;
 
     border: 1px solid $blue-color;
@@ -44,12 +36,22 @@
     }
   }
 
-  &.big {
+  &.widthBig {
     width: 100%;
   }
 
-  &.small {
+  &.widthSmall {
     padding: 0 25px;
+  }
+
+  &.heightBig {
+    font-size: 13px;
+    height: 40px;
+  }
+
+  &.heightSmall {
+    font-size: 12px;
+    height: 35px;
   }
 }
 

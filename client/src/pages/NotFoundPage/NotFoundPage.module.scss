@@ -1,17 +1,14 @@
 @import '~style/colors';
 @import '~style/typography';
 @import '~style/variables';
+@import '~style/mixins';
 
 .wrapper {
-  position: relative;
-  top: 50%;
-
+  @include base-wrapper();
   display: flex;
   align-items: center;
   flex-direction: column;
   row-gap: 50px;
-
-  transform: translateY(-50%);
 
   @media (max-width: 590px) {
     row-gap: 0;

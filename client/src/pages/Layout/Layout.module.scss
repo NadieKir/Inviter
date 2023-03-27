@@ -13,7 +13,6 @@
 }
 
 .mainAppContainer {
-  @include base-wrapper();
   max-width: $app-container-max-width;
   width: 85%;
 }

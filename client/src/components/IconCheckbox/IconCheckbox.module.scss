@@ -1,0 +1,40 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.wrapper > input {
+  position: absolute;
+  top: 0;
+
+  opacity: 0;
+
+  &:checked ~ .checkboxCustom {
+    background: $blue-color;
+
+    &:hover {
+      box-shadow: $inner-button-shadow;
+    }
+
+    > * {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.checkboxCustom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+
+  border-radius: 5px;
+  border: 1px solid $blue-color;
+
+  @include smooth-transition();
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $outer-button-shadow;
+  }
+}

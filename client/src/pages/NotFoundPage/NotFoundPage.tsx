@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { Button, ButtonSize } from 'components';
+import { Button, ButtonWidth } from 'components';
 
 import styles from './NotFoundPage.module.scss';
 
@@ -41,7 +41,7 @@ export const NotFoundPage = () => {
       <div className={styles.textContent}>
         <h1 className={styles.heading}>Такая страница не найдена</h1>
 
-        <Button size={ButtonSize.Small} onClick={handleGoHome}>
+        <Button width={ButtonWidth.Small} onClick={handleGoHome}>
           На главную
         </Button>
       </div>

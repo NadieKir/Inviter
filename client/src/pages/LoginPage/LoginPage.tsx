@@ -1,7 +1,8 @@
-import { ErrorFallback } from "components";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary } from 'react-error-boundary';
 
-import styles from "./LoginPage.module.scss";
+import { ErrorFallback } from 'pages';
+
+import styles from './LoginPage.module.scss';
 
 export const LoginPage = () => {
   return (

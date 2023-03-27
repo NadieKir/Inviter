@@ -1,9 +1,10 @@
-import { ErrorBoundary } from "react-error-boundary";
-import { Outlet } from "react-router-dom";
+import { ErrorBoundary } from 'react-error-boundary';
+import { Outlet } from 'react-router-dom';
 
-import { ErrorFallback, Navbar } from "components";
+import { Navbar } from 'components';
+import { ErrorFallback } from 'pages';
 
-import styles from "./Layout.module.scss";
+import styles from './Layout.module.scss';
 
 export const Layout = () => (
   <section className={styles.appWrapper}>

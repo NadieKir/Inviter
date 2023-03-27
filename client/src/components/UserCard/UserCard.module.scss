@@ -1,0 +1,86 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.card {
+  position: relative;
+
+  @include base-wrapper();
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  max-width: 240px;
+  width: 100%;
+  padding: 170px 25px 25px;
+  margin-top: 30px;
+}
+
+.photoNameWrapper {
+  @include base-wrapper();
+  position: absolute;
+  top: -30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  width: fit-content;
+  padding: 5px 5px 10px 5px;
+
+  @extend .h4-typography;
+
+  border-radius: 12px;
+}
+
+.photo {
+  width: 140px;
+  height: 140px;
+  min-width: 140px;
+  min-height: 140px;
+
+  border-radius: 12px;
+
+  object-fit: cover;
+}
+
+.inviteInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dateWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+
+  color: #202020;
+
+  margin-bottom: 15px;
+}
+
+.heading {
+  @extend .h3-typography;
+  margin-bottom: 6px;
+}
+
+.blue {
+  color: $blue-color;
+}
+
+.description {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  
+  
+  color: #000000;
+  
+}

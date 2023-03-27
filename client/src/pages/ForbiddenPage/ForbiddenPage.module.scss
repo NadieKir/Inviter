@@ -1,17 +1,14 @@
 @import '~style/colors';
 @import '~style/typography';
+@import '~style/mixins';
 
 .wrapper {
-  position: relative;
-  top: 50%;
-
+  @include base-wrapper();
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center;
   row-gap: 50px;
-
-  transform: translateY(-50%);
 }
 
 .numbers {
