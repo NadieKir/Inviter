@@ -54,20 +54,18 @@
   display: flex;
   align-items: center;
   column-gap: 6px;
+  margin-bottom: 16px;
 
-  font-family: 'Manrope';
-  font-style: normal;
+  font-family: $primary-font-family;
   font-weight: 400;
   font-size: 11px;
 
-  color: #202020;
-
-  margin-bottom: 15px;
+  color: $black-color;
 }
 
 .heading {
   @extend .h3-typography;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 }
 
 .blue {
@@ -75,12 +73,9 @@
 }
 
 .description {
-  font-family: 'Manrope';
-  font-style: normal;
+  font-family: $primary-font-family;
   font-weight: 400;
   font-size: 11px;
   
-  
-  color: #000000;
-  
+  color: $black-color;
 }

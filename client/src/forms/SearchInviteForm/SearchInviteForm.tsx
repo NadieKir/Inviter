@@ -2,12 +2,11 @@ import { Form, Formik } from 'formik';
 
 import {
   Button,
-  ButtonHeight,
   ButtonVariant,
   ButtonWidth,
   DateTimePicker,
   IconCheckbox,
-  MultiSelect,
+  Select,
 } from 'components';
 
 import styles from './SearchInviteForm.module.scss';
@@ -15,17 +14,23 @@ import man from './assets/man.svg';
 import woman from './assets/woman.svg';
 
 export const SearchInviteForm = () => {
-  const initialValues = { activity: '', city: '', date: '', gender: '' };
+  type A = { value: string; label: string };
+  const options: A[] = [
+    { value: 'a', label: 'a' },
+    { value: 'b', label: 'b' },
+    { value: 'n', label: 'n' },
+  ];
+
+  const initialValues = {
+    activity: options[0],
+    city: options[0],
+    date: '',
+    gender: '',
+  };
 
   const handleSubmit = (values: any, actions: any) => {
     alert(JSON.stringify(values));
   };
-
-  type A = { name: string; surname: string; id: string };
-  const options: A[] = [
-    { name: 'nam', surname: 'sur', id: '1' },
-    { name: 'nam', surname: 'sur', id: '2' },
-  ];
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -33,26 +38,25 @@ export const SearchInviteForm = () => {
         <Form className={styles.form}>
           <div className={styles.formInputs}>
             <div className={styles.multiselects}>
-              <MultiSelect
+              <Select
                 name="activity"
+                getOptionLabel={(option: A) => option.label}
+                getOptionValue={(option: A) => option.value}
                 options={options}
-                getOptionLabel={(option: A) =>
-                  `${option.name} ${option.surname}`
-                }
-                getOptionValue={(option: A) => option.id}
+                noVerify
               />
-              <MultiSelect
+              <Select
                 name="city"
+                getOptionLabel={(option: A) => option.label}
+                getOptionValue={(option: A) => option.value}
                 options={options}
-                getOptionLabel={(option: A) =>
-                  `${option.name} ${option.surname}`
-                }
-                getOptionValue={(option: A) => option.id}
+                noVerify
               />
               <DateTimePicker
                 name="date"
                 showTimeSelect={false}
                 excludePastDateTime={true}
+                placeholderText="Когда"
               />
             </div>
             <div className={styles.genders}>
@@ -63,7 +67,7 @@ export const SearchInviteForm = () => {
 
           <div className={styles.actions}>
             <Button width={ButtonWidth.Small} type="submit">
-              Найти
+              Искать
             </Button>
             <Button
               onClick={() => props.resetForm()}

@@ -1,4 +1,4 @@
-import Select, { GetOptionLabel, GetOptionValue } from 'react-select';
+import ReactSelect, { GetOptionLabel, GetOptionValue } from 'react-select';
 import { useFormikContext } from 'formik';
 import classNames from 'classnames';
 
@@ -9,29 +9,31 @@ import {
 } from 'components';
 import { EmotionCacheProvider } from 'common/contexts';
 
-import styles from './MultiSelect.module.scss';
+import styles from './Select.module.scss';
 
-type MultiSelectProps<T> = {
+type SelectProps<T> = {
+  isMulti?: boolean;
   options: T[];
-  getOptionLabel: GetOptionLabel<T>;
-  getOptionValue: GetOptionValue<T>;
+  getOptionLabel?: GetOptionLabel<T>;
+  getOptionValue?: GetOptionValue<T>;
   placeholderText?: string;
 } & InputFieldExternalProps;
 
-export function MultiSelect<T>({
+export function Select<T>({
   options,
   getOptionLabel,
   getOptionValue,
+  isMulti = false,
   placeholderText = '',
   ...inputFieldProps
-}: MultiSelectProps<T>) {
+}: SelectProps<T>) {
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
   return (
     <EmotionCacheProvider>
       <InputField {...inputFieldProps}>
         {({ field, className }: InputRenderProps): JSX.Element => (
-          <Select
+          <ReactSelect
             options={options}
             classNames={{
               control: (state) =>
@@ -46,9 +48,10 @@ export function MultiSelect<T>({
                 boxShadow: undefined,
               }),
             }}
-            isMulti
+            isMulti={isMulti}
             maxMenuHeight={145}
             defaultValue={field.value}
+            value={field.value}
             getOptionLabel={getOptionLabel}
             getOptionValue={getOptionValue}
             onBlur={() => setFieldTouched(field.name, true)}

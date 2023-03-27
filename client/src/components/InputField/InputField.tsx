@@ -22,6 +22,7 @@ export interface InputFieldExternalProps {
   labelText?: string;
   successText?: string;
   hintText?: string;
+  noVerify?: boolean;
 }
 
 type InputFieldProps = InputFieldExternalProps & {
@@ -36,6 +37,7 @@ export const InputField = ({
   successText,
   hintText,
   containerAttributes,
+  noVerify = false,
 }: InputFieldProps): JSX.Element => (
   <Field name={name}>
     {(formikProps: FieldProps) => {
@@ -52,12 +54,12 @@ export const InputField = ({
       const hasError = !!error;
       const isTouched = !!touched;
 
-      if (isTouched && hasError) {
+      if (isTouched && hasError && !noVerify) {
         inputVariant = helperTextVariant = InputFieldVariant.Error;
         helperText = error;
       }
 
-      if (isTouched && !hasError) {
+      if (isTouched && !hasError && !noVerify) {
         inputVariant = InputFieldVariant.Success;
 
         if (successText) {

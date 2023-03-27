@@ -1,13 +1,14 @@
 .form {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  column-gap: 50px;
+  column-gap: 45px;
 }
 
 .formInputs {
   display: flex;
   align-items: center;
-  column-gap: 30px;
+  column-gap: 25px;
 }
 
 .multiselects {
@@ -15,7 +16,7 @@
   align-items: center;
   column-gap: 10px;
 
-  [class*=MultiSelect] {
+  [class*=Select] {
     width: 210px;
   }
 }
@@ -23,7 +24,7 @@
 .genders {
   display: flex;
   align-items: center;
-  column-gap: 10px;  
+  column-gap: 5px;  
 }
 
 .actions {

@@ -8,7 +8,7 @@ export * from './HelperText/HelperText';
 export * from './PasswordField/PasswordField';
 export * from './TextField/TextField';
 export * from './TextArea/TextArea';
-export * from './MultiSelect/MultiSelect';
+export * from './Select/Select';
 export * from './DateTimePicker/DateTimePicker';
 export * from './IconCheckbox/IconCheckbox';
 export * from './UserCard/UserCard';
