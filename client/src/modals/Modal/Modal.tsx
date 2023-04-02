@@ -1,17 +1,16 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 
 import styles from './Modal.module.scss';
-import useModal from 'common/hooks/useModal';
 
-interface ModalProps {
+export interface ModalProps {
   isShowing: boolean;
-  onCloseButtonClick: () => void;
+  onClose: () => void;
 }
 
 export const Modal = ({
   isShowing,
-  onCloseButtonClick,
+  onClose,
   children,
 }: PropsWithChildren<ModalProps>) => {
   if (!isShowing) {
@@ -21,7 +20,7 @@ export const Modal = ({
   const handleClose = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (event.currentTarget === event.target) {
       event.stopPropagation();
-      onCloseButtonClick();
+      onClose();
     }
   };
 

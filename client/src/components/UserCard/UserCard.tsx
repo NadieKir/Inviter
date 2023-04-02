@@ -1,28 +1,25 @@
 import { NavLink } from 'react-router-dom';
 
 import { Button, ButtonHeight, ButtonVariant } from 'components';
+import { ViewInviteModal } from 'modals';
 import { User } from 'common/models';
 
 import styles from './UserCard.module.scss';
 import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from 'assets/images/calendar.svg';
 import useModal from 'common/hooks/useModal';
-import { ViewInviteModal } from 'modals';
 
 interface UserCardProps {
   user: User;
 }
-export const UserCard = ({ user }: UserCardProps) => {
-  const { id, name } = user;
 
+export const UserCard = ({ user }: UserCardProps) => {
   const [isShowingModal, toggleModal] = useModal();
+
+  const { id, name } = user;
 
   return (
     <li>
-      <ViewInviteModal
-        isShowing={isShowingModal}
-        onCloseButtonClick={toggleModal}
-      />
       <article className={styles.card}>
         <NavLink to={`/user/${id}`} className={styles.photoNameWrapper}>
           <img className={styles.photo} src={mockUser} alt="Фото" />
@@ -47,6 +44,8 @@ export const UserCard = ({ user }: UserCardProps) => {
           Посмотреть инвайт
         </Button>
       </article>
+
+      <ViewInviteModal isShowing={isShowingModal} onClose={toggleModal} />
     </li>
   );
 };
