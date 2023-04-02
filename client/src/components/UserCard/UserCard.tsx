@@ -6,6 +6,8 @@ import { User } from 'common/models';
 import styles from './UserCard.module.scss';
 import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from 'assets/images/calendar.svg';
+import useModal from 'common/hooks/useModal';
+import { ViewInviteModal } from 'modals';
 
 interface UserCardProps {
   user: User;
@@ -13,8 +15,14 @@ interface UserCardProps {
 export const UserCard = ({ user }: UserCardProps) => {
   const { id, name } = user;
 
+  const [isShowingModal, toggleModal] = useModal();
+
   return (
     <li>
+      <ViewInviteModal
+        isShowing={isShowingModal}
+        onCloseButtonClick={toggleModal}
+      />
       <article className={styles.card}>
         <NavLink to={`/user/${id}`} className={styles.photoNameWrapper}>
           <img className={styles.photo} src={mockUser} alt="Фото" />
@@ -31,7 +39,11 @@ export const UserCard = ({ user }: UserCardProps) => {
           </h3>
           <p className={styles.description}>С девушкой 18-22 лет</p>
         </div>
-        <Button variant={ButtonVariant.Secondary} height={ButtonHeight.Small}>
+        <Button
+          variant={ButtonVariant.Secondary}
+          height={ButtonHeight.Small}
+          onClick={toggleModal}
+        >
           Посмотреть инвайт
         </Button>
       </article>
