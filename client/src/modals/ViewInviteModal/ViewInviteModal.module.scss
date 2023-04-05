@@ -1,6 +1,9 @@
-.a {
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
 
-  height: 200px;
-  width: 200px;
-  background: rgb(46, 221, 113);
+.modal {
+  @include base-wrapper();
+  padding: 50px 70px;
+  width: 600px;
 }

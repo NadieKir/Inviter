@@ -1,0 +1,15 @@
+@import '~style/variables';
+
+.stepper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+  &Body {
+    width: calc(100% * var(--numOfSteps));
+    display: flex;
+    overflow: hidden;
+    transform: translateX(calc(100% / var(--numOfSteps) * var(--currentStep)));
+  }
+}

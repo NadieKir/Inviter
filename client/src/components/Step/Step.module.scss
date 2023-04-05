@@ -1,0 +1,68 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.step {
+  width: 100%; 
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+
+  @extend .navigation-typography;
+
+  .number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    min-width: 24px;
+    height: 24px;
+    width: 24px;
+    border-radius: 100%;
+
+    font-weight: 700;
+    font-size: 12px;
+    line-height: initial;
+  }
+
+  &.active {
+    color: $black-color;
+
+    .number {
+      background: $blue-gradient-color;
+      color: $white-color;
+    }
+  }
+
+  &.disabled {
+    color: #848FA5;
+    cursor: not-allowed;
+    font-weight: 400;
+    
+    .number {
+      background-color: #E2E7EF;
+      color: #AAB6CA;
+    }
+  }
+
+  &.available {
+    color: $black-color;
+
+    .number {
+      border: 1px solid $blue-color;
+      color: $blue-color;
+      font-weight: 500;
+    }
+  }
+
+  &.confirmed {
+    color: $black-color;
+    font-weight: 400;
+
+    .number {
+      background-color: $green-color;
+    }
+  }
+}

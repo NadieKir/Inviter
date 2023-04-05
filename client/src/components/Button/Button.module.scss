@@ -16,6 +16,11 @@
   @include smooth-transition();
   cursor: pointer;
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   &.primary {
     background: $blue-gradient-color;
     color: $white-color;

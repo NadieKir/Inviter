@@ -1,0 +1,7 @@
+@import '~style/variables';
+
+.wrapper {
+  width: 100%;
+  max-width: $app-container-max-width;
+  overflow-x: hidden;
+}
