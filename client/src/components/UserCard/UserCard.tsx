@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
 import { Button, ButtonHeight, ButtonVariant } from 'components';
-import { ViewInviteModal } from 'modals';
 import { User } from 'common/models';
 
 import styles from './UserCard.module.scss';
@@ -44,8 +43,6 @@ export const UserCard = ({ user }: UserCardProps) => {
           Посмотреть инвайт
         </Button>
       </article>
-
-      <ViewInviteModal isShowing={isShowingModal} onClose={toggleModal} />
     </li>
   );
 };

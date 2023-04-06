@@ -1,13 +1,13 @@
 import { Modal, ModalProps } from 'modals';
 import { CreateInviteForm, EditInviteForm } from 'forms';
 
-import styles from './ViewInviteModal.module.scss';
+import styles from './CreateInviteModal.module.scss';
 
 interface ViewInviteModalProps extends ModalProps {
   isEdit?: boolean;
 }
 
-export const ViewInviteModal = ({
+export const CreateInviteModal = ({
   isShowing,
   onClose,
   isEdit = false,

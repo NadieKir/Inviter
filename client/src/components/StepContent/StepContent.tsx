@@ -25,6 +25,8 @@ export const StepContent = ({
   isFirst,
   isLast,
   stepDescriptor,
+  step,
+  currentStep,
   setConfirmed,
 }: StepContentProps) => {
   const [isStepConfirmed, setIsStepConfirmed] = useState<boolean>(false);
@@ -118,6 +120,7 @@ export const StepContent = ({
       onFormikPropsChange={onFormikPropsChange}
       formHeading="Создать инвайт"
       isFirstStep={isFirst}
+      isCurrentStepActive={step === currentStep}
     />
   );
 };

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { FormikHelpers } from 'formik';
 
 import { usePushNotification } from 'common/hooks';
 import { InviteType } from 'models';
@@ -8,7 +9,6 @@ import {
   InviteFormData,
   RequiredInviteFields,
 } from 'types';
-import { FormikHelpers } from 'formik';
 import { InviteForm } from 'forms';
 
 export const CreateInviteForm = observer(() => {

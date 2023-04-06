@@ -2,6 +2,8 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Button } from 'components';
+import useModal from 'common/hooks/useModal';
+import { CreateInviteModal } from 'modals';
 
 import styles from './Navbar.module.scss';
 
@@ -15,6 +17,7 @@ import people from './assets/people.svg';
 import search from './assets/search.svg';
 import ticket from './assets/ticket.svg';
 import plus from './assets/plus.svg';
+
 
 type LinkToNavItem = {
   name: string;
@@ -55,51 +58,57 @@ const linksToNavItem: LinkToNavItem[] = [
   },
 ];
 
-export const Navbar = () => {
+export function Navbar() {
+  const [isShowingModal, toggleModal] = useModal();
+
   return (
-    <aside className={styles.aside}>
-      <NavLink to="/">
-        <img src={logo} alt="Логотип" />
-      </NavLink>
+    <>
+      <aside className={styles.aside}>
+        <NavLink to="/">
+          <img src={logo} alt="Логотип" />
+        </NavLink>
 
-      <NavLink to="/profile" className={styles.userProfile}>
-        <img
-          className={styles.userPhoto}
-          src={userPhoto}
-          alt="Фото пользователя"
-        />
-        <div className={styles.userInfo}>
-          <span className={styles.userName}>Надежда, 20</span>
-          <div className={styles.userCity}>
-            <img src={geo} alt="Локация" width={'10px'} />
-            Минск
+        <NavLink to="/profile" className={styles.userProfile}>
+          <img
+            className={styles.userPhoto}
+            src={userPhoto}
+            alt="Фото пользователя"
+          />
+          <div className={styles.userInfo}>
+            <span className={styles.userName}>Надежда, 20</span>
+            <div className={styles.userCity}>
+              <img src={geo} alt="Локация" width={'10px'} />
+              Минск
+            </div>
           </div>
-        </div>
-      </NavLink>
+        </NavLink>
 
-      <nav className={styles.nav}>
-        {linksToNavItem.map((linkToNavItem) => (
-          <NavLink
-            to={linkToNavItem.link}
-            className={({ isActive }) =>
-              classNames(styles.navItem, {
-                [styles.active]: isActive,
-              })
-            }
-          >
-            <img
-              src={linkToNavItem.icon}
-              alt="Иконка пункта меню"
-              width={'18px'}
-            />
-            {linkToNavItem.name}
-          </NavLink>
-        ))}
-      </nav>
+        <nav className={styles.nav}>
+          {linksToNavItem.map((linkToNavItem) => (
+            <NavLink
+              to={linkToNavItem.link}
+              className={({ isActive }) =>
+                classNames(styles.navItem, {
+                  [styles.active]: isActive,
+                })
+              }
+            >
+              <img
+                src={linkToNavItem.icon}
+                alt="Иконка пункта меню"
+                width={'18px'}
+              />
+              {linkToNavItem.name}
+            </NavLink>
+          ))}
+        </nav>
 
-      <Button>
-        <img src={plus} alt="Плюс" /> Создать инвайт
-      </Button>
-    </aside>
+        <Button onClick={toggleModal}>
+          <img src={plus} alt="Плюс" /> Создать инвайт
+        </Button>
+      </aside>
+
+      <CreateInviteModal isShowing={isShowingModal} onClose={toggleModal} />
+    </>
   );
 };
