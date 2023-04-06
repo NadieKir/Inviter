@@ -18,7 +18,7 @@ interface StepperFormProps<T extends FormikValues> {
   handleSubmit: (values: T, actions: FormikHelpers<T>) => Promise<void> | void;
   handleGoBack?: () => void;
   validateSchema?: Yup.AnySchema;
-  fields: () => JSX.Element;
+  fields: (formikProps: FormikProps<T>) => JSX.Element;
   submitButton: (props: FormikProps<T>) => JSX.Element;
   onFormikPropsChange?: (props: FormikProps<T>) => void;
   formHeading?: string;
@@ -59,7 +59,7 @@ export function StepperForm<T extends FormikValues>({
           <div className={classNames(styles.formInputs, {
             [styles.hide]: !isCurrentStepActive
           })}>
-            {fields()}
+            {fields(props)}
           </div>
           <div className={styles.formActions}>
             {!isFirstStep && (

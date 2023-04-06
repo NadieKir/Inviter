@@ -1,4 +1,4 @@
-import { FormikHelpers } from 'formik';
+import { FormikHelpers, FormikProps, FormikValues } from 'formik';
 import { observer } from 'mobx-react-lite';
 import * as Yup from 'yup';
 
@@ -86,45 +86,58 @@ export const InviteForm = observer(
       </>
     );
 
-    const renderAdditionalFields = () => (
-      <>
-        <div className={styles.wrapper}>
-          <div className={styles.dateWrapper}>
-            <DateTimePicker
-              name="date"
-              labelText="Дата"
-              excludePastDateTime={true}
-              showTimeSelect={false}
-            />
-            <DateTimePicker
-              name="time"
-              labelText="Время"
-              constraints={{
-                showTimeSelectOnly: true,
-                timeIntervals: 15,
+    const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
+      const { setFieldValue } = formikProps;
+
+      return (
+        <>
+          <div className={styles.wrapper}>
+            <div className={styles.dateWrapper}>
+              <DateTimePicker
+                name="date"
+                labelText="Дата"
+                excludePastDateTime={true}
+                showTimeSelect={false}
+              />
+              <DateTimePicker
+                name="time"
+                labelText="Время"
+                constraints={{
+                  showTimeSelectOnly: true,
+                  timeIntervals: 15,
+                }}
+              />
+            </div>
+
+            <button
+              type="button"
+              className={styles.clearButton}
+              onClick={() => {
+                setFieldValue("date", "");
+                setFieldValue("time", "");
               }}
+            >
+              Очистить
+            </button>
+          </div>
+          <TextField name="place" labelText="Адрес" multiline={false} />
+          <div className={styles.wrapper}>
+            <TextField
+              name="companionAge"
+              labelText="Возраст компаньона(-ов)"
+              multiline={false}
+            />
+            <GenderCheckboxes name="gender" labelText="Пол" />
+            <NumberField
+              name="companionsAmount"
+              labelText="Количество"
+              min={0}
+              max={3}
             />
           </div>
-
-          <button className={styles.clearButton}>Очистить</button>
-        </div>
-        <TextField name="place" labelText="Адрес" multiline={false} />
-        <div className={styles.wrapper}>
-          <TextField
-            name="companionAge"
-            labelText="Возраст компаньона(-ов)"
-            multiline={false}
-          />
-          <GenderCheckboxes name="gender" labelText="Пол" />
-          <NumberField
-            name="companionsAmount"
-            labelText="Количество"
-            min={0}
-            max={3}
-          />
-        </div>
-      </>
-    );
+        </>)
+        ;
+    };
 
     const steps: IStep[] = [
       {
