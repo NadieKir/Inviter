@@ -12,6 +12,7 @@ import {
   FormikStepper,
   GenderCheckboxes,
   IStep,
+  NumberField,
   Select,
   TextField,
 } from 'components';
@@ -115,10 +116,11 @@ export const InviteForm = observer(
             multiline={false}
           />
           <GenderCheckboxes name="gender" labelText="Пол" />
-          <TextField
+          <NumberField
             name="companionsAmount"
             labelText="Количество"
-            multiline={false}
+            min={0}
+            max={3}
           />
         </div>
       </>

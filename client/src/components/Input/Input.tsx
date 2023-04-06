@@ -1,21 +1,24 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, InputHTMLAttributes } from 'react';
 
 export enum InputType {
   Text = 'text',
+  Number = 'number',
   Password = 'password',
 }
 
 type InputProps = {
   type: InputType;
-} & HTMLAttributes<HTMLInputElement>;
+} & InputHTMLAttributes<HTMLInputElement>;
 
-export const Input = ({
+export function Input({
   type,
   ...nativeHtmlProps
-}: InputProps): JSX.Element => (
-  <input
-    type={type}
-    autoComplete={type === InputType.Password ? 'off' : 'on'}
-    {...nativeHtmlProps}
-  />
-);
+}: InputProps): JSX.Element {
+  return (
+    <input
+      type={type}
+      autoComplete={type === InputType.Password ? 'off' : 'on'}
+      {...nativeHtmlProps}
+    />
+  );
+}

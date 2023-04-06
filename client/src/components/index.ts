@@ -7,6 +7,7 @@ export * from './InputLabel/InputLabel';
 export * from './HelperText/HelperText';
 export * from './PasswordField/PasswordField';
 export * from './TextField/TextField';
+export * from './NumberField/NumberField';
 export * from './TextArea/TextArea';
 export * from './Select/Select';
 export * from './DateTimePicker/DateTimePicker';
