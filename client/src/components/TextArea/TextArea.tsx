@@ -25,7 +25,7 @@ export const TextArea = ({
 
       // We then set the height directly, outside of the render loop
       // Trying to set this with state or a ref will product an incorrect value.
-      textArea.style.height = scrollHeight + 'px';
+      textArea.style.height = scrollHeight + 15 + 'px';
     }
   }, [textAreaRef.current, value]);
 

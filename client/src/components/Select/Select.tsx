@@ -37,8 +37,8 @@ export function Select<T>({
             options={options}
             classNames={{
               control: (state) =>
-                classNames(className, styles.multiSelect, {
-                  [styles.multiSelectFocused]: state.isFocused,
+                classNames(className, styles.select, {
+                  [styles.selectFocused]: state.isFocused,
                 }),
             }}
             styles={{
