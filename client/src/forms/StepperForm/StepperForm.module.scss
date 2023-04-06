@@ -1,26 +1,26 @@
 @use 'sass:color';
 @import '~style/colors';
 @import '~style/mixins';
-
-.whiteContainer {
-  @include base-wrapper();
-  padding: 25px 35px;
-}
+@import '~style/typography';
 
 .form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 30px;
 
   &Inputs {
     display: flex;
     flex-direction: column;
-    row-gap: 30px;
+    row-gap: 20px;
   }
 
   &Actions {
     display: flex;
     justify-content: space-between;
   }
+}
+
+.heading {
+  @extend .h1-typography;
 }

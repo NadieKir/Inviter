@@ -18,4 +18,5 @@ export * from './StepContent/StepContent';
 export * from './StepperProgress/StepperProgress';
 export * from './TabsIndicator/TabsIndicator';
 export * from './Scrollable/Scrollable';
-export * from './Form/Form';
+export * from './GenderCheckboxes/GenderCheckboxes';
+

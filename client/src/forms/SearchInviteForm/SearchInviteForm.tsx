@@ -5,13 +5,11 @@ import {
   ButtonVariant,
   ButtonWidth,
   DateTimePicker,
-  IconCheckbox,
+  GenderCheckboxes,
   Select,
 } from 'components';
 
 import styles from './SearchInviteForm.module.scss';
-import man from './assets/man.svg';
-import woman from './assets/woman.svg';
 
 export const SearchInviteForm = () => {
   type A = { value: string; label: string };
@@ -59,10 +57,7 @@ export const SearchInviteForm = () => {
                 placeholderText="Когда"
               />
             </div>
-            <div className={styles.genders}>
-              <IconCheckbox icon={man} name="gender" value="Мужской" />
-              <IconCheckbox icon={woman} name="gender" value="Женский" />
-            </div>
+            <GenderCheckboxes name="gender" />
           </div>
 
           <div className={styles.actions}>

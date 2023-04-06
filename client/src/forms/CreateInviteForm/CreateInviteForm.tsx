@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { usePushNotification } from 'common/hooks';
-import { InviteType } from 'models/invite';
+import { InviteType } from 'models';
 import {
   AdditionalInviteFields,
   InviteFormData,

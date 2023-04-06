@@ -7,7 +7,17 @@ import {
   InviteFormData,
   RequiredInviteFields,
 } from 'types';
-import { FormikStepper, IStep, TextField } from 'components';
+import {
+  DateTimePicker,
+  FormikStepper,
+  GenderCheckboxes,
+  IStep,
+  Select,
+  TextField,
+} from 'components';
+
+import styles from './InviteForm.module.scss';
+import classNames from 'classnames';
 
 interface InviteFormProps {
   initialValuesRequiredStep: RequiredInviteFields;
@@ -40,40 +50,74 @@ export const InviteForm = observer(
     });
 
     const additionalFieldsSchema = Yup.object().shape({
-      place: Yup.string().min(3, 'ds').required('s'),
+      place: Yup.string().min(3, 'ds'),
     });
+
+    type A = { value: string; label: string };
+    const options: A[] = [
+      { value: 'a', label: 'a' },
+      { value: 'b', label: 'b' },
+      { value: 'n', label: 'n' },
+    ];
 
     const renderRequiredFields = () => (
       <>
         <TextField name="subject" labelText="Хочу..." multiline={false} />
-        {/* <RichTextInput
-          name="excerpt"
-          labelText={intl.formatMessage({ id: 'excerptLabel' })}
-        />
-        <MultiSelect
-          name="speakers"
-          labelText={intl.formatMessage({ id: 'speakersLabel' })}
+        <Select
+          name="type"
+          labelText="Тема"
+          getOptionLabel={(option: A) => option.label}
+          getOptionValue={(option: A) => option.value}
           options={options}
-          getOptionLabel={(option) => `${option.name} ${option.surname}`}
-          getOptionValue={(option) => option.id}
         />
-        <DateTimeRangePicker
-          startRangeName="start"
-          endRangeName="finish"
-          excludePastDateTime
-          className={styles.datesInputWrapper}
-        /> */}
+        <Select
+          name="city"
+          labelText="Город"
+          getOptionLabel={(option: A) => option.label}
+          getOptionValue={(option: A) => option.value}
+          options={options}
+        />
+        <TextField
+          name="description"
+          labelText="Описание"
+          multiline={true}
+          maxLetterCount={500}
+        />
       </>
     );
 
     const renderAdditionalFields = () => (
       <>
         <TextField name="place" labelText="Адрес" multiline={false} />
-        {/* <ImageUploader
-          name="image"
-          variant={ImagePreviewMode.Thumbnail}
-          labelText={intl.formatMessage({ id: 'imageLabel' })}
-        /> */}
+        <div className={classNames(styles.wrapper, styles.dateWrapper)}>
+          <DateTimePicker
+            name="date"
+            labelText="Дата"
+            excludePastDateTime={true}
+            showTimeSelect={false}
+          />
+          <DateTimePicker
+            name="time"
+            labelText="Время"
+            constraints={{
+              showTimeSelectOnly: true,
+              timeIntervals: 15,
+            }}
+          />
+        </div>
+        <div className={styles.wrapper}>
+          <TextField
+            name="companionAge"
+            labelText="Возраст компаньона(-ов)"
+            multiline={false}
+          />
+          <GenderCheckboxes name="gender" labelText="Пол" />
+          <TextField
+            name="companionsAmount"
+            labelText="Количество"
+            multiline={false}
+          />
+        </div>
       </>
     );
 

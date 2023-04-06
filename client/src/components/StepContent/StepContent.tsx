@@ -7,10 +7,10 @@ import {
   StepperContextType,
   Button,
   ButtonVariant,
-  Form,
   IStep,
   ButtonWidth,
 } from 'components';
+import { StepperForm } from 'forms';
 
 interface StepContentProps {
   step: number;
@@ -108,7 +108,7 @@ export const StepContent = ({
   };
 
   return (
-    <Form
+    <StepperForm
       handleSubmit={handleSubmit}
       handleGoBack={isFirst ? handleGoBack : handlePreviousStep}
       initialValues={stepDescriptor.initialValues}
@@ -116,6 +116,7 @@ export const StepContent = ({
       fields={stepDescriptor.fields}
       submitButton={isLast ? renderSubmitFormButton : renderGoNextStepButton}
       onFormikPropsChange={onFormikPropsChange}
+      formHeading="Создать инвайт"
     />
   );
 };

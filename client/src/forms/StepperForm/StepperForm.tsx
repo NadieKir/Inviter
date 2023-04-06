@@ -10,9 +10,9 @@ import * as Yup from 'yup';
 
 import { Button, ButtonVariant, ButtonWidth } from 'components';
 
-import styles from './Form.module.scss';
+import styles from './StepperForm.module.scss';
 
-interface FormProps<T extends FormikValues> {
+interface StepperFormProps<T extends FormikValues> {
   initialValues: T;
   handleSubmit: (values: T, actions: FormikHelpers<T>) => Promise<void> | void;
   handleGoBack?: () => void;
@@ -20,9 +20,10 @@ interface FormProps<T extends FormikValues> {
   fields: () => JSX.Element;
   submitButton: (props: FormikProps<T>) => JSX.Element;
   onFormikPropsChange?: (props: FormikProps<T>) => void;
+  formHeading?: string;
 }
 
-export function Form<T extends FormikValues>({
+export function StepperForm<T extends FormikValues>({
   handleSubmit,
   handleGoBack,
   initialValues,
@@ -30,7 +31,8 @@ export function Form<T extends FormikValues>({
   fields,
   submitButton,
   onFormikPropsChange,
-}: FormProps<T>) {
+  formHeading,
+}: StepperFormProps<T>) {
   const navigate = useNavigate();
 
   const handleReset = (nativeHandleResetFn: () => void) => {
@@ -48,6 +50,7 @@ export function Form<T extends FormikValues>({
     >
       {(props) => (
         <FormikForm className={styles.form}>
+          {formHeading && <h1 className={styles.heading}>{formHeading}</h1>}
           <div className={styles.formInputs}>{fields()}</div>
           <div className={styles.formActions}>
             <Button
