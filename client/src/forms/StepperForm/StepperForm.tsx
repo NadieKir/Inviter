@@ -21,6 +21,7 @@ interface StepperFormProps<T extends FormikValues> {
   submitButton: (props: FormikProps<T>) => JSX.Element;
   onFormikPropsChange?: (props: FormikProps<T>) => void;
   formHeading?: string;
+  isFirstStep?: boolean;
 }
 
 export function StepperForm<T extends FormikValues>({
@@ -32,6 +33,7 @@ export function StepperForm<T extends FormikValues>({
   submitButton,
   onFormikPropsChange,
   formHeading,
+  isFirstStep = false,
 }: StepperFormProps<T>) {
   const navigate = useNavigate();
 
@@ -53,14 +55,16 @@ export function StepperForm<T extends FormikValues>({
           {formHeading && <h1 className={styles.heading}>{formHeading}</h1>}
           <div className={styles.formInputs}>{fields()}</div>
           <div className={styles.formActions}>
-            <Button
-              type="button"
-              variant={ButtonVariant.Secondary}
-              width={ButtonWidth.Small}
-              onClick={handleGoBack || (() => handleReset(props.handleReset))}
-            >
-              Назад
-            </Button>
+            {!isFirstStep && (
+              <Button
+                type="button"
+                variant={ButtonVariant.Secondary}
+                width={ButtonWidth.Small}
+                onClick={handleGoBack || (() => handleReset(props.handleReset))}
+              >
+                Назад
+              </Button>
+            )}
 
             {submitButton(props)}
           </div>

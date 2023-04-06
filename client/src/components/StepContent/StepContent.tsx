@@ -117,6 +117,7 @@ export const StepContent = ({
       submitButton={isLast ? renderSubmitFormButton : renderGoNextStepButton}
       onFormikPropsChange={onFormikPropsChange}
       formHeading="Создать инвайт"
+      isFirstStep={isFirst}
     />
   );
 };

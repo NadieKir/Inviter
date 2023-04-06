@@ -18,6 +18,11 @@
   &Actions {
     display: flex;
     justify-content: space-between;
+
+    &:has(> button:only-child) {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 }
 

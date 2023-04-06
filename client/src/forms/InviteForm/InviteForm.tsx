@@ -17,7 +17,6 @@ import {
 } from 'components';
 
 import styles from './InviteForm.module.scss';
-import classNames from 'classnames';
 
 interface InviteFormProps {
   initialValuesRequiredStep: RequiredInviteFields;
@@ -88,23 +87,27 @@ export const InviteForm = observer(
 
     const renderAdditionalFields = () => (
       <>
-        <TextField name="place" labelText="Адрес" multiline={false} />
-        <div className={classNames(styles.wrapper, styles.dateWrapper)}>
-          <DateTimePicker
-            name="date"
-            labelText="Дата"
-            excludePastDateTime={true}
-            showTimeSelect={false}
-          />
-          <DateTimePicker
-            name="time"
-            labelText="Время"
-            constraints={{
-              showTimeSelectOnly: true,
-              timeIntervals: 15,
-            }}
-          />
+        <div className={styles.wrapper}>
+          <div className={styles.dateWrapper}>
+            <DateTimePicker
+              name="date"
+              labelText="Дата"
+              excludePastDateTime={true}
+              showTimeSelect={false}
+            />
+            <DateTimePicker
+              name="time"
+              labelText="Время"
+              constraints={{
+                showTimeSelectOnly: true,
+                timeIntervals: 15,
+              }}
+            />
+          </div>
+
+          <button className={styles.clearButton}>Очистить</button>
         </div>
+        <TextField name="place" labelText="Адрес" multiline={false} />
         <div className={styles.wrapper}>
           <TextField
             name="companionAge"
