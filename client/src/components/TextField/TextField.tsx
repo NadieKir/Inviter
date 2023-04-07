@@ -9,15 +9,16 @@ import {
 
 type TextInputOrAreaProps = {
   placeholderText?: string;
+  pattern?: string;
 } & (
-  | {
+    | {
       multiline: false | undefined;
     }
-  | {
+    | {
       multiline: true;
       maxLetterCount?: number;
     }
-);
+  );
 
 type TextFieldProps = InputFieldExternalProps & TextInputOrAreaProps;
 
@@ -26,10 +27,11 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
   let inputFieldProps: InputFieldExternalProps;
   let multiline: boolean | undefined;
   let maxLetterCount: number | undefined;
+  let pattern: string | undefined;
 
   switch (props.multiline) {
     case true:
-      ({ placeholderText, multiline, maxLetterCount, ...inputFieldProps } =
+      ({ placeholderText, pattern, multiline, maxLetterCount, ...inputFieldProps } =
         props);
 
       return (
@@ -40,13 +42,14 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
               className={className}
               placeholder={placeholderText}
               maxLetterCount={maxLetterCount}
+              pattern={pattern}
             />
           )}
         </InputField>
       );
     case false:
     default:
-      ({ placeholderText, ...inputFieldProps } = props);
+      ({ placeholderText, pattern, ...inputFieldProps } = props);
 
       return (
         <InputField {...inputFieldProps}>
@@ -56,6 +59,7 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
               className={className}
               placeholder={placeholderText}
               type={InputType.Text}
+              pattern={pattern}
             />
           )}
         </InputField>

@@ -20,4 +20,4 @@ export * from './StepperProgress/StepperProgress';
 export * from './TabsIndicator/TabsIndicator';
 export * from './Scrollable/Scrollable';
 export * from './GenderCheckboxes/GenderCheckboxes';
-
+export * from './AgeRangeField/AgeRangeField';

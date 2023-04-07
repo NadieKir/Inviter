@@ -9,6 +9,7 @@ import {
   RequiredInviteFields,
 } from 'types';
 import {
+  AgeRangeField,
   DateTimePicker,
   FormikStepper,
   GenderCheckboxes,
@@ -79,7 +80,12 @@ export const InviteForm = observer(
       [InviteFormFields.Date]: Yup.date(),
       [InviteFormFields.Time]: Yup.date(),
       [InviteFormFields.Place]: Yup.string(),
-      [InviteFormFields.CompanionAge]: Yup.string(),
+      [InviteFormFields.CompanionAge]: Yup.string()
+        .test(
+          'not-empty-test',
+          'Введите строку типа "XX-XX"',
+          value => !value ? true : /^(1[8-9]|[2-9][0-9])-(1[9]|[2-9][0-9])$/gm.test(value),
+        ),
       [InviteFormFields.CompanionGender]: Yup.array()
         .of(Yup.string()),
       [InviteFormFields.CompanionsAmount]: Yup.number()
@@ -169,10 +175,9 @@ export const InviteForm = observer(
             multiline={false}
           />
           <div className={styles.wrapper}>
-            <TextField
+            <AgeRangeField
               name={InviteFormFields.CompanionAge}
               labelText="Возраст компаньона(-ов)"
-              multiline={false}
             />
             <GenderCheckboxes
               name={InviteFormFields.CompanionGender}

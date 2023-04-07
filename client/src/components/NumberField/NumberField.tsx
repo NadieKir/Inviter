@@ -20,25 +20,21 @@ export const NumberField = ({
     min,
     ...inputFieldProps
 }: NumberFieldProps): JSX.Element => {
-
-
     return (
         <InputField {...inputFieldProps}>
-            {({ field, className, form: { setFieldValue } }: InputRenderProps): JSX.Element => {
-                return (
-                    <Input
-                        {...field}
-                        onKeyDown={e => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                        }}
-                        className={className}
-                        type={InputType.Number}
-                        min={min}
-                        max={max}
-                    />
-                )
-            }}
+            {({ field, className, form: { setFieldValue } }: InputRenderProps): JSX.Element => (
+                <Input
+                    {...field}
+                    onKeyDown={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }}
+                    className={className}
+                    type={InputType.Number}
+                    min={min}
+                    max={max}
+                />
+            )}
         </InputField>
     );
 };
