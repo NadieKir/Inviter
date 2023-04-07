@@ -11,7 +11,7 @@ export * from './TextArea/TextArea';
 export * from './Select/Select';
 export * from './DateTimePicker/DateTimePicker';
 export * from './IconCheckbox/IconCheckbox';
-export * from './UserCard/UserCard';
+export * from './InviteCard/InviteCard';
 export * from './FormikStepper/FormikStepper';
 export * from './Step/Step';
 export * from './StepContent/StepContent';

@@ -1,9 +1,9 @@
 import { Button } from 'components';
 
-import styles from './ViewUserPage.module.scss';
+import styles from './UserPage.module.scss';
 import mockUser from 'assets/images/mock-user-photo.jpg';
 
-export const ViewUserPage = () => {
+export const UserPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.userInfo}>

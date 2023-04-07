@@ -1,4 +1,4 @@
-import { UserCard } from 'components';
+import { InviteCard } from 'components';
 import { SearchInviteForm } from 'forms';
 
 import styles from './SearchInvitePage.module.scss';
@@ -20,7 +20,7 @@ export const SearchInvitePage = () => {
       </div>
       <ul className={styles.userCards}>
         {users.map((user) => (
-          <UserCard key={user.id} user={user} />
+          <InviteCard key={user.id} user={user} />
         ))}
       </ul>
     </section>

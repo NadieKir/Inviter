@@ -4,16 +4,16 @@ import { Button, ButtonHeight, ButtonVariant } from 'components';
 import { ViewInviteModal } from 'modals';
 import { User } from 'common/models';
 
-import styles from './UserCard.module.scss';
+import styles from './InviteCard.module.scss';
 import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from 'assets/images/calendar.svg';
 import useModal from 'common/hooks/useModal';
 
-interface UserCardProps {
+interface InviteCardProps {
   user: User;
 }
 
-export const UserCard = ({ user }: UserCardProps) => {
+export const InviteCard = ({ user }: InviteCardProps) => {
   const [isShowingModal, toggleModal] = useModal();
 
   const { id, name } = user;
