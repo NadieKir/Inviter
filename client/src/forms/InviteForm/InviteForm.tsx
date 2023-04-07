@@ -38,8 +38,13 @@ const options: A[] = [
 ];
 
 const formConstraints = {
-  [InviteFormFields.CompanionsAmount]: [0, 3]
+  [InviteFormFields.CompanionsAmount]: [1, 3]
 }
+
+const isDateValueEqualsBy = (first: Date, second: Date) =>
+  first.getDay() === second.getDay()
+  && first.getMonth() === second.getMonth()
+  && first.getFullYear() === second.getFullYear();
 
 export const InviteForm = observer(
   ({
@@ -60,12 +65,12 @@ export const InviteForm = observer(
     const requiredFieldsSchema = Yup.object().shape({
       [InviteFormFields.Subject]: Yup.string().min(3, 'subject min length - 3').required('subject is required'),
       [InviteFormFields.Type]: Yup.object().shape({
-        value: Yup.string().required(),
-        label: Yup.string().required(),
+        value: Yup.string(),
+        label: Yup.string(),
       }).nullable().required('type is required'),
       [InviteFormFields.City]: Yup.object().shape({
-        value: Yup.string().required(),
-        label: Yup.string().required(),
+        value: Yup.string(),
+        label: Yup.string(),
       }).nullable().required('city is required'),
       [InviteFormFields.Description]: Yup.string().min(3, 'description min length - 3').required('description is required'),
     });
@@ -113,7 +118,17 @@ export const InviteForm = observer(
     );
 
     const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
-      const { setFieldValue } = formikProps;
+      const { values, setFieldValue } = formikProps;
+      const date = new Date(values[InviteFormFields.Date] as string);
+      const time = new Date(values[InviteFormFields.Time] as string);
+
+      const isSelectedDateToday = isDateValueEqualsBy(date, new Date());
+      const minTime = isSelectedDateToday ? new Date() : undefined;
+      const maxTime = isSelectedDateToday ? new Date(new Date().setHours(23, 59, 59)) : undefined;
+
+      if (minTime && time && time < minTime) {
+        setFieldValue(InviteFormFields.Time, "");
+      }
 
       return (
         <>
@@ -131,6 +146,8 @@ export const InviteForm = observer(
                 constraints={{
                   showTimeSelectOnly: true,
                   timeIntervals: 15,
+                  minTime: minTime,
+                  maxTime: maxTime,
                 }}
               />
             </div>
