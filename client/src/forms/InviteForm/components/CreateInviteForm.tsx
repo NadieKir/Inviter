@@ -10,8 +10,11 @@ import {
   RequiredInviteFields,
 } from 'types';
 import { InviteForm } from 'forms';
+import { CreateOrEditInviteFormProps } from './types';
 
-export const CreateInviteForm = observer(() => {
+export const CreateInviteForm = observer(({
+  onSubmit,
+}: CreateOrEditInviteFormProps) => {
   const navigate = useNavigate();
   const { pushSuccess } = usePushNotification();
 
@@ -48,7 +51,7 @@ export const CreateInviteForm = observer(() => {
 
     actions.setSubmitting(false);
     pushSuccess('Инвайт создан');
-    //close modal
+    onSubmit();
   };
 
   return (

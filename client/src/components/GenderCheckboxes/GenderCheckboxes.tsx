@@ -4,16 +4,11 @@ import {
   InputFieldExternalProps,
   InputRenderProps,
 } from 'components';
+import { Gender } from 'models';
 
 import styles from './GenderCheckboxes.module.scss';
 import man from './assets/man.svg';
 import woman from './assets/woman.svg';
-
-// name: string;
-// labelText?: string;
-// successText?: string;
-// hintText?: string;
-// noVerify?: boolean;
 
 export const GenderCheckboxes = ({
   ...inputFieldProps
@@ -22,8 +17,8 @@ export const GenderCheckboxes = ({
     <InputField {...inputFieldProps}>
       {({ field, className }: InputRenderProps): JSX.Element => (
         <div className={styles.genders}>
-          <IconCheckbox icon={man} name="gender" value="Мужской" />
-          <IconCheckbox icon={woman} name="gender" value="Женский" />
+          <IconCheckbox icon={man} name={inputFieldProps.name} value={Gender.MALE} />
+          <IconCheckbox icon={woman} name={inputFieldProps.name} value={Gender.FEMALE} />
         </div>
       )}
     </InputField>

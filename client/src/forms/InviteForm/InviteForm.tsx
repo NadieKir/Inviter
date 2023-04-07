@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import {
   AdditionalInviteFields,
   InviteFormData,
+  InviteFormFields,
   RequiredInviteFields,
 } from 'types';
 import {
@@ -29,6 +30,17 @@ interface InviteFormProps {
   touchedNotRequired?: boolean;
 }
 
+type A = { value: string; label: string };
+const options: A[] = [
+  { value: 'a', label: 'a' },
+  { value: 'b', label: 'b' },
+  { value: 'n', label: 'n' },
+];
+
+const formConstraints = {
+  [InviteFormFields.CompanionsAmount]: [0, 3]
+}
+
 export const InviteForm = observer(
   ({
     initialValuesRequiredStep,
@@ -46,39 +58,53 @@ export const InviteForm = observer(
     // }, []);
 
     const requiredFieldsSchema = Yup.object().shape({
-      subject: Yup.string().min(3, 'd').required('s'),
+      [InviteFormFields.Subject]: Yup.string().min(3, 'subject min length - 3').required('subject is required'),
+      [InviteFormFields.Type]: Yup.object().shape({
+        value: Yup.string().required(),
+        label: Yup.string().required(),
+      }).nullable().required('type is required'),
+      [InviteFormFields.City]: Yup.object().shape({
+        value: Yup.string().required(),
+        label: Yup.string().required(),
+      }).nullable().required('city is required'),
+      [InviteFormFields.Description]: Yup.string().min(3, 'description min length - 3').required('description is required'),
     });
 
     const additionalFieldsSchema = Yup.object().shape({
-      place: Yup.string().min(3, 'ds'),
+      [InviteFormFields.Date]: Yup.date(),
+      [InviteFormFields.Time]: Yup.date(),
+      [InviteFormFields.Place]: Yup.string(),
+      [InviteFormFields.CompanionAge]: Yup.string(),
+      [InviteFormFields.CompanionGender]: Yup.array()
+        .of(Yup.string()),
+      [InviteFormFields.CompanionsAmount]: Yup.number()
+        .min(formConstraints[InviteFormFields.CompanionsAmount][0])
+        .max(formConstraints[InviteFormFields.CompanionsAmount][1])
     });
-
-    type A = { value: string; label: string };
-    const options: A[] = [
-      { value: 'a', label: 'a' },
-      { value: 'b', label: 'b' },
-      { value: 'n', label: 'n' },
-    ];
 
     const renderRequiredFields = () => (
       <>
-        <TextField name="subject" labelText="Хочу..." multiline={false} />
+        <TextField
+          name={InviteFormFields.Subject}
+          labelText="Хочу..."
+          multiline={false}
+        />
         <Select
-          name="type"
+          name={InviteFormFields.Type}
           labelText="Тема"
           getOptionLabel={(option: A) => option.label}
           getOptionValue={(option: A) => option.value}
           options={options}
         />
         <Select
-          name="city"
+          name={InviteFormFields.City}
           labelText="Город"
           getOptionLabel={(option: A) => option.label}
           getOptionValue={(option: A) => option.value}
           options={options}
         />
         <TextField
-          name="description"
+          name={InviteFormFields.Description}
           labelText="Описание"
           multiline={true}
           maxLetterCount={500}
@@ -94,13 +120,13 @@ export const InviteForm = observer(
           <div className={styles.wrapper}>
             <div className={styles.dateWrapper}>
               <DateTimePicker
-                name="date"
+                name={InviteFormFields.Date}
                 labelText="Дата"
                 excludePastDateTime={true}
                 showTimeSelect={false}
               />
               <DateTimePicker
-                name="time"
+                name={InviteFormFields.Time}
                 labelText="Время"
                 constraints={{
                   showTimeSelectOnly: true,
@@ -113,30 +139,37 @@ export const InviteForm = observer(
               type="button"
               className={styles.clearButton}
               onClick={() => {
-                setFieldValue("date", "");
-                setFieldValue("time", "");
+                setFieldValue(InviteFormFields.Date, "");
+                setFieldValue(InviteFormFields.Time, "");
               }}
             >
               Очистить
             </button>
           </div>
-          <TextField name="place" labelText="Адрес" multiline={false} />
+          <TextField
+            name={InviteFormFields.Place}
+            labelText="Адрес"
+            multiline={false}
+          />
           <div className={styles.wrapper}>
             <TextField
-              name="companionAge"
+              name={InviteFormFields.CompanionAge}
               labelText="Возраст компаньона(-ов)"
               multiline={false}
             />
-            <GenderCheckboxes name="gender" labelText="Пол" />
+            <GenderCheckboxes
+              name={InviteFormFields.CompanionGender}
+              labelText="Пол"
+            />
             <NumberField
-              name="companionsAmount"
+              name={InviteFormFields.CompanionsAmount}
               labelText="Количество"
-              min={0}
-              max={3}
+              min={formConstraints[InviteFormFields.CompanionsAmount][0]}
+              max={formConstraints[InviteFormFields.CompanionsAmount][1]}
             />
           </div>
-        </>)
-        ;
+        </>
+      );
     };
 
     const steps: IStep[] = [

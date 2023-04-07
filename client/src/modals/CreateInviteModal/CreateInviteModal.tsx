@@ -14,7 +14,7 @@ export const CreateInviteModal = ({
 }: ViewInviteModalProps) => (
   <Modal isShowing={isShowing} onClose={onClose}>
     <div className={styles.modal}>
-      {isEdit ? <EditInviteForm /> : <CreateInviteForm />}
+      {isEdit ? <EditInviteForm onSubmit={onClose} /> : <CreateInviteForm onSubmit={onClose} />}
     </div>
   </Modal>
 );
