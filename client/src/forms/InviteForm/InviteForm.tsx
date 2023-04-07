@@ -85,6 +85,21 @@ export const InviteForm = observer(
           'not-empty-test',
           'Введите строку типа "XX-XX"',
           value => !value ? true : /^(1[8-9]|[2-9][0-9])-(1[9]|[2-9][0-9])$/gm.test(value),
+        ).test(
+          'first-age-less-than-second',
+          'Первый возраст должен быть меньше второго',
+          value => {
+            if (!value) {
+              return true;
+            }
+
+            const ages = value?.split('-');
+            if (ages.length !== 2) {
+              return true;
+            }
+
+            return ages[0] < ages[1];
+          }
         ),
       [InviteFormFields.CompanionGender]: Yup.array()
         .of(Yup.string()),
