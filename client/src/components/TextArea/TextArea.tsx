@@ -19,12 +19,8 @@ export const TextArea = ({
     if (textAreaRef.current) {
       const { current: textArea } = textAreaRef;
 
-      // We need to reset the height momentarily to get the correct scrollHeight for the textarea
       textArea.style.height = 'auto';
       const scrollHeight = textArea.scrollHeight;
-
-      // We then set the height directly, outside of the render loop
-      // Trying to set this with state or a ref will product an incorrect value.
       textArea.style.height = scrollHeight + 15 + 'px';
     }
   }, [textAreaRef.current, value]);

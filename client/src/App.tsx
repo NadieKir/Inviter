@@ -6,6 +6,7 @@ import {
   LoginPage,
   NotFoundPage,
   SearchInvitePage,
+  ViewUserPage,
 } from 'pages';
 import { history, AppRouter } from 'common/router';
 
@@ -22,7 +23,7 @@ function App() {
           <Route path="following" element={<div>following</div>} />
           <Route path="notifications" element={<div>notifications</div>} />
           <Route path="profile" element={<div>profile</div>} />
-          <Route path="user/:id" element={<div>user</div>} />
+          <Route path="user/:id" element={<ViewUserPage />} />
           <Route path="forbidden" element={<ForbiddenPage />} />
           <Route path="not-found" element={<NotFoundPage />} />
           <Route path="*" element={<Navigate replace to="/not-found" />} />
