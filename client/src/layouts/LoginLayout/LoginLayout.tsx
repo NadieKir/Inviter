@@ -1,18 +1,54 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { Button, ButtonHeight, ButtonWidth } from 'components';
 import { ErrorFallback } from 'pages';
-import { AuthorizationForm } from 'forms';
 
-import styles from './LoginPage.module.scss';
+import styles from './LoginLayout.module.scss';
 import youtube from './assets/youtube.svg';
 import logo from './assets/white-logo.svg';
 import promoImage1 from './assets/promo-image-1.jpg';
 import promoImage2 from './assets/promo-image-2.jpg';
 import promoImage3 from './assets/promo-image-3.jpg';
 
-export const LoginPage = () => {
+interface PageContent {
+  buttonName: string;
+  heading: string;
+  buttonLink: string;
+}
+
+interface PathToPageContent {
+  [key: string]: PageContent;
+}
+
+const pageContentByPathDescriptor: PathToPageContent = {
+  '/login': {
+    buttonName: 'Зарегистрироваться',
+    heading: 'Войти',
+    buttonLink: '/registration',
+  },
+  '/registration': {
+    buttonName: 'Войти',
+    heading: 'Регистрация',
+    buttonLink: '/login',
+  },
+};
+
+export const LoginLayout = () => {
+  const location = useLocation();
+
+  const getCurrentPathContent = () =>
+    pageContentByPathDescriptor[location.pathname];
+
+  const [currentPageContent, setCurrentPageContent] = useState(
+    getCurrentPathContent,
+  );
+
+  useEffect(() => {
+    setCurrentPageContent(getCurrentPathContent());
+  }, [location]);
+
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <section className={styles.loginSection}>
@@ -57,13 +93,16 @@ export const LoginPage = () => {
               <Link to="#">О нас</Link>
               <Link to="#">Правовая информация</Link>
             </div>
-            <Button width={ButtonWidth.Small} height={ButtonHeight.Small}>
-              Зарегистрироваться
-            </Button>
+            <Link to={currentPageContent.buttonLink}>
+              <Button width={ButtonWidth.Small} height={ButtonHeight.Small}>
+                {currentPageContent.buttonName}
+              </Button>
+            </Link>
           </div>
+
           <div className={styles.formWrapper}>
-            <h1 className={styles.heading}>Авторизация</h1>
-            <AuthorizationForm />
+            <h1 className={styles.heading}>{currentPageContent.heading}</h1>
+            <Outlet />
           </div>
           <div></div>
         </section>

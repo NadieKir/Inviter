@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 import { Navbar } from 'components';
 import { ErrorFallback } from 'pages';
 
-import styles from './Layout.module.scss';
+import styles from './MainLayout.module.scss';
 
-export const Layout = () => (
+export const MainLayout = () => (
   <section className={styles.appWrapper}>
     <Navbar />
     <main className={styles.main}>
