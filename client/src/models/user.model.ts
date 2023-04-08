@@ -37,4 +37,5 @@ export interface User {
   interests: string[];
   welcomeMessage: string;
   connectionMethods: string;
+  preferredAge: string;
 }
