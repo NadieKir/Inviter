@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { Button, ButtonHeight, ButtonWidth } from 'components';
 import { ErrorFallback } from 'pages';
 import { AuthorizationForm } from 'forms';
 
@@ -10,7 +11,6 @@ import logo from './assets/white-logo.svg';
 import promoImage1 from './assets/promo-image-1.jpg';
 import promoImage2 from './assets/promo-image-2.jpg';
 import promoImage3 from './assets/promo-image-3.jpg';
-import { Button, ButtonHeight, ButtonWidth } from 'components';
 
 export const LoginPage = () => {
   return (
@@ -53,7 +53,7 @@ export const LoginPage = () => {
         </header>
         <section className={styles.formSection}>
           <div className={styles.actions}>
-            <div>
+            <div className={styles.links}>
               <Link to="#">О нас</Link>
               <Link to="#">Правовая информация</Link>
             </div>
@@ -62,9 +62,10 @@ export const LoginPage = () => {
             </Button>
           </div>
           <div className={styles.formWrapper}>
-            <h1>Авторизация</h1>
+            <h1 className={styles.heading}>Авторизация</h1>
             <AuthorizationForm />
           </div>
+          <div></div>
         </section>
       </section>
     </ErrorBoundary>

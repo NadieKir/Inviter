@@ -1,5 +1,5 @@
-import React from 'react';
+import styles from './AuthorizationForm.module.scss';
 
 export const AuthorizationForm = () => {
-  return <div>AuthorizationForm</div>;
+  return <div className={styles.formWrapper}>AuthorizationForm</div>;
 };

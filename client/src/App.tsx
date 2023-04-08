@@ -29,7 +29,9 @@ function App() {
           <Route path="not-found" element={<NotFoundPage />} />
           <Route path="*" element={<Navigate replace to="/not-found" />} />
         </Route>
+        {/* <Route path="/" element={<Layout />}> */}
         <Route path="login" element={<LoginPage />} />
+        {/* </Route> */}
       </Routes>
     </AppRouter>
   );
