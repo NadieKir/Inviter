@@ -1,4 +1,4 @@
-import { Invite } from "models";
+import { Invite, User } from "models";
 
 export type RequiredInviteFields = Pick<
   Invite,
@@ -11,3 +11,13 @@ export type AdditionalInviteFields = Pick<
 >;
 
 export type InviteFormData = RequiredInviteFields & AdditionalInviteFields;
+
+export type AuthFormData = Pick<
+  User,
+  'login' | 'password'
+>;
+
+export type RegistrationFormData = Omit<
+  User,
+  'id' 
+>;

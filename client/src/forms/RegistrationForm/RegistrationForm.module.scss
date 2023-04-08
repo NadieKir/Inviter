@@ -1,5 +1,15 @@
+// временный стиль
 .formWrapper {
   height: 100px;
   width: 100%;
   background: #0a5e10;
 }
+
+// стиль для формы, не юзать лейблы для показа, что это за инпут, 
+// юзать плейсхолдеры (см. AuthorizationForm)
+
+// .form {
+//   display: flex;
+//   flex-direction: column;
+//   row-gap: 20px;
+// }

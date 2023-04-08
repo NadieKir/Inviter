@@ -23,7 +23,7 @@ export interface User {
   id: string;
   name: string;
   birthday: string;
-  nickname: string;
+  login: string;
   email: string;
   phone: string;
   password: string;

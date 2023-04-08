@@ -1,5 +1,5 @@
-.formWrapper {
-  height: 100px;
-  width: 100%;
-  background: #0a5e10;
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }
