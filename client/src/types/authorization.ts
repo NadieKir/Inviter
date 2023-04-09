@@ -39,7 +39,7 @@ export type RegistrationFirstStepFormData = {
   [RegistrationFormFields.Gender]: Gender | null,
   [RegistrationFormFields.Email]: string,
   [RegistrationFormFields.Password]: string,
-  [RegistrationFormFields.ConfirmPassword]: string,
+  [RegistrationFormFields.ConfirmPassword]?: string,
 }
 
 export type RegistrationSecondStepFormData = {

@@ -233,6 +233,7 @@ export const RegistrationForm = observer(() => {
   const handleSubmit = async (values: RegistrationFormData, actions: FormikHelpers<RegistrationFormData>) => {
     const resultValues: RegistrationFormData = {
       ...values,
+      [RegistrationFormFields.ConfirmPassword]: undefined,
       [RegistrationFormFields.Orientation]: (values[RegistrationFormFields.Orientation] as SelectOption<Orientation>).value,
       [RegistrationFormFields.FamilyStatus]: (values[RegistrationFormFields.FamilyStatus] as SelectOption<FamilyStatus>).value,
       [RegistrationFormFields.City]: (values[RegistrationFormFields.City] as SelectOption<City>).value,
@@ -269,5 +270,5 @@ export const RegistrationForm = observer(() => {
     },
   ];
 
-  return <FormikStepper steps={steps} onFinish={handleSubmit} />;
+  return <FormikStepper finishButtonContent='Зарегестрироваться' steps={steps} onFinish={handleSubmit} />;
 });
