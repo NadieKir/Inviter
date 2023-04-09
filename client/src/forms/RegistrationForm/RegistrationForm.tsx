@@ -2,7 +2,16 @@ import { observer } from 'mobx-react-lite';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
-import { AgeRangeField, DateTimePicker, FormikStepper, GenderPicker, IStep, PasswordField, Select, TextField, YesNoPicker } from 'components';
+import {
+  AgeRangeField,
+  DateTimePicker,
+  FormikStepper,
+  GenderPicker,
+  IStep,
+  PasswordField,
+  Select,
+  TextField
+} from 'components';
 import {
   RegistrationFirstStepFormData,
   RegistrationSecondStepFormData,
@@ -10,12 +19,21 @@ import {
   RegistrationFormData,
   RegistrationFormFields
 } from 'types/authorization';
-import { FAMILY_STATUSES_OPTIONS, GENDERS, INTERESTS_OPTIONS, LANGUAGES_OPTIONS, ORIENTATIONS_OPTIONS } from 'models/constants';
+import {
+  ATTITUDES_OPTIONS,
+  CITIES_OPTIONS,
+  FAMILY_STATUSES_OPTIONS,
+  GENDERS,
+  INTERESTS_OPTIONS,
+  LANGUAGES_OPTIONS,
+  ORIENTATIONS_OPTIONS
+} from 'models/constants';
 
 import styles from './RegistrationForm.module.scss';
 import { ageRangeValidationSchema, selectOptionValidationSchema } from 'common/constants';
 import { SelectOption } from 'types/other';
-import { FamilyStatus, Interests, Language, Orientation } from 'models';
+import { Attitude, City, FamilyStatus, Interests, Language, Orientation } from 'models';
+import { getAge } from 'common/helpers/date';
 
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
@@ -32,7 +50,11 @@ const firstStepValidationSchema = Yup.object().shape({
   [RegistrationFormFields.Name]: Yup.string().required('Введите имя'),
   [RegistrationFormFields.Login]: Yup.string().required('Введите логин'),
   [RegistrationFormFields.Email]: Yup.string().email('Введите правильную почту').required('Введите почту'),
-  [RegistrationFormFields.Birthday]: Yup.string().nullable().required('Введите день рождения'),
+  [RegistrationFormFields.Birthday]: Yup.string().nullable().required('Введите день рождения')
+    .test(
+      'adultTest',
+      'Вам должно быть 18 лет',
+      v => v ? getAge(new Date(v)) >= 18 : true),
   [RegistrationFormFields.Gender]: Yup.string().nullable().oneOf(GENDERS).required('Введите пол'),
   [RegistrationFormFields.Password]: Yup.string().required('Введите пароль'),
   [RegistrationFormFields.ConfirmPassword]: Yup.string()
@@ -45,21 +67,22 @@ const firstStepFields = () => (
     <TextField
       name={RegistrationFormFields.Name}
       className={styles.firstStepFormName}
-      placeholderText='Имя'
+      labelText='Имя'
       multiline={false}
     />
     <TextField
       name={RegistrationFormFields.Login}
       className={styles.firstStepFormLogin}
-      placeholderText='Логин'
+      labelText='Логин'
       multiline={false}
     />
-    <div className={styles.firstStepFormEmailGenderBirthday}>
-      <TextField
-        name={RegistrationFormFields.Email}
-        labelText='Почта'
-        multiline={false}
-      />
+    <TextField
+      name={RegistrationFormFields.Email}
+      className={styles.firstStepFormEmail}
+      labelText='Почта'
+      multiline={false}
+    />
+    <div className={styles.firstStepFormGenderBirthday}>
       <DateTimePicker
         name={RegistrationFormFields.Birthday}
         labelText="День рождения"
@@ -80,18 +103,18 @@ const firstStepFields = () => (
     <PasswordField
       name={RegistrationFormFields.Password}
       className={styles.firstStepFormPassword}
-      placeholderText='Пароль'
+      labelText='Пароль'
     />
     <PasswordField
       name={RegistrationFormFields.ConfirmPassword}
       className={styles.firstStepFormConfirmPassword}
-      placeholderText='Подтвердите пароль'
+      labelText='Подтвердите пароль'
     />
   </>
 );
 
 const secondStepInitialValues: RegistrationSecondStepFormData = {
-  [RegistrationFormFields.City]: '',
+  [RegistrationFormFields.City]: null,
   [RegistrationFormFields.Orientation]: null,
   [RegistrationFormFields.FamilyStatus]: null,
   [RegistrationFormFields.AlcoholAttitude]: null,
@@ -101,27 +124,29 @@ const secondStepInitialValues: RegistrationSecondStepFormData = {
 }
 
 const secondStepValidationSchema = Yup.object().shape({
-  [RegistrationFormFields.City]: Yup.string().required('Введите город'),
+  [RegistrationFormFields.City]: selectOptionValidationSchema.required('Введите город'),
   [RegistrationFormFields.Orientation]: selectOptionValidationSchema.nullable().required('Введите ориентацию'),
   [RegistrationFormFields.FamilyStatus]: selectOptionValidationSchema.nullable().required('Введите семейный статус'),
-  [RegistrationFormFields.AlcoholAttitude]: Yup.boolean().nullable().required('Выберите отношение к алкоголю'),
-  [RegistrationFormFields.SmokingAttitude]: Yup.boolean().nullable().required('Выберите отношение к курению'),
+  [RegistrationFormFields.AlcoholAttitude]: selectOptionValidationSchema.nullable().required('Выберите отношение к алкоголю'),
+  [RegistrationFormFields.SmokingAttitude]: selectOptionValidationSchema.nullable().required('Выберите отношение к курению'),
   [RegistrationFormFields.Languages]: Yup.array().of(selectOptionValidationSchema).min(1, 'Введите хотя бы один язык'),
   [RegistrationFormFields.Interests]: Yup.array().of(selectOptionValidationSchema).min(1, 'Введите хотя бы один интерес'),
 });
 
 const secondStepFields = () => (
   <>
-    <TextField
+    <Select
       name={RegistrationFormFields.City}
       className={styles.secondStepFormCity}
-      placeholderText='Город'
-      multiline={false}
+      labelText='Город'
+      getOptionLabel={o => o.value}
+      getOptionValue={o => o.label}
+      options={CITIES_OPTIONS}
     />
     <Select
       name={RegistrationFormFields.Orientation}
       className={styles.secondStepFormOrientation}
-      placeholderText="Ориентация"
+      labelText="Ориентация"
       getOptionLabel={o => o.value}
       getOptionValue={o => o.label}
       options={ORIENTATIONS_OPTIONS}
@@ -129,25 +154,31 @@ const secondStepFields = () => (
     <Select
       name={RegistrationFormFields.FamilyStatus}
       className={styles.secondStepFormFamilyStatus}
-      placeholderText="Семейное положение"
+      labelText="Семейное положение"
       getOptionLabel={o => o.value}
       getOptionValue={o => o.label}
       options={FAMILY_STATUSES_OPTIONS}
     />
-    <YesNoPicker
+    <Select
       name={RegistrationFormFields.AlcoholAttitude}
       className={styles.secondStepFormAlcoholAttitude}
       labelText='Отношение к алкоголю'
+      getOptionLabel={o => o.value}
+      getOptionValue={o => o.label}
+      options={ATTITUDES_OPTIONS}
     />
-    <YesNoPicker
+    <Select
       name={RegistrationFormFields.SmokingAttitude}
       className={styles.secondStepFormSmokingAttitude}
       labelText='Отношение к курению'
+      getOptionLabel={o => o.value}
+      getOptionValue={o => o.label}
+      options={ATTITUDES_OPTIONS}
     />
     <Select
       name={RegistrationFormFields.Languages}
       className={styles.secondStepFormLanguages}
-      placeholderText="Языки"
+      labelText="Языки"
       getOptionLabel={o => o.value}
       getOptionValue={o => o.label}
       isMulti
@@ -156,10 +187,11 @@ const secondStepFields = () => (
     <Select
       name={RegistrationFormFields.Interests}
       className={styles.secondStepFormInterests}
-      placeholderText="Интересы"
+      labelText="Интересы"
       getOptionLabel={o => o.value}
       getOptionValue={o => o.label}
       isMulti
+      creatable
       options={INTERESTS_OPTIONS}
     />
   </>
@@ -203,8 +235,11 @@ export const RegistrationForm = observer(() => {
       ...values,
       [RegistrationFormFields.Orientation]: (values[RegistrationFormFields.Orientation] as SelectOption<Orientation>).value,
       [RegistrationFormFields.FamilyStatus]: (values[RegistrationFormFields.FamilyStatus] as SelectOption<FamilyStatus>).value,
+      [RegistrationFormFields.City]: (values[RegistrationFormFields.City] as SelectOption<City>).value,
+      [RegistrationFormFields.AlcoholAttitude]: (values[RegistrationFormFields.AlcoholAttitude] as SelectOption<Attitude>).value,
+      [RegistrationFormFields.SmokingAttitude]: (values[RegistrationFormFields.SmokingAttitude] as SelectOption<Attitude>).value,
       [RegistrationFormFields.Languages]: (values[RegistrationFormFields.Languages] as SelectOption<Language>[]).map(o => o.value),
-      [RegistrationFormFields.Interests]: (values[RegistrationFormFields.Interests] as SelectOption<Interests>[]).map(o => o.value),
+      [RegistrationFormFields.Interests]: (values[RegistrationFormFields.Interests] as SelectOption<Interests | string>[]).map(o => o.value),
     };
 
     alert(JSON.stringify(resultValues));
@@ -229,6 +264,7 @@ export const RegistrationForm = observer(() => {
       title: 'Шаг 3',
       initialValues: thirdStepInitialValues,
       validateSchema: thirdStepValidationSchema,
+      formClassName: styles.thirdStepForm,
       fields: thirdStepFields,
     },
   ];

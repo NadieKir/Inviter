@@ -3,6 +3,13 @@ export enum Gender {
   FEMALE = 'Женский',
 }
 
+export enum City {
+  MINKS = 'Минск',
+  BREST = 'Брест',
+  GRODNO = 'Гродно',
+  MOGILEV = 'Могилев'
+}
+
 export enum Orientation {
   HETEROSEXUAL = 'Гетеросексуал',
   HOMOSEXUAL = 'Гомосексуал',
@@ -17,6 +24,15 @@ export enum FamilyStatus {
   MARRIED = 'Женат / замужем',
   DIVORCED = 'Разведён(-а)',
   WIDOWER_WIDOW = 'Вдовец / вдова'
+}
+
+export enum Attitude {
+  NOT_SPECIFIED = 'Нет указано',
+  STRONGLY_NEGATIVE = 'Резко негативное',
+  NEGATIVE = 'Негативное',
+  COMPROMISE = 'Компромисное',
+  NEUTRAL = 'Нейтральное',
+  POSITIVE = 'Позитивное',
 }
 
 export enum Language {
@@ -44,14 +60,14 @@ export interface User {
   email: string;
   phone: string;
   password: string;
-  city: string;
+  city: City;
   gender: Gender;
   orientation: Orientation;
   familyStatus: FamilyStatus;
-  alcoholAttitude: boolean;
-  smokingAttitude: boolean;
-  languages: string[];
-  interests: string[];
+  alcoholAttitude: Attitude;
+  smokingAttitude: Attitude;
+  languages: Language[];
+  interests: Interests[];
   welcomeMessage: string;
   connectionMethods: string;
   preferredAge: string;
