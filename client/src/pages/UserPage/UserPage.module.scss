@@ -2,10 +2,9 @@
 @import '~style/typography';
 @import '~style/mixins';
 
-.wrapper {
+.userPageSection {
   display: flex;
   justify-content: space-between;
-  margin: 35px 0;
   padding: 40px 0;
 }
 
@@ -14,12 +13,14 @@
   display: flex;
   justify-content: space-between;
   width: 690px;
+  height: calc(100% - 80px);
 
 }
 
 .questionnairePhotoWrapper {
   width: 220px;
-  margin-top: -75px;
+  margin-top: -80px;
+  height: calc(100% - 80px)
 }
 
 .headingH1 {

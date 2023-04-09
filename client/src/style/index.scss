@@ -32,3 +32,24 @@ body {
 .blue {
   color: $blue-color;
 }
+
+.headingH1 {
+  @extend .h1-typography;
+}
+
+.headingH2 {
+  @extend .h2-typography;
+}
+
+.headingH3 {
+  @extend .h3-typography;
+}
+
+.headingH4 {
+  @extend .h4-typography;
+}
+
+.paragraph {
+  @extend .p-typography;
+}
+

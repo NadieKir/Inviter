@@ -68,7 +68,7 @@ export const LoginLayout = () => {
             <div className={styles.promoImage}>
               <img src={promoImage2} alt="Промо изображение" />
               <span>
-                #<span className="blue">попробовоть_дессерт</span>
+                #<span className="blue">попробовоть_десерт</span>
               </span>
             </div>
             <div className={styles.promoImage}>

@@ -21,7 +21,7 @@ export enum FamilyStatus {
 
 export interface User {
   id: string;
-  name: string;
+  name: string; 
   birthday: string;
   login: string;
   email: string;
