@@ -10,8 +10,13 @@ import {
 } from 'types';
 import { FormikHelpers } from 'formik';
 import { InviteForm } from 'forms';
+import { CreateOrEditInviteFormProps } from './types';
 
-export const EditInviteForm = observer(() => {
+
+
+export const EditInviteForm = observer(({
+  onSubmit,
+}: CreateOrEditInviteFormProps) => {
   const navigate = useNavigate();
   const { pushSuccess } = usePushNotification();
 
@@ -48,6 +53,7 @@ export const EditInviteForm = observer(() => {
 
     actions.setSubmitting(false);
     pushSuccess('Инвайт создан');
+    onSubmit();
     //close modal
   };
 

@@ -7,6 +7,7 @@ import {
   FormikValues,
 } from 'formik';
 import * as Yup from 'yup';
+import classNames from 'classnames';
 
 import { Button, ButtonVariant, ButtonWidth } from 'components';
 
@@ -17,11 +18,12 @@ interface StepperFormProps<T extends FormikValues> {
   handleSubmit: (values: T, actions: FormikHelpers<T>) => Promise<void> | void;
   handleGoBack?: () => void;
   validateSchema?: Yup.AnySchema;
-  fields: () => JSX.Element;
+  fields: (formikProps: FormikProps<T>) => JSX.Element;
   submitButton: (props: FormikProps<T>) => JSX.Element;
   onFormikPropsChange?: (props: FormikProps<T>) => void;
   formHeading?: string;
   isFirstStep?: boolean;
+  isCurrentStepActive: boolean;
 }
 
 export function StepperForm<T extends FormikValues>({
@@ -33,6 +35,7 @@ export function StepperForm<T extends FormikValues>({
   submitButton,
   onFormikPropsChange,
   formHeading,
+  isCurrentStepActive,
   isFirstStep = false,
 }: StepperFormProps<T>) {
   const navigate = useNavigate();
@@ -53,7 +56,11 @@ export function StepperForm<T extends FormikValues>({
       {(props) => (
         <FormikForm className={styles.form}>
           {formHeading && <h1 className={styles.heading}>{formHeading}</h1>}
-          <div className={styles.formInputs}>{fields()}</div>
+          <div className={classNames(styles.formInputs, {
+            [styles.hide]: !isCurrentStepActive
+          })}>
+            {fields(props)}
+          </div>
           <div className={styles.formActions}>
             {!isFirstStep && (
               <Button

@@ -1,13 +1,34 @@
 import { Invite, User } from "models";
 
+export enum InviteFormFields {
+  Subject = 'subject',
+  Description = 'description',
+  City = 'city',
+  Type = 'type',
+  Place = 'place',
+  Date = 'date',
+  Time = 'time',
+  CompanionAge = 'companionAge',
+  CompanionGender = 'companionGender',
+  CompanionsAmount = 'companionsAmount',
+};
+
 export type RequiredInviteFields = Pick<
   Invite,
-  'subject' | 'description' | 'city' | 'type'
+  InviteFormFields.Subject
+  | InviteFormFields.Description
+  | InviteFormFields.City
+  | InviteFormFields.Type
 >;
 
 export type AdditionalInviteFields = Pick<
   Invite,
-  'place' | 'date' | 'time' | 'companionAge' | 'companionGender' | 'companionsAmount' 
+  InviteFormFields.Place
+  | InviteFormFields.Date
+  | InviteFormFields.Time
+  | InviteFormFields.CompanionAge
+  | InviteFormFields.CompanionGender
+  | InviteFormFields.CompanionsAmount
 >;
 
 export type InviteFormData = RequiredInviteFields & AdditionalInviteFields;

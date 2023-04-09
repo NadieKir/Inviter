@@ -1,2 +1,2 @@
-export * from './ViewInviteModal/ViewInviteModal';
+export * from './CreateInviteModal/CreateInviteModal';
 export * from './Modal/Modal';

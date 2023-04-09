@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { FormikHelpers } from 'formik';
 
 import { usePushNotification } from 'common/hooks';
 import { InviteType } from 'models';
@@ -8,10 +9,12 @@ import {
   InviteFormData,
   RequiredInviteFields,
 } from 'types';
-import { FormikHelpers } from 'formik';
 import { InviteForm } from 'forms';
+import { CreateOrEditInviteFormProps } from './types';
 
-export const CreateInviteForm = observer(() => {
+export const CreateInviteForm = observer(({
+  onSubmit,
+}: CreateOrEditInviteFormProps) => {
   const navigate = useNavigate();
   const { pushSuccess } = usePushNotification();
 
@@ -48,7 +51,7 @@ export const CreateInviteForm = observer(() => {
 
     actions.setSubmitting(false);
     pushSuccess('Инвайт создан');
-    //close modal
+    onSubmit();
   };
 
   return (

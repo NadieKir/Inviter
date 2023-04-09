@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import * as Yup from 'yup';
-import { FormikHelpers, FormikValues } from 'formik';
+import { FormikHelpers, FormikProps, FormikValues } from 'formik';
 
 import { StepperProgress, StepContent } from 'components';
 
@@ -29,7 +29,7 @@ export interface IStep {
   title: string;
   initialValues: FormikValues;
   validateSchema: Yup.AnySchema;
-  fields: () => JSX.Element;
+  fields: (formikProps: FormikProps<FormikValues>) => JSX.Element;
   noVerify?: boolean;
 }
 
@@ -120,8 +120,8 @@ export function FormikStepper<T extends FormikValues>({
                   ? StepVariant.Confirmed
                   : stepsDescriptor[nextStepIndex].visited ||
                     nextStepIndex === i + 1
-                  ? StepVariant.Available
-                  : StepVariant.Disabled;
+                    ? StepVariant.Available
+                    : StepVariant.Disabled;
               }
             }
 
