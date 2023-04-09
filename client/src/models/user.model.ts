@@ -19,6 +19,23 @@ export enum FamilyStatus {
   WIDOWER_WIDOW = 'Вдовец / вдова'
 }
 
+export enum Language {
+  RUSSIAN = 'Русский',
+  BELARUSIAN = 'Белорусский',
+  UKRAINIAN = 'Украинский',
+  GERMAN = 'Немецкий',
+  ENGLISH = 'Английский'
+}
+
+export enum Interests {
+  MOVIES = 'Кино',
+  SERIES = 'Сериалы',
+  ART = 'Исскуство',
+  MUSIC = 'Музыка',
+  TRAVEL = 'Путешествия',
+  BOOKS = 'Книги',
+}
+
 export interface User {
   id: string;
   name: string;

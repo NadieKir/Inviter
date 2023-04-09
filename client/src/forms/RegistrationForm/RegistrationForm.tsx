@@ -10,12 +10,12 @@ import {
   RegistrationFormData,
   RegistrationFormFields
 } from 'types/authorization';
-import { FAMILY_STATUSES_OPTIONS, GENDERS, ORIENTATIONS_OPTIONS } from 'models/constants';
+import { FAMILY_STATUSES_OPTIONS, GENDERS, INTERESTS_OPTIONS, LANGUAGES_OPTIONS, ORIENTATIONS_OPTIONS } from 'models/constants';
 
 import styles from './RegistrationForm.module.scss';
 import { ageRangeValidationSchema, selectOptionValidationSchema } from 'common/constants';
 import { SelectOption } from 'types/other';
-import { FamilyStatus, Orientation } from 'models';
+import { FamilyStatus, Interests, Language, Orientation } from 'models';
 
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
@@ -151,7 +151,7 @@ const secondStepFields = () => (
       getOptionLabel={o => o.value}
       getOptionValue={o => o.label}
       isMulti
-      options={ORIENTATIONS_OPTIONS}
+      options={LANGUAGES_OPTIONS}
     />
     <Select
       name={RegistrationFormFields.Interests}
@@ -160,7 +160,7 @@ const secondStepFields = () => (
       getOptionLabel={o => o.value}
       getOptionValue={o => o.label}
       isMulti
-      options={FAMILY_STATUSES_OPTIONS}
+      options={INTERESTS_OPTIONS}
     />
   </>
 );
@@ -201,10 +201,10 @@ export const RegistrationForm = observer(() => {
   const handleSubmit = async (values: RegistrationFormData, actions: FormikHelpers<RegistrationFormData>) => {
     const resultValues: RegistrationFormData = {
       ...values,
-      [RegistrationFormFields.Orientation]: (values[RegistrationFormFields.Orientation] as SelectOption).value as Orientation,
-      [RegistrationFormFields.FamilyStatus]: (values[RegistrationFormFields.FamilyStatus] as SelectOption).value as FamilyStatus,
-      [RegistrationFormFields.Languages]: (values[RegistrationFormFields.Languages] as SelectOption[]).map(o => o.value),
-      [RegistrationFormFields.Interests]: (values[RegistrationFormFields.Interests] as SelectOption[]).map(o => o.value),
+      [RegistrationFormFields.Orientation]: (values[RegistrationFormFields.Orientation] as SelectOption<Orientation>).value,
+      [RegistrationFormFields.FamilyStatus]: (values[RegistrationFormFields.FamilyStatus] as SelectOption<FamilyStatus>).value,
+      [RegistrationFormFields.Languages]: (values[RegistrationFormFields.Languages] as SelectOption<Language>[]).map(o => o.value),
+      [RegistrationFormFields.Interests]: (values[RegistrationFormFields.Interests] as SelectOption<Interests>[]).map(o => o.value),
     };
 
     alert(JSON.stringify(resultValues));

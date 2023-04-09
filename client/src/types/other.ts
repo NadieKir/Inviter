@@ -1,4 +1,4 @@
-export type SelectOption = {
-    value: string;
-    label: string;
+export type SelectOption<T extends string> = {
+    value: T;
+    label: T;
 }
