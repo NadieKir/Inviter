@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
 import { Button, ButtonHeight, ButtonVariant } from 'components';
-import { User } from 'common/models';
+import { MockedUser, User } from 'models';
 
 import styles from './InviteCard.module.scss';
 import mockUser from 'assets/images/mock-user-photo.jpg';
@@ -9,7 +9,7 @@ import calendar from 'assets/images/calendar.svg';
 import useModal from 'common/hooks/useModal';
 
 interface InviteCardProps {
-  user: User;
+  user: MockedUser;
 }
 
 export const InviteCard = ({ user }: InviteCardProps) => {

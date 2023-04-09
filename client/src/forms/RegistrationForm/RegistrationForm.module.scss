@@ -1,15 +1,91 @@
-// временный стиль
-.formWrapper {
-  height: 100px;
-  width: 100%;
-  background: #0a5e10;
+
+.firstStepForm {
+  display: grid;
+  grid-template-columns: repeat(4, 2fr);
+  grid-template-rows: repeat(6, 60px);
+  grid-row-gap: 35px;
+  grid-column-gap: 20px;
+  margin-bottom: 10px;
+
+  &Name {
+    grid-row: 1;
+    grid-column: 1/-1;
+  }
+
+  &Login {
+    grid-row: 2;
+    grid-column: 1/-1;
+  }
+
+  &Email {
+    grid-row: 3;
+    grid-column: 1/-1;
+  }
+
+  &GenderBirthday {
+    grid-row: 4;
+    grid-column: 1/-1;
+
+    width: 100%;
+    display: grid;
+    grid-column-gap: 20px;
+    grid-template-columns: 3fr 3fr 1fr;
+  } 
+
+  &Password {
+    grid-row: 5;
+    grid-column: 1/-1;
+  }
+
+  &ConfirmPassword {
+    grid-row: 6;
+    grid-column: 1/-1;
+  }
 }
 
-// стиль для формы, не юзать лейблы для показа, что это за инпут, 
-// юзать плейсхолдеры (см. AuthorizationForm)
+.secondStepForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(5, 60px);
+  grid-row-gap: 35px;
+  grid-column-gap: 30px;
+  margin-bottom: 15px;
 
-// .form {
-//   display: flex;
-//   flex-direction: column;
-//   row-gap: 20px;
-// }
+  &City {
+    grid-row: 1;
+    grid-column: 1/-1;
+  }
+
+  &Orientation {
+    grid-row: 2;
+  }
+
+  &FamilyStatus {
+    grid-row: 2;
+  }
+
+  &AlcoholAttitude {
+    grid-row: 3;
+  }
+
+  &SmokingAttitude {
+    grid-row: 3;
+  }
+
+  &Languages {
+    grid-row: 4;
+    grid-column: 1/-1;
+  }
+
+  &Interests {
+    grid-row: 5;
+    grid-column: 1/-1;
+  }
+}
+
+.thirdStepForm {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 10px;
+}

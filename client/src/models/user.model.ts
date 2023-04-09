@@ -3,6 +3,13 @@ export enum Gender {
   FEMALE = 'Женский',
 }
 
+export enum City {
+  MINKS = 'Минск',
+  BREST = 'Брест',
+  GRODNO = 'Гродно',
+  MOGILEV = 'Могилев'
+}
+
 export enum Orientation {
   HETEROSEXUAL = 'Гетеросексуал',
   HOMOSEXUAL = 'Гомосексуал',
@@ -19,6 +26,32 @@ export enum FamilyStatus {
   WIDOWER_WIDOW = 'Вдовец / вдова'
 }
 
+export enum Attitude {
+  NOT_SPECIFIED = 'Нет указано',
+  STRONGLY_NEGATIVE = 'Резко негативное',
+  NEGATIVE = 'Негативное',
+  COMPROMISE = 'Компромисное',
+  NEUTRAL = 'Нейтральное',
+  POSITIVE = 'Позитивное',
+}
+
+export enum Language {
+  RUSSIAN = 'Русский',
+  BELARUSIAN = 'Белорусский',
+  UKRAINIAN = 'Украинский',
+  GERMAN = 'Немецкий',
+  ENGLISH = 'Английский'
+}
+
+export enum Interests {
+  MOVIES = 'Кино',
+  SERIES = 'Сериалы',
+  ART = 'Исскуство',
+  MUSIC = 'Музыка',
+  TRAVEL = 'Путешествия',
+  BOOKS = 'Книги',
+}
+
 export interface User {
   id: string;
   name: string; 
@@ -27,15 +60,17 @@ export interface User {
   email: string;
   phone: string;
   password: string;
-  city: string;
+  city: City;
   gender: Gender;
   orientation: Orientation;
   familyStatus: FamilyStatus;
-  alcoholAttitude: boolean;
-  smokingAttitude: boolean;
-  languages: string[];
-  interests: string[];
+  alcoholAttitude: Attitude;
+  smokingAttitude: Attitude;
+  languages: Language[];
+  interests: Interests[];
   welcomeMessage: string;
   connectionMethods: string;
   preferredAge: string;
 }
+
+export type MockedUser = Partial<User>;

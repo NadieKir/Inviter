@@ -1,4 +1,6 @@
 import ReactSelect, { GetOptionLabel, GetOptionValue } from 'react-select';
+import CreatableReactSelect from 'react-select/creatable';
+
 import { useFormikContext } from 'formik';
 import classNames from 'classnames';
 
@@ -12,7 +14,9 @@ import { EmotionCacheProvider } from 'common/contexts';
 import styles from './Select.module.scss';
 
 type SelectProps<T> = {
+  className?: string;
   isMulti?: boolean;
+  creatable?: boolean;
   options: T[];
   getOptionLabel?: GetOptionLabel<T>;
   getOptionValue?: GetOptionValue<T>;
@@ -20,20 +24,24 @@ type SelectProps<T> = {
 } & InputFieldExternalProps;
 
 export function Select<T>({
+  className,
   options,
   getOptionLabel,
   getOptionValue,
   isMulti = false,
   placeholderText = '',
+  creatable = false,
   ...inputFieldProps
 }: SelectProps<T>) {
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
+  const SelectComponent = creatable ? CreatableReactSelect : ReactSelect;
+
   return (
     <EmotionCacheProvider>
-      <InputField {...inputFieldProps}>
+      <InputField containerAttributes={{ className: className }} {...inputFieldProps}>
         {({ field, className }: InputRenderProps): JSX.Element => (
-          <ReactSelect
+          <SelectComponent
             options={options}
             classNames={{
               control: (state) =>

@@ -5,7 +5,7 @@ import {
   ButtonVariant,
   ButtonWidth,
   DateTimePicker,
-  GenderCheckboxes,
+  GenderPicker,
   Select,
 } from 'components';
 
@@ -57,7 +57,7 @@ export const SearchInviteForm = () => {
                 placeholderText="Когда"
               />
             </div>
-            <GenderCheckboxes name="gender" />
+            <GenderPicker name="gender" inputType='checkbox' />
           </div>
 
           <div className={styles.actions}>

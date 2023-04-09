@@ -1,15 +1,16 @@
 import { InviteCard } from 'components';
 import { SearchInviteForm } from 'forms';
+import { MockedUser, User } from 'models';
 
 import styles from './SearchInvitePage.module.scss';
 
 export const SearchInvitePage = () => {
-  const users = [
-    { name: 'ss', surname: 'dd', id: '1' },
-    { name: 'ss', surname: 'dd', id: '2' },
-    { name: 'ss', surname: 'dd', id: '3' },
-    { name: 'ss', surname: 'dd', id: '4' },
-    { name: 'ss', surname: 'dd', id: '5' },
+  const users: MockedUser[] = [
+    { name: 'ss', id: '1' },
+    { name: 'ss', id: '2' },
+    { name: 'ss', id: '3' },
+    { name: 'ss', id: '4' },
+    { name: 'ss', id: '5' },
   ];
 
   return (
