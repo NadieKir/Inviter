@@ -15,6 +15,7 @@ import './DateTimePicker.scss';
 type DateTimePickerConstraints = Partial<ComponentProps<typeof DatePicker>>;
 
 type DateTimePickerProps = InputFieldExternalProps & {
+  className?: string;
   showTimeSelect?: boolean;
   excludePastDateTime?: boolean;
   placeholderText?: string;
@@ -23,6 +24,7 @@ type DateTimePickerProps = InputFieldExternalProps & {
 };
 
 export const DateTimePicker = ({
+  className,
   showTimeSelect = true,
   excludePastDateTime = false,
   placeholderText = '',
@@ -34,11 +36,11 @@ export const DateTimePicker = ({
   return (
     <InputField
       {...inputFieldProps}
-      containerAttributes={{ style: { width: 'min-content' } }}
+      containerAttributes={{ className: className }}
     >
       {({
         field: { name, value },
-        form: { setFieldValue },
+        form: { setFieldValue, setFieldTouched },
         className,
       }: InputRenderProps): JSX.Element => {
         const now = new Date();
@@ -49,12 +51,12 @@ export const DateTimePicker = ({
 
         const excludeProps = excludePastDateTime
           ? {
-              minDate: now,
-              minTime: new Date(
-                now.setHours(minTimeHour, minTimeMinutes, 0, 0),
-              ),
-              maxTime: new Date(now.setHours(23, 59, 0, 0)),
-            }
+            minDate: now,
+            minTime: new Date(
+              now.setHours(minTimeHour, minTimeMinutes, 0, 0),
+            ),
+            maxTime: new Date(now.setHours(23, 59, 0, 0)),
+          }
           : undefined;
 
         const handleChange = (date: Date | null): void => {
@@ -90,6 +92,7 @@ export const DateTimePicker = ({
             name={name}
             selected={value}
             onChange={handleChange}
+            onBlur={() => setFieldTouched(name, true, true)}
             showTimeSelect={showTimeSelect}
             dateFormat={showTimeSelect ? 'p' : 'd MMMM'}
             placeholderText={placeholderText}

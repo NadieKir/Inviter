@@ -1,4 +1,4 @@
-import { Invite, User } from "models";
+import { Invite } from "models";
 
 export enum InviteFormFields {
   Subject = 'subject',
@@ -32,13 +32,3 @@ export type AdditionalInviteFields = Pick<
 >;
 
 export type InviteFormData = RequiredInviteFields & AdditionalInviteFields;
-
-export type AuthFormData = Pick<
-  User,
-  'login' | 'password'
->;
-
-export type RegistrationFormData = Omit<
-  User,
-  'id' 
->;

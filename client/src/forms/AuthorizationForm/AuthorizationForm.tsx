@@ -1,18 +1,20 @@
-import { AuthFormData } from 'types';
-import styles from './AuthorizationForm.module.scss';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+
 import { Button, PasswordField, TextField } from 'components';
+import { LoginFormData, LoginFormFields } from 'types/authorization';
+
+import styles from './AuthorizationForm.module.scss';
 
 export const AuthorizationForm = () => {
   const loginSchema = Yup.object().shape({
-    login: Yup.string(),
-    password: Yup.string(),
+    [LoginFormFields.Login]: Yup.string(),
+    [LoginFormFields.Password]: Yup.string(),
   });
 
   const handleSubmit = (
-    values: AuthFormData,
-    actions: FormikHelpers<AuthFormData>,
+    values: LoginFormData,
+    actions: FormikHelpers<LoginFormData>,
   ) => {
     alert(JSON.stringify(values));
   };

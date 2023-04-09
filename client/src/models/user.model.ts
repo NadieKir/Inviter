@@ -39,3 +39,5 @@ export interface User {
   connectionMethods: string;
   preferredAge: string;
 }
+
+export type MockedUser = Partial<User>;

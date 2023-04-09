@@ -2,17 +2,20 @@ import { Input, InputField, InputFieldExternalProps, InputRenderProps, InputType
 import { maskString } from "./utils";
 
 
-export type AgeRangeFieldProps = InputFieldExternalProps;
+export type AgeRangeFieldProps = InputFieldExternalProps & {
+    className?: string;
+};
 
 const ageRangeMask = "XX-XX";
 
 const allowedKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace', 'ArrowLeft', 'ArrowRight'];
 
 export const AgeRangeField = ({
+    className,
     ...inputFieldProps
 }: AgeRangeFieldProps): JSX.Element => {
     return (
-        <InputField {...inputFieldProps}>
+        <InputField containerAttributes={{ className: className }} {...inputFieldProps}>
             {({ field, className, form: { setFieldValue } }: InputRenderProps): JSX.Element => {
                 return (
                     <Input

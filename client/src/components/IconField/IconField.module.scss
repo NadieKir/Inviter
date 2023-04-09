@@ -8,7 +8,7 @@
 
   opacity: 0;
 
-  &:checked ~ .checkboxCustom {
+  &:checked ~ .fieldCustom {
     background: $blue-color;
 
     &:hover {
@@ -21,7 +21,7 @@
   }
 }
 
-.checkboxCustom {
+.fieldCustom {
   display: flex;
   align-items: center;
   justify-content: center;

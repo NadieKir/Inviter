@@ -9,6 +9,7 @@
   &Body {
     width: calc(100% * var(--numOfSteps));
     display: flex;
+    gap: 5px;
     overflow: hidden;
     transform: translateX(calc(100% / var(--numOfSteps) * var(--currentStep)));
   }

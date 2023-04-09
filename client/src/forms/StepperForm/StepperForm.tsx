@@ -23,6 +23,7 @@ interface StepperFormProps<T extends FormikValues> {
   onFormikPropsChange?: (props: FormikProps<T>) => void;
   formHeading?: string;
   isFirstStep?: boolean;
+  fieldsClassName?: string;
   isCurrentStepActive: boolean;
 }
 
@@ -36,6 +37,7 @@ export function StepperForm<T extends FormikValues>({
   onFormikPropsChange,
   formHeading,
   isCurrentStepActive,
+  fieldsClassName,
   isFirstStep = false,
 }: StepperFormProps<T>) {
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ export function StepperForm<T extends FormikValues>({
       {(props) => (
         <FormikForm className={styles.form}>
           {formHeading && <h1 className={styles.heading}>{formHeading}</h1>}
-          <div className={classNames(styles.formInputs, {
+          <div className={classNames(styles.formInputs, fieldsClassName, {
             [styles.hide]: !isCurrentStepActive
           })}>
             {fields(props)}

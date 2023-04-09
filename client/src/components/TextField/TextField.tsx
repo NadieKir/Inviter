@@ -10,6 +10,7 @@ import {
 type TextInputOrAreaProps = {
   placeholderText?: string;
   pattern?: string;
+  className?: string;
 } & (
     | {
       multiline: false | undefined;
@@ -23,6 +24,7 @@ type TextInputOrAreaProps = {
 type TextFieldProps = InputFieldExternalProps & TextInputOrAreaProps;
 
 export const TextField = (props: TextFieldProps): JSX.Element => {
+  let className: string | undefined;
   let placeholderText: string | undefined;
   let inputFieldProps: InputFieldExternalProps;
   let multiline: boolean | undefined;
@@ -31,11 +33,11 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
 
   switch (props.multiline) {
     case true:
-      ({ placeholderText, pattern, multiline, maxLetterCount, ...inputFieldProps } =
+      ({ className, placeholderText, pattern, multiline, maxLetterCount, ...inputFieldProps } =
         props);
 
       return (
-        <InputField {...inputFieldProps}>
+        <InputField containerAttributes={{ className: className }} {...inputFieldProps}>
           {({ field, className }: InputRenderProps): JSX.Element => (
             <TextArea
               {...field}
@@ -49,10 +51,10 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
       );
     case false:
     default:
-      ({ placeholderText, pattern, ...inputFieldProps } = props);
+      ({ className, placeholderText, pattern, ...inputFieldProps } = props);
 
       return (
-        <InputField {...inputFieldProps}>
+        <InputField containerAttributes={{ className: className }} {...inputFieldProps}>
           {({ field, className }: InputRenderProps): JSX.Element => (
             <Input
               {...field}

@@ -18,6 +18,8 @@ interface StepContentProps {
   isLast: boolean;
   isFirst: boolean;
   stepDescriptor: IStep;
+  formHeading?: string,
+  formClassName?: string;
   setConfirmed: (flag: boolean) => void;
 }
 
@@ -27,6 +29,8 @@ export const StepContent = ({
   stepDescriptor,
   step,
   currentStep,
+  formHeading,
+  formClassName,
   setConfirmed,
 }: StepContentProps) => {
   const [isStepConfirmed, setIsStepConfirmed] = useState<boolean>(false);
@@ -118,8 +122,9 @@ export const StepContent = ({
       fields={stepDescriptor.fields}
       submitButton={isLast ? renderSubmitFormButton : renderGoNextStepButton}
       onFormikPropsChange={onFormikPropsChange}
-      formHeading="Создать инвайт"
+      formHeading={formHeading}
       isFirstStep={isFirst}
+      fieldsClassName={formClassName}
       isCurrentStepActive={step === currentStep}
     />
   );

@@ -29,6 +29,7 @@ export interface IStep {
   title: string;
   initialValues: FormikValues;
   validateSchema: Yup.AnySchema;
+  formClassName?: string;
   fields: (formikProps: FormikProps<FormikValues>) => JSX.Element;
   noVerify?: boolean;
 }
@@ -57,17 +58,17 @@ interface FormikStepperProps<T extends FormikValues> {
   steps: IStep[];
   onFinish: (values: T, actions: FormikHelpers<T>) => Promise<void>;
   finishButtonContent?: JSX.Element | string;
+  formHeading?: string;
 }
 
 export function FormikStepper<T extends FormikValues>({
   steps,
   onFinish,
-  finishButtonContent,
+  finishButtonContent = 'Создать',
+  formHeading = '',
 }: FormikStepperProps<T>) {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [formData, setFormData] = useState<FormikValues>({});
-
-  finishButtonContent = 'Создать';
 
   const [stepsDescriptor, setStepsDescriptor] = useState(
     steps.map((step) =>
@@ -145,7 +146,7 @@ export function FormikStepper<T extends FormikValues>({
   );
 
   useEffect(() => {
-    if (stepsDescriptor[currentStep].noVerify) {
+    if (stepsDescriptor[currentStep]?.noVerify) {
       setConfirmed(currentStep, true);
     }
 
@@ -215,6 +216,8 @@ export function FormikStepper<T extends FormikValues>({
                 currentStep={currentStep}
                 isFirst={index === 0}
                 isLast={index === steps.length - 1}
+                formHeading={formHeading}
+                formClassName={step.formClassName}
                 setConfirmed={(isConfirmed: boolean) =>
                   setConfirmed(index, isConfirmed)
                 }
