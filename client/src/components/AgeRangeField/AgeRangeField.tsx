@@ -6,7 +6,7 @@ export type AgeRangeFieldProps = InputFieldExternalProps;
 
 const ageRangeMask = "XX-XX";
 
-const allowedKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace'];
+const allowedKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace', 'ArrowLeft', 'ArrowRight'];
 
 export const AgeRangeField = ({
     ...inputFieldProps

@@ -83,8 +83,14 @@ export const InviteForm = observer(
       [InviteFormFields.CompanionAge]: Yup.string()
         .test(
           'not-empty-test',
-          'Введите строку типа "XX-XX"',
-          value => !value ? true : /^(1[8-9]|[2-9][0-9])-(1[9]|[2-9][0-9])$/gm.test(value),
+          'Введите возраст или диапазон возрастов',
+          value => {
+            if (!value) {
+              return true;
+            }
+
+            return /^(1[8-9]|[2-9][0-9])-?(1[9]|[2-9][0-9])?$/gm.test(value);
+          },
         ).test(
           'first-age-less-than-second',
           'Первый возраст должен быть меньше второго',
