@@ -8,3 +8,8 @@ export const getAge = (birthday: Date) => {
     }
     return age;
 }
+
+export const isDateValueEquals = (first: Date, second: Date) =>
+    first.getDay() === second.getDay() &&
+    first.getMonth() === second.getMonth() &&
+    first.getFullYear() === second.getFullYear();

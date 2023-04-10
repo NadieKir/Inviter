@@ -28,8 +28,8 @@ function App() {
           <Route path="profile" element={<ProfilePage />} />
           <Route path="user/:id" element={<UserPage />} />
         </Route>
-        <Route path="/" element={<MainLayout variant={Role.ADMIN} />}>
-          <Route path="manage-events" element={<AdminEventsPage />} />
+        <Route path="/admin" element={<MainLayout variant={Role.ADMIN} />}>
+          <Route path="events" element={<AdminEventsPage />} />
         </Route>
         <Route path="/" element={<LoginLayout />}>
           <Route path="login" element={<AuthorizationForm />} />

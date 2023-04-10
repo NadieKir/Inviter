@@ -34,7 +34,7 @@ export const CreateInviteForm = observer(({
   };
 
   const initialValuesAdditionalStep: AdditionalInviteFields = {
-    place: '',
+    address: '',
     date: '',
     time: '',
     companionAge: '',

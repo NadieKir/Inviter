@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 
 export const selectOptionValidationSchema = Yup.object().shape({
-    value: Yup.string().required(),
-    label: Yup.string().required(),
+    value: Yup.string(),
+    label: Yup.string(),
 });
 
 export const ageRangeValidationSchema = Yup.string()

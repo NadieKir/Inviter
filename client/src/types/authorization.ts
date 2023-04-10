@@ -1,4 +1,4 @@
-import { Attitude, City, FamilyStatus, Gender, Interests, Language, Orientation } from "models";
+import { Attitude, City, FamilyStatus, Gender, Interests, Language, Orientation, Role } from "models";
 import { SelectOption } from "./other";
 
 export enum LoginFormFields {
@@ -23,7 +23,8 @@ export enum RegistrationFormFields {
   Interests = 'interests',
   WelcomeMessage = 'welcomeMessage',
   ConnectionMethods = 'connectionMethods',
-  PreferredAge = 'preferredAge'
+  PreferredAge = 'preferredAge',
+  Image = 'image',
 }
 
 export type LoginFormData = {
@@ -56,6 +57,9 @@ export type RegistrationThirdStepFormData = {
   [RegistrationFormFields.WelcomeMessage]: string,
   [RegistrationFormFields.ConnectionMethods]: string,
   [RegistrationFormFields.PreferredAge]: string,
+  [RegistrationFormFields.Image]: string,
 }
 
-export type RegistrationFormData = RegistrationFirstStepFormData & RegistrationSecondStepFormData & RegistrationThirdStepFormData
+export type RegistrationFormData = RegistrationFirstStepFormData & RegistrationSecondStepFormData & RegistrationThirdStepFormData & {
+  role: Role,
+}

@@ -1,0 +1,9 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.modal {
+  @include base-wrapper();
+  padding: 50px 70px;
+  width: 600px;
+}

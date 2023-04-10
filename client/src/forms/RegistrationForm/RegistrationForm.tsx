@@ -8,6 +8,7 @@ import {
   FormikStepper,
   GenderPicker,
   IStep,
+  ImageUploader,
   PasswordField,
   Select,
   TextField,
@@ -33,6 +34,7 @@ import {
   Interests,
   Language,
   Orientation,
+  Role,
 } from 'models';
 import {
   ageRangeValidationSchema,
@@ -230,6 +232,7 @@ const thirdStepInitialValues: RegistrationThirdStepFormData = {
   [RegistrationFormFields.WelcomeMessage]: '',
   [RegistrationFormFields.ConnectionMethods]: '',
   [RegistrationFormFields.PreferredAge]: '',
+  [RegistrationFormFields.Image]: '',
 };
 
 const thirdStepValidationSchema = Yup.object().shape({
@@ -260,6 +263,10 @@ const thirdStepFields = () => (
       name={RegistrationFormFields.PreferredAge}
       labelText="Предпочитаемый возраст"
     />
+    <ImageUploader
+      name={RegistrationFormFields.Image}
+      labelText="Ваша фотография"
+    />
   </>
 );
 
@@ -270,14 +277,13 @@ export const RegistrationForm = observer(() => {
   ) => {
     const resultValues: RegistrationFormData = {
       ...values,
+      role: Role.USER,
       [RegistrationFormFields.ConfirmPassword]: undefined,
       [RegistrationFormFields.Orientation]: (
         values[RegistrationFormFields.Orientation] as SelectOption<Orientation>
       ).value,
       [RegistrationFormFields.FamilyStatus]: (
-        values[
-          RegistrationFormFields.FamilyStatus
-        ] as SelectOption<FamilyStatus>
+        values[RegistrationFormFields.FamilyStatus] as SelectOption<FamilyStatus>
       ).value,
       [RegistrationFormFields.City]: (
         values[RegistrationFormFields.City] as SelectOption<City>
@@ -292,12 +298,11 @@ export const RegistrationForm = observer(() => {
         values[RegistrationFormFields.Languages] as SelectOption<Language>[]
       ).map((o) => o.value),
       [RegistrationFormFields.Interests]: (
-        values[RegistrationFormFields.Interests] as SelectOption<
-          Interests | string
-        >[]
+        values[RegistrationFormFields.Interests] as SelectOption<Interests | string>[]
       ).map((o) => o.value),
     };
 
+    console.log(resultValues);
     alert(JSON.stringify(resultValues));
   };
 

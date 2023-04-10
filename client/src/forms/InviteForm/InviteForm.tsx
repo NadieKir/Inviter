@@ -24,6 +24,8 @@ import {
 } from 'common/constants';
 
 import styles from './InviteForm.module.scss';
+import { CITIES_OPTIONS } from 'models';
+import { isDateValueEquals } from 'common/helpers';
 
 interface InviteFormProps {
   initialValuesRequiredStep: RequiredInviteFields;
@@ -48,23 +50,22 @@ const formConstraints = {
 
 const requiredFieldsSchema = Yup.object().shape({
   [InviteFormFields.Subject]: Yup.string()
-    .min(3, 'subject min length - 3')
-    .required('subject is required'),
+    .min(3, 'Минимальная длина темы - 3 символа')
+    .required('Введите тему'),
   [InviteFormFields.Type]: selectOptionValidationSchema
     .nullable()
-    .required('type is required'),
+    .required('Введите тип'),
   [InviteFormFields.City]: selectOptionValidationSchema
-    .nullable()
-    .required('city is required'),
+    .required('Введите город'),
   [InviteFormFields.Description]: Yup.string()
-    .min(3, 'description min length - 3')
-    .required('description is required'),
+    .min(3, 'Минимальная длина описания - 3 символа')
+    .required('Введите описание'),
 });
 
 const additionalFieldsSchema = Yup.object().shape({
   [InviteFormFields.Date]: Yup.date(),
   [InviteFormFields.Time]: Yup.date(),
-  [InviteFormFields.Place]: Yup.string(),
+  [InviteFormFields.Address]: Yup.string(),
   [InviteFormFields.CompanionAge]: ageRangeValidationSchema,
   [InviteFormFields.CompanionGender]: Yup.array().of(Yup.string()),
   [InviteFormFields.CompanionsAmount]: Yup.number()
@@ -89,9 +90,9 @@ const renderRequiredFields = () => (
     <Select
       name={InviteFormFields.City}
       labelText="Город"
-      getOptionLabel={(option: A) => option.label}
-      getOptionValue={(option: A) => option.value}
-      options={options}
+      getOptionLabel={o => o.label}
+      getOptionValue={o => o.value}
+      options={CITIES_OPTIONS}
     />
     <TextField
       name={InviteFormFields.Description}
@@ -151,7 +152,7 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
         </button>
       </div>
       <TextField
-        name={InviteFormFields.Place}
+        name={InviteFormFields.Address}
         labelText="Адрес"
         multiline={false}
       />
@@ -175,11 +176,6 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
     </>
   );
 };
-
-const isDateValueEquals = (first: Date, second: Date) =>
-  first.getDay() === second.getDay() &&
-  first.getMonth() === second.getMonth() &&
-  first.getFullYear() === second.getFullYear();
 
 export const InviteForm = observer(
   ({

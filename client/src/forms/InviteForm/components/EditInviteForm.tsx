@@ -36,7 +36,7 @@ export const EditInviteForm = observer(({
   };
 
   const initialValuesAdditionalStep: AdditionalInviteFields = {
-    place: '',
+    address: '',
     date: '',
     time: '',
     companionAge: '',

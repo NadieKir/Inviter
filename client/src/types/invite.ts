@@ -5,7 +5,7 @@ export enum InviteFormFields {
   Description = 'description',
   City = 'city',
   Type = 'type',
-  Place = 'place',
+  Address = 'address',
   Date = 'date',
   Time = 'time',
   CompanionAge = 'companionAge',
@@ -23,7 +23,7 @@ export type RequiredInviteFields = Pick<
 
 export type AdditionalInviteFields = Pick<
   Invite,
-  InviteFormFields.Place
+  InviteFormFields.Address
   | InviteFormFields.Date
   | InviteFormFields.Time
   | InviteFormFields.CompanionAge

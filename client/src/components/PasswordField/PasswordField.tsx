@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import classNames from 'classnames';
 
 import {
   InputFieldExternalProps,
@@ -8,9 +9,8 @@ import {
   InputType,
 } from 'components';
 
-import eyeImage from 'assets/images/eye.svg';
 import styles from './PasswordField.module.scss';
-import classNames from 'classnames';
+import eyeImage from 'assets/images/eye.svg';
 
 
 type PasswordFieldProps = {

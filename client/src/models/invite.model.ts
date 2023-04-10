@@ -17,7 +17,7 @@ export interface Invite {
   description: string;
   city: string;
   type: InviteType;
-  place?: string;
+  address?: string;
   date?: string;
   time?: string;
   companionAge?: string;
