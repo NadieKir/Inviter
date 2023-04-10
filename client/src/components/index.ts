@@ -22,3 +22,6 @@ export * from './Scrollable/Scrollable';
 export * from './GenderPicker/GenderPicker';
 export * from './AgeRangeField/AgeRangeField';
 export * from './YesNoPicker/YesNoPicker';
+export * from './ImageDropbox/ImageDropbox';
+export * from './ImagePreview/ImagePreview';
+export * from './ImageUploader/ImageUploader';

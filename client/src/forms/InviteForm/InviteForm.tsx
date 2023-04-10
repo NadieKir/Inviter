@@ -18,9 +18,12 @@ import {
   Select,
   TextField,
 } from 'components';
+import {
+  ageRangeValidationSchema,
+  selectOptionValidationSchema,
+} from 'common/constants';
 
 import styles from './InviteForm.module.scss';
-import { ageRangeValidationSchema, selectOptionValidationSchema } from 'common/constants';
 
 interface InviteFormProps {
   initialValuesRequiredStep: RequiredInviteFields;
@@ -40,14 +43,22 @@ const options: A[] = [
 ];
 
 const formConstraints = {
-  [InviteFormFields.CompanionsAmount]: [1, 3]
-}
+  [InviteFormFields.CompanionsAmount]: [1, 3],
+};
 
 const requiredFieldsSchema = Yup.object().shape({
-  [InviteFormFields.Subject]: Yup.string().min(3, 'subject min length - 3').required('subject is required'),
-  [InviteFormFields.Type]: selectOptionValidationSchema.nullable().required('type is required'),
-  [InviteFormFields.City]: selectOptionValidationSchema.nullable().required('city is required'),
-  [InviteFormFields.Description]: Yup.string().min(3, 'description min length - 3').required('description is required'),
+  [InviteFormFields.Subject]: Yup.string()
+    .min(3, 'subject min length - 3')
+    .required('subject is required'),
+  [InviteFormFields.Type]: selectOptionValidationSchema
+    .nullable()
+    .required('type is required'),
+  [InviteFormFields.City]: selectOptionValidationSchema
+    .nullable()
+    .required('city is required'),
+  [InviteFormFields.Description]: Yup.string()
+    .min(3, 'description min length - 3')
+    .required('description is required'),
 });
 
 const additionalFieldsSchema = Yup.object().shape({
@@ -55,11 +66,10 @@ const additionalFieldsSchema = Yup.object().shape({
   [InviteFormFields.Time]: Yup.date(),
   [InviteFormFields.Place]: Yup.string(),
   [InviteFormFields.CompanionAge]: ageRangeValidationSchema,
-  [InviteFormFields.CompanionGender]: Yup.array()
-    .of(Yup.string()),
+  [InviteFormFields.CompanionGender]: Yup.array().of(Yup.string()),
   [InviteFormFields.CompanionsAmount]: Yup.number()
     .min(formConstraints[InviteFormFields.CompanionsAmount][0])
-    .max(formConstraints[InviteFormFields.CompanionsAmount][1])
+    .max(formConstraints[InviteFormFields.CompanionsAmount][1]),
 });
 
 const renderRequiredFields = () => (
@@ -99,10 +109,12 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
 
   const isSelectedDateToday = isDateValueEquals(date, new Date());
   const minTime = isSelectedDateToday ? new Date() : undefined;
-  const maxTime = isSelectedDateToday ? new Date(new Date().setHours(23, 59, 59)) : undefined;
+  const maxTime = isSelectedDateToday
+    ? new Date(new Date().setHours(23, 59, 59))
+    : undefined;
 
   if (minTime && time && time < minTime) {
-    setFieldValue(InviteFormFields.Time, "");
+    setFieldValue(InviteFormFields.Time, '');
   }
 
   return (
@@ -131,8 +143,8 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
           type="button"
           className={styles.clearButton}
           onClick={() => {
-            setFieldValue(InviteFormFields.Date, "");
-            setFieldValue(InviteFormFields.Time, "");
+            setFieldValue(InviteFormFields.Date, '');
+            setFieldValue(InviteFormFields.Time, '');
           }}
         >
           Очистить
@@ -151,7 +163,7 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
         <GenderPicker
           name={InviteFormFields.CompanionGender}
           labelText="Пол"
-          inputType='checkbox'
+          inputType="checkbox"
         />
         <NumberField
           name={InviteFormFields.CompanionsAmount}
@@ -165,9 +177,9 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
 };
 
 const isDateValueEquals = (first: Date, second: Date) =>
-  first.getDay() === second.getDay()
-  && first.getMonth() === second.getMonth()
-  && first.getFullYear() === second.getFullYear();
+  first.getDay() === second.getDay() &&
+  first.getMonth() === second.getMonth() &&
+  first.getFullYear() === second.getFullYear();
 
 export const InviteForm = observer(
   ({
@@ -202,6 +214,12 @@ export const InviteForm = observer(
       },
     ];
 
-    return <FormikStepper steps={steps} formHeading='Создать инвайт' onFinish={handleSubmit} />;
+    return (
+      <FormikStepper
+        steps={steps}
+        formHeading="Создать инвайт"
+        onFinish={handleSubmit}
+      />
+    );
   },
 );

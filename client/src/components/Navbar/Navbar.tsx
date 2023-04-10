@@ -4,62 +4,24 @@ import classNames from 'classnames';
 import { Button } from 'components';
 import useModal from 'common/hooks/useModal';
 import { CreateInviteModal } from 'modals';
+import { Role } from 'models';
+import { userLinksToNavItem, adminLinksToNavItem } from 'common/constants';
 
 import styles from './Navbar.module.scss';
-
 import logo from 'assets/images/logo.svg';
 import geo from 'assets/images/geo.svg';
-import calendar from 'assets/images/calendar.svg';
 import userPhoto from 'assets/images/mock-user-photo.jpg';
-import bell from './assets/bell.svg';
-import follower from './assets/follower.svg';
-import people from './assets/people.svg';
-import search from './assets/search.svg';
-import ticket from './assets/ticket.svg';
 import plus from './assets/plus.svg';
 
+interface NavbarProps {
+  variant: Role;
+}
 
-type LinkToNavItem = {
-  name: string;
-  link: string;
-  icon: string;
-};
-
-const linksToNavItem: LinkToNavItem[] = [
-  {
-    name: 'Поиск инвайта',
-    link: '/search',
-    icon: search,
-  },
-  {
-    name: 'Афиша города',
-    link: '/events',
-    icon: calendar,
-  },
-  {
-    name: 'Мои инвайты',
-    link: '/invites',
-    icon: ticket,
-  },
-  {
-    name: 'Контакты',
-    link: '/contacts',
-    icon: people,
-  },
-  {
-    name: 'Подписки',
-    link: '/following',
-    icon: follower,
-  },
-  {
-    name: 'Уведомления',
-    link: '/notifications',
-    icon: bell,
-  },
-];
-
-export function Navbar() {
+export function Navbar({ variant }: NavbarProps) {
   const [isShowingModal, toggleModal] = useModal();
+
+  const linksToNavItem =
+    variant === Role.ADMIN ? adminLinksToNavItem : userLinksToNavItem;
 
   return (
     <>
@@ -104,11 +66,12 @@ export function Navbar() {
         </nav>
 
         <Button onClick={toggleModal}>
-          <img src={plus} alt="Плюс" /> Создать инвайт
+          <img src={plus} alt="Плюс" />{' '}
+          {variant === Role.ADMIN ? 'Добавить событие' : 'Создать инвайт'}
         </Button>
       </aside>
 
       <CreateInviteModal isShowing={isShowingModal} onClose={toggleModal} />
     </>
   );
-};
+}

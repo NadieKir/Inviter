@@ -52,8 +52,14 @@ export enum Interests {
   BOOKS = 'Книги',
 }
 
+export enum Role {
+  ADMIN = 'Администратор',
+  USER = 'Пользователь'
+}
+
 export interface User {
   id: string;
+  role: Role;
   name: string; 
   birthday: string;
   login: string;

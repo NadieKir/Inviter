@@ -1,0 +1,93 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.container {
+  width: 100%;
+}
+
+.dropbox {
+  background: $white-color;
+  border: 1px dashed $dark-gray-color;
+  border-radius: 5px;
+  padding: 14px;
+  padding-top: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  // @extend .font-family-primary;
+  // @extend .font-weight-regular;
+  // @extend .text-align-center;
+
+  @include smooth-transition();
+
+  &.willAccept {
+    background-color: $green-color;
+    border-color: $green-color;
+    @include smooth-transition();
+  }
+
+  &.willReject {
+    background-color: $red-color;
+    border-color: $red-color;
+    @include smooth-transition();
+  }
+
+  .promptText {
+    margin-top: 8px;
+
+    // @extend .font-size-2xs;
+    // @extend .line-height-l;
+    // @extend .font-color-gray-01;
+  }
+
+  .browseFileLink {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+
+    // @extend .font-color-blue-02;
+    // @extend .line-height-l;
+
+    @include smooth-transition();
+
+    &:hover,
+    &:active {
+      color: $blue-color;
+      @include smooth-transition();
+    }
+
+    &:active {
+      transform: scale(0.99);
+      @include smooth-transition();
+    }
+
+    &::before {
+      content: ' ';
+      white-space: pre;
+    }
+  }
+
+  .constraints,
+  .errors {
+    margin-top: 12px;
+
+    // @extend .font-size-5xs;
+    // @extend .line-height-xs;
+  }
+
+  .constraints {
+   color: $dark-gray-color;
+  }
+
+  .errors {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+
+    color: $red-color;
+  }
+}

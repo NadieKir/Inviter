@@ -4,3 +4,4 @@ export * from './SearchInvitePage/SearchInvitePage';
 export * from './ErrorFallback/ErrorFallback';
 export * from './UserPage/UserPage';
 export * from './ProfilePage/ProfilePage';
+export * from './AdminEventsPage/AdminEventsPage';
