@@ -48,6 +48,7 @@
 
   &__input-container {
     input[type='text'] {
+      width: inherit;
       position: relative;
 
       background-image: url('../../assets/images/calendar.svg');

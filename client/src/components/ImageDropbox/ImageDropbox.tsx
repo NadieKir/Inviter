@@ -15,11 +15,13 @@ const MAX_FILESIZE = 10_485_760; // bytes
 interface ImageDropboxProps {
   onDrop: (image: FileWithUrl) => void;
   externalError?: string;
+  placeholderText: string;
 }
 
 export const ImageDropbox = ({
   onDrop,
   externalError,
+  placeholderText,
 }: ImageDropboxProps): JSX.Element => {
   const [internalErrors, setInternalErrors] = useState<string[]>([]);
 
@@ -92,7 +94,7 @@ export const ImageDropbox = ({
         <input {...getInputProps()} type="file" data-testid="fileUploader" />
         <UploadIcon />
         <p className={styles.promptText}>
-          Переместите сюда картинку
+          Переместите сюда {placeholderText}
           <br />
           или
           <button

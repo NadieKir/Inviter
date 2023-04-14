@@ -58,9 +58,11 @@ export function StepperForm<T extends FormikValues>({
       {(props) => (
         <FormikForm className={styles.form}>
           {formHeading && <h1 className={styles.heading}>{formHeading}</h1>}
-          <div className={classNames(styles.formInputs, fieldsClassName, {
-            [styles.hide]: !isCurrentStepActive
-          })}>
+          <div
+            className={classNames(styles.formInputs, fieldsClassName, {
+              [styles.hide]: !isCurrentStepActive,
+            })}
+          >
             {fields(props)}
           </div>
           <div className={styles.formActions}>

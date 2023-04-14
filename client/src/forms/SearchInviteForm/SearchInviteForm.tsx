@@ -50,14 +50,16 @@ export const SearchInviteForm = () => {
                 options={options}
                 noVerify
               />
-              <DateTimePicker
-                name="date"
-                showTimeSelect={false}
-                excludePastDateTime={true}
-                placeholderText="Когда"
-              />
+              <div className={styles.dateInputWrapper}>
+                <DateTimePicker
+                  name="date"
+                  showTimeSelect={false}
+                  excludePastDateTime={true}
+                  placeholderText="Когда"
+                />
+              </div>
             </div>
-            <GenderPicker name="gender" inputType='checkbox' />
+            <GenderPicker name="gender" inputType="checkbox" />
           </div>
 
           <div className={styles.actions}>

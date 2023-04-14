@@ -13,10 +13,12 @@ import {
 type ImageUploaderProps = InputFieldExternalProps & {
   name: string;
   variant?: ImagePreviewMode;
+  placeholderText?: string;
 };
 
 export const ImageUploader = ({
   variant = ImagePreviewMode.Thumbnail,
+  placeholderText = 'картинку',
   ...inputFieldProps
 }: ImageUploaderProps): JSX.Element => (
   <InputField {...inputFieldProps}>
@@ -44,7 +46,11 @@ export const ImageUploader = ({
       };
 
       return !image ? (
-        <ImageDropbox onDrop={handleUpload} externalError={error} />
+        <ImageDropbox
+          onDrop={handleUpload}
+          externalError={error}
+          placeholderText={placeholderText}
+        />
       ) : (
         <ImagePreview variant={variant} image={image} onClear={handleClear} />
       );

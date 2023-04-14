@@ -101,10 +101,12 @@ export const LoginLayout = () => {
           </div>
 
           <div className={styles.formWrapper}>
-            <h1 className={styles.heading}>{currentPageContent.heading}</h1>
+            {location.pathname === '/login' && (
+              <h1 className={styles.heading}>{currentPageContent.heading}</h1>
+            )}
             <Outlet />
           </div>
-          <div></div>
+          {location.pathname === '/login' && <div></div>}
         </section>
       </section>
     </ErrorBoundary>

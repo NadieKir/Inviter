@@ -1,6 +1,6 @@
 import { InviteCard } from 'components';
 import { SearchInviteForm } from 'forms';
-import { MockedUser, User } from 'models';
+import { MockedUser } from 'models';
 
 import styles from './SearchInvitePage.module.scss';
 
@@ -16,7 +16,7 @@ export const SearchInvitePage = () => {
   return (
     <section className={styles.section}>
       <div className={styles.searchForm}>
-        <h1 className={styles.heading}>Чем хотите заняться?</h1>
+        <h1 className="heading-H1">Чем хотите заняться?</h1>
         <SearchInviteForm />
       </div>
       <ul className={styles.userCards}>

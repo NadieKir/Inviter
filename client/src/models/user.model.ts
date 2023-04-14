@@ -27,7 +27,7 @@ export enum FamilyStatus {
 }
 
 export enum Attitude {
-  NOT_SPECIFIED = 'Нет указано',
+  NOT_SPECIFIED = 'Не указано',
   STRONGLY_NEGATIVE = 'Резко негативное',
   NEGATIVE = 'Негативное',
   COMPROMISE = 'Компромисное',

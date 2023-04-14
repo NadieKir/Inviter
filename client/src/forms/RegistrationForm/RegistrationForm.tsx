@@ -85,25 +85,14 @@ const firstStepFields = () => (
     <TextField
       name={RegistrationFormFields.Name}
       className={styles.firstStepFormName}
-      labelText="Имя"
+      placeholderText="Имя"
       multiline={false}
     />
-    <TextField
-      name={RegistrationFormFields.Login}
-      className={styles.firstStepFormLogin}
-      labelText="Логин"
-      multiline={false}
-    />
-    <TextField
-      name={RegistrationFormFields.Email}
-      className={styles.firstStepFormEmail}
-      labelText="Почта"
-      multiline={false}
-    />
-    <div className={styles.firstStepFormGenderBirthday}>
+    <div className={styles.spaceBetweenWrapper}>
       <DateTimePicker
         name={RegistrationFormFields.Birthday}
-        labelText="День рождения"
+        className={styles.firstStepFormBirthday}
+        placeholderText="День рождения"
         showTimeSelect={false}
         constraints={{
           dateFormat: 'dd.MM.yyyy',
@@ -113,21 +102,35 @@ const firstStepFields = () => (
         }}
       />
       <GenderPicker
+        className={styles.genderWrapper}
         name={RegistrationFormFields.Gender}
-        labelText="Пол"
         inputType="radio"
       />
     </div>
-    <PasswordField
-      name={RegistrationFormFields.Password}
-      className={styles.firstStepFormPassword}
-      labelText="Пароль"
+    <TextField
+      name={RegistrationFormFields.Login}
+      className={styles.firstStepFormLogin}
+      placeholderText="Логин"
+      multiline={false}
     />
-    <PasswordField
-      name={RegistrationFormFields.ConfirmPassword}
-      className={styles.firstStepFormConfirmPassword}
-      labelText="Подтвердите пароль"
+    <TextField
+      name={RegistrationFormFields.Email}
+      className={styles.firstStepFormEmail}
+      placeholderText="Почта"
+      multiline={false}
     />
+    <div className={styles.spaceBetweenWrapper}>
+      <PasswordField
+        name={RegistrationFormFields.Password}
+        className={styles.firstStepFormPassword}
+        placeholderText="Пароль"
+      />
+      <PasswordField
+        name={RegistrationFormFields.ConfirmPassword}
+        className={styles.firstStepFormConfirmPassword}
+        placeholderText="Подтвердите пароль"
+      />
+    </div>
   </>
 );
 
@@ -169,47 +172,51 @@ const secondStepFields = () => (
     <Select
       name={RegistrationFormFields.City}
       className={styles.secondStepFormCity}
-      labelText="Город"
+      placeholderText="Город"
       getOptionLabel={(o) => o.value}
       getOptionValue={(o) => o.label}
       options={CITIES_OPTIONS}
     />
-    <Select
-      name={RegistrationFormFields.Orientation}
-      className={styles.secondStepFormOrientation}
-      labelText="Ориентация"
-      getOptionLabel={(o) => o.value}
-      getOptionValue={(o) => o.label}
-      options={ORIENTATIONS_OPTIONS}
-    />
-    <Select
-      name={RegistrationFormFields.FamilyStatus}
-      className={styles.secondStepFormFamilyStatus}
-      labelText="Семейное положение"
-      getOptionLabel={(o) => o.value}
-      getOptionValue={(o) => o.label}
-      options={FAMILY_STATUSES_OPTIONS}
-    />
-    <Select
-      name={RegistrationFormFields.AlcoholAttitude}
-      className={styles.secondStepFormAlcoholAttitude}
-      labelText="Отношение к алкоголю"
-      getOptionLabel={(o) => o.value}
-      getOptionValue={(o) => o.label}
-      options={ATTITUDES_OPTIONS}
-    />
-    <Select
-      name={RegistrationFormFields.SmokingAttitude}
-      className={styles.secondStepFormSmokingAttitude}
-      labelText="Отношение к курению"
-      getOptionLabel={(o) => o.value}
-      getOptionValue={(o) => o.label}
-      options={ATTITUDES_OPTIONS}
-    />
+    <div className={styles.spaceBetweenWrapper}>
+      <Select
+        name={RegistrationFormFields.Orientation}
+        className={styles.secondStepFormOrientation}
+        placeholderText="Ориентация"
+        getOptionLabel={(o) => o.value}
+        getOptionValue={(o) => o.label}
+        options={ORIENTATIONS_OPTIONS}
+      />
+      <Select
+        name={RegistrationFormFields.FamilyStatus}
+        className={styles.secondStepFormFamilyStatus}
+        placeholderText="Семейное положение"
+        getOptionLabel={(o) => o.value}
+        getOptionValue={(o) => o.label}
+        options={FAMILY_STATUSES_OPTIONS}
+      />
+    </div>
+    <div className={styles.spaceBetweenWrapper}>
+      <Select
+        name={RegistrationFormFields.AlcoholAttitude}
+        className={styles.secondStepFormAlcoholAttitude}
+        placeholderText="Отношение к алкоголю"
+        getOptionLabel={(o) => o.value}
+        getOptionValue={(o) => o.label}
+        options={ATTITUDES_OPTIONS}
+      />
+      <Select
+        name={RegistrationFormFields.SmokingAttitude}
+        className={styles.secondStepFormSmokingAttitude}
+        placeholderText="Отношение к курению"
+        getOptionLabel={(o) => o.value}
+        getOptionValue={(o) => o.label}
+        options={ATTITUDES_OPTIONS}
+      />
+    </div>
     <Select
       name={RegistrationFormFields.Languages}
       className={styles.secondStepFormLanguages}
-      labelText="Языки"
+      placeholderText="Языки"
       getOptionLabel={(o) => o.value}
       getOptionValue={(o) => o.label}
       isMulti
@@ -218,7 +225,7 @@ const secondStepFields = () => (
     <Select
       name={RegistrationFormFields.Interests}
       className={styles.secondStepFormInterests}
-      labelText="Интересы"
+      placeholderText="Интересы"
       getOptionLabel={(o) => o.value}
       getOptionValue={(o) => o.label}
       isMulti
@@ -251,21 +258,23 @@ const thirdStepFields = () => (
   <>
     <TextField
       name={RegistrationFormFields.WelcomeMessage}
-      labelText="Приветственное сообщение"
+      placeholderText="Рассказ о вас, отображаемый в профиле"
       multiline
+      maxLetterCount={500}
     />
     <TextField
       name={RegistrationFormFields.ConnectionMethods}
-      labelText="Контактные данные"
+      placeholderText="Данные для связи, показываемые при взаимности инвайта"
       multiline
+      maxLetterCount={100}
     />
     <AgeRangeField
       name={RegistrationFormFields.PreferredAge}
-      labelText="Предпочитаемый возраст"
+      placeholderText="Предпочитаемый возраст отобржаемых компаньонов"
     />
     <ImageUploader
       name={RegistrationFormFields.Image}
-      labelText="Ваша фотография"
+      placeholderText="ваше фото"
     />
   </>
 );
@@ -283,7 +292,9 @@ export const RegistrationForm = observer(() => {
         values[RegistrationFormFields.Orientation] as SelectOption<Orientation>
       ).value,
       [RegistrationFormFields.FamilyStatus]: (
-        values[RegistrationFormFields.FamilyStatus] as SelectOption<FamilyStatus>
+        values[
+          RegistrationFormFields.FamilyStatus
+        ] as SelectOption<FamilyStatus>
       ).value,
       [RegistrationFormFields.City]: (
         values[RegistrationFormFields.City] as SelectOption<City>
@@ -298,7 +309,9 @@ export const RegistrationForm = observer(() => {
         values[RegistrationFormFields.Languages] as SelectOption<Language>[]
       ).map((o) => o.value),
       [RegistrationFormFields.Interests]: (
-        values[RegistrationFormFields.Interests] as SelectOption<Interests | string>[]
+        values[RegistrationFormFields.Interests] as SelectOption<
+          Interests | string
+        >[]
       ).map((o) => o.value),
     };
 
@@ -332,9 +345,10 @@ export const RegistrationForm = observer(() => {
 
   return (
     <FormikStepper
-      finishButtonContent="Зарегестрироваться"
+      finishButtonContent="Зарегистрироваться"
       steps={steps}
       onFinish={handleSubmit}
+      formHeading="Зарегистрироваться"
     />
   );
 });

@@ -33,19 +33,19 @@ body {
   color: $blue-color;
 }
 
-.headingH1 {
+.heading-H1 {
   @extend .h1-typography;
 }
 
-.headingH2 {
+.heading-H2 {
   @extend .h2-typography;
 }
 
-.headingH3 {
+.heading-H3 {
   @extend .h3-typography;
 }
 
-.headingH4 {
+.heading-H4 {
   @extend .h4-typography;
 }
 

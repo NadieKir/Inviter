@@ -12,11 +12,11 @@
   @include base-wrapper();
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 25px;
   
-  .heading {
-    @extend .h1-typography;
-  }
+  // .heading {
+  //   @extend .h1-typography;
+  // }
 }
 
 .userCards {

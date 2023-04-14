@@ -10,4 +10,9 @@
   justify-content: center;
 
   background: rgba(0, 0, 0, 0.4);
+
+  & > * {
+    max-height: 650px;
+    overflow: auto;
+  }
 }

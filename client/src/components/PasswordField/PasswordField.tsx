@@ -12,7 +12,6 @@ import {
 import styles from './PasswordField.module.scss';
 import eyeImage from 'assets/images/eye.svg';
 
-
 type PasswordFieldProps = {
   placeholderText?: string;
   className?: string;
@@ -23,12 +22,17 @@ export const PasswordField = (props: PasswordFieldProps): JSX.Element => {
   const { className, placeholderText, ...inputFieldProps } = props;
 
   return (
-    <InputField containerAttributes={{ className: classNames(className, styles.passwordField) }} {...inputFieldProps}>
+    <InputField
+      containerAttributes={{
+        className: classNames(className),
+      }}
+      {...inputFieldProps}
+    >
       {({ field, className }: InputRenderProps): JSX.Element => (
-        <>
+        <div className={styles.passwordField}>
           <Input
             {...field}
-            className={classNames(className,)}
+            className={classNames(className)}
             placeholder={placeholderText}
             type={isPasswordRevealed ? InputType.Text : InputType.Password}
           />
@@ -37,8 +41,9 @@ export const PasswordField = (props: PasswordFieldProps): JSX.Element => {
             onMouseDown={() => setIsPasswordRevealed(true)}
             onMouseUp={() => setIsPasswordRevealed(false)}
             src={eyeImage}
-            alt='eye' />
-        </>
+            alt="eye"
+          />
+        </div>
       )}
     </InputField>
   );

@@ -8,18 +8,16 @@
 
 .dropbox {
   background: $white-color;
-  border: 1px dashed $dark-gray-color;
+  border: 1px solid $blue-color;
   border-radius: 5px;
-  padding: 14px;
-  padding-top: 24px;
+  padding: 25px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  // @extend .font-family-primary;
-  // @extend .font-weight-regular;
-  // @extend .text-align-center;
+  font-weight: 400;
+  text-align: center;
 
   @include smooth-transition();
 
@@ -30,7 +28,6 @@
   }
 
   &.willReject {
-    background-color: $red-color;
     border-color: $red-color;
     @include smooth-transition();
   }
@@ -38,9 +35,8 @@
   .promptText {
     margin-top: 8px;
 
-    // @extend .font-size-2xs;
-    // @extend .line-height-l;
-    // @extend .font-color-gray-01;
+    font-size: 13px;
+    color: $black-color;
   }
 
   .browseFileLink {
@@ -49,8 +45,7 @@
     cursor: pointer;
     background-color: transparent;
 
-    // @extend .font-color-blue-02;
-    // @extend .line-height-l;
+    color: $blue-color;
 
     @include smooth-transition();
 
@@ -75,12 +70,12 @@
   .errors {
     margin-top: 12px;
 
-    // @extend .font-size-5xs;
-    // @extend .line-height-xs;
+    font-size: 11px;
   }
 
   .constraints {
-   color: $dark-gray-color;
+   color: rgb(63, 63, 63);
+   font-weight: 300;
   }
 
   .errors {
