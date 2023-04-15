@@ -25,3 +25,4 @@ export * from './YesNoPicker/YesNoPicker';
 export * from './ImageDropbox/ImageDropbox';
 export * from './ImagePreview/ImagePreview';
 export * from './ImageUploader/ImageUploader';
+export * from './EventCard/EventCard';

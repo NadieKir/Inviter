@@ -5,3 +5,4 @@ export * from './InviteForm/InviteForm';
 export * from './StepperForm/StepperForm';
 export * from './AuthorizationForm/AuthorizationForm';
 export * from './RegistrationForm/RegistrationForm';
+export * from './SearchEventForm/SearchEventForm';

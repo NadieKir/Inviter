@@ -1,21 +1,18 @@
 import { Form, Formik } from 'formik';
-
+import styles from './SearchEventForm.module.scss';
 import {
   Button,
   ButtonVariant,
   ButtonWidth,
   DateTimePicker,
-  GenderPicker,
   Select,
 } from 'components';
 
-import styles from './SearchInviteForm.module.scss';
-
-export const SearchInviteForm = () => {
+export const SearchEventForm = () => {
   type A = { value: string; label: string };
 
   const options: A[] = [
-    { value: 'Любая активность', label: 'Любая активность' },
+    { value: 'Любое событие', label: 'Любое событие' },
     { value: 'Спорт', label: 'Спорт' },
     { value: 'Искусство', label: 'Искусство' },
     { value: 'Кино', label: 'Кино' },
@@ -31,7 +28,6 @@ export const SearchInviteForm = () => {
     activity: options[0],
     city: cityOptions[0],
     date: '',
-    gender: '',
   };
 
   const handleSubmit = (values: any, actions: any) => {
@@ -67,7 +63,6 @@ export const SearchInviteForm = () => {
                 />
               </div>
             </div>
-            <GenderPicker name="gender" inputType="checkbox" />
           </div>
 
           <div className={styles.actions}>

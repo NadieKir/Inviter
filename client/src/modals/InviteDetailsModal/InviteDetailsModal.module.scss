@@ -1,0 +1,122 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.modal {
+  @include base-wrapper();
+  padding: 35px 40px;
+  width: 540px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+.mainWrapper {
+  display: flex;
+  column-gap: 40px;
+}
+
+.userInfo {
+  @include base-wrapper();
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  padding: 0px 5px 10px 5px;
+  height: max-content;
+
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.userPhoto {
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  min-height: 120px;
+
+  border-radius: 8px;
+
+  object-fit: cover;
+}
+
+.inviteInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  color: $black-color;
+}
+
+.heading {
+  margin-bottom: 8px;
+
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.whoWithDescription {
+  margin-bottom: 15px;
+
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.description {
+  margin-bottom: 25px;
+
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.secondStepModal {
+  @include base-wrapper();
+  padding: 35px 40px;
+  width: 540px;
+
+  .description {
+    margin-bottom: 30px;
+
+    font-weight: 400;
+    font-size: 12px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.infoWrapper{
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+
+  font-weight: 400;
+  font-size: 10px;
+}
+
+.submitButton{
+  margin-top: 20px;
+}
+
+.hide {
+  display: none;
+}

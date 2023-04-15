@@ -23,7 +23,7 @@ export const userLinksToNavItem: LinkToNavItem[] = [
     icon: search,
   },
   {
-    name: 'Афиша города',
+    name: 'События',
     link: '/events',
     icon: calendar,
   },
@@ -52,22 +52,22 @@ export const userLinksToNavItem: LinkToNavItem[] = [
 export const adminLinksToNavItem: LinkToNavItem[] = [
   {
     name: 'Отчёты',
-    link: '/reports',
+    link: '/admin/reports',
     icon: search,
   },
   {
     name: 'События',
-    link: '/manage-events',
+    link: '/admin/events',
     icon: calendar,
   },
   {
     name: 'Инвайты',
-    link: '/manage-invites',
+    link: '/admin/invites',
     icon: ticket,
   },
   {
     name: 'Пользователи',
-    link: '/manage-users',
+    link: '/admin/users',
     icon: people,
   },
 ];

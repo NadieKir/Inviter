@@ -16,6 +16,11 @@
   margin-top: 30px;
 }
 
+.cardWithoutUser {
+  padding: 25px;
+  margin-top: 0px;
+}
+
 .photoNameWrapper {
   @include base-wrapper();
   position: absolute;

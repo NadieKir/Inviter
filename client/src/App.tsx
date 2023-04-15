@@ -5,6 +5,7 @@ import {
   ForbiddenPage,
   NotFoundPage,
   ProfilePage,
+  SearchEventPage,
   SearchInvitePage,
   UserPage,
 } from 'pages';
@@ -20,7 +21,7 @@ function App() {
         <Route index element={<Navigate replace to="/search" />} />
         <Route path="/" element={<MainLayout />}>
           <Route path="search" element={<SearchInvitePage />} />
-          <Route path="events" element={<div>events</div>} />
+          <Route path="events" element={<SearchEventPage />} />
           <Route path="invites" element={<div>invites</div>} />
           <Route path="contacts" element={<div>contacts</div>} />
           <Route path="following" element={<div>following</div>} />

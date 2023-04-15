@@ -6,11 +6,11 @@ import styles from './SearchInvitePage.module.scss';
 
 export const SearchInvitePage = () => {
   const users: MockedUser[] = [
-    { name: 'ss', id: '1' },
-    { name: 'ss', id: '2' },
-    { name: 'ss', id: '3' },
-    { name: 'ss', id: '4' },
-    { name: 'ss', id: '5' },
+    { name: 'Ирина', id: '1' },
+    { name: 'Владимир', id: '2' },
+    { name: 'Полина', id: '3' },
+    { name: 'Ангелина', id: '4' },
+    { name: 'Павел', id: '5' },
   ];
 
   return (

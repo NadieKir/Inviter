@@ -28,6 +28,7 @@ export const Button = ({
   variant = ButtonVariant.Primary,
   width = ButtonWidth.Big,
   height = ButtonHeight.Big,
+  className,
   children,
   ...nativeButtonProps
 }: PropsWithChildren<ButtonProps>) => {
@@ -39,6 +40,7 @@ export const Button = ({
         styles[variant],
         styles[width],
         styles[height],
+        className,
       )}
     >
       <div className={styles.buttonContent}>{children}</div>

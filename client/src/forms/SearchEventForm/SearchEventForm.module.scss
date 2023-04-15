@@ -1,0 +1,33 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 45px;
+}
+
+.formInputs {
+  display: flex;
+  align-items: center;
+  column-gap: 25px;
+}
+
+.multiselects {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+
+  [class*=Select] {
+    width: 210px;
+  }
+}
+
+.dateInputWrapper {
+  width: 140px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
