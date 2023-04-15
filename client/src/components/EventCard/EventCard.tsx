@@ -36,7 +36,11 @@ export const EventCard = ({ event }: EventCardProps) => {
               <div className={styles.restCounter}>+44</div>
             </div>
           </div>
-          <img className={styles.eventImage} src={mockEvent} alt={event.name} />
+          <div className={styles.imageWrapper}>
+            <div className={styles.imageHolder}>
+              <img className={styles.eventImage} src={mockEvent} alt={event.name} />
+            </div>
+          </div>
         </article>
       </NavLink>
     </li>
