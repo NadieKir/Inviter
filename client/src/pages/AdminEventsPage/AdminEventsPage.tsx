@@ -1,9 +1,10 @@
+import { EventTabs } from 'components';
 import React from 'react';
 
 export const AdminEventsPage = () => {
   return (
     <div>
-      <div></div>
+      <EventTabs />
     </div>
   );
 };
