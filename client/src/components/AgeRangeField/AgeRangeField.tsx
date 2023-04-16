@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import {
   Input,
   InputField,
@@ -5,7 +7,10 @@ import {
   InputRenderProps,
   InputType,
 } from 'components';
+
 import { maskString } from './utils';
+
+import styles from './AgeRangeField.module.scss';
 
 export type AgeRangeFieldProps = InputFieldExternalProps & {
   className?: string;
@@ -60,7 +65,7 @@ export const AgeRangeField = ({
               const maskedValue = maskString(clearedValue, ageRangeMask);
               setFieldValue(field.name, maskedValue);
             }}
-            className={className}
+            className={classNames(className, styles.ageRangeField)}
             type={InputType.Text}
             placeholder={placeholderText}
           />

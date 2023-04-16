@@ -7,6 +7,17 @@ export const selectOptionValidationSchema = Yup.object().shape({
 
 export const ageRangeValidationSchema = Yup.string()
     .test(
+        'ages-more-than-eighteen',
+        'Вводимые возраста должны быть больше 16',
+        value => {
+            if (!value) {
+                return true;
+            }
+
+            const ages = value?.split('-');
+            return ages.every(a => +a >= 16);
+        }
+    ).test(
         'not-empty-test',
         'Введите возраст или диапазон возрастов',
         value => {
@@ -14,7 +25,7 @@ export const ageRangeValidationSchema = Yup.string()
                 return true;
             }
 
-            return /^(1[8-9]|[2-9][0-9])-?(1[9]|[2-9][0-9])?$/gm.test(value);
+            return /^(1[6-9]|[2-9][0-9])-?(1[7]|[2-9][0-9])?$/gm.test(value);
         },
     ).test(
         'first-age-less-than-second',

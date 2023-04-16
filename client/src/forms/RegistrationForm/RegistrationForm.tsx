@@ -64,8 +64,8 @@ const firstStepValidationSchema = Yup.object().shape({
   [RegistrationFormFields.Birthday]: Yup.string()
     .nullable()
     .required('Введите день рождения')
-    .test('adultTest', 'Вам должно быть 18 лет', (v) =>
-      v ? getAge(new Date(v)) >= 18 : true,
+    .test('adultTest', 'Вам должно быть 16 лет', (v) =>
+      v ? getAge(new Date(v)) >= 16 : true,
     ),
   [RegistrationFormFields.Gender]: Yup.string()
     .nullable()
@@ -99,6 +99,7 @@ const firstStepFields = () => (
           showYearDropdown: true,
           scrollableYearDropdown: true,
           yearDropdownItemNumber: 30,
+          maxDate: new Date()
         }}
       />
       <GenderPicker
@@ -293,7 +294,7 @@ export const RegistrationForm = observer(() => {
       ).value,
       [RegistrationFormFields.FamilyStatus]: (
         values[
-          RegistrationFormFields.FamilyStatus
+        RegistrationFormFields.FamilyStatus
         ] as SelectOption<FamilyStatus>
       ).value,
       [RegistrationFormFields.City]: (

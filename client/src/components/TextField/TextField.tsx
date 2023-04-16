@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import {
   InputFieldExternalProps,
   InputField,
@@ -6,6 +7,9 @@ import {
   Input,
   InputType,
 } from 'components';
+
+import styles from './TextField.module.scss';
+
 
 type TextInputOrAreaProps = {
   placeholderText?: string;
@@ -41,7 +45,7 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
           {({ field, className }: InputRenderProps): JSX.Element => (
             <TextArea
               {...field}
-              className={className}
+              className={classNames(className, styles.textArea)}
               placeholder={placeholderText}
               maxLetterCount={maxLetterCount}
               pattern={pattern}
