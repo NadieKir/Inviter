@@ -1,17 +1,17 @@
 import { InviteCard } from 'components';
 import { SearchInviteForm } from 'forms';
-import { MockedUser } from 'models';
 
 import styles from './SearchInvitePage.module.scss';
 
-export const SearchInvitePage = () => {
-  const users: MockedUser[] = [
-    { name: 'Ирина', id: '1' },
-    { name: 'Владимир', id: '2' },
-    { name: 'Полина', id: '3' },
-    { name: 'Ангелина', id: '4' },
-    { name: 'Павел', id: '5' },
-  ];
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import { InviteListStore } from 'stores';
+
+export const SearchInvitePage = observer(() => {
+  const { isLoading, invites } = useLocalObservable(
+    () => new InviteListStore(),
+  );
+
+  if (isLoading) return <div>Загрузка</div>;
 
   return (
     <section className={styles.section}>
@@ -20,10 +20,10 @@ export const SearchInvitePage = () => {
         <SearchInviteForm />
       </div>
       <ul className={styles.userCards}>
-        {users.map((user) => (
-          <InviteCard key={user.id} user={user} />
+        {invites.map((invite) => (
+          <InviteCard key={invite.id} invite={invite} />
         ))}
       </ul>
     </section>
   );
-};
+});

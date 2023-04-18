@@ -24,7 +24,7 @@ import {
 } from 'common/constants';
 
 import styles from './InviteForm.module.scss';
-import { CITIES_OPTIONS } from 'models';
+import { CITIES_OPTIONS, INVITE_TYPES_OPTIONS } from 'models';
 import { isDateValueEquals } from 'common/helpers';
 
 interface InviteFormProps {
@@ -37,13 +37,6 @@ interface InviteFormProps {
   touchedNotRequired?: boolean;
 }
 
-type A = { value: string; label: string };
-const options: A[] = [
-  { value: 'a', label: 'a' },
-  { value: 'b', label: 'b' },
-  { value: 'n', label: 'n' },
-];
-
 const formConstraints = {
   [InviteFormFields.CompanionsAmount]: [1, 3],
 };
@@ -55,8 +48,8 @@ const requiredFieldsSchema = Yup.object().shape({
   [InviteFormFields.Type]: selectOptionValidationSchema
     .nullable()
     .required('Введите тип'),
-  [InviteFormFields.City]: selectOptionValidationSchema
-    .required('Введите город'),
+  [InviteFormFields.City]:
+    selectOptionValidationSchema.required('Введите город'),
   [InviteFormFields.Description]: Yup.string()
     .min(3, 'Минимальная длина описания - 3 символа')
     .required('Введите описание'),
@@ -83,15 +76,15 @@ const renderRequiredFields = () => (
     <Select
       name={InviteFormFields.Type}
       labelText="Тема"
-      getOptionLabel={(option: A) => option.label}
-      getOptionValue={(option: A) => option.value}
-      options={options}
+      getOptionLabel={(o) => o.label}
+      getOptionValue={(o) => o.value}
+      options={INVITE_TYPES_OPTIONS}
     />
     <Select
       name={InviteFormFields.City}
       labelText="Город"
-      getOptionLabel={o => o.label}
-      getOptionValue={o => o.value}
+      getOptionLabel={(o) => o.label}
+      getOptionValue={(o) => o.value}
       options={CITIES_OPTIONS}
     />
     <TextField
@@ -184,15 +177,6 @@ export const InviteForm = observer(
     handleSubmit,
     touchedNotRequired = false,
   }: InviteFormProps) => {
-    // const [options, setOptions] = useState<ShortUser[]>([]);
-
-    // useEffect(() => {
-    //   (async function () {
-    //     const users = await getShortUsers();
-    //     setOptions(users);
-    //   })();
-    // }, []);
-
     const steps: IStep[] = [
       {
         title: 'Обязательные поля',

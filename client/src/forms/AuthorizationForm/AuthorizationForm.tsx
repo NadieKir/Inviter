@@ -5,18 +5,36 @@ import { Button, PasswordField, TextField } from 'components';
 import { LoginFormData, LoginFormFields } from 'types/authorization';
 
 import styles from './AuthorizationForm.module.scss';
+import { useContext } from 'react';
+import { UserContext } from 'common/contexts/UserProvider';
+import { login } from 'api';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthorizationForm = () => {
+  const navigate = useNavigate();
+
+  const userStore = useContext(UserContext);
+
   const loginSchema = Yup.object().shape({
     [LoginFormFields.Login]: Yup.string(),
     [LoginFormFields.Password]: Yup.string(),
   });
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: LoginFormData,
     actions: FormikHelpers<LoginFormData>,
   ) => {
-    alert(JSON.stringify(values));
+    try {
+      const user = await login(values);
+      userStore.setUser(user);
+      localStorage.setItem('user', user.token);
+      navigate('/');
+    } catch (error: any) {
+      if (error.response.status === 400) alert('Пользователь не найден');
+      else console.log(error);
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   return (

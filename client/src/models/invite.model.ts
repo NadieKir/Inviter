@@ -1,4 +1,4 @@
-import { Gender } from "./user.model";
+import { Gender, User } from "./user.model";
 
 export enum InviteType {
   SPORT = 'Спорт',
@@ -6,15 +6,15 @@ export enum InviteType {
   ENTERTAINMENT = 'Развлечения',
   TRAVELLING = 'Путешествия',
   HELP = 'Помощь',
+  CINEMA = 'Кино',
   OTHER = 'Другое'
 }
 
 export interface Invite {
   id: string;
-  modified: string;
-  creatorId: string;
   subject: string;
   description: string;
+  creator: User;
   city: string;
   type: InviteType;
   address?: string;

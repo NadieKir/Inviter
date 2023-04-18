@@ -10,12 +10,17 @@ import geo from 'assets/images/geo.svg';
 import userPhoto from 'assets/images/mock-user-photo.jpg';
 import { AdminNavbarAction } from './components/AdminNavbarAction/AdminNavbarAction';
 import { UserNavbarAction } from './components/UserNavbarAction/UserNavbarAction';
+import { useContext } from 'react';
+import { UserContext } from 'common/contexts/UserProvider';
+import { observer } from 'mobx-react-lite';
 
 interface NavbarProps {
   variant: Role;
 }
 
-export function Navbar({ variant }: NavbarProps) {
+export const Navbar = observer(({ variant }: NavbarProps) => {
+  const userStore = useContext(UserContext);
+
   const linksToNavItem =
     variant === Role.ADMIN ? adminLinksToNavItem : userLinksToNavItem;
 
@@ -28,14 +33,14 @@ export function Navbar({ variant }: NavbarProps) {
       <NavLink to="/profile" className={styles.userProfile}>
         <img
           className={styles.userPhoto}
-          src={userPhoto}
+          src={userStore.user?.image}
           alt="Фото пользователя"
         />
         <div className={styles.userInfo}>
-          <span className={styles.userName}>Надежда, 20</span>
+          <span className={styles.userName}>{userStore.user?.name}, 20</span>
           <div className={styles.userCity}>
             <img src={geo} alt="Локация" width={'10px'} />
-            Минск
+            {userStore.user?.city}
           </div>
         </div>
       </NavLink>
@@ -60,10 +65,7 @@ export function Navbar({ variant }: NavbarProps) {
         ))}
       </nav>
 
-      {variant === Role.ADMIN
-        ? <AdminNavbarAction />
-        : <UserNavbarAction />
-      }
+      {variant === Role.ADMIN ? <AdminNavbarAction /> : <UserNavbarAction />}
     </aside>
   );
-}
+});

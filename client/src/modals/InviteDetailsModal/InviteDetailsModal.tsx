@@ -13,7 +13,7 @@ import geo from './assets/geo.svg';
 import info from './assets/info.svg';
 
 interface ViewInviteModalProps extends ModalProps {
-  invite?: Invite;
+  invite: Invite;
 }
 
 export const InviteDetailsModal = ({
@@ -54,26 +54,24 @@ export const InviteDetailsModal = ({
               src={mockUser}
               alt="Фото пользователя"
             />
-            <span>Ирина, 28</span>
+            <span>{invite.creator.name}, 28</span>
           </div>
           <div className={styles.inviteInfo}>
             <h1 className={styles.heading}>
-              Хочет <span className="blue">выпить кофе</span>
+              Хочет <span className="blue">{invite.subject}</span>
             </h1>
-            <p className={styles.whoWithDescription}>С девушкой, 20-25 лет</p>
-            <p className={styles.description}>
-              Ищу девушку, с которой можем сходить на “Вишнёвый сад” в театре
-              музкомедии 21 числа в 18:30. Билеты с меня :) thr gvrijsgvoi iudgj
-              idg iug etdigjoed r gorijs erf jrpso pt
+            <p className={styles.whoWithDescription}>
+              {invite.companionGender} {invite.companionAge}
             </p>
+            <p className={styles.description}>{invite.description}</p>
             <div className={styles.details}>
               <div className={styles.detail}>
                 <img src={calendar} alt="Дата и время" />
-                21 ноября в 18:30
+                {invite.date} {invite.time}
               </div>
               <div className={styles.detail}>
                 <img src={geo} alt="Локация" />
-                Санкт-Петербург, ул. Иванова д.23
+                {invite.city} {invite.address}
               </div>
             </div>
           </div>

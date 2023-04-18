@@ -1,4 +1,5 @@
-import { Invite } from "models";
+import { City, Gender, Invite, InviteType } from "models";
+import { SelectOption } from "./other";
 
 export enum InviteFormFields {
   Subject = 'subject',
@@ -13,22 +14,21 @@ export enum InviteFormFields {
   CompanionsAmount = 'companionsAmount',
 };
 
-export type RequiredInviteFields = Pick<
-  Invite,
-  InviteFormFields.Subject
-  | InviteFormFields.Description
-  | InviteFormFields.City
-  | InviteFormFields.Type
->;
+export type RequiredInviteFields = {
+  [InviteFormFields.Subject]: string;
+  [InviteFormFields.Description]: string;
+  [InviteFormFields.City]: City | SelectOption<City> | null;
+  [InviteFormFields.Type]: InviteType | SelectOption<InviteType> | null;
+};
 
-export type AdditionalInviteFields = Pick<
-  Invite,
-  InviteFormFields.Address
-  | InviteFormFields.Date
-  | InviteFormFields.Time
-  | InviteFormFields.CompanionAge
-  | InviteFormFields.CompanionGender
-  | InviteFormFields.CompanionsAmount
->;
+
+export type AdditionalInviteFields = {
+  [InviteFormFields.Address]: string;
+  [InviteFormFields.Date]: string;
+  [InviteFormFields.Time]: string;
+  [InviteFormFields.CompanionAge]: string;
+  [InviteFormFields.CompanionGender]: Gender[];
+  [InviteFormFields.CompanionsAmount]: number;
+};
 
 export type InviteFormData = RequiredInviteFields & AdditionalInviteFields;

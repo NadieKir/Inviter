@@ -44,6 +44,10 @@ import { SelectOption } from 'types';
 import { getAge } from 'common/helpers';
 
 import styles from './RegistrationForm.module.scss';
+import { login, register } from 'api';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from 'common/contexts/UserProvider';
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
   [RegistrationFormFields.Name]: '',
@@ -99,7 +103,7 @@ const firstStepFields = () => (
           showYearDropdown: true,
           scrollableYearDropdown: true,
           yearDropdownItemNumber: 30,
-          maxDate: new Date()
+          maxDate: new Date(),
         }}
       />
       <GenderPicker
@@ -281,6 +285,10 @@ const thirdStepFields = () => (
 );
 
 export const RegistrationForm = observer(() => {
+  const navigate = useNavigate();
+
+  const userStore = useContext(UserContext);
+
   const handleSubmit = async (
     values: RegistrationFormData,
     actions: FormikHelpers<RegistrationFormData>,
@@ -294,7 +302,7 @@ export const RegistrationForm = observer(() => {
       ).value,
       [RegistrationFormFields.FamilyStatus]: (
         values[
-        RegistrationFormFields.FamilyStatus
+          RegistrationFormFields.FamilyStatus
         ] as SelectOption<FamilyStatus>
       ).value,
       [RegistrationFormFields.City]: (
@@ -316,8 +324,16 @@ export const RegistrationForm = observer(() => {
       ).map((o) => o.value),
     };
 
-    console.log(resultValues);
-    alert(JSON.stringify(resultValues));
+    try {
+      const user = await register(resultValues);
+      userStore.setUser(user);
+      localStorage.setItem('user', user.token);
+      navigate('/');
+    } catch (error) {
+      alert(error);
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   const steps: IStep[] = [

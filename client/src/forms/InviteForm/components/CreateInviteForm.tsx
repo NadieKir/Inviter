@@ -3,62 +3,82 @@ import { observer } from 'mobx-react-lite';
 import { FormikHelpers } from 'formik';
 
 import { usePushNotification } from 'common/hooks';
-import { InviteType } from 'models';
+import { City, InviteType } from 'models';
 import {
   AdditionalInviteFields,
   InviteFormData,
+  InviteFormFields,
   RequiredInviteFields,
+  SelectOption,
 } from 'types';
 import { InviteForm } from 'forms';
 import { CreateOrEditInviteFormProps } from './types';
+import { createInvite } from 'api';
 
-export const CreateInviteForm = observer(({
-  onSubmit,
-}: CreateOrEditInviteFormProps) => {
-  const navigate = useNavigate();
-  const { pushSuccess } = usePushNotification();
+export const CreateInviteForm = observer(
+  ({ onSubmit }: CreateOrEditInviteFormProps) => {
+    const navigate = useNavigate();
 
-  // const userStore = useContext(UserContext);
-  // const { meetup, isLoading, error, publishMeetup } = useLocalObservable(
-  //   () => new MeetupStore(id!, userStore),
-  // );
+    // const userStore = useContext(UserContext);
+    // const { meetup, isLoading, error, publishMeetup } = useLocalObservable(
+    //   () => new MeetupStore(id!, userStore),
+    // );
 
-  // if (isLoading) return <FormattedMessage id="loading" />;
-  // if (!meetup) throw error;
+    // if (isLoading) return <FormattedMessage id="loading" />;
+    // if (!meetup) throw error;
 
-  const initialValuesRequiredStep: RequiredInviteFields = {
-    subject: '',
-    description: '',
-    city: '',
-    type: InviteType.ENTERTAINMENT,
-  };
+    const initialValuesRequiredStep: RequiredInviteFields = {
+      [InviteFormFields.Subject]: '',
+      [InviteFormFields.Description]: '',
+      [InviteFormFields.City]: City.BREST,
+      [InviteFormFields.Type]: InviteType.ENTERTAINMENT,
+    };
 
-  const initialValuesAdditionalStep: AdditionalInviteFields = {
-    address: '',
-    date: '',
-    time: '',
-    companionAge: '',
-    companionGender: [],
-    companionsAmount: 1,
-  };
+    const initialValuesAdditionalStep: AdditionalInviteFields = {
+      [InviteFormFields.Address]: '',
+      [InviteFormFields.Date]: '',
+      [InviteFormFields.Time]: '',
+      [InviteFormFields.CompanionAge]: '',
+      [InviteFormFields.CompanionGender]: [],
+      [InviteFormFields.CompanionsAmount]: 1,
+    };
 
-  const handleSubmit = async (
-    values: InviteFormData,
-    actions: FormikHelpers<InviteFormData>,
-  ) => {
-    //await publishMeetup(values);
-    alert(JSON.stringify(values));
+    const handleSubmit = async (
+      values: InviteFormData,
+      actions: FormikHelpers<InviteFormData>,
+    ) => {
+      const resultValues: InviteFormData = {
+        ...values,
+        [InviteFormFields.City]: (
+          values[InviteFormFields.City] as SelectOption<City>
+        ).value,
+        [InviteFormFields.Type]: (
+          values[InviteFormFields.Type] as SelectOption<InviteType>
+        ).value,
+      };
 
-    actions.setSubmitting(false);
-    pushSuccess('Инвайт создан');
-    onSubmit();
-  };
+      try {
+        await createInvite(resultValues);
+        onSubmit();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        actions.setSubmitting(false);
+      }
+      //await publishMeetup(values);
+      // alert(JSON.stringify(values));
 
-  return (
-    <InviteForm
-      initialValuesRequiredStep={initialValuesRequiredStep}
-      initialValuesAdditionalStep={initialValuesAdditionalStep}
-      handleSubmit={handleSubmit}
-    />
-  );
-});
+      // actions.setSubmitting(false);
+
+      // onSubmit();
+    };
+
+    return (
+      <InviteForm
+        initialValuesRequiredStep={initialValuesRequiredStep}
+        initialValuesAdditionalStep={initialValuesAdditionalStep}
+        handleSubmit={handleSubmit}
+      />
+    );
+  },
+);

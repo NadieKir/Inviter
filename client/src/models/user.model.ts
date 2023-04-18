@@ -80,4 +80,5 @@ export interface User {
   preferredAge: string;
 }
 
+export type UserWithToken = User & {token : string};
 export type MockedUser = Partial<User>;

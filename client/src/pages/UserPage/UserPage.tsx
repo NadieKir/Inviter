@@ -107,8 +107,8 @@ export const UserPage = () => {
       <section className={styles.userInvitesSection}>
         <h2 className="heading-H2">Текущие инвайты</h2>
         <ul className={styles.userInvites}>
-          <InviteCard user={{ name: 'ss', id: '1' }} noUserVariant />
-          <InviteCard user={{ name: 'ss', id: '1' }} noUserVariant />
+          {/* <InviteCard invite={{ name: 'ss', id: '1' }} noUserVariant />
+          <InviteCard user={{ name: 'ss', id: '1' }} noUserVariant /> */}
         </ul>
       </section>
     </section>

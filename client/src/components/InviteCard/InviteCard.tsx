@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 import { Button, ButtonHeight, ButtonVariant } from 'components';
-import { MockedUser, User } from 'models';
+import { Invite } from 'models';
 import useModal from 'common/hooks/useModal';
 import { InviteDetailsModal } from 'modals';
 
@@ -11,17 +11,15 @@ import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from 'assets/images/calendar.svg';
 
 interface InviteCardProps {
-  user: MockedUser;
+  invite: Invite;
   noUserVariant?: boolean;
 }
 
 export const InviteCard = ({
-  user,
+  invite,
   noUserVariant = false,
 }: InviteCardProps) => {
   const [isShowingModal, toggleModal] = useModal();
-
-  const { id, name } = user;
 
   return (
     <>
@@ -32,21 +30,25 @@ export const InviteCard = ({
           })}
         >
           {!noUserVariant && (
-            <NavLink to={`/user/${id}`} className={styles.photoNameWrapper}>
+            <NavLink
+              to={`/user/${invite.creator.id}`}
+              className={styles.photoNameWrapper}
+            >
               <img className={styles.photo} src={mockUser} alt="Фото" />
-              <span>{name}, 33</span>
+              <span>{invite.creator.name}, 33</span>
             </NavLink>
           )}
           <div className={styles.inviteInfo}>
             <div className={styles.dateWrapper}>
-              <img src={calendar} alt="Календарь" width={'13px'} /> 21 января в
-              18:30
+              <img src={calendar} alt="Календарь" width={'13px'} />
+              {invite.date} {invite.time}
             </div>
             <h3 className={styles.heading}>
-              Хочет{' '}
-              <span className={styles.blue}>сходить в театр юного зрителя</span>
+              Хочет <span className={styles.blue}>{invite.subject}</span>
             </h3>
-            <p className={styles.description}>С девушкой 18-22 лет</p>
+            <p className={styles.description}>
+              {invite.companionGender} {invite.companionAge}
+            </p>
           </div>
           <Button
             variant={ButtonVariant.Secondary}
@@ -58,9 +60,11 @@ export const InviteCard = ({
         </article>
       </li>
 
-      {user && (
-        <InviteDetailsModal isShowing={isShowingModal} onClose={toggleModal} />
-      )}
+      <InviteDetailsModal
+        invite={invite}
+        isShowing={isShowingModal}
+        onClose={toggleModal}
+      />
     </>
   );
 };
