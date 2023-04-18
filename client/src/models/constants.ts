@@ -40,7 +40,7 @@ export const EVENT_TYPES_OPTIONS = EVENT_TYPES.map(createOption);
 
 export const mockedUsers: User[] = [
     {
-        id: "1",
+        _id: "1",
         role: Role.USER,
         image: "https://randomuser.me/api/portraits/men/1.jpg",
         name: "Андрей",
@@ -61,7 +61,7 @@ export const mockedUsers: User[] = [
         preferredAge: "20-30",
     },
     {
-        id: "2",
+        _id: "2",
         role: Role.USER,
         image: "https://randomuser.me/api/portraits/women/2.jpg",
         name: "Александра",
@@ -82,7 +82,7 @@ export const mockedUsers: User[] = [
         preferredAge: "25-35",
     },
     {
-        id: "3",
+        _id: "3",
         role: Role.USER,
         image: "https://randomuser.me/api/portraits/men/3.jpg",
         name: "Алексей",
@@ -103,7 +103,7 @@ export const mockedUsers: User[] = [
         preferredAge: "18-25",
     },
     {
-        id: "4",
+        _id: "4",
         role: Role.USER,
         image: "https://randomuser.me/api/portraits/women/4.jpg",
         name: "Екатерина",
@@ -124,7 +124,7 @@ export const mockedUsers: User[] = [
         preferredAge: "20-30",
     },
     {
-        id: "5",
+        _id: "5",
         role: Role.USER,
         image: "https://randomuser.me/api/portraits/men/5.jpg",
         name: "Влад",

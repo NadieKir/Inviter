@@ -31,7 +31,7 @@ export const InviteCard = ({
         >
           {!noUserVariant && (
             <NavLink
-              to={`/user/${invite.creator.id}`}
+              to={`/user/${invite.creator._id}`}
               className={styles.photoNameWrapper}
             >
               <img

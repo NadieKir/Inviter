@@ -5,14 +5,38 @@ import styles from './UserPage.module.scss';
 import mockUser from 'assets/images/mock-user-photo.jpg';
 import at from './assets/at.svg';
 import geo from './assets/geo.svg';
+import { useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { getUser } from 'api/services/user.service';
+import { User } from 'models';
+import { getOverlapPercent } from 'common/helpers';
+import { UserContext } from 'common/contexts/UserProvider';
+import { observer } from 'mobx-react-lite';
 
-export const UserPage = () => {
+export const UserPage = observer(() => {
+  const { id } = useParams();
+
+  const userStore = useContext(UserContext);
+
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    const r = async () => {
+      const a = await getUser(id!);
+      setUser(a);
+    };
+
+    r();
+  }, []);
+
+  if (!user) return <div>Загрузка</div>;
+
   return (
     <section className={styles.userPageSection}>
       <div className={styles.userInfo}>
         <div className={styles.questionnairePhotoWrapper}>
           <img
-            src={mockUser}
+            src={user?.image}
             alt="Фото пользователя"
             className={styles.userPhoto}
           />
@@ -21,18 +45,20 @@ export const UserPage = () => {
             Интересы
           </h2>
           <div className={styles.interestsTags}>
-            <div className={styles.interestTag}>Спорт</div>
-            <div className={styles.interestTag}>Вышивание</div>
-            <div className={styles.interestTag}>Чтение</div>
-            <div className={styles.interestTag}>Настольные игры</div>
+            {user?.interests.map((interest) => {
+              return <div className={styles.interestTag}>{interest}</div>;
+            })}
           </div>
           <p className={styles.matchRate}>
-            Совпадение интересов: <span className="blue">33%</span>
+            Совпадение интересов:{' '}
+            <span className="blue">
+              {getOverlapPercent(userStore.user!.interests, user.interests)}
+            </span>
           </p>
         </div>
         <div className={styles.briefInterestsWrapper}>
           <div className={styles.brief}>
-            <h1 className="heading-H1">Ангелина, 22</h1>
+            <h1 className="heading-H1">{user?.name}, 22</h1>
             <div className={styles.nicknameCity}>
               <div className={styles.nicknameCityWrapper}>
                 <img src={at} alt="Никнейм" />
@@ -113,4 +139,4 @@ export const UserPage = () => {
       </section>
     </section>
   );
-};
+});

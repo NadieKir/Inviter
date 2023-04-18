@@ -58,7 +58,7 @@ export enum Role {
 }
 
 export interface User {
-  id: string;
+  _id: string;
   role: Role;
   image: string;
   name: string;

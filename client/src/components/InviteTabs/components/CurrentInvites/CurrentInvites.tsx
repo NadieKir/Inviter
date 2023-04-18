@@ -12,7 +12,7 @@ export const CurrentInvites = observer(() => {
 
   return (
     <ul className={styles.currentInvites}>
-      {currentUserInvites.map((i) => (
+      {[...currentUserInvites, ...mockedInvites].map((i) => (
         <CurrentInviteCard invite={i} />
       ))}
     </ul>

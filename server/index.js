@@ -33,6 +33,7 @@ app.post("/auth/login", handleValidationErrors, UserController.login);
 app.get("/auth/me", checkAuth, UserController.getMe);
 
 app.get("/users/:id", UserController.getOne);
+app.patch("/users", checkAuth, UserController.update);
 
 app.get("/invites", InviteController.getAll);
 app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);

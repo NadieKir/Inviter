@@ -6,3 +6,10 @@ export const getUser = async (id: string): Promise<User> => {
   return user;
 };
 
+export const updateUser = async (
+  user: User,
+): Promise<User> => {
+  const { data: updatedMeetup } = await httpClient.patch<User>(`/users`, user);
+
+  return updatedMeetup;
+};
