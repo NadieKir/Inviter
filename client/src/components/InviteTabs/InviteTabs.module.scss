@@ -1,0 +1,38 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.tabs {
+  &Wrapper {
+    @include base-wrapper();
+    display: flex;
+    flex-direction: column;
+    row-gap: 35px;
+    background-color: $white-color;
+    padding: 40px;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+.tab {
+  position: relative;
+
+  max-width: 310px;   
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+
+  // @extend .font-family-primary;
+  // @extend .font-weight-regular;
+  // @extend .font-size-s;
+  // @extend .line-height-s;
+  // @extend .font-color-gray-02;
+
+  &.active {
+    // @extend .font-weight-medium;
+    // @extend .font-color-dark;
+  }
+}

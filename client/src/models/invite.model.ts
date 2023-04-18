@@ -1,3 +1,4 @@
+import { InviteResponse } from "./inviteResponse.model";
 import { Gender, User } from "./user.model";
 
 export enum InviteType {
@@ -12,9 +13,11 @@ export enum InviteType {
 
 export interface Invite {
   id: string;
+  modified: string;
+  creatorId: string;
+  creator: User;
   subject: string;
   description: string;
-  creator: User;
   city: string;
   type: InviteType;
   address?: string;
@@ -23,4 +26,6 @@ export interface Invite {
   companionAge?: string;
   companionGender?: Gender[];
   companionsAmount?: number;
+  companions?: User[];
+  responses?: InviteResponse[];
 }

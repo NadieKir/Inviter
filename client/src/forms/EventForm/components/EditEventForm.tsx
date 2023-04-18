@@ -26,6 +26,7 @@ export const EditEventForm = observer(({
     const initialValuesRequiredStep: RequiredEventFields = {
         [EventFormFields.Name]: '',
         [EventFormFields.Description]: '',
+        [EventFormFields.Type]: null,
         [EventFormFields.City]: null,
         [EventFormFields.Address]: '',
         [EventFormFields.Date]: '',

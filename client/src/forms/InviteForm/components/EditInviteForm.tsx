@@ -31,7 +31,7 @@ export const EditInviteForm = observer(({
   const initialValuesRequiredStep: RequiredInviteFields = {
     subject: 'ss',
     description: '',
-    city: '',
+    city: null,
     type: InviteType.ENTERTAINMENT,
   };
 

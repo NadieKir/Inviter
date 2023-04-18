@@ -6,3 +6,4 @@ export * from './UserPage/UserPage';
 export * from './ProfilePage/ProfilePage';
 export * from './AdminEventsPage/AdminEventsPage';
 export * from './SearchEventPage/SearchEventPage';
+export * from './InvitesPage/InvitesPage';

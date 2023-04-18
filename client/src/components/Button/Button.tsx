@@ -8,6 +8,11 @@ export enum ButtonVariant {
   Secondary = 'secondary',
 }
 
+export enum ButtonType {
+  Default = 'default',
+  Danger = 'danger',
+}
+
 export enum ButtonWidth {
   Big = 'widthBig',
   Small = 'widthSmall',
@@ -22,12 +27,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   width?: ButtonWidth;
   height?: ButtonHeight;
+  buttonType?: ButtonType;
 }
 
 export const Button = ({
   variant = ButtonVariant.Primary,
   width = ButtonWidth.Big,
   height = ButtonHeight.Big,
+  buttonType = ButtonType.Default,
   className,
   children,
   ...nativeButtonProps
@@ -40,6 +47,7 @@ export const Button = ({
         styles[variant],
         styles[width],
         styles[height],
+        styles[buttonType],
         className,
       )}
     >

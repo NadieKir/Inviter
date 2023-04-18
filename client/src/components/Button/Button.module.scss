@@ -21,6 +21,10 @@
     opacity: 0.5;
   }
 
+  &.default {
+    color: inherit;
+  }
+
   &.primary {
     background: $blue-gradient-color;
     color: $white-color;
@@ -58,6 +62,12 @@
     font-size: 12px;
     height: 35px;
   }
+}
+
+button.button.danger {
+  background: transparent; 
+  color: $red-color;
+  border: 1px solid $red-color;
 }
 
 .buttonContent {

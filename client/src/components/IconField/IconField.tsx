@@ -1,4 +1,4 @@
-import { Field, FieldAttributes } from 'formik';
+import { Field } from 'formik';
 
 import styles from './IconField.module.scss';
 

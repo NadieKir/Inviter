@@ -1,0 +1,139 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.card {
+    @include base-wrapper();
+
+    display: flex;
+    justify-content: space-between;
+    min-height: 220px;
+    max-height: 395px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    width: 30%;
+}
+
+.subject {
+    font-weight: 600;
+}
+
+.companions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &Users {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &Amount {
+        font-weight: 600;
+        font-size: 13px;
+    }
+}
+
+.companion {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+
+    &Image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50px;
+    }
+
+    &Info {
+        font-weight: 300;
+        font-size: 13px;
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.noResponses {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: $light-gray-color;
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+}
+
+.responses {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 70%;
+    overflow-y: auto;
+}
+
+.response {
+    display: flex;
+    gap: 25px;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 140px;
+
+    &Image {
+        width: 140px;
+        height: 140px;
+        border-radius: 12px;
+    }
+
+    &Info {
+        width: 75%;
+        height: 100%;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+
+        &Name {
+            font-weight: 500;
+        }
+    }
+
+    &Actions {
+        width: 10%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px
+    }
+}
+
+.blue {
+    color: $blue-color;
+}
+
+.cross {
+    cursor: pointer;
+    color: $red-color;
+    width: 10px;
+}
+
+.headingInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.companionsInfo {
+    font-size: 13px;
+    font-weight: 300;
+}

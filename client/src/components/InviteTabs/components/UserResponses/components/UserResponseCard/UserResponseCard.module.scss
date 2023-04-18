@@ -1,0 +1,70 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.card {
+    @include base-wrapper();
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    min-height: 170px;
+    max-height: 200px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    button {
+        width:100%;
+    }
+}
+
+.companionsInfo {
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.creator {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+
+    &Image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50px;
+    }
+
+    &Info {
+        font-weight: 300;
+        font-size: 13px;
+    }
+}
+
+.subject {
+    font-weight: 600;
+}
+
+.date {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 14px;
+}
+
+.blue {
+    color: $blue-color;
+}

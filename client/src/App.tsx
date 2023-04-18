@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import {
   AdminEventsPage,
   ForbiddenPage,
+  InvitesPage,
   NotFoundPage,
   ProfilePage,
   SearchEventPage,
@@ -13,6 +14,7 @@ import { history, AppRouter } from 'common/router';
 import { LoginLayout, MainLayout } from 'layouts';
 import { AuthorizationForm, RegistrationForm } from 'forms';
 import { Role } from 'models';
+import { inviteTabs } from 'components';
 
 function App() {
   return (
@@ -22,7 +24,21 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route path="search" element={<SearchInvitePage />} />
           <Route path="events" element={<SearchEventPage />} />
-          <Route path="invites" element={<div>invites</div>} />
+          <Route path="invites" element={<InvitesPage />}>
+            {inviteTabs.map((t, i) => (
+              <>
+                {(i === 0) && (
+                  <Route index element={<Navigate replace to={t.link} />} />
+                )}
+                <Route
+                  index={i === 0}
+                  key={t.link}
+                  path={t.link}
+                  element={t.component}
+                />
+              </>
+            ))}
+          </Route>
           <Route path="contacts" element={<div>contacts</div>} />
           <Route path="following" element={<div>following</div>} />
           <Route path="notifications" element={<div>notifications</div>} />

@@ -16,9 +16,10 @@ import {
   EventFormData,
   EventFormFields,
   RequiredEventFields,
+  SelectOption,
 } from 'types';
 import { selectOptionValidationSchema } from 'common/constants';
-import { CITIES_OPTIONS } from 'models';
+import { CITIES_OPTIONS, City, EVENT_TYPES_OPTIONS, EventType } from 'models';
 import { isDateValueEquals } from 'common/helpers';
 
 import styles from './EventForm.module.scss';
@@ -40,6 +41,9 @@ const requiredFieldsSchema = Yup.object().shape({
   [EventFormFields.Description]: Yup.string()
     .min(3, 'Минимальная длина описания - 3 символа')
     .required('Введите описание'),
+  [EventFormFields.Type]: selectOptionValidationSchema
+    .required('Введите тип события')
+    .nullable(),
   [EventFormFields.Address]: Yup.string().required('Введите адрес'),
   [EventFormFields.City]: selectOptionValidationSchema
     .required('Введите город')
@@ -80,6 +84,13 @@ const renderRequiredFields = (formikProps: FormikProps<FormikValues>) => {
         labelText="Описание"
         multiline
         maxLetterCount={1000}
+      />
+      <Select
+        name={EventFormFields.Type}
+        labelText="Тип"
+        getOptionLabel={(o) => o.label}
+        getOptionValue={(o) => o.value}
+        options={EVENT_TYPES_OPTIONS}
       />
       <Select
         name={EventFormFields.City}
@@ -156,12 +167,22 @@ export const EventForm = observer(
       },
     ];
 
+    const onSubmit = async (values: EventFormData, actions: FormikHelpers<EventFormData>) => {
+      const resultValues = {
+        ...values,
+        [EventFormFields.Type]: (values[EventFormFields.Type] as SelectOption<EventType>).value,
+        [EventFormFields.City]: (values[EventFormFields.City] as SelectOption<City>).value,
+      };
+
+      handleSubmit(resultValues, actions);
+    }
+
     return (
       <FormikStepper
         steps={steps}
         formHeading="Создать событие"
         finishButtonContent="Создать"
-        onFinish={handleSubmit}
+        onFinish={onSubmit}
       />
     );
   },

@@ -65,7 +65,6 @@ export interface User {
   birthday: string;
   login: string;
   email: string;
-  phone: string;
   password: string;
   city: City;
   gender: Gender;

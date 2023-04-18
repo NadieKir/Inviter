@@ -1,8 +1,10 @@
-import { City, Event } from "models";
+import { City, EventType } from "models";
+import { SelectOption } from "./other";
 
 export enum EventFormFields {
     Name = 'name',
     Description = 'description',
+    Type = 'type',
     City = 'city',
     Address = 'address',
     Date = 'date',
@@ -14,7 +16,8 @@ export enum EventFormFields {
 export type RequiredEventFields = {
     [EventFormFields.Name]: string,
     [EventFormFields.Description]: string,
-    [EventFormFields.City]: City | null,
+    [EventFormFields.Type]: EventType | SelectOption<EventType> | null,
+    [EventFormFields.City]: City | SelectOption<City> | null,
     [EventFormFields.Address]: string,
     [EventFormFields.Date]: string,
     [EventFormFields.Time]: string,
