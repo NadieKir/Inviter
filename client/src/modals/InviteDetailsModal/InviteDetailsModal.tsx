@@ -51,7 +51,7 @@ export const InviteDetailsModal = ({
           <div className={styles.userInfo}>
             <img
               className={styles.userPhoto}
-              src={mockUser}
+              src={invite.creator.image}
               alt="Фото пользователя"
             />
             <span>{invite.creator.name}, 28</span>

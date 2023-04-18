@@ -7,9 +7,10 @@
     @include base-wrapper();
     display: flex;
     flex-direction: column;
-    row-gap: 35px;
+    row-gap: 45px;
     background-color: $white-color;
     padding: 40px;
+    padding-bottom: 0;
   }
 
   a {

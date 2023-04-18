@@ -1,21 +1,33 @@
-import { getInvites } from 'api';
+import { getAnotherUsersInvites, getCurrentUserInvites, getInvites } from 'api';
 import { AxiosError } from 'axios';
 import { makeAutoObservable } from 'mobx';
 
 import { Invite } from 'models';
 
 export class InviteListStore {
-  invites: Invite[] = [];
+  // invites: Invite[] = [];
+  anotherUsersInvites: Invite[] = [];
+  currentUserInvites: Invite[] = [];
   isLoading: boolean = false;
   error: AxiosError | null = null;
   
   constructor() {
     makeAutoObservable(this);
-    this.getInvites();
+    // this.getInvites();
+    this.getAnotherUsersInvites();
+    this.getCurrentUserInvites();
   }
 
-  setInvites(newInvites: Invite[]) {
-    this.invites = newInvites;
+  // setInvites(newInvites: Invite[]) {
+  //   this.invites = newInvites;
+  // }
+
+  setAnotherUsersInvites(newInvites: Invite[]) {
+    this.anotherUsersInvites = newInvites;
+  }
+
+  setCurrentUserInvites(newInvites: Invite[]) {
+    this.currentUserInvites = newInvites;
   }
 
   setIsLoading(isLoading: boolean) {
@@ -26,20 +38,52 @@ export class InviteListStore {
     this.error = error;
   }
 
-  async getInvites() {
+  async getAnotherUsersInvites() {
     this.setIsLoading(true);
 
     try {
-      this.setInvites(await getInvites());
+      this.setAnotherUsersInvites(await getAnotherUsersInvites());
     }
     catch (error) {
-      this.setError(error as AxiosError);
-      throw this.error;
+      this.setAnotherUsersInvites([]);
+      // this.setError(error as AxiosError);
+      // throw this.error;
     } 
     finally {
       this.setIsLoading(false);
     }
   }
+
+  async getCurrentUserInvites() {
+    this.setIsLoading(true);
+
+    try {
+      this.setCurrentUserInvites(await getCurrentUserInvites());
+    }
+    catch (error) {
+      this.setCurrentUserInvites([]);
+      // this.setError(error as AxiosError);
+      // throw this.error;
+    } 
+    finally {
+      this.setIsLoading(false);
+    }
+  }
+
+  // async getInvites() {
+  //   this.setIsLoading(true);
+
+  //   try {
+  //     this.setInvites(await getInvites());
+  //   }
+  //   catch (error) {
+  //     this.setError(error as AxiosError);
+  //     throw this.error;
+  //   } 
+  //   finally {
+  //     this.setIsLoading(false);
+  //   }
+  // }
 }
 
 export default new InviteListStore();

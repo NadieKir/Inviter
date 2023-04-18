@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 import { registerValidator, createInviteValidator } from "./validations.js";
 import { checkAuth, handleValidationErrors } from "./utils/index.js";
@@ -15,6 +16,15 @@ mongoose
 
 const app = express();
 
+app.use(express.json({ limit: "10mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "10mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
+
 app.use(cors());
 app.use(express.json());
 
@@ -25,6 +35,8 @@ app.get("/auth/me", checkAuth, UserController.getMe);
 app.get("/users/:id", UserController.getOne);
 
 app.get("/invites", InviteController.getAll);
+app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
+app.get("/invites/current", checkAuth, InviteController.getAllCurrentUser);
 app.get("/invites/:id", InviteController.getOne);
 app.post(
   "/invites",

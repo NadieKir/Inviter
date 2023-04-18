@@ -39,6 +39,32 @@ export const getAll = async (req, res) => {
   }
 };
 
+export const getAllAnotherUsers = async (req, res) => {
+  try {
+    const invites = await InviteModel.find({ creator: { $ne: req.userId } })
+      .populate("creator")
+      .exec();
+    res.json(invites);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось получить инвайты",
+    });
+  }
+};
+
+export const getAllCurrentUser = async (req, res) => {
+  try {
+    const invites = await InviteModel.find({ creator: req.userId }).populate("creator").exec();
+    res.json(invites);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось получить инвайты",
+    });
+  }
+};
+
 export const getOne = async (req, res) => {
   try {
     const inviteId = req.params.id;

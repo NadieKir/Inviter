@@ -13,19 +13,19 @@ import { UserResponses } from './components/UserResponses/UserResponses';
 
 export const inviteTabs: InviteTabDescriptor[] = [
   {
-    label: "Текущие",
-    link: "current",
-    component: <CurrentInvites />
+    label: 'Текущие',
+    link: 'current',
+    component: <CurrentInvites />,
   },
   {
-    label: "Закрытые",
-    link: "closed",
-    component: <ClosedInvites />
+    label: 'Закрытые',
+    link: 'closed',
+    component: <ClosedInvites />,
   },
   {
-    label: "Мои отклики",
-    link: "responses",
-    component: <UserResponses />
+    label: 'Мои отклики',
+    link: 'responses',
+    component: <UserResponses />,
   },
 ];
 
@@ -33,12 +33,10 @@ interface Props {
   heading?: string;
 }
 
-export const InviteTabs = observer(({
-  heading,
-}: Props) => {
+export const InviteTabs = observer(({ heading }: Props) => {
   return (
     <div className={styles.tabsWrapper}>
-      {heading && (<h1 className='heading-H1'>{heading}</h1>)}
+      {heading && <h1 className="heading-H1">{heading}</h1>}
       <NavTabs className={styles.tabs}>
         {inviteTabs.map((tab) => (
           <NavLink

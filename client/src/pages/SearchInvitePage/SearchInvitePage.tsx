@@ -7,12 +7,12 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import { InviteListStore } from 'stores';
 
 export const SearchInvitePage = observer(() => {
-  const { isLoading, invites } = useLocalObservable(
+  const { isLoading, anotherUsersInvites } = useLocalObservable(
     () => new InviteListStore(),
   );
 
   if (isLoading) return <div>Загрузка</div>;
-
+  console.log(anotherUsersInvites);
   return (
     <section className={styles.section}>
       <div className={styles.searchForm}>
@@ -20,7 +20,7 @@ export const SearchInvitePage = observer(() => {
         <SearchInviteForm />
       </div>
       <ul className={styles.userCards}>
-        {invites.map((invite) => (
+        {anotherUsersInvites.map((invite) => (
           <InviteCard key={invite.id} invite={invite} />
         ))}
       </ul>

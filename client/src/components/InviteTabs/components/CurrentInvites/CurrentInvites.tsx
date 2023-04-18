@@ -1,18 +1,20 @@
+import { mockedInvites } from 'models';
+import { CurrentInviteCard } from './components/CurrentInviteCard/CurrentInviteCard';
 
-import { mockedInvites } from "models";
-import { CurrentInviteCard } from "./components/CurrentInviteCard/CurrentInviteCard";
+import styles from './CurrentInvites.module.scss';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import { InviteListStore } from 'stores';
 
-import styles from "./CurrentInvites.module.scss";
+export const CurrentInvites = observer(() => {
+  const { currentUserInvites } = useLocalObservable(
+    () => new InviteListStore(),
+  );
 
-
-export function CurrentInvites() {
-    return (
-        <ul className={styles.currentInvites}>
-            {mockedInvites.map(i => (
-                <CurrentInviteCard
-                    invite={i}
-                />
-            ))}
-        </ul>
-    );
-}
+  return (
+    <ul className={styles.currentInvites}>
+      {currentUserInvites.map((i) => (
+        <CurrentInviteCard invite={i} />
+      ))}
+    </ul>
+  );
+});

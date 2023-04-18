@@ -34,7 +34,11 @@ export const InviteCard = ({
               to={`/user/${invite.creator.id}`}
               className={styles.photoNameWrapper}
             >
-              <img className={styles.photo} src={mockUser} alt="Фото" />
+              <img
+                className={styles.photo}
+                src={invite.creator.image}
+                alt="Фото"
+              />
               <span>{invite.creator.name}, 33</span>
             </NavLink>
           )}

@@ -1,8 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 import { FormikHelpers } from 'formik';
 
-import { usePushNotification } from 'common/hooks';
 import { City, InviteType } from 'models';
 import {
   AdditionalInviteFields,
@@ -17,16 +15,6 @@ import { createInvite } from 'api';
 
 export const CreateInviteForm = observer(
   ({ onSubmit }: CreateOrEditInviteFormProps) => {
-    const navigate = useNavigate();
-
-    // const userStore = useContext(UserContext);
-    // const { meetup, isLoading, error, publishMeetup } = useLocalObservable(
-    //   () => new MeetupStore(id!, userStore),
-    // );
-
-    // if (isLoading) return <FormattedMessage id="loading" />;
-    // if (!meetup) throw error;
-
     const initialValuesRequiredStep: RequiredInviteFields = {
       [InviteFormFields.Subject]: '',
       [InviteFormFields.Description]: '',
