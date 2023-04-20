@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -13,14 +15,13 @@ import {
   Select,
   TextField,
 } from 'components';
+import { register } from 'api';
 import {
   RegistrationFirstStepFormData,
   RegistrationSecondStepFormData,
   RegistrationThirdStepFormData,
   RegistrationFormData,
   RegistrationFormFields,
-} from 'types';
-import {
   ATTITUDES_OPTIONS,
   CITIES_OPTIONS,
   FAMILY_STATUSES_OPTIONS,
@@ -28,6 +29,9 @@ import {
   INTERESTS_OPTIONS,
   LANGUAGES_OPTIONS,
   ORIENTATIONS_OPTIONS,
+  SelectOption,
+} from 'types';
+import {
   Attitude,
   City,
   FamilyStatus,
@@ -40,14 +44,9 @@ import {
   ageRangeValidationSchema,
   selectOptionValidationSchema,
 } from 'common/constants';
-import { SelectOption } from 'types';
+import { UserContext } from 'common/contexts';
 import { getAge } from 'common/helpers';
-
 import styles from './RegistrationForm.module.scss';
-import { login, register } from 'api';
-import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from 'common/contexts/UserProvider';
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
   [RegistrationFormFields.Name]: '',

@@ -29,4 +29,5 @@ export * from './EventCard/EventCard';
 export * from './InviteTabs/InviteTabs';
 export * from './NavTabs/NavTabs';
 export * from './IconButton/IconButton';
+export * from './PrivateRoute/PrivateRoute';
 export * from './InviteTabs/InviteTabs';

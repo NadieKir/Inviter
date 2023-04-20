@@ -14,20 +14,27 @@ import { history, AppRouter } from 'common/router';
 import { LoginLayout, MainLayout } from 'layouts';
 import { AuthorizationForm, RegistrationForm } from 'forms';
 import { Role } from 'models';
-import { inviteTabs } from 'components';
+import { PrivateRoute, UserStatus, inviteTabs } from 'components';
 
 function App() {
   return (
     <AppRouter history={history}>
       <Routes>
         <Route index element={<Navigate replace to="/search" />} />
-        <Route path="/" element={<MainLayout />}>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute roles={[UserStatus.AUTHORIZED]}>
+              <MainLayout />
+            </PrivateRoute>
+          }
+        >
           <Route path="search" element={<SearchInvitePage />} />
           <Route path="events" element={<SearchEventPage />} />
           <Route path="invites" element={<InvitesPage />}>
             {inviteTabs.map((t, i) => (
               <>
-                {(i === 0) && (
+                {i === 0 && (
                   <Route index element={<Navigate replace to={t.link} />} />
                 )}
                 <Route
@@ -45,7 +52,14 @@ function App() {
           <Route path="profile" element={<ProfilePage />} />
           <Route path="user/:id" element={<UserPage />} />
         </Route>
-        <Route path="/admin" element={<MainLayout variant={Role.ADMIN} />}>
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute roles={[Role.ADMIN]}>
+              <MainLayout variant={Role.ADMIN} />
+            </PrivateRoute>
+          }
+        >
           <Route path="events" element={<AdminEventsPage />} />
         </Route>
         <Route path="/" element={<LoginLayout />}>

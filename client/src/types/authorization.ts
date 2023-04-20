@@ -1,5 +1,5 @@
 import { Attitude, City, FamilyStatus, Gender, Interests, Language, Orientation, Role } from "models";
-import { SelectOption } from "./other";
+import { SelectOption } from "./options";
 
 export enum LoginFormFields {
   Login = 'login',
@@ -31,7 +31,6 @@ export type LoginFormData = {
   [LoginFormFields.Login]: string;
   [LoginFormFields.Password]: string;
 }
-
 
 export type RegistrationFirstStepFormData = {
   [RegistrationFormFields.Name]: string,

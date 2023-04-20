@@ -1,5 +1,4 @@
 import { getCurrentUser } from 'api';
-import { getUser } from 'api/services/user.service';
 import { makeAutoObservable } from 'mobx';
 import { User } from 'models';
 
@@ -7,8 +6,8 @@ export class UserStore {
   user: User | null = null;
 
   constructor() {
-    makeAutoObservable(this);
     this.loadUser();
+    makeAutoObservable(this);
   }
 
   setUser(newUser: User | null) {

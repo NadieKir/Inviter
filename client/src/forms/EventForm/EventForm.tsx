@@ -1,3 +1,7 @@
+import { observer } from 'mobx-react-lite';
+import { FormikHelpers, FormikProps, FormikValues } from 'formik';
+import * as Yup from 'yup';
+
 import {
   DateTimePicker,
   FormikStepper,
@@ -7,19 +11,17 @@ import {
   Select,
   TextField,
 } from 'components';
-import { FormikHelpers, FormikProps, FormikValues } from 'formik';
-import { observer } from 'mobx-react-lite';
-import * as Yup from 'yup';
-
 import {
   AdditionalEventFields,
   EventFormData,
   EventFormFields,
   RequiredEventFields,
   SelectOption,
+  CITIES_OPTIONS,
+  EVENT_TYPES_OPTIONS,
 } from 'types';
+import { City, EventType } from 'models';
 import { selectOptionValidationSchema } from 'common/constants';
-import { CITIES_OPTIONS, City, EVENT_TYPES_OPTIONS, EventType } from 'models';
 import { isDateValueEquals } from 'common/helpers';
 
 import styles from './EventForm.module.scss';
@@ -167,15 +169,22 @@ export const EventForm = observer(
       },
     ];
 
-    const onSubmit = async (values: EventFormData, actions: FormikHelpers<EventFormData>) => {
+    const onSubmit = async (
+      values: EventFormData,
+      actions: FormikHelpers<EventFormData>,
+    ) => {
       const resultValues = {
         ...values,
-        [EventFormFields.Type]: (values[EventFormFields.Type] as SelectOption<EventType>).value,
-        [EventFormFields.City]: (values[EventFormFields.City] as SelectOption<City>).value,
+        [EventFormFields.Type]: (
+          values[EventFormFields.Type] as SelectOption<EventType>
+        ).value,
+        [EventFormFields.City]: (
+          values[EventFormFields.City] as SelectOption<City>
+        ).value,
       };
 
       handleSubmit(resultValues, actions);
-    }
+    };
 
     return (
       <FormikStepper

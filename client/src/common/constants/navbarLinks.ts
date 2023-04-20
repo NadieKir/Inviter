@@ -1,9 +1,4 @@
 import calendar from 'assets/images/navbarIcons/calendar.svg';
-// import bell from 'assets/images/calendar.svg';
-// import follower from 'assets/images/calendar.svg';
-// import people from 'assets/images/calendar.svg';
-// import search from 'assets/images/calendar.svg';
-// import ticket from 'assets/images/calendar.svg';
 import bell from 'assets/images/navbarIcons/bell.svg';
 import follower from 'assets/images/navbarIcons/follower.svg';
 import people from 'assets/images/navbarIcons/people.svg';

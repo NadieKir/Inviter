@@ -26,8 +26,10 @@ export const AuthorizationForm = () => {
   ) => {
     try {
       const user = await login(values);
+
       userStore.setUser(user);
       localStorage.setItem('user', user.token);
+
       navigate('/');
     } catch (error: any) {
       if (error.response.status === 400) alert('Пользователь не найден');

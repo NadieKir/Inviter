@@ -7,6 +7,8 @@ import {
   InviteFormData,
   InviteFormFields,
   RequiredInviteFields,
+  CITIES_OPTIONS,
+  INVITE_TYPES_OPTIONS,
 } from 'types';
 import {
   AgeRangeField,
@@ -22,10 +24,9 @@ import {
   ageRangeValidationSchema,
   selectOptionValidationSchema,
 } from 'common/constants';
+import { isDateValueEquals } from 'common/helpers';
 
 import styles from './InviteForm.module.scss';
-import { CITIES_OPTIONS, INVITE_TYPES_OPTIONS } from 'models';
-import { isDateValueEquals } from 'common/helpers';
 
 interface InviteFormProps {
   initialValuesRequiredStep: RequiredInviteFields;

@@ -16,21 +16,18 @@ export const getFileSizeString = (
   bytes: number,
   maxDecimalPlaces: number = 0,
 ): string => {  
-  // start from most aggregating conversion
   let result = toFixedIfAny(convertBytesToMb(bytes), maxDecimalPlaces);
 
   if (+result > 0) {
     return `${result} Mb`;
   }
 
-  // take less aggregating conversion
   result = toFixedIfAny(convertBytesToKb(bytes), maxDecimalPlaces);
 
   if (+result > 0) {
     return `${result} Kb`;
   }
 
-  // return without aggregation
   result = toFixedIfAny(bytes, maxDecimalPlaces);
 
   return `${result} bytes`;

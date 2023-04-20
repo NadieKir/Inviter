@@ -1,5 +1,5 @@
-import { City, Gender, Invite, InviteType } from "models";
-import { SelectOption } from "./other";
+import { City, Gender, InviteType } from "models";
+import { SelectOption } from "./options";
 
 export enum InviteFormFields {
   Subject = 'subject',
