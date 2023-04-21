@@ -16,6 +16,7 @@ import {
   FormikStepper,
   GenderPicker,
   IStep,
+  IconButton,
   NumberField,
   Select,
   TextField,
@@ -25,6 +26,7 @@ import {
   selectOptionValidationSchema,
 } from 'common/constants';
 import { isDateValueEquals } from 'common/helpers';
+import cross from 'assets/images/redCross.svg';
 
 import styles from './InviteForm.module.scss';
 
@@ -99,7 +101,8 @@ const renderRequiredFields = () => (
 
 const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
   const { values, setFieldValue } = formikProps;
-  const date = new Date(values[InviteFormFields.Date] as string);
+  const dateString = values[InviteFormFields.Date] as string;
+  const date = new Date(dateString);
   const time = new Date(values[InviteFormFields.Time] as string);
 
   const isSelectedDateToday = isDateValueEquals(date, new Date());
@@ -122,6 +125,17 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
             excludePastDateTime={true}
             showTimeSelect={false}
           />
+          <img
+            src={cross}
+            className={styles.clearButton}
+            alt='Очистить'
+            onClick={() => {
+              setFieldValue(InviteFormFields.Date, '');
+              setFieldValue(InviteFormFields.Time, '');
+            }}
+          />
+        </div>
+        <div className={styles.dateWrapper}>
           <DateTimePicker
             name={InviteFormFields.Time}
             labelText="Время"
@@ -130,20 +144,18 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
               timeIntervals: 15,
               minTime: minTime,
               maxTime: maxTime,
+              disabled: !dateString
+            }}
+          />
+          <img
+            src={cross}
+            alt='Очистить'
+            className={styles.clearButton}
+            onClick={() => {
+              setFieldValue(InviteFormFields.Time, '');
             }}
           />
         </div>
-
-        <button
-          type="button"
-          className={styles.clearButton}
-          onClick={() => {
-            setFieldValue(InviteFormFields.Date, '');
-            setFieldValue(InviteFormFields.Time, '');
-          }}
-        >
-          Очистить
-        </button>
       </div>
       <TextField
         name={InviteFormFields.Address}
@@ -195,11 +207,24 @@ export const InviteForm = observer(
       },
     ];
 
+    const onSubmit = async (values: InviteFormData, actions: FormikHelpers<InviteFormData>) => {
+      var time = values[InviteFormFields.Time]
+        ? new Date(values[InviteFormFields.Time])
+        : undefined;
+
+      const resultValues = {
+        ...values,
+        [InviteFormFields.Time]: time ? `${time.getHours()}:${time.getMinutes()}` : ''
+      }
+
+      handleSubmit(resultValues, actions);
+    }
+
     return (
       <FormikStepper
         steps={steps}
         formHeading="Создать инвайт"
-        onFinish={handleSubmit}
+        onFinish={onSubmit}
       />
     );
   },

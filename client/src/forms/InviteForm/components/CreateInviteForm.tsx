@@ -35,6 +35,8 @@ export const CreateInviteForm = observer(
       values: InviteFormData,
       actions: FormikHelpers<InviteFormData>,
     ) => {
+      alert(JSON.stringify(values));
+
       const resultValues: InviteFormData = {
         ...values,
         [InviteFormFields.City]: (

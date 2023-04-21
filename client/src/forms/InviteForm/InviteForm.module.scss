@@ -9,11 +9,12 @@
 
 .dateWrapper {
   display: flex;
-  column-gap: 20px;
+  column-gap: 15px;
+  align-items: center;
 }
 
 .clearButton {
-  margin-top: 15px;
+  margin-top: 20px;
 
   font-size: 12px;
   font-weight: 300;

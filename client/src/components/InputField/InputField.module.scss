@@ -39,6 +39,15 @@
   }
 }
 
+input.inputDisabled {
+  border: 1px solid $dark-gray-color;
+
+  &:hover {
+    border: 1px solid $dark-gray-color;
+    box-shadow: none;
+  }
+}
+
 .error {
   border: 1px solid $red-color;
 }

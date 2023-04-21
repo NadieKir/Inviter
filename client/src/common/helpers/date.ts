@@ -1,14 +1,14 @@
 export const getAge = (birthday: Date) => {
-    let today = new Date();
-    let birthDate = new Date(birthday);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    let month = today.getMonth() - birthDate.getMonth();
+  let today = new Date();
+  let birthDate = new Date(birthday);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  let month = today.getMonth() - birthDate.getMonth();
 
-    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
 
-    return age;
+  return age;
 }
 
 export const isDateValueEquals = (first: Date, second: Date) =>
@@ -17,8 +17,31 @@ export const isDateValueEquals = (first: Date, second: Date) =>
   first.getFullYear() === second.getFullYear();
 
 
-export const formatInviteDate = (date: Date) => {
-  const formatter = new Intl.DateTimeFormat('ru', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' });
+export const formatInviteDate = (date: Date, time?: string) => {
+  const resultDate = new Date(date);
+  let formatOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+  };
 
-  return formatter.format(date);
+  console.log()
+
+  if (time) {
+    const timeUnits = time.split(":");
+    const hours = +timeUnits[0];
+    const minutes = +timeUnits[1];
+
+    resultDate.setHours(hours);
+    resultDate.setMinutes(minutes)
+
+    formatOptions = {
+      ...formatOptions,
+      hour: 'numeric',
+      minute: 'numeric'
+    };
+  }
+
+  const formatter = new Intl.DateTimeFormat('ru', formatOptions);
+
+  return formatter.format(resultDate);
 }

@@ -23,6 +23,7 @@ export interface InputFieldExternalProps {
   successText?: string;
   hintText?: string;
   noVerify?: boolean;
+  disabled?: boolean;
 }
 
 type InputFieldProps = InputFieldExternalProps & {
@@ -37,6 +38,7 @@ export const InputField = ({
   successText,
   hintText,
   containerAttributes,
+  disabled = false,
   noVerify = false,
 }: InputFieldProps): JSX.Element => (
   <Field name={name}>
@@ -84,7 +86,9 @@ export const InputField = ({
           {inputComponent({
             ...formikProps,
             variant: inputVariant,
-            className: classNames(styles.input, styles[inputVariant]),
+            className: classNames(styles.input, styles[inputVariant], {
+              [styles.inputDisabled]: disabled
+            }),
           })}
           {helperText ? (
             <HelperText
