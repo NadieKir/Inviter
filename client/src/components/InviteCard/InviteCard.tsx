@@ -8,6 +8,10 @@ import { InviteDetailsModal } from 'modals';
 
 import styles from './InviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
+import {
+  concatUserNameAndAge,
+  getInviteCompanionsInfoString,
+} from 'common/helpers';
 
 interface InviteCardProps {
   invite: Invite;
@@ -38,7 +42,7 @@ export const InviteCard = ({
                 src={invite.creator.image}
                 alt="Фото"
               />
-              <span>{invite.creator.name}, 33</span>
+              <span>{concatUserNameAndAge(invite.creator)}</span>
             </NavLink>
           )}
           <div className={styles.inviteInfo}>
@@ -50,7 +54,7 @@ export const InviteCard = ({
               Хочет <span className={styles.blue}>{invite.subject}</span>
             </h3>
             <p className={styles.description}>
-              {invite.companionGender} {invite.companionAge}
+              {getInviteCompanionsInfoString(invite)}
             </p>
           </div>
           <Button

@@ -13,7 +13,7 @@ import {
 import styles from './CurrentInviteCard.module.scss';
 import check from 'assets/images/greenCheck.svg';
 import cross from 'assets/images/redCross.svg';
-import { getUserInfo } from 'common/helpers/user';
+import { concatUserNameAndAge } from 'common/helpers/user';
 import { getInviteCompanionsInfoString } from 'common/helpers/invite';
 
 interface Props {
@@ -38,7 +38,9 @@ export function CurrentInviteCard({ invite }: Props) {
       <div className={styles.response}>
         <img className={styles.responseImage} src={r.user.image} alt="" />
         <div className={styles.responseInfo}>
-          <span className={styles.responseInfoName}>{getUserInfo(r.user)}</span>
+          <span className={styles.responseInfoName}>
+            {concatUserNameAndAge(r.user)}
+          </span>
           <span>{r.message}</span>
         </div>
         <div className={styles.responseActions}>
@@ -73,7 +75,9 @@ export function CurrentInviteCard({ invite }: Props) {
                   src={c.image}
                   alt={c.name}
                 />
-                <span className={styles.companionInfo}>{getUserInfo(c)}</span>
+                <span className={styles.companionInfo}>
+                  {concatUserNameAndAge(c)}
+                </span>
                 <img className={styles.cross} src={cross} alt={''} />
               </li>
             ))}
