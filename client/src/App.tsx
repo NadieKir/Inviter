@@ -1,7 +1,11 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import { Navigate, Route, Routes } from 'react-router';
 
+import { PrivateRoute, UserStatus, inviteTabs } from 'components';
+import { AuthorizationForm, RegistrationForm } from 'forms';
 import {
   AdminEventsPage,
+  ErrorFallback,
   ForbiddenPage,
   InvitesPage,
   NotFoundPage,
@@ -12,9 +16,7 @@ import {
 } from 'pages';
 import { history, AppRouter } from 'common/router';
 import { LoginLayout, MainLayout } from 'layouts';
-import { AuthorizationForm, RegistrationForm } from 'forms';
 import { Role } from 'models';
-import { PrivateRoute, UserStatus, inviteTabs } from 'components';
 
 function App() {
   return (
@@ -24,9 +26,11 @@ function App() {
         <Route
           path="/"
           element={
-            <PrivateRoute roles={[UserStatus.AUTHORIZED]}>
-              <MainLayout />
-            </PrivateRoute>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <PrivateRoute roles={[UserStatus.AUTHORIZED]}>
+                <MainLayout />
+              </PrivateRoute>
+            </ErrorBoundary>
           }
         >
           <Route path="search" element={<SearchInvitePage />} />
@@ -50,14 +54,16 @@ function App() {
           <Route path="following" element={<div>following</div>} />
           <Route path="notifications" element={<div>notifications</div>} />
           <Route path="profile" element={<ProfilePage />} />
-          <Route path="user/:id" element={<UserPage />} />
+          <Route path="user/:login" element={<UserPage />} />
         </Route>
         <Route
           path="/admin"
           element={
-            <PrivateRoute roles={[Role.ADMIN]}>
-              <MainLayout variant={Role.ADMIN} />
-            </PrivateRoute>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <PrivateRoute roles={[Role.ADMIN]}>
+                <MainLayout variant={Role.ADMIN} />
+              </PrivateRoute>
+            </ErrorBoundary>
           }
         >
           <Route path="events" element={<AdminEventsPage />} />

@@ -117,8 +117,8 @@ export const getMe = async (req, res) => {
 
 export const getOne = async (req, res) => {
   try {
-    const userId = req.params.id;
-    const user = await UserModel.findById(userId).exec();
+    const userLogin = req.params.login;
+    const user = await UserModel.findOne({ login: userLogin });
     res.json(user);
   } catch (err) {
     console.log(err);

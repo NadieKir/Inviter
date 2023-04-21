@@ -22,10 +22,6 @@ export const UpdateProfileForm = observer(() => {
     actions: FormikHelpers<{ name: string }>,
   ) => {
     try {
-      console.log({
-        ...userStore.user,
-        name: values.name,
-      });
       const user = await updateUser({
         ...userStore.user,
         name: values.name,

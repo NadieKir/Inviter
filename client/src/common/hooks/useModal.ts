@@ -5,7 +5,7 @@ type ModalProps = [
   toggleModal: () => void
 ]
 
-const useModal = (): ModalProps => {
+export const useModal = (): ModalProps => {
   const [isShowingModal, setIsShowingModal] = useState(false);
 
   function toggleModal() {
@@ -14,5 +14,3 @@ const useModal = (): ModalProps => {
 
   return [isShowingModal, toggleModal];
 }
-
-export default useModal;

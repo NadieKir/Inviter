@@ -1,14 +1,14 @@
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
 import { Button, PasswordField, TextField } from 'components';
-import { LoginFormData, LoginFormFields } from 'types/authorization';
+import { LoginFormData, LoginFormFields } from 'types';
+import { login } from 'api';
+import { UserContext } from 'common/contexts';
 
 import styles from './AuthorizationForm.module.scss';
-import { useContext } from 'react';
-import { UserContext } from 'common/contexts/UserProvider';
-import { login } from 'api';
-import { useNavigate } from 'react-router-dom';
 
 export const AuthorizationForm = () => {
   const navigate = useNavigate();

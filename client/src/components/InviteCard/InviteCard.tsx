@@ -3,11 +3,10 @@ import { NavLink } from 'react-router-dom';
 
 import { Button, ButtonHeight, ButtonVariant } from 'components';
 import { Invite } from 'models';
-import useModal from 'common/hooks/useModal';
+import { useModal } from 'common/hooks';
 import { InviteDetailsModal } from 'modals';
 
 import styles from './InviteCard.module.scss';
-import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from 'assets/images/calendar.svg';
 
 interface InviteCardProps {
@@ -31,7 +30,7 @@ export const InviteCard = ({
         >
           {!noUserVariant && (
             <NavLink
-              to={`/user/${invite.creator._id}`}
+              to={`/user/${invite.creator.login}`}
               className={styles.photoNameWrapper}
             >
               <img

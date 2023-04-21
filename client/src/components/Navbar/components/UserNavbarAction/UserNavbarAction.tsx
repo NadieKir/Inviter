@@ -1,5 +1,5 @@
 import { Button } from 'components/Button/Button';
-import useModal from 'common/hooks/useModal';
+import { useModal } from 'common/hooks';
 import { CreateInviteModal } from 'modals';
 
 import plus from '../../assets/plus.svg';

@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 
 import { registerValidator, createInviteValidator } from "./validations.js";
 import { checkAuth, handleValidationErrors } from "./utils/index.js";
-import { UserController, InviteController } from "./controllers/index.js";
+import { UserController, InviteController, EventController } from "./controllers/index.js";
 
 mongoose
   .connect(
@@ -32,8 +32,8 @@ app.post("/auth/register", registerValidator, handleValidationErrors, UserContro
 app.post("/auth/login", handleValidationErrors, UserController.login);
 app.get("/auth/me", checkAuth, UserController.getMe);
 
-app.get("/users/:id", UserController.getOne);
 app.patch("/users", checkAuth, UserController.update);
+app.get("/users/:login", UserController.getOne);
 
 app.get("/invites", InviteController.getAll);
 app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
@@ -54,6 +54,8 @@ app.patch(
   InviteController.update
 );
 app.delete("/invites/:id", checkAuth, InviteController.remove);
+
+app.get("/events", EventController.getAll);
 
 app.listen(8080, (error) => {
   if (error) {

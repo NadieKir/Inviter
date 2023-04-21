@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import { UserContext } from 'common/contexts';
 import { Role } from 'models';
@@ -16,20 +17,27 @@ interface PrivateRouteProps {
   children: JSX.Element;
 }
 
-export const PrivateRoute = ({ roles, children }: PrivateRouteProps) => {
-  const { user, isGuest } = useContext(UserContext);
+export const PrivateRoute = observer(
+  ({ roles, children }: PrivateRouteProps) => {
+    const { user, isGuest, isLoading, error } = useContext(UserContext);
 
-  if (
-    (isGuest && roles.includes(Role.ADMIN)) ||
-    (user &&
-      !roles.some((role) => [user.role, UserStatus.AUTHORIZED].includes(role)))
-  ) {
-    return <Navigate to="/forbidden" />;
-  }
+    if (isLoading) return <div>Загрузка</div>;
+    if (error) throw error;
 
-  if (isGuest && roles.includes(UserStatus.AUTHORIZED)) {
-    return <Navigate to="/login" />;
-  }
+    if (
+      (isGuest && roles.includes(Role.ADMIN)) ||
+      (user &&
+        !roles.some((role) =>
+          [user.role, UserStatus.AUTHORIZED].includes(role),
+        ))
+    ) {
+      return <Navigate to="/forbidden" />;
+    }
 
-  return children;
-};
+    if (isGuest && roles.includes(UserStatus.AUTHORIZED)) {
+      return <Navigate to="/login" />;
+    }
+
+    return children;
+  },
+);

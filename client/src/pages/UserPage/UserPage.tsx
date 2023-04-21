@@ -14,7 +14,7 @@ import { UserContext } from 'common/contexts/UserProvider';
 import { observer } from 'mobx-react-lite';
 
 export const UserPage = observer(() => {
-  const { id } = useParams();
+  const { login } = useParams();
 
   const userStore = useContext(UserContext);
 
@@ -22,7 +22,7 @@ export const UserPage = observer(() => {
 
   useEffect(() => {
     const r = async () => {
-      const a = await getUser(id!);
+      const a = await getUser(login!);
       setUser(a);
     };
 
