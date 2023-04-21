@@ -25,7 +25,7 @@ export function UserResponseCard({ invite }: Props) {
         <span className={styles.date}>
           <img src={calendar} alt="calendar" />
           {invite.date
-            ? formatInviteDate(new Date(invite.date))
+            ? formatInviteDate(new Date(invite.date), invite.time)
             : 'Любое время'}
         </span>
         <span className={styles.subject}>

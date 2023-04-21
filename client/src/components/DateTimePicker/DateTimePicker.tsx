@@ -36,6 +36,7 @@ export const DateTimePicker = ({
   return (
     <InputField
       {...inputFieldProps}
+      disabled={constraints.disabled}
       containerAttributes={{ className: className }}
     >
       {({
