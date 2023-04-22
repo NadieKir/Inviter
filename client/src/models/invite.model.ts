@@ -13,8 +13,6 @@ export enum InviteType {
 
 export interface Invite {
   id: string;
-  modified: string;
-  creatorId: string;
   creator: User;
   subject: string;
   description: string;
@@ -24,8 +22,8 @@ export interface Invite {
   date?: string;
   time?: string;
   companionAge?: string;
-  companionGender?: Gender[];
-  companionsAmount?: number;
+  companionGender: Gender[];
+  companionsAmount: number;
   companions?: User[];
   responses?: InviteResponse[];
 }

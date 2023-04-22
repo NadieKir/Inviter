@@ -9,6 +9,7 @@ import {
   RequiredInviteFields,
   CITIES_OPTIONS,
   INVITE_TYPES_OPTIONS,
+  SelectOption,
 } from 'types';
 import {
   AgeRangeField,
@@ -29,6 +30,7 @@ import { isDateValueEquals } from 'common/helpers';
 import cross from 'assets/images/redCross.svg';
 
 import styles from './InviteForm.module.scss';
+import { City, Gender, InviteType } from 'models';
 
 interface InviteFormProps {
   initialValuesRequiredStep: RequiredInviteFields;
@@ -128,7 +130,7 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
           <img
             src={cross}
             className={styles.clearButton}
-            alt='Очистить'
+            alt="Очистить"
             onClick={() => {
               setFieldValue(InviteFormFields.Date, '');
               setFieldValue(InviteFormFields.Time, '');
@@ -144,12 +146,12 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
               timeIntervals: 15,
               minTime: minTime,
               maxTime: maxTime,
-              disabled: !dateString
+              disabled: !dateString,
             }}
           />
           <img
             src={cross}
-            alt='Очистить'
+            alt="Очистить"
             className={styles.clearButton}
             onClick={() => {
               setFieldValue(InviteFormFields.Time, '');
@@ -207,18 +209,40 @@ export const InviteForm = observer(
       },
     ];
 
-    const onSubmit = async (values: InviteFormData, actions: FormikHelpers<InviteFormData>) => {
-      var time = values[InviteFormFields.Time]
+    const onSubmit = async (
+      values: InviteFormData,
+      actions: FormikHelpers<InviteFormData>,
+    ) => {
+      const time = values[InviteFormFields.Time]
         ? new Date(values[InviteFormFields.Time])
         : undefined;
 
+      console.log(values[InviteFormFields.CompanionGender]);
+
       const resultValues = {
         ...values,
-        [InviteFormFields.Time]: time ? `${time.getHours()}:${time.getMinutes()}` : ''
-      }
+        [InviteFormFields.Date]: values[InviteFormFields.Date] || undefined,
+        [InviteFormFields.Time]: time
+          ? `${time.getHours()}:${time.getMinutes()}`
+          : undefined,
+        [InviteFormFields.Address]:
+          values[InviteFormFields.Address] || undefined,
+        [InviteFormFields.CompanionGender]:
+          values[InviteFormFields.CompanionGender]?.length === 0
+            ? [Gender.MALE, Gender.FEMALE]
+            : values[InviteFormFields.CompanionGender],
+        [InviteFormFields.CompanionAge]:
+          values[InviteFormFields.CompanionAge] || undefined,
+        [InviteFormFields.City]: (
+          values[InviteFormFields.City] as SelectOption<City>
+        ).value,
+        [InviteFormFields.Type]: (
+          values[InviteFormFields.Type] as SelectOption<InviteType>
+        ).value,
+      };
 
       handleSubmit(resultValues, actions);
-    }
+    };
 
     return (
       <FormikStepper

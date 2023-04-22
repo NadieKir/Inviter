@@ -5,6 +5,7 @@ const InviteSchema = new mongoose.Schema(
     subject: {
       type: String,
       required: true,
+      lowercase: true,
     },
     description: {
       type: String,
@@ -23,25 +24,13 @@ const InviteSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
-      type: String,
-      default: "",
-    },
-    date: {
-      type: String,
-      default: "",
-    },
-    time: {
-      type: String,
-      default: "",
-    },
-    companionAge: {
-      type: String,
-      default: "",
-    },
+    address: String,
+    date: String,
+    time: String,
+    companionAge: String,
     companionGender: {
       type: Array,
-      default: [],
+      default: ["Мужской", "Женский"],
     },
     companionsAmount: {
       type: String,

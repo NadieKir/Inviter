@@ -24,9 +24,7 @@ export function ClosedInviteCard({ invite }: Props) {
           </span>
           <span className={styles.date}>
             <img src={calendar} alt="calendar" />
-            {invite.date
-              ? formatInviteDate(new Date(invite.date), invite.time)
-              : 'Любое время'}
+            {formatInviteDate(invite.date, invite.time)}
           </span>
           <span className={styles.companionsInfo}>
             {getInviteCompanionsInfoString(invite)}

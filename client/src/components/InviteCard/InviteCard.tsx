@@ -10,6 +10,7 @@ import styles from './InviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
 import {
   concatUserNameAndAge,
+  formatInviteDate,
   getInviteCompanionsInfoString,
 } from 'common/helpers';
 
@@ -48,7 +49,7 @@ export const InviteCard = ({
           <div className={styles.inviteInfo}>
             <div className={styles.dateWrapper}>
               <img src={calendar} alt="Календарь" width={'13px'} />
-              {invite.date} {invite.time}
+              {formatInviteDate(invite.date, invite.time)}
             </div>
             <h3 className={styles.heading}>
               Хочет <span className={styles.blue}>{invite.subject}</span>

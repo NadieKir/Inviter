@@ -35,32 +35,14 @@ export const CreateInviteForm = observer(
       values: InviteFormData,
       actions: FormikHelpers<InviteFormData>,
     ) => {
-      alert(JSON.stringify(values));
-
-      const resultValues: InviteFormData = {
-        ...values,
-        [InviteFormFields.City]: (
-          values[InviteFormFields.City] as SelectOption<City>
-        ).value,
-        [InviteFormFields.Type]: (
-          values[InviteFormFields.Type] as SelectOption<InviteType>
-        ).value,
-      };
-
       try {
-        await createInvite(resultValues);
+        await createInvite(values);
         onSubmit();
       } catch (error) {
         console.log(error);
       } finally {
         actions.setSubmitting(false);
       }
-      //await publishMeetup(values);
-      // alert(JSON.stringify(values));
-
-      // actions.setSubmitting(false);
-
-      // onSubmit();
     };
 
     return (

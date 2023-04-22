@@ -23,11 +23,11 @@ export type RequiredInviteFields = {
 
 
 export type AdditionalInviteFields = {
-  [InviteFormFields.Address]: string;
-  [InviteFormFields.Date]: string;
-  [InviteFormFields.Time]: string;
-  [InviteFormFields.CompanionAge]: string;
-  [InviteFormFields.CompanionGender]: Gender[];
+  [InviteFormFields.Address]: string | undefined;
+  [InviteFormFields.Date]: string | undefined;
+  [InviteFormFields.Time]: string | undefined;
+  [InviteFormFields.CompanionAge]: string | undefined;
+  [InviteFormFields.CompanionGender]: Gender[]
   [InviteFormFields.CompanionsAmount]: number;
 };
 
