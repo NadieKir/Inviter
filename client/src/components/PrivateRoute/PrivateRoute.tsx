@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import { UserContext } from 'common/contexts';
 import { Role } from 'models';
+import { Loader } from 'components';
 
 export enum UserStatus {
   AUTHORIZED = 'Authorized',
@@ -21,7 +22,7 @@ export const PrivateRoute = observer(
   ({ roles, children }: PrivateRouteProps) => {
     const { user, isGuest, isLoading, error } = useContext(UserContext);
 
-    if (isLoading) return <div>Загрузка</div>;
+    if (isLoading) return <Loader />;
     if (error) throw error;
 
     if (

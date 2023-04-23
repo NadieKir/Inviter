@@ -36,6 +36,15 @@ const InviteSchema = new mongoose.Schema(
       type: String,
       default: 1,
     },
+    companions: {
+      type: Array,
+      default: [],
+    },
+    responses: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "InviteResponse",
+      default: [],
+    },
   },
   {
     timestamps: true,

@@ -24,6 +24,6 @@ export interface Invite {
   companionAge?: string;
   companionGender: Gender[];
   companionsAmount: number;
-  companions?: User[];
-  responses?: InviteResponse[];
+  companions: User[];
+  responses: InviteResponse[];
 }

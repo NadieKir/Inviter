@@ -217,8 +217,6 @@ export const InviteForm = observer(
         ? new Date(values[InviteFormFields.Time])
         : undefined;
 
-      console.log(values[InviteFormFields.CompanionGender]);
-
       const resultValues = {
         ...values,
         [InviteFormFields.Date]: values[InviteFormFields.Date] || undefined,

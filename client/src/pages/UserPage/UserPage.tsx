@@ -1,22 +1,27 @@
-import classNames from 'classnames';
-import { Button, InviteCard } from 'components';
-
-import styles from './UserPage.module.scss';
-import mockUser from 'assets/images/mock-user-photo.jpg';
-import at from './assets/at.svg';
-import geo from './assets/geo.svg';
-import { useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { getUser } from 'api/services/user.service';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import { useParams } from 'react-router-dom';
+import classNames from 'classnames';
+
+import { Button, Loader } from 'components';
+import { getUser } from 'api';
 import { User } from 'models';
 import { getOverlapPercent } from 'common/helpers';
-import { UserContext } from 'common/contexts/UserProvider';
-import { observer } from 'mobx-react-lite';
+import { UserContext } from 'common/contexts';
+
+import styles from './UserPage.module.scss';
+import at from './assets/at.svg';
+import geo from './assets/geo.svg';
+import UserStore from 'stores/UserStore';
 
 export const UserPage = observer(() => {
   const { login } = useParams();
 
   const userStore = useContext(UserContext);
+
+  // const { isLoading, anotherUsersInvites } = useLocalObservable(
+  //   () => new UserStore(),
+  // );
 
   const [user, setUser] = useState<User>();
 
@@ -29,7 +34,7 @@ export const UserPage = observer(() => {
     r();
   }, []);
 
-  if (!user) return <div>Загрузка</div>;
+  if (!user) return <Loader />;
 
   return (
     <section className={styles.userPageSection}>
@@ -52,7 +57,7 @@ export const UserPage = observer(() => {
           <p className={styles.matchRate}>
             Совпадение интересов:{' '}
             <span className="blue">
-              {getOverlapPercent(userStore.user!.interests, user.interests)}
+              {getOverlapPercent(user.interests, userStore.user!.interests)}
             </span>
           </p>
         </div>

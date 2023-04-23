@@ -1,16 +1,23 @@
 import { useState } from 'react';
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import { Form, Formik, FormikHelpers } from 'formik';
 
+import { Button, TextField } from 'components';
 import { Modal, ModalProps } from 'modals';
 import { Invite } from 'models';
-import { Button, TextField } from 'components';
+import {
+  concatUserNameAndAge,
+  formatInviteDate,
+  getInviteCompanionsInfoString,
+} from 'common/helpers';
 
 import styles from './InviteDetailsModal.module.scss';
-import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from './assets/calendar.svg';
 import geo from './assets/geo.svg';
 import info from './assets/info.svg';
+import { respondInvite } from 'api';
+import { InviteRespondFormData, InviteRespondFormFields } from 'types';
 
 interface ViewInviteModalProps extends ModalProps {
   invite: Invite;
@@ -32,12 +39,22 @@ export const InviteDetailsModal = ({
     setCurrentStep(1);
   };
 
-  const handleSubmit = (
-    values: { respondMessage: string },
-    actions: FormikHelpers<{ respondMessage: string }>,
+  const handleSubmit = async (
+    values: InviteRespondFormData,
+    actions: FormikHelpers<InviteRespondFormData>,
   ) => {
-    alert(JSON.stringify(values));
-    onModalClose();
+    try {
+      await respondInvite(invite.id, values);
+      onModalClose();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      actions.setSubmitting(false);
+    }
+  };
+
+  const initialValues: InviteRespondFormData = {
+    [InviteRespondFormFields.Message]: '',
   };
 
   return (
@@ -48,30 +65,33 @@ export const InviteDetailsModal = ({
         })}
       >
         <div className={styles.mainWrapper}>
-          <div className={styles.userInfo}>
+          <NavLink
+            to={`/user/${invite.creator.login}`}
+            className={styles.userInfo}
+          >
             <img
               className={styles.userPhoto}
               src={invite.creator.image}
               alt="Фото пользователя"
             />
-            <span>{invite.creator.name}, 28</span>
-          </div>
+            <span>{concatUserNameAndAge(invite.creator)}</span>
+          </NavLink>
           <div className={styles.inviteInfo}>
             <h1 className={styles.heading}>
               Хочет <span className="blue">{invite.subject}</span>
             </h1>
             <p className={styles.whoWithDescription}>
-              {invite.companionGender} {invite.companionAge}
+              {getInviteCompanionsInfoString(invite)}
             </p>
             <p className={styles.description}>{invite.description}</p>
             <div className={styles.details}>
               <div className={styles.detail}>
                 <img src={calendar} alt="Дата и время" />
-                {invite.date} {invite.time}
+                {formatInviteDate(invite.date, invite.time)}
               </div>
               <div className={styles.detail}>
                 <img src={geo} alt="Локация" />
-                {invite.city} {invite.address}
+                {invite.city} {invite.address && `, ${invite.address}`}
               </div>
             </div>
           </div>
@@ -89,11 +109,11 @@ export const InviteDetailsModal = ({
           Заявки с прикреплённым сообщением имеют больший шанс быть выбранными
         </p>
 
-        <Formik initialValues={{ respondMessage: '' }} onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {(props) => (
             <Form className={styles.form}>
               <TextField
-                name="respondMessage"
+                name="message"
                 placeholderText="Ваше сообщение"
                 multiline={true}
                 maxLetterCount={300}

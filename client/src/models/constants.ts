@@ -141,6 +141,7 @@ export const mockedInvites: Invite[] = [
     companionGender: [Gender.MALE, Gender.FEMALE],
     companionsAmount: 4,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 4) < (4 / 2)).slice(0, 3),
+    responses: []
   },
   {
     id: "invite3",
@@ -172,6 +173,7 @@ export const mockedInvites: Invite[] = [
     companionGender: [Gender.FEMALE],
     companionsAmount: 1,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 1) < (1 / 2)).slice(0, 1),
+    responses: []
   },
   {
     id: "invite5",

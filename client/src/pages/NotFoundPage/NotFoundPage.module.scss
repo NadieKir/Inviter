@@ -3,10 +3,20 @@
 @import '~style/variables';
 @import '~style/mixins';
 
-.wrapper {
-  @include base-wrapper();
+.container {
+  height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  @include base-wrapper();
+  height: 80vh;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   row-gap: 50px;
 

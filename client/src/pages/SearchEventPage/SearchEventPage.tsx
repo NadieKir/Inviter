@@ -1,6 +1,6 @@
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
-import { EventCard } from 'components';
+import { EventCard, Loader } from 'components';
 import { MockedEvent } from 'models';
 import { SearchEventForm } from 'forms';
 import { EventListStore } from 'stores';
@@ -23,7 +23,7 @@ export const SearchEventPage = observer(() => {
         <SearchEventForm />
       </div>
       {isLoading ? (
-        <div>Загрузка</div>
+        <Loader />
       ) : (
         <ul className={styles.сards}>
           {events.map((event) => (

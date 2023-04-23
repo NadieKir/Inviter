@@ -1,6 +1,6 @@
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
-import { InviteCard } from 'components';
+import { InviteCard, Loader } from 'components';
 import { SearchInviteForm } from 'forms';
 import { AnotherUsersInvitesStore } from 'stores';
 
@@ -18,7 +18,7 @@ export const SearchInvitePage = observer(() => {
         <SearchInviteForm />
       </div>
       {isLoading ? (
-        <div>Загрузка</div>
+        <Loader />
       ) : (
         <ul className={styles.userCards}>
           {anotherUsersInvites.map((invite) => (
