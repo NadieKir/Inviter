@@ -3,7 +3,7 @@
 @import '~style/mixins';
 
 .card {
-  height: 92%;
+  height: 100%;
   position: relative;
 
   @include base-wrapper();

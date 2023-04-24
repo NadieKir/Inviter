@@ -11,6 +11,7 @@ import { UserStore } from 'stores';
 import styles from './UserPage.module.scss';
 import at from './assets/at.svg';
 import geo from './assets/geo.svg';
+import { Invite } from 'models';
 
 export const UserPage = observer(() => {
   const { login } = useParams();
@@ -124,7 +125,11 @@ export const UserPage = observer(() => {
       </div>
       <section className={styles.userInvitesSection}>
         <h2 className="heading-H2">Текущие инвайты</h2>
-        <ul className={styles.userInvites}></ul>
+        <ul className={styles.userInvites}>
+          {userInvites.map((invite: Invite) => (
+            <InviteCard key={invite.id} invite={invite} noUserVariant />
+          ))}
+        </ul>
       </section>
     </section>
   );
