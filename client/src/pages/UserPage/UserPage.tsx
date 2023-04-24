@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Button, InviteCard, Loader } from 'components';
-import { concatUserNameAndAge, getOverlapPercent } from 'common/helpers';
+import { concatUserNameAndAge, formatDate, getOverlapPercent } from 'common/helpers';
 import { UserContext } from 'common/contexts';
 import { UserStore } from 'stores';
 
@@ -74,35 +74,31 @@ export const UserPage = observer(() => {
               <div className={styles.questionnaire}>
                 <div className={styles.questionnaireRow}>
                   <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
+                  <span className={styles.description}>{formatDate(new Date(user.birthday))}</span>
                 </div>
                 <div className={styles.questionnaireRow}>
-                  <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
+                  <span className={styles.subject}>Ориентация</span>
+                  <span className={styles.description}>{user.orientation}</span>
                 </div>
                 <div className={styles.questionnaireRow}>
-                  <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
+                  <span className={styles.subject}>Отношения</span>
+                  <span className={styles.description}>{user.familyStatus}</span>
                 </div>
                 <div className={styles.questionnaireRow}>
-                  <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
+                  <span className={styles.subject}>Языки</span>
+                  <span className={styles.description}>{user.languages.join(', ')}</span>
                 </div>
                 <div className={styles.questionnaireRow}>
-                  <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
+                  <span className={styles.subject}>Курение</span>
+                  <span className={styles.description}>{user.smokingAttitude}</span>
                 </div>
                 <div className={styles.questionnaireRow}>
-                  <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
+                  <span className={styles.subject}>Алкоголь</span>
+                  <span className={styles.description}>{user.alcoholAttitude}</span>
                 </div>
                 <div className={styles.questionnaireRow}>
-                  <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
-                </div>
-                <div className={styles.questionnaireRow}>
-                  <span className={styles.subject}>День рождения</span>
-                  <span className={styles.description}>21.08.2000</span>
+                  <span className={styles.subject}>Возраст компаньонов</span>
+                  <span className={styles.description}>{user.preferredAge}</span>
                 </div>
               </div>
               <div className={styles.questionnaire}>
