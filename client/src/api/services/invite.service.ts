@@ -13,6 +13,11 @@ export const getAnotherUsersInvites = async (): Promise<Invite[]> => {
   return invites;
 };
 
+export const getAnotherUserInvites = async (userId: string): Promise<Invite[]> => {
+  const { data: invites } = await httpClient.get<Invite[]>(`/invites/another/${userId}`);
+  return invites;
+};
+
 export const getCurrentUserInvites = async (): Promise<Invite[]> => {
   const { data: invites } = await httpClient.get<Invite[]>('/invites/current');
   return invites;

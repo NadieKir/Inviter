@@ -36,7 +36,8 @@ app.patch("/users", checkAuth, UserController.update);
 app.get("/users/:login", UserController.getOne);
 
 app.get("/invites", InviteController.getAll);
-app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
+app.get("/invites/another", InviteController.getAllAnotherUsers);
+app.get("/invites/another/:userId", InviteController.getAllAnotherUser);
 app.get("/invites/current", checkAuth, InviteController.getAllCurrentUser);
 app.get("/invites/:id", InviteController.getOne);
 app.post(

@@ -1,17 +1,16 @@
-import { makeAutoObservable } from 'mobx';
+import { getCurrentUser } from 'api';
 import { AxiosError } from 'axios';
-
-import { getAnotherUserInvites, getUser } from 'api';
+import { makeAutoObservable } from 'mobx';
 import { User } from 'models';
 
-export class UserStore {
+export class CurrentUserStore {
   user: User | null = null;
   isLoading: boolean = false;
   error: AxiosError | null = null;
 
-  constructor(login: string) {
+  constructor() {
     makeAutoObservable(this);
-    this.loadUser(login);
+    this.loadUser();
   }
 
   setUser(newUser: User | null) {
@@ -26,15 +25,19 @@ export class UserStore {
     this.error = error;
   }
 
-  get userInvites() {
-    return this.user ? getAnotherUserInvites(this.user._id) : [] ;
+  get isGuest() {
+    return this.user === null;
   }
 
-  loadUser = async (login: string) => {
+  loadUser = async () => {
     this.setIsLoading(true);
 
+    const savedUserToken = localStorage.getItem('user');
+    if (!savedUserToken) return;
+
     try {
-      this.setUser(await getUser(login));
+      const savedUser = await getCurrentUser();
+      this.setUser(savedUser);
     }
     catch (error) {
       this.setError(error as AxiosError);
@@ -44,4 +47,11 @@ export class UserStore {
       this.setIsLoading(false);
     }
   }
+
+  logout = () => {
+    this.setUser(null);
+    localStorage.removeItem('user');
+  }
 }
+
+export default new CurrentUserStore();
