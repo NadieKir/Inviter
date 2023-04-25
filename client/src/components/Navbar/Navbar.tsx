@@ -1,18 +1,17 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 
 import { Role } from 'models';
 import { userLinksToNavItem, adminLinksToNavItem } from 'common/constants';
+import { UserContext } from 'common/contexts';
+import { AdminNavbarAction } from './components/AdminNavbarAction/AdminNavbarAction';
+import { UserNavbarAction } from './components/UserNavbarAction/UserNavbarAction';
 
 import styles from './Navbar.module.scss';
 import logo from 'assets/images/logo.svg';
 import geo from 'assets/images/geo.svg';
-import userPhoto from 'assets/images/mock-user-photo.jpg';
-import { AdminNavbarAction } from './components/AdminNavbarAction/AdminNavbarAction';
-import { UserNavbarAction } from './components/UserNavbarAction/UserNavbarAction';
-import { useContext } from 'react';
-import { UserContext } from 'common/contexts/UserProvider';
-import { observer } from 'mobx-react-lite';
 
 interface NavbarProps {
   variant: Role;

@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { makeAutoObservable } from 'mobx';
 
-import { getAnotherUsersInvites, getCurrentUserInvites } from 'api';
+import { getCurrentUserInvites } from 'api';
 import { Invite } from 'models';
 
 export class CurrentUserInvitesStore {

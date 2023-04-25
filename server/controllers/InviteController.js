@@ -86,7 +86,7 @@ export const getOne = async (req, res) => {
     res.json(invite);
   } catch (err) {
     console.log(err);
-    res.status(404).json({
+    res.status(400).json({
       message: "Не удалось получить инвайт",
     });
   }
@@ -99,7 +99,7 @@ export const remove = async (req, res) => {
     InviteModel.findOneAndDelete({ _id: inviteId })
       .then((doc) => {
         if (!doc) {
-          return res.status(404).json({
+          return res.status(400).json({
             message: "Инвайт не найден",
           });
         }

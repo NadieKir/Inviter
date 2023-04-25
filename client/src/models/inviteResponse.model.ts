@@ -1,6 +1,8 @@
+import { Invite } from "./invite.model";
 import { User } from "./user.model";
 
 export interface InviteResponse {
   user: User;
-  message?: string;
+  invite: Invite;
+  message: string;
 }

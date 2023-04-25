@@ -44,7 +44,7 @@ export const InviteDetailsModal = ({
     actions: FormikHelpers<InviteRespondFormData>,
   ) => {
     try {
-      await respondInvite(invite.id, values);
+      await respondInvite(invite._id, values);
       onModalClose();
     } catch (error) {
       console.log(error);

@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
@@ -5,14 +6,15 @@ import { Button, ButtonHeight, ButtonVariant } from 'components';
 import { Invite } from 'models';
 import { useModal } from 'common/hooks';
 import { InviteDetailsModal } from 'modals';
-
-import styles from './InviteCard.module.scss';
-import calendar from 'assets/images/calendar.svg';
 import {
   concatUserNameAndAge,
   formatInviteDate,
   getInviteCompanionsInfoString,
 } from 'common/helpers';
+import { UserContext } from 'common/contexts';
+
+import styles from './InviteCard.module.scss';
+import calendar from 'assets/images/calendar.svg';
 
 interface InviteCardProps {
   invite: Invite;
@@ -24,7 +26,9 @@ export const InviteCard = ({
   noUserVariant = false,
 }: InviteCardProps) => {
   const [isShowingModal, toggleModal] = useModal();
+  const { userResponses } = useContext(UserContext);
 
+  console.log(invite);
   return (
     <>
       <li>
@@ -58,13 +62,25 @@ export const InviteCard = ({
               {getInviteCompanionsInfoString(invite)}
             </p>
           </div>
-          <Button
-            variant={ButtonVariant.Secondary}
-            height={ButtonHeight.Small}
-            onClick={toggleModal}
-          >
-            Посмотреть инвайт
-          </Button>
+          {userResponses
+            .map((response) => response.invite._id)
+            .includes(invite._id) ? (
+            <Button
+              variant={ButtonVariant.Secondary}
+              height={ButtonHeight.Small}
+              disabled
+            >
+              Вы откликнулись
+            </Button>
+          ) : (
+            <Button
+              variant={ButtonVariant.Secondary}
+              height={ButtonHeight.Small}
+              onClick={toggleModal}
+            >
+              Посмотреть инвайт
+            </Button>
+          )}
         </article>
       </li>
 

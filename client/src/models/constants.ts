@@ -112,7 +112,7 @@ export const mockedUsers: User[] = [
 
 export const mockedInvites: Invite[] = [
   {
-    id: "invite1",
+    _id: "invite1",
     creator: getRandomItem(mockedUsers),
     subject: "Coffee talk",
     description: "Let's catch up over some coffee and croissants!",
@@ -125,10 +125,11 @@ export const mockedInvites: Invite[] = [
     companionGender: [Gender.FEMALE],
     companionsAmount: 2,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 1),
-    responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 1).map(u => ({ user: u, message: 'Go. Go' }))
+    responses: []
+    // responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 1).map(u => ({ user: u, message: 'Go. Go' }))
   },
   {
-    id: "invite2",
+    _id: "invite2",
     creator: getRandomItem(mockedUsers),
     subject: "Movie night",
     description: "Let's watch some classic movies and have some popcorn!",
@@ -144,7 +145,7 @@ export const mockedInvites: Invite[] = [
     responses: []
   },
   {
-    id: "invite3",
+    _id: "invite3",
     creator: getRandomItem(mockedUsers),
     subject: "Hiking adventure",
     description: "Let's explore the beautiful trails and views of Yosemite!",
@@ -157,10 +158,11 @@ export const mockedInvites: Invite[] = [
     companionGender: [Gender.MALE, Gender.FEMALE],
     companionsAmount: 3,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 3) < (3 / 2)).slice(0, 2),
-    responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 3).map(u => ({ user: u, message: 'SfSDFASDFASD ASDFASD ASDF AADFSAD ADSF ADFA DSA SDFASD' }))
+    responses: []
+    // responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 3).map(u => ({ user: u, message: 'SfSDFASDFASD ASDFASD ASDF AADFSAD ADSF ADFA DSA SDFASD' }))
   },
   {
-    id: "invite4",
+    _id: "invite4",
     creator: getRandomItem(mockedUsers),
     subject: "Sushi dinner",
     description: "Let's enjoy some delicious sushi rolls and sashimi together!",
@@ -176,7 +178,7 @@ export const mockedInvites: Invite[] = [
     responses: []
   },
   {
-    id: "invite5",
+    _id: "invite5",
     creator: getRandomItem(mockedUsers),
     subject: "Beach day",
     description: "Let's soak up some sun and play some volleyball on the beach!",
@@ -189,6 +191,6 @@ export const mockedInvites: Invite[] = [
     companionGender: [Gender.MALE, Gender.FEMALE],
     companionsAmount: 5,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 5) < (5 / 2)).slice(0, 4),
-    responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 2).map(u => ({ user: u, message: 'Go. Go' }))
+    responses: []
   },
 ];

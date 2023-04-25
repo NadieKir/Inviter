@@ -99,7 +99,7 @@ export const getMe = async (req, res) => {
     const user = await UserModel.findById(req.userId);
 
     if (!user) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: "Пользователь не найден",
       });
     }
@@ -122,7 +122,7 @@ export const getOne = async (req, res) => {
     res.json(user);
   } catch (err) {
     console.log(err);
-    res.status(404).json({
+    res.status(400).json({
       message: "Не удалось получить пользователя",
     });
   }

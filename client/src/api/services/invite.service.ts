@@ -1,7 +1,6 @@
 import { httpClient } from 'api/httpClient';
 import { Invite } from 'models';
-import { InviteFormData, InviteRespondFormData } from 'types';
-
+import { InviteFormData } from 'types';
 
 export const getInvites = async (): Promise<Invite[]> => {
   const { data: invites } = await httpClient.get<Invite[]>('/invites');
@@ -30,10 +29,3 @@ export const createInvite = async (
   return createdInvite;
 };
 
-export const respondInvite = async (
-  id: string,
-  response: InviteRespondFormData,
-): Promise<Invite> => {
-  const { data: updatedInvite } = await httpClient.patch<Invite>(`/invite-responses/${id}`, response);
-  return updatedInvite;
-};
