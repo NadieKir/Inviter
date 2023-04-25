@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
@@ -15,7 +16,6 @@ import { UserContext } from 'common/contexts';
 
 import styles from './InviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import { observer } from 'mobx-react-lite';
 
 interface InviteCardProps {
   invite: Invite;

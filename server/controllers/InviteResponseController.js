@@ -26,6 +26,7 @@ export const getAllCurrentUser = async (req, res) => {
     const responses = await InviteResponseModel.find({ user: req.userId })
       .populate("invite")
       .exec();
+
     res.json(responses);
   } catch (err) {
     console.log(err);

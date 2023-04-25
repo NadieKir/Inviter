@@ -1,9 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 import { AxiosError } from 'axios';
 
-import { getCurrentUser, getCurrentUserResponses, login } from 'api';
+import { getCurrentUser, getCurrentUserResponses, login, respondInvite } from 'api';
 import { InviteResponse, User } from 'models';
-import { LoginFormData } from 'types';
+import { InviteRespondFormData, LoginFormData } from 'types';
 
 export class CurrentUserStore {
   user: User | null = null;
@@ -44,7 +44,7 @@ export class CurrentUserStore {
       if (!savedUserToken) return;
 
       this.setUser(await getCurrentUser());
-      this.loadUserResponses();
+      this.setUserResponses(await getCurrentUserResponses());
     }
     catch (error) {
       this.setError(error as AxiosError);
@@ -55,8 +55,9 @@ export class CurrentUserStore {
     }
   }
 
-  loadUserResponses = async () => {
+  respondInvite = async (inviteId: string, values: InviteRespondFormData) => {
     try {
+      await respondInvite(inviteId, values);
       this.setUserResponses(await getCurrentUserResponses());
     }
     catch (error) {

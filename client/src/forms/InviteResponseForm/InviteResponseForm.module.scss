@@ -1,0 +1,18 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.infoWrapper{
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+
+  font-weight: 400;
+  font-size: 10px;
+}
+
+.submitButton{
+  margin-top: 20px;
+}
