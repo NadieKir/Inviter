@@ -66,15 +66,15 @@ export const LoginLayout = () => {
               </span>
             </div>
             <div className={styles.promoImage}>
-              <img src={promoImage2} alt="Промо изображение" />
-              <span>
-                #<span className="blue">попробовоть_десерт</span>
-              </span>
-            </div>
-            <div className={styles.promoImage}>
               <img src={promoImage3} alt="Промо изображение" />
               <span>
                 #<span className="blue">посмотреть_фильм</span>
+              </span>
+            </div>
+            <div className={styles.promoImage}>
+              <img src={promoImage2} alt="Промо изображение" />
+              <span>
+                #<span className="blue">покорить_вершины</span>
               </span>
             </div>
           </div>

@@ -15,7 +15,6 @@ const InviteResponseSchema = new mongoose.Schema(
     message: {
       type: String,
       default: "",
-      required: true,
     },
   },
   {

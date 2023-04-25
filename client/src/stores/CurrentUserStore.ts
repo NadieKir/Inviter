@@ -1,7 +1,9 @@
-import { getCurrentUser, getCurrentUserResponses } from 'api';
-import { AxiosError } from 'axios';
 import { makeAutoObservable } from 'mobx';
+import { AxiosError } from 'axios';
+
+import { getCurrentUser, getCurrentUserResponses, login } from 'api';
 import { InviteResponse, User } from 'models';
+import { LoginFormData } from 'types';
 
 export class CurrentUserStore {
   user: User | null = null;
@@ -12,7 +14,6 @@ export class CurrentUserStore {
   constructor() {
     makeAutoObservable(this);
     this.loadUser();
-    this.loadUserResponses();
   }
 
   setUser(newUser: User | null) {
@@ -34,16 +35,16 @@ export class CurrentUserStore {
   get isGuest() {
     return this.user === null;
   }
-
+  
   loadUser = async () => {
     this.setIsLoading(true);
 
-    const savedUserToken = localStorage.getItem('user');
-    if (!savedUserToken) return;
-
     try {
-      const savedUser = await getCurrentUser();
-      this.setUser(savedUser);
+      const savedUserToken = localStorage.getItem('user');
+      if (!savedUserToken) return;
+
+      this.setUser(await getCurrentUser());
+      this.loadUserResponses();
     }
     catch (error) {
       this.setError(error as AxiosError);
@@ -55,8 +56,6 @@ export class CurrentUserStore {
   }
 
   loadUserResponses = async () => {
-    this.setIsLoading(true);
-
     try {
       this.setUserResponses(await getCurrentUserResponses());
     }
@@ -64,7 +63,20 @@ export class CurrentUserStore {
       this.setError(error as AxiosError);
       throw this.error;
     } 
-    finally {
+  }
+
+  login = async (values: LoginFormData) => {
+    try {
+      this.setIsLoading(true);
+
+      const user = await login(values);
+
+      this.setUser(user);
+      localStorage.setItem('user', user.token);
+    } catch (error) {
+      this.setError(error as AxiosError);
+      throw this.error;
+    } finally {
       this.setIsLoading(false);
     }
   }

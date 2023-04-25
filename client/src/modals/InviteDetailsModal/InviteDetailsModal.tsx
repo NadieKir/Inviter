@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { Form, Formik, FormikHelpers } from 'formik';
@@ -11,13 +11,14 @@ import {
   formatInviteDate,
   getInviteCompanionsInfoString,
 } from 'common/helpers';
+import { respondInvite } from 'api';
+import { InviteRespondFormData, InviteRespondFormFields } from 'types';
+import { UserContext } from 'common/contexts';
 
 import styles from './InviteDetailsModal.module.scss';
 import calendar from './assets/calendar.svg';
 import geo from './assets/geo.svg';
 import info from './assets/info.svg';
-import { respondInvite } from 'api';
-import { InviteRespondFormData, InviteRespondFormFields } from 'types';
 
 interface ViewInviteModalProps extends ModalProps {
   invite: Invite;
@@ -29,6 +30,7 @@ export const InviteDetailsModal = ({
   invite,
 }: ViewInviteModalProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const { loadUserResponses } = useContext(UserContext);
 
   const onModalClose = () => {
     onClose();
@@ -45,6 +47,7 @@ export const InviteDetailsModal = ({
   ) => {
     try {
       await respondInvite(invite._id, values);
+      loadUserResponses();
       onModalClose();
     } catch (error) {
       console.log(error);
