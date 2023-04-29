@@ -22,7 +22,7 @@ export const SearchInvitePage = observer(() => {
       ) : (
         <ul className={styles.userCards}>
           {anotherUsersInvites.map((invite) => (
-            <InviteCard key={invite.id} invite={invite} />
+            <InviteCard key={invite._id} invite={invite} />
           ))}
         </ul>
       )}

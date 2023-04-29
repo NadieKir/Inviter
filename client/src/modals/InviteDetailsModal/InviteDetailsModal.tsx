@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
-import { Form, Formik, FormikHelpers } from 'formik';
 
-import { Button, TextField } from 'components';
+import { Button } from 'components';
 import { Modal, ModalProps } from 'modals';
 import { Invite } from 'models';
+import { InviteResponseForm } from 'forms';
 import {
   concatUserNameAndAge,
   formatInviteDate,
@@ -15,9 +15,6 @@ import {
 import styles from './InviteDetailsModal.module.scss';
 import calendar from './assets/calendar.svg';
 import geo from './assets/geo.svg';
-import info from './assets/info.svg';
-import { respondInvite } from 'api';
-import { InviteRespondFormData, InviteRespondFormFields } from 'types';
 
 interface ViewInviteModalProps extends ModalProps {
   invite: Invite;
@@ -37,24 +34,6 @@ export const InviteDetailsModal = ({
 
   const handleInviteRespond = () => {
     setCurrentStep(1);
-  };
-
-  const handleSubmit = async (
-    values: InviteRespondFormData,
-    actions: FormikHelpers<InviteRespondFormData>,
-  ) => {
-    try {
-      await respondInvite(invite.id, values);
-      onModalClose();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      actions.setSubmitting(false);
-    }
-  };
-
-  const initialValues: InviteRespondFormData = {
-    [InviteRespondFormFields.Message]: '',
   };
 
   return (
@@ -109,25 +88,7 @@ export const InviteDetailsModal = ({
           Заявки с прикреплённым сообщением имеют больший шанс быть выбранными
         </p>
 
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {(props) => (
-            <Form className={styles.form}>
-              <TextField
-                name="message"
-                placeholderText="Ваше сообщение"
-                multiline={true}
-                maxLetterCount={300}
-              />
-              <div className={styles.infoWrapper}>
-                <img src={info} alt="Информация" />
-                Пожалуйста, не используйте фраз, способных обидеть собеседника
-              </div>
-              <Button className={styles.submitButton} type="submit">
-                Отправить заявку
-              </Button>
-            </Form>
-          )}
-        </Formik>
+        <InviteResponseForm inviteId={invite._id} onModalClose={onModalClose} />
       </section>
     </Modal>
   );

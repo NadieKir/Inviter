@@ -12,7 +12,7 @@ export enum InviteType {
 }
 
 export interface Invite {
-  id: string;
+  _id: string;
   creator: User;
   subject: string;
   description: string;

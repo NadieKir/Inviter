@@ -5,7 +5,12 @@ import bodyParser from "body-parser";
 
 import { registerValidator, createInviteValidator } from "./validations.js";
 import { checkAuth, handleValidationErrors } from "./utils/index.js";
-import { UserController, InviteController, EventController } from "./controllers/index.js";
+import {
+  UserController,
+  InviteController,
+  EventController,
+  InviteResponseController,
+} from "./controllers/index.js";
 
 mongoose
   .connect(
@@ -35,11 +40,11 @@ app.get("/auth/me", checkAuth, UserController.getMe);
 app.patch("/users", checkAuth, UserController.update);
 app.get("/users/:login", UserController.getOne);
 
-app.get("/invites", InviteController.getAll);
-app.get("/invites/another", InviteController.getAllAnotherUsers);
-app.get("/invites/another/:userId", InviteController.getAllAnotherUser);
+app.get("/invites", checkAuth, InviteController.getAll);
+app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
+app.get("/invites/another/:userId", checkAuth, InviteController.getAllAnotherUser);
 app.get("/invites/current", checkAuth, InviteController.getAllCurrentUser);
-app.get("/invites/:id", InviteController.getOne);
+app.get("/invites/:id", checkAuth, InviteController.getOne);
 app.post(
   "/invites",
   checkAuth,
@@ -56,7 +61,10 @@ app.patch(
 );
 app.delete("/invites/:id", checkAuth, InviteController.remove);
 
-app.get("/events", EventController.getAll);
+app.get("/invite-responses/current", checkAuth, InviteResponseController.getAllCurrentUser);
+app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);
+
+app.get("/events", checkAuth, EventController.getAll);
 
 app.listen(8080, (error) => {
   if (error) {

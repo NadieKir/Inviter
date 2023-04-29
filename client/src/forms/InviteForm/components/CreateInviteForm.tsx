@@ -7,7 +7,6 @@ import {
   InviteFormData,
   InviteFormFields,
   RequiredInviteFields,
-  SelectOption,
 } from 'types';
 import { InviteForm } from 'forms';
 import { CreateOrEditInviteFormProps } from './types';

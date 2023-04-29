@@ -123,7 +123,7 @@ export const UserPage = observer(() => {
         <h2 className="heading-H2">Текущие инвайты</h2>
         <ul className={styles.userInvites}>
           {userInvites.map((invite: Invite) => (
-            <InviteCard key={invite.id} invite={invite} noUserVariant />
+            <InviteCard key={invite._id} invite={invite} noUserVariant />
           ))}
         </ul>
       </section>

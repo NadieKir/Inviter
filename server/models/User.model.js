@@ -13,10 +13,12 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     login: {
       type: String,
       required: true,
+      unique: true,
     },
     passwordHash: {
       type: String,
@@ -73,6 +75,18 @@ const UserSchema = new mongoose.Schema(
     preferredAge: {
       type: String,
       required: true,
+    },
+    contacts: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      default: [],
+    },
+    followers: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      default: [],
+    },
+    followings: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      default: [],
     },
   },
   {

@@ -1,19 +1,19 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
-import { Button, PasswordField, TextField } from 'components';
+import { Button, Loader, PasswordField, TextField } from 'components';
 import { LoginFormData, LoginFormFields } from 'types';
-import { login } from 'api';
 import { UserContext } from 'common/contexts';
 
 import styles from './AuthorizationForm.module.scss';
 
-export const AuthorizationForm = () => {
+export const AuthorizationForm = observer(() => {
   const navigate = useNavigate();
 
-  const userStore = useContext(UserContext);
+  const { login, isLoading } = useContext(UserContext);
 
   const loginSchema = Yup.object().shape({
     [LoginFormFields.Login]: Yup.string(),
@@ -25,11 +25,7 @@ export const AuthorizationForm = () => {
     actions: FormikHelpers<LoginFormData>,
   ) => {
     try {
-      const user = await login(values);
-
-      userStore.setUser(user);
-      localStorage.setItem('user', user.token);
-
+      await login(values);
       navigate('/');
     } catch (error: any) {
       if (error.response.status === 400) alert('Пользователь не найден');
@@ -53,8 +49,10 @@ export const AuthorizationForm = () => {
           <Button type="submit" disabled={!props.isValid || !props.dirty}>
             Войти
           </Button>
+
+          {isLoading && <Loader />}
         </Form>
       )}
     </Formik>
   );
-};
+});

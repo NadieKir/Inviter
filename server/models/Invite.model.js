@@ -33,16 +33,15 @@ const InviteSchema = new mongoose.Schema(
       default: ["Мужской", "Женский"],
     },
     companionsAmount: {
-      type: String,
+      type: Number,
       default: 1,
     },
     companions: {
-      type: Array,
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       default: [],
     },
     responses: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "InviteResponse",
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "InviteResponse" }],
       default: [],
     },
   },
