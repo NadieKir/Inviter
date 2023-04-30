@@ -15,6 +15,8 @@ type TextInputOrAreaProps = {
   placeholderText?: string;
   pattern?: string;
   className?: string;
+  onBlur?: (value: string) => void;
+  onChange?: (value: string) => void;
 } & (
     | {
       multiline: false | undefined;
@@ -35,6 +37,8 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
   let maxLetterCount: number | undefined;
   let pattern: string | undefined;
 
+
+
   switch (props.multiline) {
     case true:
       ({ className, placeholderText, pattern, multiline, maxLetterCount, ...inputFieldProps } =
@@ -45,6 +49,14 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
           {({ field, className }: InputRenderProps): JSX.Element => (
             <TextArea
               {...field}
+              onBlur={(e) => {
+                field.onBlur(e);
+                props.onBlur?.(e.target.value);
+              }}
+              onChange={(e) => {
+                field.onChange(e);
+                props.onChange?.(e.currentTarget.value);
+              }}
               className={classNames(className, styles.textArea)}
               placeholder={placeholderText}
               maxLetterCount={maxLetterCount}
@@ -62,6 +74,14 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
           {({ field, className }: InputRenderProps): JSX.Element => (
             <Input
               {...field}
+              onBlur={(e) => {
+                field.onBlur(e);
+                props.onBlur?.(e.target.value);
+              }}
+              onChange={(e) => {
+                field.onChange(e);
+                props.onChange?.(e.currentTarget.value);
+              }}
               className={className}
               placeholder={placeholderText}
               type={InputType.Text}

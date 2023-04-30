@@ -17,3 +17,14 @@ export const getCurrentUser = async (): Promise<User> => {
   const { data: user } = await httpClient.get<User>('/auth/me');
   return user;
 };
+
+export const checkLogin = async (login: string): Promise<boolean> => {
+  const result = await httpClient.get<boolean>(`auth/login/${login}`);
+  return result.data;
+}
+
+export const checkEmail = async (email: string): Promise<boolean> => {
+  const result = await httpClient.get<boolean>(`auth/email/${email}`);
+
+  return result.data;
+}

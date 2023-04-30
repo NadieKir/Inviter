@@ -186,3 +186,41 @@ export const update = async (req, res) => {
     });
   }
 };
+
+export const checkLogin = async (req, res) => {
+  try {
+    const login = req.params.login;
+    const user = await UserModel.findOne({ login });
+    if (!user) {
+      res.json(false);
+
+      return;
+    }
+
+    res.json(true);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось обновить пользователя",
+    });
+  }
+}
+
+export const checkEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      res.json(false);
+
+      return;
+    }
+
+    res.json(true);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось обновить пользователя",
+    });
+  }
+}

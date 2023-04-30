@@ -28,14 +28,14 @@ export class CurrentUserStore {
     this.isLoading = isLoading;
   }
 
-  setError(error: AxiosError) {
+  setError(error: AxiosError | null) {
     this.error = error;
   }
 
   get isGuest() {
     return this.user === null;
   }
-  
+
   loadUser = async () => {
     this.setIsLoading(true);
 
@@ -49,8 +49,9 @@ export class CurrentUserStore {
     catch (error) {
       this.setError(error as AxiosError);
       throw this.error;
-    } 
+    }
     finally {
+      this.setError(null);
       this.setIsLoading(false);
     }
   }
@@ -63,7 +64,7 @@ export class CurrentUserStore {
     catch (error) {
       this.setError(error as AxiosError);
       throw this.error;
-    } 
+    }
   }
 
   login = async (values: LoginFormData) => {
@@ -74,6 +75,7 @@ export class CurrentUserStore {
 
       this.setUser(user);
       localStorage.setItem('user', user.token);
+      this.setError(null);
     } catch (error) {
       this.setError(error as AxiosError);
       throw this.error;

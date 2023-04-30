@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import * as Yup from 'yup';
-import { FormikHelpers, FormikProps, FormikValues } from 'formik';
+import { FormikConfig, FormikHelpers, FormikProps, FormikValues } from 'formik';
 
 import { StepperProgress, StepContent } from 'components';
 
@@ -31,6 +31,7 @@ export interface IStep {
   validateSchema: Yup.AnySchema;
   formClassName?: string;
   fields: (formikProps: FormikProps<FormikValues>) => JSX.Element;
+  formConfig?: Partial<FormikConfig<FormikValues>>;
   noVerify?: boolean;
 }
 

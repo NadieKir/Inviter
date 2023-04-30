@@ -24,6 +24,7 @@ export interface InputFieldExternalProps {
   hintText?: string;
   noVerify?: boolean;
   disabled?: boolean;
+  forcedError?: string;
 }
 
 type InputFieldProps = InputFieldExternalProps & {
@@ -38,6 +39,7 @@ export const InputField = ({
   successText,
   hintText,
   containerAttributes,
+  forcedError,
   disabled = false,
   noVerify = false,
 }: InputFieldProps): JSX.Element => (
@@ -53,12 +55,12 @@ export const InputField = ({
       inputVariant = helperTextVariant = InputFieldVariant.Default;
       let helperText = hintText;
 
-      const hasError = !!error;
+      const hasError = !!error || !!forcedError;
       const isTouched = !!touched;
 
       if (isTouched && hasError && !noVerify) {
         inputVariant = helperTextVariant = InputFieldVariant.Error;
-        helperText = error;
+        helperText = forcedError ? forcedError : error;
       }
 
       if (isTouched && !hasError && !noVerify) {
