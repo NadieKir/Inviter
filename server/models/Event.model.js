@@ -6,6 +6,16 @@ const EventSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    lastEditor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     description: {
       type: String,
       required: true,
