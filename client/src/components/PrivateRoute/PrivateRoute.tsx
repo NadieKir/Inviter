@@ -20,10 +20,9 @@ interface PrivateRouteProps {
 
 export const PrivateRoute = observer(
   ({ roles, children }: PrivateRouteProps) => {
-    const { user, isGuest, isLoading, error } = useContext(UserContext);
+    const { user, isGuest, isLoading } = useContext(UserContext);
 
     if (isLoading) return <Loader />;
-    if (error) throw error;
 
     if (
       (isGuest && roles.includes(Role.ADMIN)) ||

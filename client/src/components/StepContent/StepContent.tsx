@@ -125,6 +125,7 @@ export const StepContent = ({
       formHeading={formHeading}
       isFirstStep={isFirst}
       fieldsClassName={formClassName}
+      formConfig={stepDescriptor.formConfig}
       isCurrentStepActive={step === currentStep}
     />
   );

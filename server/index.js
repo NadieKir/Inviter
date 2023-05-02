@@ -36,6 +36,8 @@ app.use(express.json());
 app.post("/auth/register", registerValidator, handleValidationErrors, UserController.register);
 app.post("/auth/login", handleValidationErrors, UserController.login);
 app.get("/auth/me", checkAuth, UserController.getMe);
+app.get("/auth/login/:login", UserController.checkLogin);
+app.get("/auth/email/:email", UserController.checkEmail)
 
 app.patch("/users", checkAuth, UserController.update);
 app.get("/users/:login", UserController.getOne);

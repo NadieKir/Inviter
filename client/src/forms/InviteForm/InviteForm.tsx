@@ -53,8 +53,9 @@ const requiredFieldsSchema = Yup.object().shape({
   [InviteFormFields.Type]: selectOptionValidationSchema
     .nullable()
     .required('Введите тип'),
-  [InviteFormFields.City]:
-    selectOptionValidationSchema.required('Введите город'),
+  [InviteFormFields.City]: selectOptionValidationSchema
+    .nullable()
+    .required('Введите город'),
   [InviteFormFields.Description]: Yup.string()
     .min(3, 'Минимальная длина описания - 3 символа')
     .required('Введите описание'),

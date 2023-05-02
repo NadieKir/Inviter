@@ -5,6 +5,7 @@ import {
   FormikHelpers,
   FormikProps,
   FormikValues,
+  FormikConfig,
 } from 'formik';
 import * as Yup from 'yup';
 import classNames from 'classnames';
@@ -24,6 +25,7 @@ interface StepperFormProps<T extends FormikValues> {
   formHeading?: string;
   isFirstStep?: boolean;
   fieldsClassName?: string;
+  formConfig?: Partial<FormikConfig<T>>;
   isCurrentStepActive: boolean;
 }
 
@@ -38,6 +40,7 @@ export function StepperForm<T extends FormikValues>({
   formHeading,
   isCurrentStepActive,
   fieldsClassName,
+  formConfig,
   isFirstStep = false,
 }: StepperFormProps<T>) {
   const navigate = useNavigate();
@@ -49,6 +52,7 @@ export function StepperForm<T extends FormikValues>({
 
   return (
     <Formik
+      {...formConfig}
       innerRef={onFormikPropsChange}
       initialValues={initialValues}
       validationSchema={validateSchema}

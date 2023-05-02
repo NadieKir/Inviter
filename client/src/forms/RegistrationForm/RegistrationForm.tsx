@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { FormikHelpers } from 'formik';
+import { FormikHelpers, FormikProps, FormikValues } from 'formik';
 import * as Yup from 'yup';
 
 import {
@@ -46,7 +46,11 @@ import {
 } from 'common/constants';
 import { UserContext } from 'common/contexts';
 import { getAge } from 'common/helpers';
+
+import { LoginField } from './components/LoginField';
+
 import styles from './RegistrationForm.module.scss';
+import { EmailField } from './components/EmailField';
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
   [RegistrationFormFields.Name]: '',
@@ -74,7 +78,9 @@ const firstStepValidationSchema = Yup.object().shape({
     .nullable()
     .oneOf(GENDERS)
     .required('Введите пол'),
-  [RegistrationFormFields.Password]: Yup.string().required('Введите пароль'),
+  [RegistrationFormFields.Password]: Yup.string()
+    .required('Введите пароль')
+    .min(8, "Минимальная длина пароля - 8 символов"),
   [RegistrationFormFields.ConfirmPassword]: Yup.string()
     .oneOf(
       [Yup.ref(RegistrationFormFields.Password), null],
@@ -83,60 +89,60 @@ const firstStepValidationSchema = Yup.object().shape({
     .required('Подтвердите пароль'),
 });
 
-const firstStepFields = () => (
-  <>
-    <TextField
-      name={RegistrationFormFields.Name}
-      className={styles.firstStepFormName}
-      placeholderText="Имя"
-      multiline={false}
-    />
-    <div className={styles.spaceBetweenWrapper}>
-      <DateTimePicker
-        name={RegistrationFormFields.Birthday}
-        className={styles.firstStepFormBirthday}
-        placeholderText="День рождения"
-        showTimeSelect={false}
-        constraints={{
-          dateFormat: 'dd.MM.yyyy',
-          showYearDropdown: true,
-          scrollableYearDropdown: true,
-          yearDropdownItemNumber: 30,
-          maxDate: new Date(),
-        }}
+const firstStepFields = (formikProps: FormikProps<FormikValues>) => {
+  return (
+    <>
+      <TextField
+        name={RegistrationFormFields.Name}
+        className={styles.firstStepFormName}
+        placeholderText="Имя"
+        multiline={false}
       />
-      <GenderPicker
-        className={styles.genderWrapper}
-        name={RegistrationFormFields.Gender}
-        inputType="radio"
+      <div className={styles.spaceBetweenWrapper}>
+        <DateTimePicker
+          name={RegistrationFormFields.Birthday}
+          className={styles.firstStepFormBirthday}
+          placeholderText="День рождения"
+          showTimeSelect={false}
+          constraints={{
+            dateFormat: 'dd.MM.yyyy',
+            showYearDropdown: true,
+            scrollableYearDropdown: true,
+            yearDropdownItemNumber: 30,
+            maxDate: new Date(),
+          }}
+        />
+        <GenderPicker
+          className={styles.genderWrapper}
+          name={RegistrationFormFields.Gender}
+          inputType="radio"
+        />
+      </div>
+      <LoginField
+        name={RegistrationFormFields.Login}
+        className={styles.firstStepFormLogin}
+        placeholderText="Логин"
       />
-    </div>
-    <TextField
-      name={RegistrationFormFields.Login}
-      className={styles.firstStepFormLogin}
-      placeholderText="Логин"
-      multiline={false}
-    />
-    <TextField
-      name={RegistrationFormFields.Email}
-      className={styles.firstStepFormEmail}
-      placeholderText="Почта"
-      multiline={false}
-    />
-    <div className={styles.spaceBetweenWrapper}>
-      <PasswordField
-        name={RegistrationFormFields.Password}
-        className={styles.firstStepFormPassword}
-        placeholderText="Пароль"
+      <EmailField
+        name={RegistrationFormFields.Email}
+        className={styles.firstStepFormEmail}
+        placeholderText="Почта"
       />
-      <PasswordField
-        name={RegistrationFormFields.ConfirmPassword}
-        className={styles.firstStepFormConfirmPassword}
-        placeholderText="Подтвердите пароль"
-      />
-    </div>
-  </>
-);
+      <div className={styles.spaceBetweenWrapper}>
+        <PasswordField
+          name={RegistrationFormFields.Password}
+          className={styles.firstStepFormPassword}
+          placeholderText="Пароль"
+        />
+        <PasswordField
+          name={RegistrationFormFields.ConfirmPassword}
+          className={styles.firstStepFormConfirmPassword}
+          placeholderText="Подтвердите пароль"
+        />
+      </div>
+    </>
+  );
+};
 
 const secondStepInitialValues: RegistrationSecondStepFormData = {
   [RegistrationFormFields.City]: null,
@@ -149,8 +155,9 @@ const secondStepInitialValues: RegistrationSecondStepFormData = {
 };
 
 const secondStepValidationSchema = Yup.object().shape({
-  [RegistrationFormFields.City]:
-    selectOptionValidationSchema.required('Введите город'),
+  [RegistrationFormFields.City]: selectOptionValidationSchema
+    .nullable()
+    .required('Введите город'),
   [RegistrationFormFields.Orientation]: selectOptionValidationSchema
     .nullable()
     .required('Введите ориентацию'),
@@ -283,6 +290,7 @@ const thirdStepFields = () => (
   </>
 );
 
+
 export const RegistrationForm = observer(() => {
   const navigate = useNavigate();
 
@@ -301,7 +309,7 @@ export const RegistrationForm = observer(() => {
       ).value,
       [RegistrationFormFields.FamilyStatus]: (
         values[
-          RegistrationFormFields.FamilyStatus
+        RegistrationFormFields.FamilyStatus
         ] as SelectOption<FamilyStatus>
       ).value,
       [RegistrationFormFields.City]: (
