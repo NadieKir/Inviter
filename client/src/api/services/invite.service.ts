@@ -1,14 +1,31 @@
 import { httpClient } from 'api/httpClient';
 import { Invite } from 'models';
-import { InviteFormData } from 'types';
+import { InviteFormData, SearchInviteFilters } from 'types';
 
 export const getInvites = async (): Promise<Invite[]> => {
   const { data: invites } = await httpClient.get<Invite[]>('/invites');
   return invites;
 };
 
-export const getAnotherUsersInvites = async (): Promise<Invite[]> => {
-  const { data: invites } = await httpClient.get<Invite[]>('/invites/another');
+export const getAnotherUsersInvites = async (filters?: SearchInviteFilters): Promise<Invite[]> => {
+  const filtersQueryParams =
+    filters
+      ? "?" + Object.entries(filters).map(e => {
+        if (!e[1]) {
+          return null;
+        }
+
+        if (Array.isArray(e[1])) {
+          return e[1].map((v, i) => `${e[0]}[${i}]=${v}`).join("&");
+        }
+
+        return `${e[0]}=${e[1]}`;
+      }).filter(Boolean).join("&")
+      : '';
+
+  const url = decodeURI(`/invites/another${filtersQueryParams}`);
+
+  const { data: invites } = await httpClient.get<Invite[]>(url);
   return invites;
 };
 

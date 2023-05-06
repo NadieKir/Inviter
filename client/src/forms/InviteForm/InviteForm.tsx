@@ -26,7 +26,7 @@ import {
   ageRangeValidationSchema,
   selectOptionValidationSchema,
 } from 'common/constants';
-import { isDateValueEquals } from 'common/helpers';
+import { formatToOnlyDate, formatToOnlyTime, isDateValueEquals } from 'common/helpers';
 import cross from 'assets/images/redCross.svg';
 
 import styles from './InviteForm.module.scss';
@@ -214,16 +214,18 @@ export const InviteForm = observer(
       values: InviteFormData,
       actions: FormikHelpers<InviteFormData>,
     ) => {
-      const time = values[InviteFormFields.Time]
-        ? new Date(values[InviteFormFields.Time])
+      const formattedDate = values[InviteFormFields.Date]
+        ? formatToOnlyDate(values[InviteFormFields.Date])
+        : undefined;
+
+      const formattedTime = values[InviteFormFields.Time]
+        ? formatToOnlyTime(values[InviteFormFields.Time])
         : undefined;
 
       const resultValues = {
         ...values,
-        [InviteFormFields.Date]: values[InviteFormFields.Date] || undefined,
-        [InviteFormFields.Time]: time
-          ? `${time.getHours()}:${time.getMinutes()}`
-          : undefined,
+        [InviteFormFields.Date]: formattedDate,
+        [InviteFormFields.Time]: formattedTime,
         [InviteFormFields.Address]:
           values[InviteFormFields.Address] || undefined,
         [InviteFormFields.CompanionGender]:

@@ -8,34 +8,59 @@ import {
   GenderPicker,
   Select,
 } from 'components';
+import {
+  CITIES_OPTIONS,
+  INVITE_TYPES_OPTIONS,
+  SearchInviteFilters,
+  SearchInviteFiltersFormFields,
+  SelectOption
+} from 'types';
 
 import styles from './SearchInviteForm.module.scss';
+import { formatToOnlyDate } from 'common/helpers';
 
-export const SearchInviteForm = () => {
-  type A = { value: string; label: string };
 
-  const options: A[] = [
-    { value: 'Любая активность', label: 'Любая активность' },
-    { value: 'Спорт', label: 'Спорт' },
-    { value: 'Искусство', label: 'Искусство' },
-    { value: 'Кино', label: 'Кино' },
-  ];
+const inviteOptions: SelectOption<string>[] = [
+  {
+    label: 'Любой',
+    value: '',
+  },
+  ...INVITE_TYPES_OPTIONS
+];
 
-  const cityOptions: A[] = [
-    { value: 'Минск', label: 'Минск' },
-    { value: 'Гродно', label: 'Гродно' },
-    { value: 'Могилев', label: 'Могилев' },
-  ];
+type Props = {
+  initialFilters?: SearchInviteFiltersFormFields;
+  onSubmit?: (values: SearchInviteFilters) => void;
+}
 
+const formatResultValues = (values: SearchInviteFiltersFormFields): SearchInviteFilters => {
+  const formattedDate = values.date
+    ? formatToOnlyDate(values.date)
+    : undefined;
+
+  return {
+    ...values,
+    type: values.type?.value ?? undefined,
+    city: values.city?.value ?? undefined,
+    date: formattedDate,
+    gender: values.gender ? [...values.gender] : undefined
+  };
+};
+
+export const SearchInviteForm = ({
+  initialFilters,
+  onSubmit,
+}: Props) => {
   const initialValues = {
-    activity: options[0],
-    city: cityOptions[0],
-    date: '',
-    gender: '',
+    type: inviteOptions[0],
+    city: CITIES_OPTIONS[0],
+    date: null,
+    gender: null,
+    ...initialFilters,
   };
 
-  const handleSubmit = (values: any, actions: any) => {
-    alert(JSON.stringify(values));
+  const handleSubmit = (values: SearchInviteFiltersFormFields, actions: any) => {
+    onSubmit?.(formatResultValues(values));
   };
 
   return (
@@ -45,17 +70,17 @@ export const SearchInviteForm = () => {
           <div className={styles.formInputs}>
             <div className={styles.multiselects}>
               <Select
-                name="activity"
-                getOptionLabel={(option: A) => option.label}
-                getOptionValue={(option: A) => option.value}
-                options={options}
+                name="type"
+                getOptionLabel={o => o.label}
+                getOptionValue={o => o.value}
+                options={inviteOptions}
                 noVerify
               />
               <Select
                 name="city"
-                getOptionLabel={(cityOption: A) => cityOption.label}
-                getOptionValue={(cityOption: A) => cityOption.value}
-                options={cityOptions}
+                getOptionLabel={o => o.label}
+                getOptionValue={o => o.value}
+                options={CITIES_OPTIONS}
                 noVerify
               />
               <div className={styles.dateInputWrapper}>
@@ -75,7 +100,12 @@ export const SearchInviteForm = () => {
               Искать
             </Button>
             <Button
-              onClick={() => props.resetForm()}
+              onClick={() => {
+                props.resetForm()
+                const initialValues = props.initialValues;
+
+                onSubmit?.(formatResultValues(initialValues));
+              }}
               width={ButtonWidth.Small}
               variant={ButtonVariant.Secondary}
               type="button"

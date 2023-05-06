@@ -14,6 +14,7 @@ import { createInvite } from 'api';
 
 export const CreateInviteForm = observer(
   ({ onSubmit }: CreateOrEditInviteFormProps) => {
+
     const initialValuesRequiredStep: RequiredInviteFields = {
       [InviteFormFields.Subject]: '',
       [InviteFormFields.Description]: '',

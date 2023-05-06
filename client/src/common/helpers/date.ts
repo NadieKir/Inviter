@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const getAge = (birthday: Date) => {
   let today = new Date();
   let birthDate = new Date(birthday);
@@ -22,3 +24,10 @@ export const formatDate = (date: Date) => {
   return formatter.format(date);
 }
 
+export const formatToOnlyDate = (date: string | Date) => {
+  return dayjs(date).format('YYYY-MM-DD');
+}
+
+export const formatToOnlyTime = (date: string | Date) => {
+  return dayjs(date).format('HH:mm');
+} 

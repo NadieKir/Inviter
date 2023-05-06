@@ -4,10 +4,49 @@ export enum Gender {
 }
 
 export enum City {
-  MINKS = 'Минск',
+  MINSK = 'Минск',
   BREST = 'Брест',
   GRODNO = 'Гродно',
-  MOGILEV = 'Могилев'
+  MOGILEV = 'Могилев',
+  VITEBSK = 'Витебск',
+  GOMEL = 'Гомель',
+  NOVOPOLOTSK = 'Новополоцк',
+  BARANOVICHI = 'Барановичи',
+  BORISOV = 'Борисов',
+  ORSHA = 'Орша',
+  LIDA = 'Лида',
+  PINSK = 'Пинск',
+  MOZYR = 'Мозырь',
+  SMORGON = 'Сморгонь',
+  RECHKUNY = 'Речкуны',
+  VILEIKA = 'Вилейка',
+  POLONKA = 'Полонка',
+  ZASLAVL = 'Заславль',
+  ZHLOBIN = 'Жлобин',
+  BOBRUISK = 'Бобруйск',
+  LUNINETS = 'Лунинец',
+  SHKLOU = 'Шклов',
+  KRASNOPOL = 'Краснополь',
+  SMOLEVICHI = 'Смолевичи',
+  MALADZECNA = 'Молодечно',
+  ZHODINO = 'Жодино',
+  KALINKOVICHI = 'Калинковичи',
+  STOLBTSY = 'Столбцы',
+  LAGOYSK = 'Логойск',
+  KOBRYN = 'Кобрин',
+  SOLIGORSK = 'Солигорск',
+  DOKSICY = 'Докшицы',
+  VALOZHYN = 'Воложин',
+  BYAROZA = 'Береза',
+  KRYCHAU = 'Кричев',
+  RAGACHOU = 'Рогачев',
+  SALIHORSK = 'Солигорск',
+  PRUZHANY = 'Пружаны',
+  SLONIM = 'Слоним',
+  SLUTSK = 'Слуцк',
+  TUROV = 'Туров',
+  VOLKOVYSK = 'Волковыск',
+  ASMIANY = 'Ошмяны',
 }
 
 export enum Orientation {
@@ -79,5 +118,5 @@ export interface User {
   preferredAge: string;
 }
 
-export type UserWithToken = User & { token : string };
+export type UserWithToken = User & { token: string };
 export type MockedUser = Partial<User>;

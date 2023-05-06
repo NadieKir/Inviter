@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import InviteModel from "../models/Invite.model.js";
 
 export const create = async (req, res) => {
@@ -40,9 +41,45 @@ export const getAll = async (req, res) => {
 };
 
 export const getAllAnotherUsers = async (req, res) => {
+  const filters = Object
+    .entries(req.query)
+    .filter(e => e[1])
+    .reduce((acc, v) => {
+      if (v[0] == 'gender') {
+        acc['creator.gender'] = { $in: v[1] };
+      } else {
+        acc[v[0]] = v[1];
+      }
+
+      return acc;
+    }, {
+      'creator._id': { $ne: new mongoose.Types.ObjectId(req.userId) },
+    });
+
   try {
-    const invites = await InviteModel.find({ creator: { $ne: req.userId } })
-      .populate("creator")
+    const invites = await InviteModel
+      .aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'creator',
+            foreignField: '_id',
+            as: 'creator',
+          },
+        },
+        {
+          $unwind: {
+            path: "$creator"
+          }
+        },
+        {
+          $match: {
+            $and: [
+              filters
+            ],
+          }
+        }
+      ])
       .exec();
     res.json(invites);
   } catch (err) {

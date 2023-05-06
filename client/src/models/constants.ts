@@ -12,7 +12,7 @@ export const mockedUsers: User[] = [
     login: "andrew034",
     email: "andrew034@gmail.com",
     password: "andrew_password",
-    city: City.MINKS,
+    city: City.MINSK,
     gender: Gender.MALE,
     orientation: Orientation.HETEROSEXUAL,
     familyStatus: FamilyStatus.SINGLE,

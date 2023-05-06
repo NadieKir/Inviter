@@ -39,3 +39,17 @@ export type InviteFormData = RequiredInviteFields & AdditionalInviteFields;
 export type InviteRespondFormData = {
   [InviteRespondFormFields.Message]: string | undefined;
 };
+
+export type SearchInviteFiltersFormFields = {
+  type?: SelectOption<string> | null;
+  city?: SelectOption<string> | null;
+  date?: string | null;
+  gender?: string[] | null;
+}
+
+export type SearchInviteFilters = {
+  type?: string | null;
+  city?: string | null;
+  date?: string | null;
+  gender?: string[] | null;
+}
