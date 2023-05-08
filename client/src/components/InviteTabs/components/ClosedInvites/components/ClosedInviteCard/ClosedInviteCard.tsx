@@ -1,20 +1,22 @@
-import { Button, ButtonHeight, ButtonVariant, ButtonWidth } from 'components';
+import { useContext } from 'react';
+import { Button, ButtonHeight, ButtonVariant, ButtonWidth, CompanionItem } from 'components';
 import { Invite } from 'models';
 import {
   getInviteCompanionsInfoString,
-  concatUserNameAndAge,
   wordFormatDate,
 } from 'common/helpers';
+import { UserContext } from 'common/contexts';
 
 import styles from './ClosedInviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import cross from 'assets/images/redCross.svg';
 
 interface Props {
   invite: Invite;
 }
 
 export function ClosedInviteCard({ invite }: Props) {
+  const { user } = useContext(UserContext);
+
   return (
     <div className={styles.card}>
       <div className={styles.top}>
@@ -34,17 +36,7 @@ export function ClosedInviteCard({ invite }: Props) {
           <span>Компания</span>
           <ul className={styles.companionsUsers}>
             {(invite.companions ?? []).map((c) => (
-              <li className={styles.companion}>
-                <img
-                  className={styles.companionImage}
-                  src={c.image}
-                  alt={c.name}
-                />
-                <span className={styles.companionInfo}>
-                  {concatUserNameAndAge(c)}
-                </span>
-                <img className={styles.cross} src={cross} alt={''} />
-              </li>
+              <CompanionItem companion={c} canDelete={user?._id === invite.creator._id} />
             ))}
           </ul>
         </div>

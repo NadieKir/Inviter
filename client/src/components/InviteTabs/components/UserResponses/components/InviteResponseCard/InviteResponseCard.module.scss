@@ -7,17 +7,27 @@
 
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    width: 100%;
+    padding: 30px;
+
     gap: 20px;
-    min-height: 170px;
-    max-height: 200px;
+    min-height: 100px;
+    max-height: 250px;
 }
 
-.left {
+.info {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 20px;
-    height: 100%;
+}
+
+.responseInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .actions {
@@ -26,15 +36,16 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    width: 100%;
 
     button {
-        width:100%;
+        width :100%;
     }
 }
 
 .companionsInfo {
     font-size: 13px;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .creator {
@@ -56,13 +67,14 @@
 
 .subject {
     font-weight: 600;
+    font-size: 14px;
 }
 
 .date {
     display: flex;
     gap: 10px;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .blue {

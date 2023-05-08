@@ -3,29 +3,36 @@ import { Invite } from 'models';
 import {
   Button,
   ButtonHeight,
-  ButtonType,
   ButtonVariant,
   ButtonWidth,
+  CompanionItem,
+  Divider,
   IconButton,
   IconButtonColor,
 } from 'components';
-
-import styles from './CurrentInviteCard.module.scss';
-import check from 'assets/images/greenCheck.svg';
-import cross from 'assets/images/redCross.svg';
 import { concatUserNameAndAge } from 'common/helpers/user';
 import { getInviteCompanionsInfoString } from 'common/helpers/invite';
+
+import styles from './CreatedInviteCard.module.scss';
+import check from 'assets/images/greenCheck.svg';
+import cross from 'assets/images/redCross.svg';
+import { useInviteDetailsModalContext } from 'common/contexts';
+import { InviteModalType } from 'modals';
+
 
 interface Props {
   invite: Invite;
 }
 
-export function CurrentInviteCard({ invite }: Props) {
-  const { companions, companionsAmount, responses } = invite;
-  const plannedCompanions = companionsAmount ?? 0;
-  const currentCompanions = companions?.length ?? 0;
+export function CreatedInviteCard({ invite }: Props) {
+  const { openModal } = useInviteDetailsModalContext();
 
-  const companionsLeft = plannedCompanions - currentCompanions;
+  const { companions, responses } = invite;
+
+  const event = invite.event;
+
+  const companionsAmount = companions?.length ?? 0;
+  const responsesAmount = responses?.length ?? 0;
 
   const renderResponses = () => {
     if (!responses || responses.length === 0) {
@@ -56,30 +63,31 @@ export function CurrentInviteCard({ invite }: Props) {
       <div className={styles.info}>
         <div className={styles.headingInfo}>
           <span className={styles.subject}>
-            Хочет <span className={styles.blue}>{invite.subject}</span>
+            {event
+              ? (
+                <>
+                  Событие: <span className={styles.blue}>{event.name}</span>
+                </>
+              )
+              : (
+                <>
+                  Хочет <span className={styles.blue}>{invite.subject}</span>
+                </>
+              )
+            }
           </span>
           <span className={styles.companionsInfo}>
             {getInviteCompanionsInfoString(invite)}
           </span>
         </div>
+        <Divider />
         <div className={styles.companions}>
           <span className={styles.companionsAmount}>
-            Осталось найти:{' '}
-            <span className={styles.blue}>{companionsLeft} человек(а)</span>
+            Компания ({companionsAmount})
           </span>
           <ul className={styles.companionsUsers}>
             {(companions ?? []).map((c) => (
-              <li className={styles.companion}>
-                <img
-                  className={styles.companionImage}
-                  src={c.image}
-                  alt={c.name}
-                />
-                <span className={styles.companionInfo}>
-                  {concatUserNameAndAge(c)}
-                </span>
-                <img className={styles.cross} src={cross} alt={''} />
-              </li>
+              <CompanionItem companion={c} component='li' canDelete />
             ))}
           </ul>
         </div>
@@ -88,20 +96,23 @@ export function CurrentInviteCard({ invite }: Props) {
             variant={ButtonVariant.Secondary}
             width={ButtonWidth.Small}
             height={ButtonHeight.Small}
+            onClick={() => openModal(invite, InviteModalType.Edit)}
           >
-            Cмотреть
+            Подробнее
           </Button>
           <Button
-            variant={ButtonVariant.Secondary}
+            variant={ButtonVariant.Primary}
             width={ButtonWidth.Small}
             height={ButtonHeight.Small}
-            buttonType={ButtonType.Danger}
           >
-            Удалить
+            Утвердить
           </Button>
         </div>
       </div>
-      <div className={styles.responses}>{renderResponses()}</div>
-    </li>
+      <div className={styles.responses}>
+        <span>Хотят с вами <span>({responsesAmount})</span></span>
+        {renderResponses()}
+      </div>
+    </li >
   );
 }

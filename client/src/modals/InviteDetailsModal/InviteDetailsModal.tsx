@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
-import { Button } from 'components';
+import { Button, ButtonType, ButtonVariant } from 'components';
 import { Modal, ModalProps } from 'modals';
 import { Invite } from 'models';
 import { InviteResponseForm } from 'forms';
@@ -16,14 +16,22 @@ import styles from './InviteDetailsModal.module.scss';
 import calendar from './assets/calendar.svg';
 import geo from './assets/geo.svg';
 
+export enum InviteModalType {
+  Response = 'response',
+  Delete = 'Delete',
+  Edit = 'Edit',
+}
+
 interface ViewInviteModalProps extends ModalProps {
   invite: Invite;
+  modalType?: InviteModalType;
 }
 
 export const InviteDetailsModal = ({
   isShowing,
   onClose,
   invite,
+  modalType = InviteModalType.Response,
 }: ViewInviteModalProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -32,9 +40,41 @@ export const InviteDetailsModal = ({
     setCurrentStep(0);
   };
 
-  const handleInviteRespond = () => {
-    setCurrentStep(1);
-  };
+  const renderActions = () => {
+    switch (modalType) {
+      case InviteModalType.Response:
+        return (
+          <>
+            <Button onClick={() => setCurrentStep(1)}>Откликнуться</Button>
+          </>
+        );
+      case InviteModalType.Delete:
+        return (
+          <Button
+            buttonType={ButtonType.Danger}
+            variant={ButtonVariant.Primary}
+          >
+            Удалить
+          </Button>
+        );
+      case InviteModalType.Edit:
+        return (
+          <>
+            <Button
+              variant={ButtonVariant.Secondary}
+            >
+              Редактировать
+            </Button>
+            <Button
+              buttonType={ButtonType.Danger}
+              variant={ButtonVariant.Secondary}
+            >
+              Удалить
+            </Button>
+          </>
+        );
+    }
+  }
 
   return (
     <Modal isShowing={isShowing} onClose={onModalClose}>
@@ -75,7 +115,9 @@ export const InviteDetailsModal = ({
             </div>
           </div>
         </div>
-        <Button onClick={handleInviteRespond}>Откликнуться</Button>
+        <div className={styles.actions}>
+          {renderActions()}
+        </div>
       </section>
 
       <section

@@ -43,7 +43,7 @@ export const SearchEventPage = observer(() => {
           : (
             <ul className={styles.сards}>
               {events.map((event) => (
-                <EventCard key={event.id} event={event} />
+                <EventCard key={event._id} event={event} />
               ))}
             </ul>
           )

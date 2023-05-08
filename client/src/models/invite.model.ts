@@ -1,3 +1,4 @@
+import { Event } from "./event.model";
 import { InviteResponse } from "./inviteResponse.model";
 import { Gender, User } from "./user.model";
 
@@ -14,6 +15,7 @@ export enum InviteType {
 export interface Invite {
   _id: string;
   creator: User;
+  event?: Event | null;
   subject: string;
   description: string;
   city: string;

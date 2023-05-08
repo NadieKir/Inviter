@@ -7,6 +7,7 @@
 
     display: flex;
     justify-content: space-between;
+    gap: 50px;
     min-height: 220px;
     max-height: 395px;
 }
@@ -15,7 +16,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 30px;
-    width: 30%;
+    width: 28%;
 }
 
 .subject {
@@ -30,6 +31,9 @@
     &Users {
         display: flex;
         flex-direction: column;
+        padding: 10px 2px;
+        max-height: 125px;
+        overflow-y: auto;
         gap: 10px;
     }
 
@@ -39,27 +43,11 @@
     }
 }
 
-.companion {
-    display: flex;
-    gap: 11px;
-    align-items: center;
-
-    &Image {
-        width: 30px;
-        height: 30px;
-        border-radius: 50px;
-    }
-
-    &Info {
-        font-weight: 300;
-        font-size: 13px;
-    }
-}
-
 .actions {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .noResponses {

@@ -1,5 +1,5 @@
 import { Attitude, City, FamilyStatus, Gender, Interests, Language, Orientation, Role, User } from "./user.model";
-import { Invite, InviteType } from "models";
+import { Event, EventType, Invite, InviteResponse, InviteType } from "models";
 import { getRandomItem } from "common/helpers";
 
 export const mockedUsers: User[] = [
@@ -110,10 +110,74 @@ export const mockedUsers: User[] = [
   },
 ];
 
+export const mockedEvents: Event[] = [
+  {
+    _id: "1",
+    name: "Шоу Цирка",
+    description: "Захватывающее цирковое выступление с акробатами и клоунами.",
+    type: EventType.CIRCUS,
+    image: "https://example.com/circus.jpg",
+    url: "https://example.com/circus",
+    city: City.MINSK,
+    address: "ул. Главная, дом 123",
+    date: "2022-10-15",
+    time: "19:00"
+  },
+  {
+    _id: "2",
+    name: "Киновечер",
+    description: "Открытое показы классических фильмов.",
+    type: EventType.CINEMA,
+    image: "https://example.com/movie.jpg",
+    url: "https://example.com/movie",
+    city: City.MINSK,
+    address: "ул. Голливуд, дом 456",
+    date: "2022-10-20",
+    time: "20:00"
+  },
+  {
+    _id: "3",
+    name: "Шекспир в парке",
+    description: "Представление классической пьесы Шекспира в красивой парковой атмосфере.",
+    type: EventType.THEATER,
+    image: "https://example.com/shakespeare.jpg",
+    url: "https://example.com/shakespeare",
+    city: City.MINSK,
+    address: "ул. Стратфорд, дом 789",
+    date: "2022-10-25",
+    time: "18:00"
+  },
+  {
+    _id: "4",
+    name: "Развлечения в парке",
+    description: "Аттракционы, игры и еда для всей семьи.",
+    type: EventType.PARK,
+    image: "https://example.com/amusement_park.jpg",
+    url: "https://example.com/amusement_park",
+    city: City.MINSK,
+    address: "ул. Фэнтези, дом 101",
+    date: "2022-10-30",
+    time: "10:00"
+  },
+  {
+    _id: "5",
+    name: "Мастерская цирка",
+    description: "Изучение цирковых навыков, таких как жонглирование и хождение по канату, от профессиональных артистов.",
+    type: EventType.CIRCUS,
+    image: "https://example.com/circus_workshop.jpg",
+    url: "https://example.com/circus_workshop",
+    city: City.MINSK,
+    address: "ул. Цирковая, дом 555",
+    date: "2022-11-05",
+    time: "14:00"
+  }
+];
+
 export const mockedInvites: Invite[] = [
   {
     _id: "invite1",
     creator: getRandomItem(mockedUsers),
+    event: mockedEvents[0],
     subject: "Coffee talk",
     description: "Let's catch up over some coffee and croissants!",
     city: "San Francisco",
@@ -131,6 +195,7 @@ export const mockedInvites: Invite[] = [
   {
     _id: "invite2",
     creator: getRandomItem(mockedUsers),
+    event: mockedEvents[0],
     subject: "Movie night",
     description: "Let's watch some classic movies and have some popcorn!",
     city: "Los Angeles",
@@ -147,6 +212,7 @@ export const mockedInvites: Invite[] = [
   {
     _id: "invite3",
     creator: getRandomItem(mockedUsers),
+    event: mockedEvents[1],
     subject: "Hiking adventure",
     description: "Let's explore the beautiful trails and views of Yosemite!",
     city: "Fresno",
@@ -194,3 +260,21 @@ export const mockedInvites: Invite[] = [
     responses: []
   },
 ];
+
+export const mockedInviteResponses: InviteResponse[] = [
+  {
+    user: mockedUsers[0],
+    invite: mockedInvites[1],
+    message: 'hello',
+  },
+  {
+    user: mockedUsers[0],
+    invite: mockedInvites[1],
+    message: 'hello',
+  },
+  {
+    user: mockedUsers[1],
+    invite: mockedInvites[2],
+    message: 'hello',
+  }
+] 

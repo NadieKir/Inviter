@@ -10,6 +10,12 @@
   row-gap: 40px;
 }
 
+.actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
 .mainWrapper {
   display: flex;
   column-gap: 40px;

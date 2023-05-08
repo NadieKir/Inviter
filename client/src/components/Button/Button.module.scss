@@ -29,6 +29,11 @@
     background: $blue-gradient-color;
     color: $white-color;
 
+    &.danger {
+      background: $red-color;
+      border: 1px solid $red-color;
+    }
+
     &:hover {
       box-shadow: $inner-button-shadow;
     }
@@ -39,6 +44,11 @@
 
     border: 1px solid $blue-color;
     color: $blue-color;  
+
+    &.danger {
+      color: $red-color;
+      border: 1px solid $red-color;
+    }
 
     &:hover {
       box-shadow: $outer-button-shadow;
@@ -62,12 +72,6 @@
     font-size: 12px;
     height: 35px;
   }
-}
-
-button.button.danger {
-  background: transparent; 
-  color: $red-color;
-  border: 1px solid $red-color;
 }
 
 .buttonContent {

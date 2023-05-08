@@ -5,27 +5,32 @@ import classNames from 'classnames';
 import { NavTabs } from 'components';
 
 import { InviteTabDescriptor } from './types';
-import { CurrentInvites } from './components/CurrentInvites/CurrentInvites';
+import { CreatedInvites } from './components/CreatedInvites/CreatedInvites';
 import { ClosedInvites } from './components/ClosedInvites/ClosedInvites';
+import { UserResponses } from './components/UserResponses/UserResponses';
 
 import styles from './InviteTabs.module.scss';
-import { UserResponses } from './components/UserResponses/UserResponses';
 
 export const inviteTabs: InviteTabDescriptor[] = [
   {
-    label: 'Текущие',
-    link: 'current',
-    component: <CurrentInvites />,
+    label: 'Созданные',
+    link: 'created',
+    component: <CreatedInvites />,
   },
   {
-    label: 'Закрытые',
+    label: 'Отклики',
+    link: 'responses',
+    component: <UserResponses />,
+  },
+  {
+    label: 'Утвержденные',
     link: 'closed',
     component: <ClosedInvites />,
   },
   {
-    label: 'Мои отклики',
-    link: 'responses',
-    component: <UserResponses />,
+    label: 'Прошедшие',
+    link: 'past',
+    component: <ClosedInvites />,
   },
 ];
 

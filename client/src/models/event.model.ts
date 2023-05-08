@@ -8,7 +8,7 @@ export enum EventType {
 }
 
 export interface Event {
-	id: string;
+	_id: string;
 	name: string;
 	description: string;
 	type: EventType;

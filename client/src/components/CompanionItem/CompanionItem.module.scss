@@ -1,0 +1,34 @@
+@import '~style/colors';
+
+.companionItem {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 15px;
+    box-shadow: 0px 3px 8px rgba(184, 184, 184, 0.25);
+    border-radius: 10px;
+
+    &Image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50px;
+    }
+
+    &Info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &Name {
+        font-weight: 300;
+        font-size: 13px;
+    }
+}
+
+.cross {
+    cursor: pointer;
+    color: $red-color;
+    width: 10px;
+}

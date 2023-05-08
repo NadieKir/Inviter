@@ -16,6 +16,11 @@ const InviteSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    event: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+      required: false,
+    },
     city: {
       type: String,
       required: true,

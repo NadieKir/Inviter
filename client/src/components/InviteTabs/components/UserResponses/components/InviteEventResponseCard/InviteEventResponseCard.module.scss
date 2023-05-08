@@ -7,42 +7,60 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
-    min-height: 250px;
-    max-height: 3000px;
-}
+    width: 100%;
+    padding: 30px;
 
-.top {
-    display: flex;
-    justify-content: space-between;
-    height: 80%;
+    gap: 15px;
+    min-height: 100px;
+    max-height: 280px;
 }
 
 .info {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    width: 100%;
+    gap: 20px;
 }
 
-.companions {
+.responseInfo {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding-left: 20px;
-    border-left: 2px solid $light-gray-color;
+    gap: 5px;
+}
 
-    &Users {
+.inviters {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+
+    padding: 5px 0px;
+
+    overflow-y: auto;
+    max-height: 150px;
+
+    &Label {
+        font-size: 13px;
+    }
+
+    &Block {
         display: flex;
         flex-direction: column;
-        max-height: 120px;
-        overflow-y: auto;
-        padding: 10px 0;
         gap: 10px;
+        width: 100%;
+    }
+
+    button {
+        width :100%;
     }
 }
 
-.companion {
+.companionsInfo {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.creator {
     display: flex;
     gap: 11px;
     align-items: center;
@@ -59,34 +77,18 @@
     }
 }
 
-.actions {
-    width: 100%;
-    height: 30%;
-}
-
 .subject {
     font-weight: 600;
+    font-size: 14px;
 }
 
 .date {
     display: flex;
     gap: 10px;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .blue {
     color: $blue-color;
-}
-
-.cross {
-    cursor: pointer;
-    color: $red-color;
-    width: 10px;
-}
-
-
-.companionsInfo {
-    font-size: 13px;
-    font-weight: 300;
 }

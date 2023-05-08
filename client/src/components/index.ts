@@ -32,3 +32,6 @@ export * from './IconButton/IconButton';
 export * from './PrivateRoute/PrivateRoute';
 export * from './InviteTabs/InviteTabs';
 export * from './Loader/Loader';
+export * from './Divider/Divider';
+export * from './CompanionItem/CompanionItem';
+export * from './InviterItem/InviterItem';
