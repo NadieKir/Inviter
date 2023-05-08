@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router';
 import { FormikHelpers } from 'formik';
 
 import {
@@ -8,6 +7,7 @@ import {
   EventFormFields,
   RequiredEventFields,
 } from 'types';
+import { createEvent } from 'api';
 import { usePushNotification } from 'common/hooks';
 
 import { EventForm } from '../EventForm';
@@ -15,16 +15,7 @@ import { CreateOrEditEventFormProps } from './types';
 
 export const CreateEventForm = observer(
   ({ onSubmit }: CreateOrEditEventFormProps) => {
-    const navigate = useNavigate();
     const { pushSuccess } = usePushNotification();
-
-    // const userStore = useContext(UserContext);
-    // const { meetup, isLoading, error, publishMeetup } = useLocalObservable(
-    //   () => new MeetupStore(id!, userStore),
-    // );
-
-    // if (isLoading) return <FormattedMessage id="loading" />;
-    // if (!meetup) throw error;
 
     const initialValuesRequiredStep: RequiredEventFields = {
       [EventFormFields.Name]: '',
@@ -45,8 +36,7 @@ export const CreateEventForm = observer(
       values: EventFormData,
       actions: FormikHelpers<EventFormData>,
     ) => {
-      //await publishMeetup(values);
-      alert(JSON.stringify(values));
+      await createEvent(values);
 
       actions.setSubmitting(false);
       pushSuccess('Событие создано');

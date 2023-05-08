@@ -29,3 +29,15 @@ export type AdditionalEventFields = {
 };
 
 export type EventFormData = RequiredEventFields & AdditionalEventFields;
+
+export type SearchEventFiltersFormFields = {
+  type?: SelectOption<string> | null;
+  city?: SelectOption<string> | null;
+  date?: string | null;
+}
+
+export type SearchEventFilters = {
+  type?: string | null;
+  city?: string | null;
+  date?: string | null;
+}

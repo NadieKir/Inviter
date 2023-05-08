@@ -20,7 +20,7 @@ import styles from './SearchInviteForm.module.scss';
 import { formatToOnlyDate } from 'common/helpers';
 
 
-const inviteOptions: SelectOption<string>[] = [
+const inviteTypeOptions: SelectOption<string>[] = [
   {
     label: 'Любой',
     value: '',
@@ -52,7 +52,7 @@ export const SearchInviteForm = ({
   onSubmit,
 }: Props) => {
   const initialValues = {
-    type: inviteOptions[0],
+    type: inviteTypeOptions[0],
     city: CITIES_OPTIONS[0],
     date: null,
     gender: null,
@@ -73,7 +73,7 @@ export const SearchInviteForm = ({
                 name="type"
                 getOptionLabel={o => o.label}
                 getOptionValue={o => o.value}
-                options={inviteOptions}
+                options={inviteTypeOptions}
                 noVerify
               />
               <Select

@@ -8,7 +8,7 @@ import {
 import { Invite } from 'models';
 
 import { concatUserNameAndAge } from 'common/helpers/user';
-import { formatInviteDate } from 'common/helpers';
+import { wordFormatDate } from 'common/helpers';
 
 import styles from './UserResponseCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
@@ -24,7 +24,7 @@ export function UserResponseCard({ invite }: Props) {
       <div className={styles.left}>
         <span className={styles.date}>
           <img src={calendar} alt="calendar" />
-          {formatInviteDate(invite.date, invite.time)}
+          {wordFormatDate(invite.date, invite.time)}
         </span>
         <span className={styles.subject}>
           Хочет <span className={styles.blue}>{invite.subject}</span>

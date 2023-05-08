@@ -18,6 +18,36 @@ export const isDateValueEquals = (first: Date, second: Date) =>
   first.getMonth() === second.getMonth() &&
   first.getFullYear() === second.getFullYear();
 
+export const wordFormatDate = (date: string | undefined, time: string | undefined) => {
+  if (!date) return 'В любой день';
+
+  const resultDate = new Date(date);
+
+  let formatOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+  };
+
+  if (time) {
+    const timeUnits = time.split(":");
+    const hours = +timeUnits[0];
+    const minutes = +timeUnits[1];
+
+    resultDate.setHours(hours);
+    resultDate.setMinutes(minutes)
+
+    formatOptions = {
+      ...formatOptions,
+      hour: 'numeric',
+      minute: 'numeric'
+    };
+  }
+
+  const formatter = new Intl.DateTimeFormat('ru', formatOptions);
+
+  return formatter.format(resultDate);
+}
+
 export const formatDate = (date: Date) => {
   var formatter = new Intl.DateTimeFormat('ru', { day: 'numeric', month: 'numeric', year: 'numeric' });
 

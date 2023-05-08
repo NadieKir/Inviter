@@ -60,7 +60,7 @@ function App() {
           path="/admin"
           element={
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <PrivateRoute roles={[Role.ADMIN]}>
+              <PrivateRoute roles={[Role.ADMIN, Role.USER]}>
                 <MainLayout variant={Role.ADMIN} />
               </PrivateRoute>
             </ErrorBoundary>

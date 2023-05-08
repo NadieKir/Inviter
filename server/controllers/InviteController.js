@@ -41,22 +41,22 @@ export const getAll = async (req, res) => {
 };
 
 export const getAllAnotherUsers = async (req, res) => {
-  const filters = Object
-    .entries(req.query)
-    .filter(e => e[1])
-    .reduce((acc, v) => {
-      if (v[0] == 'gender') {
-        acc['creator.gender'] = { $in: v[1] };
-      } else {
-        acc[v[0]] = v[1];
-      }
-
-      return acc;
-    }, {
-      'creator._id': { $ne: new mongoose.Types.ObjectId(req.userId) },
-    });
-
   try {
+    const filters = Object
+      .entries(req.query)
+      .filter(e => e[1])
+      .reduce((acc, v) => {
+        if (v[0] == 'gender') {
+          acc['creator.gender'] = { $in: v[1] };
+        } else {
+          acc[v[0]] = v[1];
+        }
+
+        return acc;
+      }, {
+        'creator._id': { $ne: new mongoose.Types.ObjectId(req.userId) },
+      });
+
     const invites = await InviteModel
       .aggregate([
         {

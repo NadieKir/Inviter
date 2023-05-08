@@ -3,7 +3,7 @@ import { Invite } from 'models';
 import {
   getInviteCompanionsInfoString,
   concatUserNameAndAge,
-  formatInviteDate,
+  wordFormatDate,
 } from 'common/helpers';
 
 import styles from './ClosedInviteCard.module.scss';
@@ -24,7 +24,7 @@ export function ClosedInviteCard({ invite }: Props) {
           </span>
           <span className={styles.date}>
             <img src={calendar} alt="calendar" />
-            {formatInviteDate(invite.date, invite.time)}
+            {wordFormatDate(invite.date, invite.time)}
           </span>
           <span className={styles.companionsInfo}>
             {getInviteCompanionsInfoString(invite)}

@@ -1,35 +1,52 @@
+import { useContext } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
 import { EventCard, Loader } from 'components';
-import { MockedEvent } from 'models';
 import { SearchEventForm } from 'forms';
 import { EventListStore } from 'stores';
+import { UserContext } from 'common/contexts';
+import { createOption } from 'types';
 
 import styles from './SearchEventPage.module.scss';
 
 export const SearchEventPage = observer(() => {
-  const { isLoading, events } = useLocalObservable(() => new EventListStore());
+  const { user } = useContext(UserContext);
 
-  // const events: MockedEvent[] = [
-  //   { name: 'Конкурс бардовской песни', id: '1' },
-  //   { name: 'Выставка домашних животных', id: '2' },
-  //   { name: 'Новогодний марафон 1-5-10 километров', id: '3' },
-  // ];
+  console.log(user);
+
+  if (!user) {
+    return null;
+  }
+
+  const { isLoading, events, getEvents } = useLocalObservable(
+    () => new EventListStore({ city: user.city })
+  );
 
   return (
     <section className={styles.section}>
       <div className={styles.searchForm}>
         <h1 className="heading-H1">События в городе Минск</h1>
-        <SearchEventForm />
+        <SearchEventForm
+          initialFilters={{
+            city: createOption(user.city)
+          }}
+          onSubmit={getEvents}
+        />
       </div>
       {isLoading ? (
         <Loader />
       ) : (
-        <ul className={styles.сards}>
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </ul>
+        events?.length === 0
+          ? (
+            <span>События с указанными фильтрами не найдены</span>
+          )
+          : (
+            <ul className={styles.сards}>
+              {events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </ul>
+          )
       )}
     </section>
   );

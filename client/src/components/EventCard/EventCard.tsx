@@ -1,13 +1,14 @@
 import { NavLink } from 'react-router-dom';
-import { MockedEvent } from 'models';
+import { Event, MockedEvent } from 'models';
 
 import styles from './EventCard.module.scss';
 import mockEvent from 'assets/images/mockEvent.jpg';
 import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from 'assets/images/calendar.svg';
+import { formatDate, wordFormatDate } from 'common/helpers';
 
 interface EventCardProps {
-  event: MockedEvent;
+  event: Event;
 }
 
 export const EventCard = ({ event }: EventCardProps) => {
@@ -18,14 +19,14 @@ export const EventCard = ({ event }: EventCardProps) => {
           <div className={styles.infoWrapper}>
             <div className={styles.date}>
               <img src={calendar} alt="Дата" height={'16px'} />
-              21 ноября в 18:30
+              {wordFormatDate(event.date, event.time)}
             </div>
             <div className={styles.headingDescription}>
-              <h2 className={styles.heading}>{event.name}</h2>
+              <h2 className={styles.heading}>
+                {event.name}
+              </h2>
               <p className={styles.description}>
-                Есть много вариантов Lorem Ipsum, но большинство из них имеет не
-                всегда приемлемые модификации, например, юмористические вставки
-                или слова, которые даже отдалённо не напоминают латынь.
+                {event.description}
               </p>
             </div>
             <div className={styles.users}>
@@ -38,7 +39,7 @@ export const EventCard = ({ event }: EventCardProps) => {
           </div>
           <div className={styles.imageWrapper}>
             <div className={styles.imageHolder}>
-              <img className={styles.eventImage} src={mockEvent} alt={event.name} />
+              <img className={styles.eventImage} src={event.image} alt={event.name} />
             </div>
           </div>
         </article>

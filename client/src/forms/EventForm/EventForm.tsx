@@ -22,7 +22,7 @@ import {
 } from 'types';
 import { City, EventType } from 'models';
 import { selectOptionValidationSchema } from 'common/constants';
-import { isDateValueEquals } from 'common/helpers';
+import { formatToOnlyDate, formatToOnlyTime, isDateValueEquals } from 'common/helpers';
 
 import styles from './EventForm.module.scss';
 
@@ -173,8 +173,13 @@ export const EventForm = observer(
       values: EventFormData,
       actions: FormikHelpers<EventFormData>,
     ) => {
+      const formattedDate = formatToOnlyDate(values[EventFormFields.Date])
+      const formattedTime = formatToOnlyTime(values[EventFormFields.Time])
+
       const resultValues = {
         ...values,
+        [EventFormFields.Date]: formattedDate,
+        [EventFormFields.Time]: formattedTime,
         [EventFormFields.Type]: (
           values[EventFormFields.Type] as SelectOption<EventType>
         ).value,

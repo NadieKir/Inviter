@@ -7,31 +7,49 @@ import {
   DateTimePicker,
   Select,
 } from 'components';
+import { CITIES_OPTIONS, EVENT_TYPES_OPTIONS, SearchEventFilters, SearchEventFiltersFormFields, SelectOption } from 'types';
+import { formatToOnlyDate } from 'common/helpers';
 
-export const SearchEventForm = () => {
-  type A = { value: string; label: string };
 
-  const options: A[] = [
-    { value: 'Любое событие', label: 'Любое событие' },
-    { value: 'Спорт', label: 'Спорт' },
-    { value: 'Искусство', label: 'Искусство' },
-    { value: 'Кино', label: 'Кино' },
-  ];
+const formatResultValues = (values: SearchEventFiltersFormFields): SearchEventFilters => {
+  const formattedDate = values.date
+    ? formatToOnlyDate(values.date)
+    : undefined;
 
-  const cityOptions: A[] = [
-    { value: 'Минск', label: 'Минск' },
-    { value: 'Гродно', label: 'Гродно' },
-    { value: 'Могилев', label: 'Могилев' },
-  ];
+  return {
+    ...values,
+    type: values.type?.value ?? undefined,
+    city: values.city?.value ?? undefined,
+    date: formattedDate,
+  };
+};
 
+const evenTypeOptions: SelectOption<string>[] = [
+  {
+    label: 'Любой',
+    value: ''
+  },
+  ...EVENT_TYPES_OPTIONS,
+];
+
+type Props = {
+  initialFilters?: SearchEventFiltersFormFields;
+  onSubmit?: (values: SearchEventFilters) => void;
+};
+
+export const SearchEventForm = ({
+  initialFilters,
+  onSubmit,
+}: Props) => {
   const initialValues = {
-    activity: options[0],
-    city: cityOptions[0],
+    type: evenTypeOptions[0],
+    city: CITIES_OPTIONS[0],
     date: '',
+    ...initialFilters,
   };
 
-  const handleSubmit = (values: any, actions: any) => {
-    alert(JSON.stringify(values));
+  const handleSubmit = (values: SearchEventFiltersFormFields, actions: any) => {
+    onSubmit?.(formatResultValues(values));
   };
 
   return (
@@ -41,17 +59,17 @@ export const SearchEventForm = () => {
           <div className={styles.formInputs}>
             <div className={styles.multiselects}>
               <Select
-                name="activity"
-                getOptionLabel={(option: A) => option.label}
-                getOptionValue={(option: A) => option.value}
-                options={options}
+                name="type"
+                getOptionLabel={o => o.label}
+                getOptionValue={o => o.value}
+                options={evenTypeOptions}
                 noVerify
               />
               <Select
                 name="city"
-                getOptionLabel={(cityOption: A) => cityOption.label}
-                getOptionValue={(cityOption: A) => cityOption.value}
-                options={cityOptions}
+                getOptionLabel={o => o.label}
+                getOptionValue={o => o.value}
+                options={CITIES_OPTIONS}
                 noVerify
               />
               <div className={styles.dateInputWrapper}>
@@ -70,7 +88,11 @@ export const SearchEventForm = () => {
               Искать
             </Button>
             <Button
-              onClick={() => props.resetForm()}
+              onClick={() => {
+                props.resetForm()
+
+                onSubmit?.(formatResultValues(props.values));
+              }}
               width={ButtonWidth.Small}
               variant={ButtonVariant.Secondary}
               type="button"

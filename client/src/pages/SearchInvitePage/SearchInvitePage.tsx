@@ -1,16 +1,18 @@
+import { useContext } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
 import { InviteCard, Loader } from 'components';
 import { SearchInviteForm } from 'forms';
 import { AnotherUsersInvitesStore } from 'stores';
-import { useContext } from 'react';
 import { UserContext } from 'common/contexts'
+import { createOption } from 'types';
 
 import styles from './SearchInvitePage.module.scss';
-;
 
 export const SearchInvitePage = observer(() => {
   const { user } = useContext(UserContext);
+
+  console.log(user);
 
   if (!user) {
     return null;
@@ -20,18 +22,13 @@ export const SearchInvitePage = observer(() => {
     () => new AnotherUsersInvitesStore({ city: user.city }),
   );
 
-  console.log(anotherUsersInvites);
-
   return (
     <section className={styles.section}>
       <div className={styles.searchForm}>
         <h1 className="heading-H1">Чем хотите заняться?</h1>
         <SearchInviteForm
           initialFilters={{
-            city: {
-              label: user.city,
-              value: user.city
-            },
+            city: createOption(user.city),
           }}
           onSubmit={(filters) => getAnotherUsersInvites(filters)} />
       </div>

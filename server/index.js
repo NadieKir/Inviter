@@ -67,6 +67,7 @@ app.get("/invite-responses/current", checkAuth, InviteResponseController.getAllC
 app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);
 
 app.get("/events", checkAuth, EventController.getAll);
+app.post("/events", checkAuth, EventController.create)
 
 app.listen(8080, (error) => {
   if (error) {

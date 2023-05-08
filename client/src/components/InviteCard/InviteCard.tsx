@@ -9,8 +9,8 @@ import { useModal } from 'common/hooks';
 import { InviteDetailsModal } from 'modals';
 import {
   concatUserNameAndAge,
-  formatInviteDate,
   getInviteCompanionsInfoString,
+  wordFormatDate,
 } from 'common/helpers';
 import { UserContext } from 'common/contexts';
 
@@ -48,7 +48,7 @@ export const InviteCard = observer(
           <div className={styles.inviteInfo}>
             <div className={styles.dateWrapper}>
               <img src={calendar} alt="Календарь" width={'13px'} />
-              {formatInviteDate(invite.date, invite.time)}
+              {wordFormatDate(invite.date, invite.time)}
             </div>
             <h3 className={styles.heading}>
               Хочет <span className={styles.blue}>{invite.subject}</span>

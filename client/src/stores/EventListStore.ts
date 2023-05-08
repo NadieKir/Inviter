@@ -3,38 +3,39 @@ import { AxiosError } from 'axios';
 
 import { getEvents } from 'api';
 import { Event } from 'models';
+import { SearchEventFilters } from 'types';
 
 export class EventListStore {
   events: Event[] = [];
   isLoading: boolean = false;
   error: AxiosError | null = null;
-  
-  constructor() {
+
+  constructor(filters?: SearchEventFilters) {
     makeAutoObservable(this);
-    this.getEvents();
+    this.getEvents(filters);
   }
 
-  setEvents(newEvents: Event[]) {
+  setEvents = (newEvents: Event[]) => {
     this.events = newEvents;
   }
 
-  setIsLoading(isLoading: boolean) {
+  setIsLoading = (isLoading: boolean) => {
     this.isLoading = isLoading;
   }
 
-  setError(error: AxiosError) {
+  setError = (error: AxiosError) => {
     this.error = error;
   }
 
-  async getEvents() {
+  getEvents = async (filters?: SearchEventFilters) => {
     this.setIsLoading(true);
 
     try {
-      this.setEvents(await getEvents());
+      this.setEvents(await getEvents(filters));
     }
     catch (error) {
       this.setError(error as AxiosError);
-    } 
+    }
     finally {
       this.setIsLoading(false);
     }

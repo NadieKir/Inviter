@@ -8,8 +8,8 @@ import { Invite } from 'models';
 import { InviteResponseForm } from 'forms';
 import {
   concatUserNameAndAge,
-  formatInviteDate,
   getInviteCompanionsInfoString,
+  wordFormatDate,
 } from 'common/helpers';
 
 import styles from './InviteDetailsModal.module.scss';
@@ -66,7 +66,7 @@ export const InviteDetailsModal = ({
             <div className={styles.details}>
               <div className={styles.detail}>
                 <img src={calendar} alt="Дата и время" />
-                {formatInviteDate(invite.date, invite.time)}
+                {wordFormatDate(invite.date, invite.time)}
               </div>
               <div className={styles.detail}>
                 <img src={geo} alt="Локация" />

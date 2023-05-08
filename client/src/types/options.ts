@@ -1,7 +1,7 @@
 import { Attitude, City, EventType, FamilyStatus, Gender, Interests, InviteType, Language, Orientation, Role, User } from "models";
 import { getEnumMembers } from "common/helpers";
 
-function createOption<T extends string>(o: T): SelectOption<T> {
+export function createOption<T extends string>(o: T): SelectOption<T> {
   return ({ value: o, label: o })
 };
 
@@ -9,7 +9,7 @@ export type SelectOption<T extends string> = {
   value: T;
   label: T;
 }
-  
+
 export const GENDERS = getEnumMembers(Gender);
 export const GENDERS_OPTIONS = GENDERS.map(createOption);
 

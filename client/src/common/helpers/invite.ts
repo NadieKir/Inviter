@@ -23,32 +23,3 @@ export const getInviteCompanionsInfoString = (invite: Invite) => {
   return infoElements.join(', ');
 }
 
-export const formatInviteDate = (date: string | undefined, time: string | undefined) => {
-  if (!date) return 'В любой день';
-  
-  const resultDate = new Date(date);
-
-  let formatOptions: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'long',
-  };
-
-  if (time) {
-    const timeUnits = time.split(":");
-    const hours = +timeUnits[0];
-    const minutes = +timeUnits[1];
-
-    resultDate.setHours(hours);
-    resultDate.setMinutes(minutes)
-
-    formatOptions = {
-      ...formatOptions,
-      hour: 'numeric',
-      minute: 'numeric'
-    };
-  }
-
-  const formatter = new Intl.DateTimeFormat('ru', formatOptions);
-
-  return formatter.format(resultDate);
-}
