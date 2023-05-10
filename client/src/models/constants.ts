@@ -187,7 +187,6 @@ export const mockedInvites: Invite[] = [
     time: "10:00",
     companionAge: "19-30",
     companionGender: [Gender.FEMALE],
-    companionsAmount: 2,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 1),
     responses: []
     // responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 1).map(u => ({ user: u, message: 'Go. Go' }))
@@ -205,7 +204,6 @@ export const mockedInvites: Invite[] = [
     time: "",
     companionAge: "25-50",
     companionGender: [Gender.MALE, Gender.FEMALE],
-    companionsAmount: 4,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 4) < (4 / 2)).slice(0, 3),
     responses: []
   },
@@ -222,7 +220,6 @@ export const mockedInvites: Invite[] = [
     time: "08:00",
     companionAge: "18-45",
     companionGender: [Gender.MALE, Gender.FEMALE],
-    companionsAmount: 3,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 3) < (3 / 2)).slice(0, 2),
     responses: []
     // responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 3).map(u => ({ user: u, message: 'SfSDFASDFASD ASDFASD ASDF AADFSAD ADSF ADFA DSA SDFASD' }))
@@ -239,7 +236,6 @@ export const mockedInvites: Invite[] = [
     time: "19:30",
     companionAge: "21-35",
     companionGender: [Gender.FEMALE],
-    companionsAmount: 1,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 1) < (1 / 2)).slice(0, 1),
     responses: []
   },
@@ -255,7 +251,6 @@ export const mockedInvites: Invite[] = [
     time: "10:00",
     companionAge: "18-40",
     companionGender: [Gender.MALE, Gender.FEMALE],
-    companionsAmount: 5,
     companions: mockedUsers.filter(u => Math.floor(Math.random() * 5) < (5 / 2)).slice(0, 4),
     responses: []
   },

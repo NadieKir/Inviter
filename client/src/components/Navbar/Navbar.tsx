@@ -48,6 +48,7 @@ export const Navbar = observer(({ variant }: NavbarProps) => {
         {linksToNavItem.map((linkToNavItem) => (
           <NavLink
             to={linkToNavItem.link}
+            key={linkToNavItem.link}
             className={({ isActive }) =>
               classNames(styles.navItem, {
                 [styles.active]: isActive,

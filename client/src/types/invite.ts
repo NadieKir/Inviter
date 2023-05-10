@@ -11,7 +11,7 @@ export enum InviteFormFields {
   Time = 'time',
   CompanionAge = 'companionAge',
   CompanionGender = 'companionGender',
-  CompanionsAmount = 'companionsAmount',
+  // CompanionsAmount = 'companionsAmount',
 };
 
 export enum InviteRespondFormFields {
@@ -31,7 +31,7 @@ export type AdditionalInviteFields = {
   [InviteFormFields.Time]: string | undefined;
   [InviteFormFields.CompanionAge]: string | undefined;
   [InviteFormFields.CompanionGender]: Gender[]
-  [InviteFormFields.CompanionsAmount]: number;
+  // [InviteFormFields.CompanionsAmount]: number;
 };
 
 export type InviteFormData = RequiredInviteFields & AdditionalInviteFields;

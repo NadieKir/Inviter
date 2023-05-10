@@ -37,19 +37,9 @@ export const userLinksToNavItem: LinkToNavItem[] = [
     link: '/following',
     icon: follower,
   },
-  {
-    name: 'Уведомления',
-    link: '/notifications',
-    icon: bell,
-  },
 ];
 
 export const adminLinksToNavItem: LinkToNavItem[] = [
-  {
-    name: 'Отчёты',
-    link: '/admin/reports',
-    icon: search,
-  },
   {
     name: 'События',
     link: '/admin/events',

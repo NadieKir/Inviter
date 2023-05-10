@@ -39,7 +39,7 @@ export const EditInviteForm = observer(
       [InviteFormFields.Time]: '',
       [InviteFormFields.CompanionAge]: '',
       [InviteFormFields.CompanionGender]: [],
-      [InviteFormFields.CompanionsAmount]: 1,
+      // [InviteFormFields.CompanionsAmount]: 1,
     };
 
     const handleSubmit = async (

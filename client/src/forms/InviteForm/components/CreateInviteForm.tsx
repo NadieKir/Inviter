@@ -14,7 +14,6 @@ import { createInvite } from 'api';
 
 export const CreateInviteForm = observer(
   ({ onSubmit }: CreateOrEditInviteFormProps) => {
-
     const initialValuesRequiredStep: RequiredInviteFields = {
       [InviteFormFields.Subject]: '',
       [InviteFormFields.Description]: '',
@@ -28,7 +27,7 @@ export const CreateInviteForm = observer(
       [InviteFormFields.Time]: '',
       [InviteFormFields.CompanionAge]: '',
       [InviteFormFields.CompanionGender]: [],
-      [InviteFormFields.CompanionsAmount]: 1,
+      // [InviteFormFields.CompanionsAmount]: 1,
     };
 
     const handleSubmit = async (
