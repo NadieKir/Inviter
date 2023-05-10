@@ -15,7 +15,11 @@ export const ErrorFallback = ({ error }: ErrorFallbackProps) => {
     <section className={styles.wrapper} role="alert">
       <h1 className={styles.heading}>Что-то пошло не так</h1>
       <p className={styles.message}>{error.message}</p>
-      <Button width={ButtonWidth.Small} onClick={resetBoundary}>
+      <Button
+        width={ButtonWidth.Small}
+        onClick={resetBoundary}
+        className={styles.button}
+      >
         Попробовать снова
       </Button>
     </section>

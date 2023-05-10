@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import classNames from 'classnames';
+import 'animate.css';
 
 import { Button, ButtonHeight, ButtonWidth } from 'components';
 import { ErrorFallback } from 'pages';
@@ -53,12 +55,24 @@ export const LoginLayout = () => {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <section className={styles.loginSection}>
         <header className={styles.header}>
-          <div className={styles.logoWrapper}>
+          <div
+            className={classNames(
+              styles.logoWrapper,
+              'animate__animated',
+              'animate__bounceInDown',
+            )}
+          >
             <img src={logo} alt="Логотип" />
             <p>Пора найти, с кем провести этот вечер</p>
           </div>
 
-          <div className={styles.promoImages}>
+          <div
+            className={classNames(
+              styles.promoImages,
+              'animate__animated',
+              'animate__zoomIn',
+            )}
+          >
             <div className={styles.promoImage}>
               <img src={promoImage1} alt="Промо изображение" />
               <span>
@@ -81,7 +95,11 @@ export const LoginLayout = () => {
 
           <Link
             to="https://www.tiktok.com/@me.nadie/video/7174027533573213445"
-            className={styles.promoButton}
+            className={classNames(
+              styles.promoButton,
+              'animate__animated',
+              'animate__bounceInUp',
+            )}
           >
             <img src={youtube} alt="Youtube" />
             Смотреть промо ролик

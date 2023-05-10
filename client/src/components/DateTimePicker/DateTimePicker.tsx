@@ -33,6 +33,7 @@ export const DateTimePicker = ({
   ...inputFieldProps
 }: DateTimePickerProps): JSX.Element => {
   registerLocale('ru-RU', ru);
+
   return (
     <InputField
       {...inputFieldProps}
@@ -52,12 +53,12 @@ export const DateTimePicker = ({
 
         const excludeProps = excludePastDateTime
           ? {
-            minDate: now,
-            minTime: new Date(
-              now.setHours(minTimeHour, minTimeMinutes, 0, 0),
-            ),
-            maxTime: new Date(now.setHours(23, 59, 0, 0)),
-          }
+              minDate: now,
+              minTime: new Date(
+                now.setHours(minTimeHour, minTimeMinutes, 0, 0),
+              ),
+              maxTime: new Date(now.setHours(23, 59, 0, 0)),
+            }
           : undefined;
 
         const handleChange = (date: Date | null): void => {

@@ -75,7 +75,7 @@ export class CurrentUserStore {
 
       this.setUser(user);
       localStorage.setItem('user', user.token);
-      this.setError(null);
+      //this.setError(null);
     } catch (error) {
       this.setError(error as AxiosError);
       throw this.error;

@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
+import 'animate.css';
 
 import styles from './Modal.module.scss';
 
@@ -26,7 +28,13 @@ export const Modal = ({
 
   return ReactDOM.createPortal(
     <div className={styles.modal} onClick={handleClose}>
-      {children}
+      <div
+        className={classNames('animate__animated', 'animate__faster', {
+          animate__fadeInDown: isShowing,
+        })}
+      >
+        {children}
+      </div>
     </div>,
     document.body,
   );
