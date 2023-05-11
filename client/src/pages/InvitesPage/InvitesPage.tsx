@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router-dom';
 
 import { InviteTabs } from 'components';
+import { InvitesDetailsModalProvider } from 'common/contexts';
 
 import styles from './InvitesPage.module.scss';
-import { InvitesDetailsModalProvider } from 'common/contexts';
 
 export function InvitesPage() {
   return (
-    <div className={styles.invitesPage}>
+    <section className={styles.invitesPage}>
       <InvitesDetailsModalProvider>
         <InviteTabs heading="Мои инвайты" />
         <Outlet />
       </InvitesDetailsModalProvider>
-    </div>
+    </section>
   );
 }

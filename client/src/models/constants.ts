@@ -187,7 +187,7 @@ export const mockedInvites: Invite[] = [
     time: "10:00",
     companionAge: "19-30",
     companionGender: [Gender.FEMALE],
-    companions: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 1),
+    companions: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 4),
     responses: []
     // responses: mockedUsers.filter(u => Math.floor(Math.random() * 2) < (2 / 2)).slice(0, 1).map(u => ({ user: u, message: 'Go. Go' }))
   },

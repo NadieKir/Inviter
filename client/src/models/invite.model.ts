@@ -12,12 +12,18 @@ export enum InviteType {
   OTHER = 'Другое'
 }
 
+export enum InviteStatus {
+  CONFIRMED = 'Утверждённые',
+  PAST = 'Прошедшие',
+}
+
 export interface Invite {
   _id: string;
   creator: User;
   event?: Event | null;
   subject: string;
   description: string;
+  status?: InviteStatus,
   city: string;
   type: InviteType;
   address?: string;

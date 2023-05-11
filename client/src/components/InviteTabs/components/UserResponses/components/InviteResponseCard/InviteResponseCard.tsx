@@ -1,9 +1,4 @@
-import {
-  Button,
-  ButtonHeight,
-  ButtonVariant,
-  ButtonWidth,
-} from 'components';
+import { Button, ButtonHeight, ButtonVariant, ButtonWidth } from 'components';
 import { InviteResponse } from 'models';
 
 import { concatUserNameAndAge } from 'common/helpers/user';
@@ -19,9 +14,7 @@ interface Props {
   inviteResponse: InviteResponse;
 }
 
-export function InviteResponseCard({
-  inviteResponse,
-}: Props) {
+export function InviteResponseCard({ inviteResponse }: Props) {
   const { openModal } = useInviteDetailsModalContext();
 
   const invite = inviteResponse.invite;
@@ -29,13 +22,13 @@ export function InviteResponseCard({
   return (
     <div className={styles.card}>
       <div className={styles.info}>
-        <span className={styles.date}>
-          <img src={calendar} alt="calendar" />
-          {wordFormatDate(invite.date, invite.time)}
-        </span>
-        <div className={styles.responseInfo}>
+        <div className={styles.headingInfo}>
+          <span className={styles.date}>
+            <img src={calendar} alt="calendar" height="13px" />
+            {wordFormatDate(invite.date, invite.time)}
+          </span>
           <span className={styles.subject}>
-            Хочет <span className={styles.blue}>{invite.subject}</span>
+            Хочет <span className="blue">{invite.subject}</span>
           </span>
           <span className={styles.companionsInfo}>
             {getInviteCompanionsInfoString(invite)}

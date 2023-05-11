@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 
 import { NavTabs } from 'components';
-
 import { InviteTabDescriptor } from './types';
 import { CreatedInvites } from './components/CreatedInvites/CreatedInvites';
 import { ClosedInvites } from './components/ClosedInvites/ClosedInvites';

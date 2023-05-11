@@ -1,6 +1,4 @@
-import {
-    Divider, InviterItem,
-} from 'components';
+import { Divider, InviterItem } from 'components';
 import { InviteEventResponse } from 'models';
 
 import { wordFormatDate } from 'common/helpers';
@@ -9,38 +7,38 @@ import styles from './InviteEventResponseCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
 
 interface Props {
-    inviteEventResponse: InviteEventResponse;
+  inviteEventResponse: InviteEventResponse;
 }
 
-export function InviteEventResponseCard({
-    inviteEventResponse,
-}: Props) {
-    const event = inviteEventResponse.event!;
-    const inviters = inviteEventResponse.inviters;
-    const invitersAmount = inviters?.length ?? 0;
+export function InviteEventResponseCard({ inviteEventResponse }: Props) {
+  const event = inviteEventResponse.event!;
+  const inviters = inviteEventResponse.inviters;
+  const invitersAmount = inviters?.length ?? 0;
 
-    return (
-        <div className={styles.card}>
-            <div className={styles.info}>
-                <span className={styles.date}>
-                    <img src={calendar} alt="calendar" />
-                    {wordFormatDate(event.date, event.time)}
-                </span>
-                <div className={styles.responseInfo}>
-                    <span className={styles.subject}>
-                        Событие: <span className={styles.blue}>{event.name}</span>
-                    </span>
-                </div>
-                <Divider />
-            </div>
-            <div className={styles.invitersBlock}>
-                <span className={styles.invitersLabel}>Приглашающие ({invitersAmount})</span>
-                <ul className={styles.inviters}>
-                    {inviters.map(i => (
-                        <InviterItem invite={i} />
-                    ))}
-                </ul>
-            </div>
+  return (
+    <div className={styles.card}>
+      <div className={styles.info}>
+        <div className={styles.headingInfo}>
+          <span className={styles.date}>
+            <img src={calendar} alt="calendar" height="13px" />
+            {wordFormatDate(event.date, event.time)}
+          </span>
+          <span className={styles.subject}>
+            Хочет <span className="blue">{event.name}</span>
+          </span>
         </div>
-    );
+        <Divider />
+      </div>
+      <div className={styles.invitersBlock}>
+        <span className={styles.invitersLabel}>
+          Приглашающие <span className="amount"> ({invitersAmount})</span>
+        </span>
+        <ul className={styles.inviters}>
+          {inviters.map((i) => (
+            <InviterItem invite={i} />
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 }

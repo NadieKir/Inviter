@@ -52,7 +52,7 @@ export const InviteDetailsModal = ({
         return (
           <Button
             buttonType={ButtonType.Danger}
-            variant={ButtonVariant.Primary}
+            variant={ButtonVariant.Secondary}
           >
             Удалить
           </Button>
@@ -60,11 +60,7 @@ export const InviteDetailsModal = ({
       case InviteModalType.Edit:
         return (
           <>
-            <Button
-              variant={ButtonVariant.Secondary}
-            >
-              Редактировать
-            </Button>
+            <Button variant={ButtonVariant.Secondary}>Редактировать</Button>
             <Button
               buttonType={ButtonType.Danger}
               variant={ButtonVariant.Secondary}
@@ -74,7 +70,7 @@ export const InviteDetailsModal = ({
           </>
         );
     }
-  }
+  };
 
   return (
     <Modal isShowing={isShowing} onClose={onModalClose}>
@@ -115,9 +111,7 @@ export const InviteDetailsModal = ({
             </div>
           </div>
         </div>
-        <div className={styles.actions}>
-          {renderActions()}
-        </div>
+        <div className={styles.actions}>{renderActions()}</div>
       </section>
 
       <section

@@ -8,25 +8,24 @@
     display: flex;
     justify-content: space-between;
     gap: 50px;
-    min-height: 220px;
-    max-height: 395px;
 }
 
 .info {
     display: flex;
     flex-direction: column;
-    row-gap: 30px;
+    row-gap: 25px;
     width: 28%;
 }
 
 .subject {
     font-weight: 600;
+    font-size: 16px;
 }
 
 .companions {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 
     &Users {
         display: flex;
@@ -38,7 +37,7 @@
     }
 
     &Amount {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 13px;
     }
 }
@@ -68,6 +67,9 @@
     gap: 15px;
     width: 70%;
     overflow-y: auto;
+
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .response {
@@ -118,10 +120,19 @@
 .headingInfo {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 .companionsInfo {
-    font-size: 13px;
-    font-weight: 300;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.date {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 400;
+    margin-bottom: 10px;
 }

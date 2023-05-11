@@ -18,7 +18,8 @@ import check from 'assets/images/greenCheck.svg';
 import cross from 'assets/images/redCross.svg';
 import { useInviteDetailsModalContext } from 'common/contexts';
 import { InviteModalType } from 'modals';
-
+import { wordFormatDate } from 'common/helpers';
+import calendar from 'assets/images/calendar.svg';
 
 interface Props {
   invite: Invite;
@@ -62,19 +63,20 @@ export function CreatedInviteCard({ invite }: Props) {
     <li className={styles.card}>
       <div className={styles.info}>
         <div className={styles.headingInfo}>
+          <span className={styles.date}>
+            <img src={calendar} alt="calendar" />
+            {wordFormatDate(invite.date, invite.time)}
+          </span>
           <span className={styles.subject}>
-            {event
-              ? (
-                <>
-                  Событие: <span className={styles.blue}>{event.name}</span>
-                </>
-              )
-              : (
-                <>
-                  Хочет <span className={styles.blue}>{invite.subject}</span>
-                </>
-              )
-            }
+            {event ? (
+              <>
+                Событие: <span className={styles.blue}>{event.name}</span>
+              </>
+            ) : (
+              <>
+                Хочет <span className={styles.blue}>{invite.subject}</span>
+              </>
+            )}
           </span>
           <span className={styles.companionsInfo}>
             {getInviteCompanionsInfoString(invite)}
@@ -83,11 +85,11 @@ export function CreatedInviteCard({ invite }: Props) {
         <Divider />
         <div className={styles.companions}>
           <span className={styles.companionsAmount}>
-            Компания ({companionsAmount})
+            Компания <span className="amount">({companionsAmount})</span>
           </span>
           <ul className={styles.companionsUsers}>
             {(companions ?? []).map((c) => (
-              <CompanionItem companion={c} component='li' canDelete />
+              <CompanionItem companion={c} component="li" canDelete />
             ))}
           </ul>
         </div>
@@ -110,9 +112,11 @@ export function CreatedInviteCard({ invite }: Props) {
         </div>
       </div>
       <div className={styles.responses}>
-        <span>Хотят с вами <span>({responsesAmount})</span></span>
+        <span>
+          Хотят с вами <span className="amount">({responsesAmount})</span>
+        </span>
         {renderResponses()}
       </div>
-    </li >
+    </li>
   );
 }
