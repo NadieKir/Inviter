@@ -89,7 +89,7 @@ export function CreatedInviteCard({ invite }: Props) {
           </span>
           <ul className={styles.companionsUsers}>
             {(companions ?? []).map((c) => (
-              <CompanionItem companion={c} component="li" canDelete />
+              <CompanionItem companion={c} canDelete />
             ))}
           </ul>
         </div>

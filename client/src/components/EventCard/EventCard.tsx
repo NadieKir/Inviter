@@ -1,11 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { Event, MockedEvent } from 'models';
+
+import { Event } from 'models';
+import { wordFormatDate } from 'common/helpers';
 
 import styles from './EventCard.module.scss';
-import mockEvent from 'assets/images/mockEvent.jpg';
-import mockUser from 'assets/images/mock-user-photo.jpg';
 import calendar from 'assets/images/calendar.svg';
-import { formatDate, wordFormatDate } from 'common/helpers';
 
 interface EventCardProps {
   event: Event;
@@ -14,34 +13,23 @@ interface EventCardProps {
 export const EventCard = ({ event }: EventCardProps) => {
   return (
     <li>
-      <NavLink to="#">
+      <NavLink to={`/events/${event._id}`}>
         <article className={styles.card}>
           <div className={styles.infoWrapper}>
             <div className={styles.date}>
-              <img src={calendar} alt="Дата" height={'16px'} />
+              <img src={calendar} alt="Дата" height={'15px'} />
               {wordFormatDate(event.date, event.time)}
             </div>
             <div className={styles.headingDescription}>
-              <h2 className={styles.heading}>
-                {event.name}
-              </h2>
-              <p className={styles.description}>
-                {event.description}
-              </p>
-            </div>
-            <div className={styles.users}>
-              <img src={mockUser} alt="Фото пользователя" />
-              <img src={mockEvent} alt="Фото пользователя" />
-              <img src={mockUser} alt="Фото пользователя" />
-              <img src={mockEvent} alt="Фото пользователя" />
-              <div className={styles.restCounter}>+44</div>
+              <h2 className={styles.heading}>{event.name}</h2>
+              <p className={styles.description}>{event.description}</p>
             </div>
           </div>
-          <div className={styles.imageWrapper}>
-            <div className={styles.imageHolder}>
-              <img className={styles.eventImage} src={event.image} alt={event.name} />
-            </div>
-          </div>
+          <img
+            className={styles.eventImage}
+            src={event.image}
+            alt={event.name}
+          />
         </article>
       </NavLink>
     </li>

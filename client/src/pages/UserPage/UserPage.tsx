@@ -3,7 +3,7 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { Button, InviteCard, Loader } from 'components';
+import { Button, InviteCard, InviteCardVariant, Loader } from 'components';
 import {
   concatUserNameAndAge,
   formatDate,
@@ -14,8 +14,8 @@ import { UserStore } from 'stores';
 import { Invite } from 'models';
 
 import styles from './UserPage.module.scss';
-import at from './assets/at.svg';
-import geo from './assets/geo.svg';
+import at from 'assets/images/at.svg';
+import geo from 'assets/images/geo.svg';
 
 export const UserPage = observer(() => {
   const { login } = useParams();
@@ -148,7 +148,11 @@ export const UserPage = observer(() => {
         </h2>
         <ul className={styles.userInvites}>
           {userInvites.map((invite: Invite) => (
-            <InviteCard key={invite._id} invite={invite} noUserVariant />
+            <InviteCard
+              key={invite._id}
+              invite={invite}
+              variant={InviteCardVariant.NO_USER}
+            />
           ))}
         </ul>
       </section>

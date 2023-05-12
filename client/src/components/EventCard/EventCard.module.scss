@@ -7,50 +7,38 @@
   display: flex;
   justify-content: space-between;
   width: 495px;
-  padding: 30px;
+  height: 240px;
+  padding: 25px 30px 25px 35px;
   color: $black-color;
 }
 
 .infoWrapper {
-  flex: 0 1 calc(50% - 10px);
-  max-width: calc(50% - 10px);
   display: flex;
   flex-direction: column;
   row-gap: 20px;
-  width: 230px;
-}
-
-.imageWrapper {
-  flex: 0 1 calc(50% - 10px);
-  max-width: calc(50% - 10px);
-}
-
-.imageHolder {
-  height: 100%;
+  width: 215px;
 }
 
 .eventImage {
-  max-width: 100%;
-  width: 100%;
   height: 100%;
   border-radius: 10px;
   object-fit: cover;
-  vertical-align: bottom;
-  aspect-ratio: 4/3;
+  aspect-ratio: 1/1;
 }
 
 .date {
   display: flex;
-  column-gap: 8px;
+  column-gap: 7px;
   align-items: center;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 0;
 }
 
 .headingDescription {
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
+  row-gap: 10px;
 }
 
 .heading {
@@ -62,7 +50,8 @@
 .description {
   font-weight: 300;
   font-size: 13px;
-  @include multiline-ellipsis(4);
+  line-height: 18px;
+  @include multiline-ellipsis(7);
 }
 
 .users {

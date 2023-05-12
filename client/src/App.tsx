@@ -5,7 +5,9 @@ import { PrivateRoute, UserStatus, inviteTabs } from 'components';
 import { AuthorizationForm, RegistrationForm } from 'forms';
 import {
   AdminEventsPage,
+  ContactsPage,
   ErrorFallback,
+  EventPage,
   ForbiddenPage,
   InvitesPage,
   NotFoundPage,
@@ -35,6 +37,7 @@ function App() {
         >
           <Route path="search" element={<SearchInvitePage />} />
           <Route path="events" element={<SearchEventPage />} />
+          <Route path="events/:id" element={<EventPage />} />
           <Route path="invites" element={<InvitesPage />}>
             <Route
               index
@@ -49,11 +52,12 @@ function App() {
               />
             ))}
           </Route>
-          <Route path="contacts" element={<div>contacts</div>} />
+          <Route path="contacts" element={<ContactsPage />} />
           <Route path="following" element={<div>following</div>} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="user/:login" element={<UserPage />} />
         </Route>
+
         <Route
           path="/admin"
           element={
@@ -66,10 +70,12 @@ function App() {
         >
           <Route path="events" element={<AdminEventsPage />} />
         </Route>
+
         <Route path="/" element={<LoginLayout />}>
           <Route path="login" element={<AuthorizationForm />} />
           <Route path="registration" element={<RegistrationForm />} />
         </Route>
+
         <Route path="forbidden" element={<ForbiddenPage />} />
         <Route path="not-found" element={<NotFoundPage />} />
         <Route path="*" element={<Navigate replace to="/not-found" />} />

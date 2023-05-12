@@ -2,23 +2,34 @@ import EventModel from "../models/Event.model.js";
 
 export const getAll = async (req, res) => {
   try {
-    const filter = Object
-      .entries(req.query)
-      .filter(e => e[1])
+    const filter = Object.entries(req.query)
+      .filter((e) => e[1])
       .reduce((acc, v) => {
-        acc[v[0]] = v[1]
+        acc[v[0]] = v[1];
 
         return acc;
-      }, {})
+      }, {});
 
-    const events = await EventModel
-      .find({ $and: [filter] });
+    const events = await EventModel.find({ $and: [filter] });
 
     res.json(events);
   } catch (err) {
     console.log(err);
     res.status(500).json({
       message: "Не удалось получить события",
+    });
+  }
+};
+
+export const getOne = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const event = await EventModel.findById(eventId);
+    res.json(event);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось получить событие",
     });
   }
 };

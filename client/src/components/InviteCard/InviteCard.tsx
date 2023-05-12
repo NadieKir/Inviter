@@ -17,22 +17,31 @@ import { UserContext } from 'common/contexts';
 import styles from './InviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
 
+export enum InviteCardVariant {
+  BIG_USER = 'Big User',
+  NO_USER = 'No User',
+  SMALL_USER = 'Small User',
+}
+
 interface InviteCardProps {
   invite: Invite;
-  noUserVariant?: boolean;
+  variant?: InviteCardVariant;
 }
 
 export const InviteCard = observer(
-  ({ invite, noUserVariant = false }: InviteCardProps) => {
+  ({ invite, variant = InviteCardVariant.BIG_USER }: InviteCardProps) => {
     const [isShowingModal, toggleModal] = useModal();
     const { userResponses } = useContext(UserContext);
 
     return (
       <>
-        <li className={classNames(styles.card, {
-          [styles.cardWithoutUser]: noUserVariant,
-        })}>
-          {!noUserVariant && (
+        <li
+          className={classNames(styles.card, {
+            [styles.cardWithoutUser]: variant !== InviteCardVariant.BIG_USER,
+            [styles.cardWide]: variant === InviteCardVariant.SMALL_USER,
+          })}
+        >
+          {variant === InviteCardVariant.BIG_USER && (
             <NavLink
               to={`/user/${invite.creator.login}`}
               className={styles.photoNameWrapper}
@@ -57,6 +66,18 @@ export const InviteCard = observer(
               {getInviteCompanionsInfoString(invite)}
             </p>
           </div>
+          {variant === InviteCardVariant.SMALL_USER && (
+            <div className={styles.creator}>
+              <img
+                className={styles.creatorImage}
+                src={invite.creator.image}
+                alt={invite.creator.name}
+              />
+              <span className={styles.creatorInfo}>
+                {concatUserNameAndAge(invite.creator)}
+              </span>
+            </div>
+          )}
           {userResponses
             .map((response) => response.invite._id)
             .includes(invite._id) ? (

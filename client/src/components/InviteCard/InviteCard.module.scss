@@ -8,7 +8,7 @@
   @include base-wrapper();
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   justify-content: space-between;
   row-gap: 25px;
   max-width: 240px;
@@ -22,6 +22,27 @@
   margin-top: 0px;
 }
 
+.cardWide {
+  max-width: none;
+}
+
+.creator {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  &Image {
+      width: 25px;
+      height: 25px;
+      border-radius: 50px;
+  }
+
+  &Info {
+      font-weight: 400;
+      font-size: 12px;
+  }
+}
+
 .photoNameWrapper {
   @include base-wrapper();
   position: absolute;
@@ -30,6 +51,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: center;
   row-gap: 10px;
   width: fit-content;
   padding: 5px 5px 10px 5px;

@@ -7,7 +7,7 @@ import {
   Divider,
 } from 'components';
 import { Invite, InviteStatus } from 'models';
-import { wordFormatDate } from 'common/helpers';
+import { getInviteCompanionsInfoString, wordFormatDate } from 'common/helpers';
 import { UserContext } from 'common/contexts';
 
 import styles from './ClosedInviteCard.module.scss';
@@ -32,6 +32,9 @@ export function ClosedInviteCard({ invite }: Props) {
             <span className={styles.subject}>
               Хочет <span className="blue">{invite.subject}</span>
             </span>
+            <span className={styles.companionsInfo}>
+              {getInviteCompanionsInfoString(invite)}
+            </span>
           </div>
           <Divider />
         </div>
@@ -41,7 +44,7 @@ export function ClosedInviteCard({ invite }: Props) {
             {invite.companions.map((c) => (
               <CompanionItem
                 companion={c}
-                component="li"
+                // component="li"
                 canDelete={user?._id === invite.creator._id}
               />
             ))}

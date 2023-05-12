@@ -1,23 +1,21 @@
 import { Button, ButtonHeight, ButtonVariant, ButtonWidth } from 'components';
-import { InviteResponse } from 'models';
+import { Invite } from 'models';
 
 import { concatUserNameAndAge } from 'common/helpers/user';
 import { wordFormatDate } from 'common/helpers';
 import { getInviteCompanionsInfoString } from 'common/helpers/invite';
-
-import styles from './InviteResponseCard.module.scss';
-import calendar from 'assets/images/calendar.svg';
 import { useInviteDetailsModalContext } from 'common/contexts';
 import { InviteModalType } from 'modals';
 
+import styles from './InviteResponseCard.module.scss';
+import calendar from 'assets/images/calendar.svg';
+
 interface Props {
-  inviteResponse: InviteResponse;
+  invite: Invite;
 }
 
-export function InviteResponseCard({ inviteResponse }: Props) {
+export function InviteResponseCard({ invite }: Props) {
   const { openModal } = useInviteDetailsModalContext();
-
-  const invite = inviteResponse.invite;
 
   return (
     <div className={styles.card}>

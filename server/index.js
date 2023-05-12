@@ -37,7 +37,7 @@ app.post("/auth/register", registerValidator, handleValidationErrors, UserContro
 app.post("/auth/login", handleValidationErrors, UserController.login);
 app.get("/auth/me", checkAuth, UserController.getMe);
 app.get("/auth/login/:login", UserController.checkLogin);
-app.get("/auth/email/:email", UserController.checkEmail)
+app.get("/auth/email/:email", UserController.checkEmail);
 
 app.patch("/users", checkAuth, UserController.update);
 app.get("/users/:login", UserController.getOne);
@@ -67,7 +67,8 @@ app.get("/invite-responses/current", checkAuth, InviteResponseController.getAllC
 app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);
 
 app.get("/events", checkAuth, EventController.getAll);
-app.post("/events", checkAuth, EventController.create)
+app.get("/events/:id", EventController.getOne);
+app.post("/events", checkAuth, EventController.create);
 
 app.listen(8080, (error) => {
   if (error) {

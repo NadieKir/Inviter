@@ -7,3 +7,5 @@ export * from './ProfilePage/ProfilePage';
 export * from './AdminEventsPage/AdminEventsPage';
 export * from './SearchEventPage/SearchEventPage';
 export * from './InvitesPage/InvitesPage';
+export * from './EventPage/EventPage';
+export * from './ContactsPage/ContactsPage';
