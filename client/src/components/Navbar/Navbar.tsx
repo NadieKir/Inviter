@@ -8,12 +8,14 @@ import { userLinksToNavItem, adminLinksToNavItem } from 'common/constants';
 import { UserContext } from 'common/contexts';
 import { AdminNavbarAction } from './components/AdminNavbarAction/AdminNavbarAction';
 import { UserNavbarAction } from './components/UserNavbarAction/UserNavbarAction';
+import { concatUserNameAndAge } from 'common/helpers';
 
 import styles from './Navbar.module.scss';
 import logo from 'assets/images/logo.svg';
 import geo from 'assets/images/geo.svg';
+import menu from './assets/menu.svg';
 import defaultImage from 'assets/images/defaultImage.png';
-import { concatUserNameAndAge } from 'common/helpers';
+import { IconButton } from 'components/IconButton/IconButton';
 
 interface NavbarProps {
   variant: Role;
@@ -33,32 +35,38 @@ export const Navbar = observer(({ variant }: NavbarProps) => {
         <img src={logo} alt="Логотип" />
       </NavLink>
 
-      <NavLink
-        to={user.role === Role.ADMIN ? '/admin/profile' : '/profile'}
-        className={styles.userProfile}
-      >
-        <img
-          className={styles.userPhoto}
-          src={user?.image !== '' ? user?.image : defaultImage}
-          alt="Фото пользователя"
-        />
-        {user.role === Role.ADMIN ? (
-          <div className={styles.userInfo}>
-            <span className={styles.userName}>{user.name}</span>
-            <div className={styles.userCity}>Администратор</div>
-          </div>
-        ) : (
-          <div className={styles.userInfo}>
-            <span className={styles.userName}>
-              {concatUserNameAndAge(user)}
-            </span>
-            <div className={styles.userCity}>
-              <img src={geo} alt="Локация" width={'10px'} />
-              {user.city}
+      <div className={styles.a}>
+        <NavLink
+          to={user.role === Role.ADMIN ? '/admin/profile' : '/profile'}
+          className={styles.userProfile}
+        >
+          <img
+            className={styles.userPhoto}
+            src={user?.image !== '' ? user?.image : defaultImage}
+            alt="Фото пользователя"
+          />
+          {user.role === Role.ADMIN ? (
+            <div className={styles.userInfo}>
+              <span className={styles.userName}>{user.name}</span>
+              <div className={styles.userCity}>Администратор</div>
             </div>
-          </div>
-        )}
-      </NavLink>
+          ) : (
+            <div className={styles.userInfo}>
+              <span className={styles.userName}>
+                {concatUserNameAndAge(user)}
+              </span>
+              <div className={styles.userCity}>
+                <img src={geo} alt="Локация" width={'10px'} />
+                {user.city}
+              </div>
+            </div>
+          )}
+        </NavLink>
+
+        <button className={styles.menuBurger}>
+          <img src={menu} alt="" />
+        </button>
+      </div>
 
       <nav className={styles.nav}>
         {linksToNavItem.map((linkToNavItem) => (
@@ -81,7 +89,9 @@ export const Navbar = observer(({ variant }: NavbarProps) => {
         ))}
       </nav>
 
-      {variant === Role.ADMIN ? <AdminNavbarAction /> : <UserNavbarAction />}
+      <div className={styles.action}>
+        {variant === Role.ADMIN ? <AdminNavbarAction /> : <UserNavbarAction />}
+      </div>
     </aside>
   );
 });

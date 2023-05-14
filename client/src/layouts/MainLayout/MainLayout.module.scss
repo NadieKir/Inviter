@@ -4,15 +4,28 @@
 .appWrapper {
   display: flex;
   margin: 30px 0;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    flex-direction: column;
+    row-gap: 30px;
+  }
 }
 
 .main {
   width: 100%;
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    display: block;
+  }
 }
 
 .mainAppContainer {
   max-width: $app-container-max-width;
   width: 85%;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    width: 100%;
+  }
 }

@@ -18,6 +18,13 @@
   min-width: $nav-container-max-width;
   height: max-content;
   margin-left: 30px;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    flex-direction: row;
+    margin-right: 30px;
+    justify-content: space-between;
+    padding: 10px 30px;
+  }
 }
 
 .userProfile {
@@ -26,9 +33,14 @@
   align-items: center;
   column-gap: 12px;
   width: 100%;
+
   padding: 10px;
 
   overflow-wrap: anywhere;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    width: 180px;
+  }
 }
 
 .userPhoto {
@@ -87,5 +99,40 @@
     &.active {
       background: $light-gray-color;
     }
+  }
+
+  @media screen and (max-width: $medium-screen-bp) {
+    display: none;
+  }
+}
+
+.action {
+  width: 100%;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    display: none;
+  }
+}
+
+.menuBurger {
+  display: none;
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    display: flex;
+  }
+}
+
+.a {
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+  width: 100%;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    width: auto;
   }
 }
