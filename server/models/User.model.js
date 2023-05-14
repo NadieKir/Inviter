@@ -28,10 +28,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
     city: {
       type: String,
       required: true,
@@ -76,14 +72,18 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      required: true,
+    },
     // contacts: {
     //   type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     //   default: [],
     // },
-    followers: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-      default: [],
-    },
+    // followers: {
+    //   type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    //   default: [],
+    // },
     // followings: {
     //   type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     //   default: [],

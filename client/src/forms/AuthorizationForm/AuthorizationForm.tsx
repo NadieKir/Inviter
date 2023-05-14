@@ -9,11 +9,12 @@ import { LoginFormData, LoginFormFields } from 'types';
 import { UserContext } from 'common/contexts';
 
 import styles from './AuthorizationForm.module.scss';
+import { Role } from 'models';
 
 export const AuthorizationForm = observer(() => {
   const navigate = useNavigate();
 
-  const { login, isLoading } = useContext(UserContext);
+  const { user, login, isLoading } = useContext(UserContext);
 
   const loginSchema = Yup.object().shape({
     [LoginFormFields.Login]: Yup.string(),
@@ -26,7 +27,8 @@ export const AuthorizationForm = observer(() => {
   ) => {
     try {
       await login(values);
-      navigate('/');
+      if (user?.role === Role.ADMIN) navigate('/admin');
+      else navigate('/');
     } catch (error: any) {
       if (error.response.status === 400) alert('Пользователь не найден');
       else console.log(error);

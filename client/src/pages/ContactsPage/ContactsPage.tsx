@@ -1,7 +1,13 @@
 import { useContext } from 'react';
 import { Form, Formik } from 'formik';
 
-import { IconButton, IconButtonColor, Loader, TextField } from 'components';
+import {
+  IconButton,
+  IconButtonColor,
+  Loader,
+  NotificationVariant,
+  TextField,
+} from 'components';
 import { UserContext } from 'common/contexts';
 import { concatUserNameAndAge } from 'common/helpers';
 

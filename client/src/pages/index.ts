@@ -10,3 +10,4 @@ export * from './InvitesPage/InvitesPage';
 export * from './EventPage/EventPage';
 export * from './ContactsPage/ContactsPage';
 export * from './FollowingsPage/FollowingsPage';
+export * from './AdminProfilePage/AdminProfilePage';

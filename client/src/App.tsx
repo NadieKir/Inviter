@@ -5,6 +5,7 @@ import { PrivateRoute, UserStatus, inviteTabs } from 'components';
 import { AuthorizationForm, RegistrationForm } from 'forms';
 import {
   AdminEventsPage,
+  AdminProfilePage,
   ContactsPage,
   ErrorFallback,
   EventPage,
@@ -30,7 +31,7 @@ function App() {
           path="/"
           element={
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <PrivateRoute roles={[UserStatus.AUTHORIZED]}>
+              <PrivateRoute roles={[Role.USER]}>
                 <MainLayout />
               </PrivateRoute>
             </ErrorBoundary>
@@ -69,6 +70,7 @@ function App() {
             </ErrorBoundary>
           }
         >
+          <Route path="profile" element={<AdminProfilePage />} />
           <Route path="events" element={<AdminEventsPage />} />
         </Route>
 
