@@ -1,5 +1,5 @@
 import { Attitude, City, FamilyStatus, Gender, Interests, Language, Orientation, Role, User } from "./user.model";
-import { Event, EventType, Invite, InviteResponse, InviteType } from "models";
+import { Event, Invite, InviteResponse, InviteType } from "models";
 import { getRandomItem } from "common/helpers";
 
 export const mockedUsers: User[] = [
@@ -115,7 +115,7 @@ export const mockedEvents: Event[] = [
     _id: "1",
     name: "Шоу Цирка",
     description: "Захватывающее цирковое выступление с акробатами и клоунами.",
-    type: EventType.CIRCUS,
+    type: InviteType.CIRCUS,
     image: "https://example.com/circus.jpg",
     url: "https://example.com/circus",
     city: City.MINSK,
@@ -127,7 +127,7 @@ export const mockedEvents: Event[] = [
     _id: "2",
     name: "Киновечер",
     description: "Открытое показы классических фильмов.",
-    type: EventType.CINEMA,
+    type: InviteType.CINEMA,
     image: "https://example.com/movie.jpg",
     url: "https://example.com/movie",
     city: City.MINSK,
@@ -139,7 +139,7 @@ export const mockedEvents: Event[] = [
     _id: "3",
     name: "Шекспир в парке",
     description: "Представление классической пьесы Шекспира в красивой парковой атмосфере.",
-    type: EventType.THEATER,
+    type: InviteType.THEATER,
     image: "https://example.com/shakespeare.jpg",
     url: "https://example.com/shakespeare",
     city: City.MINSK,
@@ -151,7 +151,7 @@ export const mockedEvents: Event[] = [
     _id: "4",
     name: "Развлечения в парке",
     description: "Аттракционы, игры и еда для всей семьи.",
-    type: EventType.PARK,
+    type: InviteType.PARK,
     image: "https://example.com/amusement_park.jpg",
     url: "https://example.com/amusement_park",
     city: City.MINSK,
@@ -163,7 +163,7 @@ export const mockedEvents: Event[] = [
     _id: "5",
     name: "Мастерская цирка",
     description: "Изучение цирковых навыков, таких как жонглирование и хождение по канату, от профессиональных артистов.",
-    type: EventType.CIRCUS,
+    type: InviteType.CIRCUS,
     image: "https://example.com/circus_workshop.jpg",
     url: "https://example.com/circus_workshop",
     city: City.MINSK,

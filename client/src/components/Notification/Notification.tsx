@@ -9,6 +9,7 @@ import successIcon from "./assets/success.svg";
 import warningIcon from "./assets/warning.svg";
 import errorIcon from "./assets/error.svg";
 import infoIcon from "./assets/info.svg";
+import redCross from 'assets/images/redCross.svg';
 
 export enum NotificationVariant {
   Success = "success",
@@ -76,9 +77,7 @@ export const Notification = () => {
         {message && <p className={styles.description}>{message}</p>}
       </div>
 
-      <button className={styles.closeBtn} onClick={resetNotification}>
-        close
-      </button>
+      <img src={redCross} className={styles.closeBtn} onClick={resetNotification} alt='cross' />
     </article>
   );
 };

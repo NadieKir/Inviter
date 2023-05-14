@@ -3,6 +3,10 @@ import { Invite } from 'models';
 import { InviteFormData, SearchInviteFilters } from 'types';
 import { buildQueryParams } from './helpers';
 
+export type InvitePayload = InviteFormData & {
+  eventId?: string;
+};
+
 export const getInvites = async (): Promise<Invite[]> => {
   const { data: invites } = await httpClient.get<Invite[]>('/invites');
   return invites;
@@ -28,7 +32,7 @@ export const getCurrentUserInvites = async (): Promise<Invite[]> => {
 };
 
 export const createInvite = async (
-  newInvite: InviteFormData,
+  newInvite: InvitePayload,
 ): Promise<Invite> => {
   const { data: createdInvite } = await httpClient.post<Invite>('/invites', newInvite);
   return createdInvite;

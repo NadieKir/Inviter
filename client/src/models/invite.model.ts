@@ -8,7 +8,10 @@ export enum InviteType {
   ENTERTAINMENT = 'Развлечения',
   TRAVELLING = 'Путешествия',
   HELP = 'Помощь',
-  CINEMA = 'Кино',
+  CIRCUS = "Цирк",
+  CINEMA = "Кино",
+  THEATER = "Театр",
+  PARK = "Парк",
   OTHER = 'Другое'
 }
 

@@ -119,6 +119,15 @@ export const getOne = async (req, res) => {
   try {
     const userLogin = req.params.login;
     const user = await UserModel.findOne({ login: userLogin });
+
+    if (user === null) {
+      res.status(404).json({
+        message: "Пользователь не найден",
+      });
+
+      return;
+    }
+
     res.json(user);
   } catch (err) {
     console.log(err);
@@ -187,29 +196,109 @@ export const update = async (req, res) => {
   }
 };
 
-export const checkLogin = async (req, res) => {
+export const updateProfile = async (req, res) => {
   try {
-    const login = req.params.login;
-    const user = await UserModel.findOne({ login });
-    if (!user) {
-      res.json(false);
+    const userId = req.userId;
 
-      return;
-    }
+    UserModel.findOneAndUpdate(
+      {
+        _id: userId,
+      },
+      {
+        name: req.body.name,
+        login: req.body.login,
+        image: req.body.image,
+        city: req.body.city,
+        gender: req.body.gender,
+        orientation: req.body.orientation,
+        familyStatus: req.body.familyStatus,
+        alcoholAttitude: req.body.alcoholAttitude,
+        smokingAttitude: req.body.smokingAttitude,
+        languages: req.body.languages,
+        interests: req.body.interests,
+        welcomeMessage: req.body.welcomeMessage,
+        connectionMethods: req.body.connectionMethods,
+        preferredAge: req.body.preferredAge,
+      },
+      {
+        returnDocument: "after",
+      }
+    ).then((doc, err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          message: "Не удалось обновить профиль пользователя",
+        });
+      }
 
-    res.json(true);
+      if (!doc) {
+        return res.status(400).json({
+          message: "Пользователь не найден",
+        });
+      }
+
+      res.json(doc);
+    });
+
+    // res.status(200).json({
+    //   success: true,
+    // });
   } catch (err) {
     console.log(err);
     res.status(500).json({
       message: "Не удалось обновить пользователя",
     });
   }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const user = await UserModel.findOne({ _id: userId });
+
+    const salt = await bcrypt.genSalt(10);
+
+    const oldPassword = req.body.oldPassword;
+
+    const isValidPass = await bcrypt.compare(oldPassword, user.passwordHash);
+
+    if (!isValidPass) {
+      res.status(400).json({
+        message: "Введен неправильный старый пароль",
+      })
+
+      return;
+    }
+
+    const newPassword = req.body.newPassword;
+    const newPasswordHash = await bcrypt.hash(newPassword, salt);
+
+    const doc = await UserModel.findOneAndUpdate(
+      { _id: userId },
+      { $set: { passwordHash: newPasswordHash } },
+      {
+        returnDocument: "after",
+      }
+    )
+
+    res.status(200).json(doc);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось обновить пароль пользователя",
+    })
+  }
 }
 
-export const checkEmail = async (req, res) => {
+export const checkLogin = async (req, res) => {
   try {
-    const email = req.params.email;
-    const user = await UserModel.findOne({ email });
+    const login = req.params.login;
+    const userId = req.userId;
+
+    const user = await UserModel.findOne({ login: login, _id: { $ne: userId } });
+
     if (!user) {
       res.json(false);
 
@@ -220,7 +309,29 @@ export const checkEmail = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Не удалось обновить пользователя",
+      message: "Не удалось проверить логин",
+    })
+  }
+};
+
+export const checkEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const userId = req.userId;
+
+    const user = await UserModel.findOne({ email: email, _id: { $ne: userId } });
+
+    if (!user) {
+      res.json(false);
+
+      return;
+    }
+
+    res.json(true);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось проверить почту",
     });
   }
 }
