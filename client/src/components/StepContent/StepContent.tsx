@@ -74,8 +74,8 @@ export const StepContent = ({
         width={ButtonWidth.Small}
         disabled={
           stepDescriptor.noVerify
-            ? !props.isValid
-            : !props.isValid || !props.dirty
+            ? !props.isValid || props.isSubmitting
+            : !props.isValid || !props.dirty || props.isSubmitting
         }
       >
         Далее
@@ -84,6 +84,7 @@ export const StepContent = ({
   };
 
   const renderSubmitFormButton = (props: FormikProps<FormikValues>) => {
+
     return (
       <Button
         type="submit"

@@ -35,13 +35,20 @@ export class UserStore {
     this.setIsLoading(true);
 
     try {
-      this.setUser(await getUser(login));
-      this.setUserInvites(await getAnotherUserInvites(this.user!._id));
+      const user = await getUser(login);
+      this.setUser(user);
+
+      if (user === null) {
+        return;
+      }
+
+      const invites = await getAnotherUserInvites(user._id)
+      this.setUserInvites(invites);
     }
     catch (error) {
       this.setError(error as AxiosError);
       throw this.error;
-    } 
+    }
     finally {
       this.setIsLoading(false);
     }

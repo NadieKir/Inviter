@@ -62,3 +62,31 @@ export type RegistrationThirdStepFormData = {
 export type RegistrationFormData = RegistrationFirstStepFormData & RegistrationSecondStepFormData & RegistrationThirdStepFormData & {
   role: Role,
 }
+
+export enum ChangePasswordFields {
+  OldPassword = 'oldPassword',
+  NewPassword = 'newPassword',
+  ConfirmNewPassword = 'confirmNewPassword',
+}
+
+export type ChangePasswordFormData = {
+  [ChangePasswordFields.OldPassword]: string;
+  [ChangePasswordFields.NewPassword]: string;
+  [ChangePasswordFields.ConfirmNewPassword]: string;
+}
+
+export type EditProfileFormData = Pick<RegistrationFormData,
+  RegistrationFormFields.Name |
+  RegistrationFormFields.Login |
+  RegistrationFormFields.City |
+  RegistrationFormFields.Orientation |
+  RegistrationFormFields.FamilyStatus |
+  RegistrationFormFields.AlcoholAttitude |
+  RegistrationFormFields.SmokingAttitude |
+  RegistrationFormFields.Languages |
+  RegistrationFormFields.Interests |
+  RegistrationFormFields.WelcomeMessage |
+  RegistrationFormFields.ConnectionMethods |
+  RegistrationFormFields.PreferredAge |
+  RegistrationFormFields.Image
+>;

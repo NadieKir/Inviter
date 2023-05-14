@@ -18,9 +18,9 @@ import {
   RequiredEventFields,
   SelectOption,
   CITIES_OPTIONS,
-  EVENT_TYPES_OPTIONS,
+  INVITE_TYPES_OPTIONS,
 } from 'types';
-import { City, EventType } from 'models';
+import { City, InviteType } from 'models';
 import { selectOptionValidationSchema } from 'common/constants';
 import { formatToOnlyDate, formatToOnlyTime, isDateValueEquals } from 'common/helpers';
 
@@ -92,7 +92,7 @@ const renderRequiredFields = (formikProps: FormikProps<FormikValues>) => {
         labelText="Тип"
         getOptionLabel={(o) => o.label}
         getOptionValue={(o) => o.value}
-        options={EVENT_TYPES_OPTIONS}
+        options={INVITE_TYPES_OPTIONS}
       />
       <Select
         name={EventFormFields.City}
@@ -181,7 +181,7 @@ export const EventForm = observer(
         [EventFormFields.Date]: formattedDate,
         [EventFormFields.Time]: formattedTime,
         [EventFormFields.Type]: (
-          values[EventFormFields.Type] as SelectOption<EventType>
+          values[EventFormFields.Type] as SelectOption<InviteType>
         ).value,
         [EventFormFields.City]: (
           values[EventFormFields.City] as SelectOption<City>

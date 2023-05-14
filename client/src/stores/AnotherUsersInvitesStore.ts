@@ -32,6 +32,8 @@ export class AnotherUsersInvitesStore {
 
     try {
       this.setAnotherUsersInvites(await getAnotherUsersInvites(filters));
+
+      console.log(this.anotherUsersInvites);
     }
     catch (error) {
       this.setError(error as AxiosError);

@@ -7,7 +7,7 @@ import {
   DateTimePicker,
   Select,
 } from 'components';
-import { CITIES_OPTIONS, EVENT_TYPES_OPTIONS, SearchEventFilters, SearchEventFiltersFormFields, SelectOption } from 'types';
+import { CITIES_OPTIONS, INVITE_TYPES_OPTIONS, SearchEventFilters, SearchEventFiltersFormFields, SelectOption } from 'types';
 import { formatToOnlyDate } from 'common/helpers';
 
 
@@ -29,7 +29,7 @@ const evenTypeOptions: SelectOption<string>[] = [
     label: 'Любой',
     value: ''
   },
-  ...EVENT_TYPES_OPTIONS,
+  ...INVITE_TYPES_OPTIONS,
 ];
 
 type Props = {

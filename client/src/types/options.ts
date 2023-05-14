@@ -1,4 +1,4 @@
-import { Attitude, City, EventType, FamilyStatus, Gender, Interests, InviteType, Language, Orientation, Role, User } from "models";
+import { Attitude, City, FamilyStatus, Gender, Interests, InviteType, Language, Orientation, Role, User } from "models";
 import { getEnumMembers } from "common/helpers";
 
 export function createOption<T extends string>(o: T): SelectOption<T> {
@@ -33,7 +33,4 @@ export const INTERESTS_OPTIONS = INTERESTS.map(createOption);
 
 export const INVITE_TYPES = getEnumMembers(InviteType);
 export const INVITE_TYPES_OPTIONS = INVITE_TYPES.map(createOption);
-
-export const EVENT_TYPES = getEnumMembers(EventType);
-export const EVENT_TYPES_OPTIONS = EVENT_TYPES.map(createOption);
 

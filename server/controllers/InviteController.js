@@ -7,6 +7,7 @@ export const create = async (req, res) => {
       subject: req.body.subject,
       description: req.body.description,
       creator: req.userId,
+      event: req.body.eventId,
       city: req.body.city,
       type: req.body.type,
       address: req.body.address,
@@ -30,7 +31,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const invites = await InviteModel.find().populate("creator").exec();
+    const invites = await InviteModel.find().populate("creator").populate("event").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -65,11 +66,24 @@ export const getAllAnotherUsers = async (req, res) => {
             localField: 'creator',
             foreignField: '_id',
             as: 'creator',
-          },
+          }
         },
         {
           $unwind: {
             path: "$creator"
+          },
+        },
+        {
+          $lookup: {
+            from: 'events',
+            localField: 'event',
+            foreignField: '_id',
+            as: 'event',
+          }
+        },
+        {
+          $unwind: {
+            path: "$event"
           }
         },
         {
@@ -94,7 +108,7 @@ export const getAllAnotherUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const invites = await InviteModel.find({ creator: userId }).populate("creator").exec();
+    const invites = await InviteModel.find({ creator: userId }).populate("creator").populate("event").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -106,7 +120,7 @@ export const getAllAnotherUser = async (req, res) => {
 
 export const getAllCurrentUser = async (req, res) => {
   try {
-    const invites = await InviteModel.find({ creator: req.userId }).populate("creator").exec();
+    const invites = await InviteModel.find({ creator: req.userId }).populate("creator").populate("event").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);

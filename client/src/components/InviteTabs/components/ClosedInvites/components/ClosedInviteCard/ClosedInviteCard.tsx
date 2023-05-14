@@ -6,12 +6,13 @@ import {
   CompanionItem,
   Divider,
 } from 'components';
-import { Invite, InviteStatus } from 'models';
+import { Invite } from 'models';
 import { getInviteCompanionsInfoString, wordFormatDate } from 'common/helpers';
-import { UserContext } from 'common/contexts';
+import { UserContext, useInviteDetailsModalContext } from 'common/contexts';
 
 import styles from './ClosedInviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
+import { InviteModalType } from 'modals';
 
 interface Props {
   invite: Invite;
@@ -19,6 +20,8 @@ interface Props {
 
 export function ClosedInviteCard({ invite }: Props) {
   const { user } = useContext(UserContext);
+
+  const { openModal } = useInviteDetailsModalContext();
 
   return (
     <div className={styles.card}>
@@ -44,7 +47,6 @@ export function ClosedInviteCard({ invite }: Props) {
             {invite.companions.map((c) => (
               <CompanionItem
                 companion={c}
-                // component="li"
                 canDelete={user?._id === invite.creator._id}
               />
             ))}
@@ -55,6 +57,7 @@ export function ClosedInviteCard({ invite }: Props) {
         className={styles.button}
         height={ButtonHeight.Small}
         variant={ButtonVariant.Secondary}
+        onClick={() => openModal(invite, InviteModalType.Delete)}
       >
         Подробнее
       </Button>
