@@ -8,6 +8,7 @@ import {
   ContactsPage,
   ErrorFallback,
   EventPage,
+  FollowingsPage,
   ForbiddenPage,
   InvitesPage,
   NotFoundPage,
@@ -53,7 +54,7 @@ function App() {
             ))}
           </Route>
           <Route path="contacts" element={<ContactsPage />} />
-          <Route path="following" element={<div>following</div>} />
+          <Route path="following" element={<FollowingsPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="user/:login" element={<UserPage />} />
         </Route>

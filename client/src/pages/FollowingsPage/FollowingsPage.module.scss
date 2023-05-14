@@ -1,0 +1,92 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.followingsSection {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+.header {
+  @include base-wrapper();
+  display: flex;
+  justify-content: space-between;
+  padding: 35px;
+  padding-bottom: 30px;
+}
+
+.mainWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.followingsWrapper {
+  @include base-wrapper();
+  display: flex;
+  flex-direction: column;
+  width: 27%;
+  height: fit-content;
+  padding: 25px 30px;
+  row-gap: 30px;
+}
+
+.searchForm {
+  display: flex;
+  column-gap: 10px;
+}
+
+.followings {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.following {
+  @include base-wrapper();
+  padding: 10px;
+  display: flex;
+  column-gap: 12px;
+  align-items: center;
+}
+
+.followingPhoto {
+  height: 50px;
+  min-height: 50px;
+  border-radius: 50px;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+
+.followingInfo {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.followingName {
+  font-weight: 500;
+  font-size: 13px;
+  color: $black-color;
+}
+
+.loginWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+
+  font-weight: 400;
+  font-size: 12px;
+  color: $black-color;
+}
+
+.invitesWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+
+  & > * {
+    width: 320px;
+  }
+}
