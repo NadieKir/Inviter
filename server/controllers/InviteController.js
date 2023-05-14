@@ -31,7 +31,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const invites = await InviteModel.find().populate("creator").populate("event").exec();
+    const invites = await InviteModel.find().populate("creator").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -43,6 +43,7 @@ export const getAll = async (req, res) => {
 
 export const getAllAnotherUsers = async (req, res) => {
   try {
+
     const filters = Object
       .entries(req.query)
       .filter(e => e[1])
@@ -57,6 +58,7 @@ export const getAllAnotherUsers = async (req, res) => {
       }, {
         'creator._id': { $ne: new mongoose.Types.ObjectId(req.userId) },
       });
+
 
     const invites = await InviteModel
       .aggregate([
@@ -74,27 +76,15 @@ export const getAllAnotherUsers = async (req, res) => {
           },
         },
         {
-          $lookup: {
-            from: 'events',
-            localField: 'event',
-            foreignField: '_id',
-            as: 'event',
-          }
-        },
-        {
-          $unwind: {
-            path: "$event"
-          }
-        },
-        {
           $match: {
             $and: [
               filters
             ],
           }
-        }
+        },
       ])
       .exec();
+
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -108,7 +98,7 @@ export const getAllAnotherUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const invites = await InviteModel.find({ creator: userId }).populate("creator").populate("event").exec();
+    const invites = await InviteModel.find({ creator: userId }).populate("creator").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -120,7 +110,7 @@ export const getAllAnotherUser = async (req, res) => {
 
 export const getAllCurrentUser = async (req, res) => {
   try {
-    const invites = await InviteModel.find({ creator: req.userId }).populate("creator").populate("event").exec();
+    const invites = await InviteModel.find({ creator: req.userId }).populate("creator").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
