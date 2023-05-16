@@ -151,7 +151,7 @@ export const mockedEvents: Event[] = [
     _id: "4",
     name: "Развлечения в парке",
     description: "Аттракционы, игры и еда для всей семьи.",
-    type: InviteType.PARK,
+    type: InviteType.WALK,
     image: "https://example.com/amusement_park.jpg",
     url: "https://example.com/amusement_park",
     city: City.MINSK,

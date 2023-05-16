@@ -1,10 +1,9 @@
 @import '~style/colors';
-@import '~style/typography';
-@import '~style/mixins';
 @import '~style/variables';
 
 .tabs {  
   width: 100%;
+  min-width: $tabs-container-min-width;
   display: flex;
 
   border-bottom: 1px solid $light-gray-color;
@@ -13,5 +12,9 @@
 
   & > * {
     width: 100%; 
+  }
+
+  & + * {
+    min-width: $tabs-container-min-width;
   }
 }

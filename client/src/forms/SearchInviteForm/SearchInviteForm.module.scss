@@ -3,11 +3,14 @@
   flex-wrap: wrap;
   align-items: center;
   column-gap: 45px;
+  row-gap: 20px;
 }
 
 .formInputs {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  row-gap: 10px;
   column-gap: 25px;
 }
 
@@ -15,6 +18,8 @@
   display: flex;
   align-items: center;
   column-gap: 10px;
+  flex-wrap: wrap;
+  row-gap: 10px;
 
   [class*=Select] {
     width: 210px;

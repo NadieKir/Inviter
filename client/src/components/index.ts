@@ -35,3 +35,4 @@ export * from './Loader/Loader';
 export * from './Divider/Divider';
 export * from './CompanionItem/CompanionItem';
 export * from './InviterItem/InviterItem';
+export * from './NothingFound/NothingFound';

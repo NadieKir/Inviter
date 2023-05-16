@@ -1,5 +1,11 @@
+@import '~style/variables';
+
 .invitesPage {
     display: flex;
     flex-direction: column;
     row-gap: 45px;
+
+    @media screen and (max-width: $medium-screen-bp) {
+        margin: 0 30px;
+    }
 }

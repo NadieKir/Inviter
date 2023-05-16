@@ -10,6 +10,8 @@
   justify-content: center;
 
   background: rgba(0, 0, 0, 0.4);
+  
+  z-index: 10;
 
   & > * {
     max-height: 650px;

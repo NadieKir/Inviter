@@ -79,7 +79,16 @@ export enum Language {
   BELARUSIAN = 'Белорусский',
   UKRAINIAN = 'Украинский',
   GERMAN = 'Немецкий',
-  ENGLISH = 'Английский'
+  ENGLISH = 'Английский',
+  FRENCH = 'Французский',
+  SPANISH = 'Испанский',
+  ITALIAN = 'Итальянский',
+  PORTUGUESE = 'Португальский',
+  JAPANESE = 'Японский',
+  CHINESE = 'Китайский',
+  KOREAN = 'Корейский',
+  ARABIC = 'Арабский',
+  HINDI = 'Хинди',      
 }
 
 export enum Interests {
@@ -89,6 +98,17 @@ export enum Interests {
   MUSIC = 'Музыка',
   TRAVEL = 'Путешествия',
   BOOKS = 'Книги',
+  READING = 'Чтение',
+  WRITING = 'Писательство',
+  SPORTS = 'Спорт',
+  PHOTOGRAPHY = 'Фотография',
+  TRAVELING = 'Путешествия',
+  COOKING = 'Кулинария',
+  GAMING = 'Игры',
+  DANCING = 'Танцы',
+  FISHING = 'Рыбалка',
+  HIKING = 'Походы в горы',
+  GARDENING = 'Садоводство',
 }
 
 export enum Role {

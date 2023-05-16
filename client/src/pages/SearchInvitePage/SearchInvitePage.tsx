@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
-import { InviteCard, Loader } from 'components';
+import { InviteCard, Loader, NothingFound } from 'components';
 import { SearchInviteForm } from 'forms';
 import { AnotherUsersInvitesStore } from 'stores';
 import { UserContext } from 'common/contexts';
@@ -35,7 +35,7 @@ export const SearchInvitePage = observer(() => {
       ) : (
         <ul className={styles.userCards}>
           {anotherUsersInvites.length === 0 ? (
-            <span>Инвайты по указанным фильтрам не найдены</span>
+            <NothingFound />
           ) : (
             anotherUsersInvites.map((invite) => (
               <InviteCard key={invite._id} invite={invite} />

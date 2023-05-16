@@ -13,44 +13,40 @@ import {
   INVITE_TYPES_OPTIONS,
   SearchInviteFilters,
   SearchInviteFiltersFormFields,
-  SelectOption
+  SelectOption,
 } from 'types';
 
 import styles from './SearchInviteForm.module.scss';
 import { formatToOnlyDate } from 'common/helpers';
-
 
 const inviteTypeOptions: SelectOption<string>[] = [
   {
     label: 'Любой',
     value: '',
   },
-  ...INVITE_TYPES_OPTIONS
+  ...INVITE_TYPES_OPTIONS,
 ];
 
 type Props = {
   initialFilters?: SearchInviteFiltersFormFields;
   onSubmit?: (values: SearchInviteFilters) => void;
-}
+};
 
-const formatResultValues = (values: SearchInviteFiltersFormFields): SearchInviteFilters => {
-  const formattedDate = values.date
-    ? formatToOnlyDate(values.date)
-    : undefined;
+const formatResultValues = (
+  values: SearchInviteFiltersFormFields,
+): SearchInviteFilters => {
+  const formattedDate = values.date ? formatToOnlyDate(values.date) : undefined;
 
   return {
     ...values,
     type: values.type?.value ?? undefined,
     city: values.city?.value ?? undefined,
     date: formattedDate,
-    gender: values.gender ? [...values.gender] : undefined
+    gender: values.gender ? [...values.gender] : undefined,
   };
 };
 
-export const SearchInviteForm = ({
-  initialFilters,
-  onSubmit,
-}: Props) => {
+export const SearchInviteForm = ({ initialFilters, onSubmit }: Props) => {
   const initialValues = {
     type: inviteTypeOptions[0],
     city: CITIES_OPTIONS[0],
@@ -59,7 +55,10 @@ export const SearchInviteForm = ({
     ...initialFilters,
   };
 
-  const handleSubmit = (values: SearchInviteFiltersFormFields, actions: any) => {
+  const handleSubmit = (
+    values: SearchInviteFiltersFormFields,
+    actions: any,
+  ) => {
     onSubmit?.(formatResultValues(values));
   };
 
@@ -67,30 +66,28 @@ export const SearchInviteForm = ({
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {(props) => (
         <Form className={styles.form}>
-          <div className={styles.formInputs}>
-            <div className={styles.multiselects}>
-              <Select
-                name="type"
-                getOptionLabel={o => o.label}
-                getOptionValue={o => o.value}
-                options={inviteTypeOptions}
-                noVerify
+          <div className={styles.multiselects}>
+            <Select
+              name="type"
+              getOptionLabel={(o) => o.label}
+              getOptionValue={(o) => o.value}
+              options={inviteTypeOptions}
+              noVerify
+            />
+            <Select
+              name="city"
+              getOptionLabel={(o) => o.label}
+              getOptionValue={(o) => o.value}
+              options={CITIES_OPTIONS}
+              noVerify
+            />
+            <div className={styles.dateInputWrapper}>
+              <DateTimePicker
+                name="date"
+                showTimeSelect={false}
+                excludePastDateTime={true}
+                placeholderText="Когда"
               />
-              <Select
-                name="city"
-                getOptionLabel={o => o.label}
-                getOptionValue={o => o.value}
-                options={CITIES_OPTIONS}
-                noVerify
-              />
-              <div className={styles.dateInputWrapper}>
-                <DateTimePicker
-                  name="date"
-                  showTimeSelect={false}
-                  excludePastDateTime={true}
-                  placeholderText="Когда"
-                />
-              </div>
             </div>
             <GenderPicker name="gender" inputType="checkbox" />
           </div>
@@ -101,7 +98,7 @@ export const SearchInviteForm = ({
             </Button>
             <Button
               onClick={() => {
-                props.resetForm()
+                props.resetForm();
                 const initialValues = props.initialValues;
 
                 onSubmit?.(formatResultValues(initialValues));

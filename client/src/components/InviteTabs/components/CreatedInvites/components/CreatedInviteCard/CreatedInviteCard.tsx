@@ -10,15 +10,17 @@ import {
   IconButton,
   IconButtonColor,
 } from 'components';
-import { concatUserNameAndAge } from 'common/helpers/user';
-import { getInviteCompanionsInfoString } from 'common/helpers/invite';
+import {
+  concatUserNameAndAge,
+  getInviteCompanionsInfoString,
+} from 'common/helpers';
+import { useInviteDetailsModalContext } from 'common/contexts';
+import { InviteModalType } from 'modals';
+import { wordFormatDate } from 'common/helpers';
 
 import styles from './CreatedInviteCard.module.scss';
 import check from 'assets/images/greenCheck.svg';
 import cross from 'assets/images/redCross.svg';
-import { useInviteDetailsModalContext } from 'common/contexts';
-import { InviteModalType } from 'modals';
-import { wordFormatDate } from 'common/helpers';
 import calendar from 'assets/images/calendar.svg';
 
 interface Props {
@@ -62,25 +64,45 @@ export function CreatedInviteCard({ invite }: Props) {
   return (
     <li className={styles.card}>
       <div className={styles.info}>
-        <div className={styles.headingInfo}>
-          <span className={styles.date}>
-            <img src={calendar} alt="calendar" />
-            {wordFormatDate(invite.date, invite.time)}
-          </span>
-          <span className={styles.subject}>
-            {event ? (
-              <>
-                Событие: <span className={styles.blue}>{event.name}</span>
-              </>
-            ) : (
-              <>
-                Хочет <span className={styles.blue}>{invite.subject}</span>
-              </>
-            )}
-          </span>
-          <span className={styles.companionsInfo}>
-            {getInviteCompanionsInfoString(invite)}
-          </span>
+        <div className={styles.a}>
+          <div className={styles.headingInfo}>
+            <span className={styles.date}>
+              <img src={calendar} alt="calendar" />
+              {wordFormatDate(invite.date, invite.time)}
+            </span>
+            <span className={styles.subject}>
+              {event ? (
+                <>
+                  Событие: <span className={styles.blue}>{event.name}</span>
+                </>
+              ) : (
+                <>
+                  Хочет <span className={styles.blue}>{invite.subject}</span>
+                </>
+              )}
+            </span>
+            <span className={styles.companionsInfo}>
+              {getInviteCompanionsInfoString(invite)}
+            </span>
+          </div>
+
+          <div className={styles.actionsSmallBp}>
+            <Button
+              variant={ButtonVariant.Secondary}
+              width={ButtonWidth.Small}
+              height={ButtonHeight.Small}
+              onClick={() => openModal(invite, InviteModalType.Edit)}
+            >
+              Подробнее
+            </Button>
+            <Button
+              variant={ButtonVariant.Primary}
+              width={ButtonWidth.Small}
+              height={ButtonHeight.Small}
+            >
+              Утвердить
+            </Button>
+          </div>
         </div>
         <Divider />
         <div className={styles.companions}>

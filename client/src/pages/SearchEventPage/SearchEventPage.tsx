@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 
-import { EventCard, Loader } from 'components';
+import { EventCard, Loader, NothingFound } from 'components';
 import { SearchEventForm } from 'forms';
 import { EventListStore } from 'stores';
 import { UserContext } from 'common/contexts';
@@ -23,7 +23,7 @@ export const SearchEventPage = observer(() => {
   return (
     <section className={styles.section}>
       <div className={styles.searchForm}>
-        <h1 className="heading-H1">События в городе Минск</h1>
+        <h1 className="heading-H1">События</h1>
         <SearchEventForm
           initialFilters={{
             city: createOption(user.city),
@@ -34,7 +34,7 @@ export const SearchEventPage = observer(() => {
       {isLoading ? (
         <Loader />
       ) : events?.length === 0 ? (
-        <span>События с указанными фильтрами не найдены</span>
+        <NothingFound />
       ) : (
         <ul className={styles.сards}>
           {events.map((event) => (

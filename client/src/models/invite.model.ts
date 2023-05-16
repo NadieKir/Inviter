@@ -11,7 +11,7 @@ export enum InviteType {
   CIRCUS = "Цирк",
   CINEMA = "Кино",
   THEATER = "Театр",
-  PARK = "Парк",
+  WALK = "Прогулка",
   OTHER = 'Другое'
 }
 

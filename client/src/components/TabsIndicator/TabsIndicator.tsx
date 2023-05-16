@@ -6,19 +6,22 @@ interface TabsIndicatorProps {
   tabsAmount: number;
   currentTab: number;
 }
+
 export const TabsIndicator = ({
   tabsAmount,
   currentTab,
 }: TabsIndicatorProps) => {
   return (
-    <div
-      className={styles.indicator}
-      style={
-        {
-          '--numOfTabs': tabsAmount,
-          '--position': currentTab,
-        } as React.CSSProperties
-      }
-    />
+    <div>
+      <div
+        className={styles.indicator}
+        style={
+          {
+            '--numOfTabs': tabsAmount,
+            '--position': currentTab,
+          } as React.CSSProperties
+        }
+      />
+    </div>
   );
 };

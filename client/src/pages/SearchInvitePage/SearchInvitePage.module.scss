@@ -28,4 +28,8 @@
   grid-row-gap: 1.9rem;
 
   list-style: none;
+
+  @media screen and (max-width: $small-screen-bp) {
+    align-self: center;
+  }
 }
