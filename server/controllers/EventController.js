@@ -1,7 +1,13 @@
+import dayjs from "dayjs";
 import EventModel from "../models/Event.model.js";
 
 export const getAll = async (req, res) => {
   try {
+    const currentDate = dayjs();
+
+    const currentDateString = currentDate.format("YYYY-MM-DD")
+    const currentTimeString = currentDate.format("HH:mm");
+
     const filter = Object.entries(req.query)
       .filter((e) => e[1])
       .reduce((acc, v) => {
@@ -10,7 +16,23 @@ export const getAll = async (req, res) => {
         return acc;
       }, {});
 
-    const events = await EventModel.find({ $and: [filter] });
+    const events = await EventModel
+      .find({
+        $and: [
+          filter,
+          {
+            $or: [
+              {
+                date: { $gt: currentDateString },
+              },
+              {
+                time: { $gt: currentTimeString }
+              }
+            ]
+          }
+        ]
+      })
+      .sort({ date: 1, time: 1 });
 
     res.json(events);
   } catch (err) {
