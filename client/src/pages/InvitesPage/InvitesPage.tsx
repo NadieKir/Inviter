@@ -7,7 +7,7 @@ import styles from './InvitesPage.module.scss';
 export function InvitesPage() {
   return (
     <section className={styles.invitesPage}>
-      <InviteTabs heading="Мои инвайты" />
+      <InviteTabs />
       <Outlet />
     </section>
   );

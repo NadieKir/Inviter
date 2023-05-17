@@ -36,3 +36,4 @@ export * from './Divider/Divider';
 export * from './CompanionItem/CompanionItem';
 export * from './InviterItem/InviterItem';
 export * from './NothingFound/NothingFound';
+export * from './Tabs/Tabs';

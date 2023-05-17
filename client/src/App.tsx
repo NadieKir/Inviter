@@ -1,7 +1,7 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { Navigate, Route, Routes } from 'react-router';
 
-import { PrivateRoute, UserStatus } from 'components';
+import { PrivateRoute, inviteTabs } from 'components';
 import { AuthorizationForm, RegistrationForm } from 'forms';
 import {
   AdminEventsPage,
@@ -17,11 +17,11 @@ import {
   SearchEventPage,
   SearchInvitePage,
   UserPage,
+  eventsTabs,
 } from 'pages';
 import { history, AppRouter } from 'common/router';
 import { LoginLayout, MainLayout } from 'layouts';
 import { Role } from 'models';
-import { inviteTabs } from 'common/constants';
 
 function App() {
   return (
@@ -73,7 +73,20 @@ function App() {
         >
           <Route index element={<Navigate replace to="/admin/events" />} />
           <Route path="profile" element={<AdminProfilePage />} />
-          <Route path="events" element={<AdminEventsPage />} />
+          <Route path="events" element={<AdminEventsPage />}>
+            <Route
+              index
+              element={<Navigate replace to={eventsTabs[0].link} />}
+            />
+            {eventsTabs.map((t, i) => (
+              <Route
+                index={i === 0}
+                key={t.link}
+                path={t.link}
+                element={t.component}
+              />
+            ))}
+          </Route>
           <Route path="invites" element={<div>i</div>} />
           <Route path="users" element={<div>u</div>} />
         </Route>

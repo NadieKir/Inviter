@@ -1,35 +1,12 @@
 @import '~style/colors';
-@import '~style/typography';
 @import '~style/mixins';
 
-.tabs {
-  &Wrapper {
-    @include base-wrapper();
-    display: flex;
-    flex-direction: column;
-    row-gap: 45px;
-    background-color: $white-color;
-    padding-top: 35px;
-    padding-bottom: 0;
-  }
-
-  a {
-    color: inherit;
-  }
-}
-
-.tab {
-  position: relative;
-
-  max-width: 310px;   
+.tabsWrapper {
+  @include base-wrapper();
   display: flex;
-  justify-content: center;
-  padding-bottom: 15px;
-
-  font-weight: 400;
-  font-size: 15px;
-
-  &.active {
-    font-weight: 500;
-  }
+  flex-direction: column;
+  row-gap: 45px;
+  background-color: $white-color;
+  padding-top: 35px;
+  padding-bottom: 0;
 }
