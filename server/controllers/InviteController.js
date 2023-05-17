@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import dayjs from "dayjs";
 import InviteModel from "../models/Invite.model.js";
 
 export const create = async (req, res) => {
@@ -31,7 +32,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const invites = await InviteModel.find().populate("creator").exec();
+    const invites = await InviteModel.find().sort({ createdAt: -1 }).populate("creator").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -43,6 +44,10 @@ export const getAll = async (req, res) => {
 
 export const getAllAnotherUsers = async (req, res) => {
   try {
+    const currentDate = dayjs();
+
+    const currentDateString = currentDate.format("YYYY-MM-DD")
+    const currentTimeString = currentDate.format("HH:mm");
 
     const filters = Object
       .entries(req.query)
@@ -78,10 +83,39 @@ export const getAllAnotherUsers = async (req, res) => {
         {
           $match: {
             $and: [
-              filters
+              filters,
+              {
+                $or: [
+                  {
+                    $or: [
+                      {
+                        date: { $exists: false }
+                      },
+                      {
+                        time: { $exists: false }
+                      },
+                    ]
+                  },
+                  {
+                    $or: [
+                      {
+                        date: { $gt: currentDateString }
+                      },
+                      {
+                        time: { $gt: currentTimeString }
+                      }
+                    ]
+                  }
+                ],
+              }
             ],
           }
         },
+        {
+          $sort: {
+            createdAt: -1,
+          }
+        }
       ])
       .exec();
 
@@ -98,7 +132,7 @@ export const getAllAnotherUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const invites = await InviteModel.find({ creator: userId }).populate("creator").exec();
+    const invites = await InviteModel.find({ creator: userId }).sort({ createdAt: -1 }).populate("creator").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -110,7 +144,7 @@ export const getAllAnotherUser = async (req, res) => {
 
 export const getAllCurrentUser = async (req, res) => {
   try {
-    const invites = await InviteModel.find({ creator: req.userId }).populate("creator").exec();
+    const invites = await InviteModel.find({ creator: req.userId }).sort({ createdAt: -1 }).populate("creator").exec();
     res.json(invites);
   } catch (err) {
     console.log(err);

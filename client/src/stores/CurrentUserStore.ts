@@ -1,13 +1,14 @@
 import { makeAutoObservable } from 'mobx';
 import { AxiosError } from 'axios';
 
-import { getCurrentUser, getCurrentUserResponses, login, respondInvite } from 'api';
+import { getCurrentUser, getCurrentUserResponses, getFollowings, login, respondInvite } from 'api';
 import { InviteResponse, User } from 'models';
 import { InviteRespondFormData, LoginFormData } from 'types';
 
 export class CurrentUserStore {
   user: User | null = null;
   userResponses: InviteResponse[] = [];
+  userFollowings: User[] = [];
   isLoading: boolean = false;
   error: AxiosError | null = null;
 
@@ -24,6 +25,10 @@ export class CurrentUserStore {
     this.userResponses = newUserResponses;
   }
 
+  setUserFollowings = (followings: User[]) => {
+    this.userFollowings = followings;
+  }
+
   setIsLoading(isLoading: boolean) {
     this.isLoading = isLoading;
   }
@@ -36,6 +41,11 @@ export class CurrentUserStore {
     return this.user === null;
   }
 
+  loadFollowings = async () => {
+    const followings = await getFollowings();
+    this.setUserFollowings(followings ?? []);
+  }
+
   loadUser = async () => {
     this.setIsLoading(true);
 
@@ -45,6 +55,8 @@ export class CurrentUserStore {
 
       this.setUser(await getCurrentUser());
       this.setUserResponses(await getCurrentUserResponses());
+
+      await this.loadFollowings();
     }
     catch (error) {
       this.setError(error as AxiosError);
