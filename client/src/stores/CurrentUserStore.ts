@@ -87,6 +87,7 @@ export class CurrentUserStore {
 
       this.setUser(user);
       localStorage.setItem('user', user.token);
+      this.loadFollowings();
       //this.setError(null);
     } catch (error) {
       this.setError(error as AxiosError);
