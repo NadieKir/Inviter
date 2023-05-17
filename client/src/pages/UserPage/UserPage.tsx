@@ -3,7 +3,7 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { Button, InviteCard, InviteCardVariant, Loader } from 'components';
+import { Button, ButtonVariant, InviteCard, InviteCardVariant, Loader } from 'components';
 import {
   concatUserNameAndAge,
   formatDate,
@@ -16,6 +16,7 @@ import { Invite } from 'models';
 import styles from './UserPage.module.scss';
 import at from 'assets/images/at.svg';
 import geo from 'assets/images/geo.svg';
+import { addFollowing, removeFollowing } from 'api/services/following.service';
 
 export const UserPage = observer(() => {
   const { login } = useParams();
@@ -25,6 +26,10 @@ export const UserPage = observer(() => {
   const { user, userInvites, error, isLoading } = useLocalObservable(
     () => new UserStore(login!),
   );
+
+  const { userFollowings: currentUserFollowings, loadFollowings } = useContext(UserContext);
+
+  const currentUserFollowingsIds = currentUserFollowings.map(c => c._id);
 
   if (isLoading) return <Loader />;
   if (!user) throw error;
@@ -52,7 +57,30 @@ export const UserPage = observer(() => {
             </div>
             <p className={styles.welcomeMessage}>{user.welcomeMessage}</p>
           </div>
-          <Button>Подписаться</Button>
+          {currentUserFollowingsIds.includes(user._id)
+            ? (
+              <Button
+                variant={ButtonVariant.Secondary}
+                onClick={async () => {
+                  await removeFollowing(user._id);
+                  await loadFollowings();
+                }}
+              >
+                Отписаться
+              </Button>
+
+            )
+            : (
+              <Button
+                onClick={async () => {
+                  await addFollowing(user._id);
+                  await loadFollowings();
+                }}
+              >
+                Подписаться
+              </Button>
+            )
+          }
         </div>
 
         <div className={styles.questionnaireInterestsWrapper}>
@@ -156,6 +184,6 @@ export const UserPage = observer(() => {
           ))}
         </ul>
       </section>
-    </section>
+    </section >
   );
 });

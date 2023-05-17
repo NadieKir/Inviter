@@ -7,6 +7,7 @@ import { registerValidator, createInviteValidator } from "./validations.js";
 import { checkAuth, populateAuth, handleValidationErrors } from "./utils/index.js";
 import {
   UserController,
+  FollowingController,
   InviteController,
   EventController,
   InviteResponseController,
@@ -43,6 +44,11 @@ app.patch("/users", checkAuth, UserController.update);
 app.put("/users/profile", checkAuth, UserController.updateProfile);
 app.put("/users/:userId/password", checkAuth, UserController.updatePassword);
 app.get("/users/:login", UserController.getOne);
+
+app.get("/followings", checkAuth, FollowingController.getFollowings);
+app.get("/followings/invites", checkAuth, FollowingController.getFollowingsInvites);
+app.post("/followings", checkAuth, FollowingController.addFollowing);
+app.delete("/followings", checkAuth, FollowingController.removeFollowing);
 
 app.get("/invites", checkAuth, InviteController.getAll);
 app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);

@@ -1,7 +1,7 @@
+import { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Form, Formik } from 'formik';
-import styles from './FollowingsPage.module.scss';
-import search from 'assets/images/search.svg';
-import at from 'assets/images/at.svg';
+
 import {
   IconButton,
   InviteCard,
@@ -10,24 +10,28 @@ import {
   TextField,
 } from 'components';
 import { mockedInvites } from 'models';
-import { useContext } from 'react';
 import { UserContext } from 'common/contexts';
 import { concatUserNameAndAge } from 'common/helpers';
-import { NavLink } from 'react-router-dom';
+import { useFollowingsInvites } from 'common/hooks/useFollowingsInvites';
+
+import styles from './FollowingsPage.module.scss';
+import search from 'assets/images/search.svg';
+import at from 'assets/images/at.svg';
 
 export const FollowingsPage = () => {
-  const { user, isLoading, error } = useContext(UserContext);
+  const { user, isLoading, error, userFollowings } = useContext(UserContext);
+  const { followingInvites, isFollowingsLoading } = useFollowingsInvites();
 
-  if (isLoading) return <Loader />;
+  if (isLoading || isFollowingsLoading) return <Loader />;
   if (!user) throw error;
 
-  const handleSearch = () => {};
+  const handleSearch = () => { };
 
   return (
     <section className={styles.followingsSection}>
       <div className={styles.header}>
         <h1 className="heading-H1">
-          Подписки <span className="amount">()</span>
+          Подписки <span className="amount">({userFollowings.length})</span>
         </h1>
       </div>
       <div className={styles.mainWrapper}>
@@ -45,22 +49,24 @@ export const FollowingsPage = () => {
             )}
           </Formik>
           <div className={styles.followings}>
-            <NavLink to={`/user/${user.login}`} className={styles.following}>
-              <img className={styles.followingPhoto} src={user.image} alt="" />
-              <div className={styles.followingInfo}>
-                <h3 className={styles.followingName}>
-                  {concatUserNameAndAge(user)}
-                </h3>
-                <div className={styles.loginWrapper}>
-                  <img src={at} alt="" height={'10px'} />
-                  <span>{user.login}</span>
+            {userFollowings.map(f => (
+              <NavLink to={`/user/${f.login}`} className={styles.following}>
+                <img className={styles.followingPhoto} src={f.image} alt="" />
+                <div className={styles.followingInfo}>
+                  <h3 className={styles.followingName}>
+                    {concatUserNameAndAge(f)}
+                  </h3>
+                  <div className={styles.loginWrapper}>
+                    <img src={at} alt="" height={'10px'} />
+                    <span>{f.login}</span>
+                  </div>
                 </div>
-              </div>
-            </NavLink>
+              </NavLink>
+            ))}
           </div>
         </div>
         <div className={styles.invitesWrapper}>
-          {mockedInvites.map((i) => (
+          {followingInvites?.map((i) => (
             <InviteCard invite={i} variant={InviteCardVariant.SMALL_USER} />
           ))}
         </div>
