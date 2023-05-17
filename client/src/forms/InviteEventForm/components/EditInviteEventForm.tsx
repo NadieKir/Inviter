@@ -25,7 +25,7 @@ export const EditInviteEventForm = observer(
       alert(JSON.stringify(values));
 
       actions.setSubmitting(false);
-      pushSuccess('Инвайт на основе события изменен!');
+      pushSuccess('Инвайт успешно изменён');
       onSubmit();
     };
 

@@ -1,9 +1,12 @@
-import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { SearchEventPage } from 'pages/SearchEventPage/SearchEventPage';
+import styles from './AdminEventsPage.module.scss';
 
 export const AdminEventsPage = () => {
   return (
-    <SearchEventPage />
+    <section className={styles.section}>
+      {/* <InviteTabs heading="Мои инвайты" /> */}
+      <Outlet />
+    </section>
   );
 };

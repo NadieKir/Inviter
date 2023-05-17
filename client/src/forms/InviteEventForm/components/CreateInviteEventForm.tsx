@@ -9,12 +9,8 @@ import { InviteEventForm } from '../InviteEventForm';
 import { InvitePayload, createInvite } from 'api';
 import { InviteFormData } from 'types';
 
-
 export const CreateInviteEventForm = observer(
-  ({
-    event,
-    onSubmit
-  }: CreateOrEditInviteEventFormProps) => {
+  ({ event, onSubmit }: CreateOrEditInviteEventFormProps) => {
     const { pushSuccess } = usePushNotification();
 
     const initialValues: InviteEventFields = {
@@ -39,12 +35,12 @@ export const CreateInviteEventForm = observer(
         time: event.time,
         companionAge: values.companionAge,
         companionGender: values.companionGender,
-      }
+      };
 
       await createInvite(invite);
 
       actions.setSubmitting(false);
-      pushSuccess('Инвайт на основе события создан!');
+      pushSuccess('Инвайт успешно создан');
       onSubmit();
     };
 

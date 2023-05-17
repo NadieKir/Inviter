@@ -50,7 +50,7 @@ export const EditInviteForm = observer(
       alert(JSON.stringify(values));
 
       actions.setSubmitting(false);
-      pushSuccess('Инвайт создан');
+      pushSuccess('Инвайт успешно создан');
       onSubmit();
       //close modal
     };

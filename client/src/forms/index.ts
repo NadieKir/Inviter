@@ -10,3 +10,4 @@ export * from './AuthorizationForm/AuthorizationForm';
 export * from './RegistrationForm/RegistrationForm';
 export * from './SearchEventForm/SearchEventForm';
 export * from './InviteResponseForm/InviteResponseForm';
+export * from './ChangePasswordForm/ChangePasswordForm';

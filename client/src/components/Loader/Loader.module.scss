@@ -14,6 +14,11 @@
          conic-gradient(#0000 30%, $blue-color);
   -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 0);
   animation: spinner-c7wet2 1s infinite linear;
+
+  &.small {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 @keyframes spinner-c7wet2 {

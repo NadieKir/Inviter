@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState } from "react";
-import classNames from "classnames";
-import "animate.css";
+import { useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+import 'animate.css';
 
-import { useNotificationsContext } from "common/contexts";
+import { useNotificationsContext } from 'common/contexts';
 
-import styles from "./Notification.module.scss";
-import successIcon from "./assets/success.svg";
-import warningIcon from "./assets/warning.svg";
-import errorIcon from "./assets/error.svg";
-import infoIcon from "./assets/info.svg";
+import styles from './Notification.module.scss';
+import successIcon from './assets/success.svg';
+import warningIcon from './assets/warning.svg';
+import errorIcon from './assets/error.svg';
+import infoIcon from './assets/info.svg';
 import redCross from 'assets/images/redCross.svg';
 
 export enum NotificationVariant {
-  Success = "success",
-  Warning = "warning",
-  Error = "error",
-  Info = "info",
+  Success = 'success',
+  Warning = 'warning',
+  Error = 'error',
+  Info = 'info',
 }
 
 const notificationVariantToIcon: Record<NotificationVariant, string> = {
@@ -66,18 +66,28 @@ export const Notification = () => {
 
   return (
     <article
-      className={classNames(styles.notification, styles[variant], "animate__animated", {
-        animate__backInRight: isStartAnimation,
-        animate__backOutRight: !isStartAnimation,
-      })}
+      className={classNames(
+        styles.notification,
+        styles[variant],
+        'animate__animated',
+        {
+          animate__backInRight: isStartAnimation,
+          animate__backOutRight: !isStartAnimation,
+        },
+      )}
     >
       <img src={notificationVariantToIcon[variant]} alt="Иконка" />
       <div className={styles.informationWrapper}>
-        <h2>{heading}</h2>
+        <h2 className={styles.heading}>{heading}</h2>
         {message && <p className={styles.description}>{message}</p>}
       </div>
 
-      <img src={redCross} className={styles.closeBtn} onClick={resetNotification} alt='cross' />
+      <img
+        src={redCross}
+        className={styles.closeBtn}
+        onClick={resetNotification}
+        alt="cross"
+      />
     </article>
   );
 };

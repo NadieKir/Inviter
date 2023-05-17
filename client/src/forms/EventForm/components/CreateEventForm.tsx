@@ -39,7 +39,7 @@ export const CreateEventForm = observer(
       await createEvent(values);
 
       actions.setSubmitting(false);
-      pushSuccess('Событие создано');
+      pushSuccess('Событие успешно создано');
       onSubmit();
     };
 

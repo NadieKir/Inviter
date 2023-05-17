@@ -146,7 +146,7 @@
 }
 
 .passwordFormSection {
-  width: 240px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   row-gap: 20px;
@@ -159,17 +159,4 @@
   text-align: center;
   font-weight: 500;
   font-size: 14px;
-}
-
-.form {
-  @include base-wrapper();
-  padding: 25px;
-
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-
-  button {
-    margin-top: 10px;
-  }
 }
