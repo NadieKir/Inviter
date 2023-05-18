@@ -6,7 +6,10 @@ import {
   ButtonWidth,
   DateTimePicker,
   GenderPicker,
+  IconButton,
+  IconButtonColor,
   Select,
+  TextField,
 } from 'components';
 import {
   CITIES_OPTIONS,
@@ -15,9 +18,11 @@ import {
   SearchInviteFiltersFormFields,
   SelectOption,
 } from 'types';
+import { formatToOnlyDate } from 'common/helpers';
 
 import styles from './SearchInviteForm.module.scss';
-import { formatToOnlyDate } from 'common/helpers';
+import search from 'assets/images/search-white.svg';
+import cross from 'assets/images/cross.svg';
 
 const inviteTypeOptions: SelectOption<string>[] = [
   {
@@ -81,6 +86,11 @@ export const SearchInviteForm = ({ initialFilters, onSubmit }: Props) => {
               options={CITIES_OPTIONS}
               noVerify
             />
+            <TextField
+              name="query"
+              multiline={false}
+              placeholderText="Ключевое слово"
+            />
             <div className={styles.dateInputWrapper}>
               <DateTimePicker
                 name="date"
@@ -93,22 +103,23 @@ export const SearchInviteForm = ({ initialFilters, onSubmit }: Props) => {
           </div>
 
           <div className={styles.actions}>
-            <Button width={ButtonWidth.Small} type="submit">
-              Искать
-            </Button>
-            <Button
+            <IconButton
+              icon={search}
+              type="submit"
+              buttonColor={IconButtonColor.Blue}
+            />
+            <IconButton
               onClick={() => {
                 props.resetForm();
                 const initialValues = props.initialValues;
 
                 onSubmit?.(formatResultValues(initialValues));
               }}
-              width={ButtonWidth.Small}
-              variant={ButtonVariant.Secondary}
+              icon={cross}
               type="button"
             >
               Сброс
-            </Button>
+            </IconButton>
           </div>
         </Form>
       )}

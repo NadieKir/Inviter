@@ -22,7 +22,11 @@ import {
 } from 'types';
 import { City, InviteType } from 'models';
 import { selectOptionValidationSchema } from 'common/constants';
-import { formatToOnlyDate, formatToOnlyTime, isDateValueEquals } from 'common/helpers';
+import {
+  formatToOnlyDate,
+  formatToOnlyTime,
+  isDateValueEquals,
+} from 'common/helpers';
 
 import styles from './EventForm.module.scss';
 
@@ -173,8 +177,30 @@ export const EventForm = observer(
       values: EventFormData,
       actions: FormikHelpers<EventFormData>,
     ) => {
-      const formattedDate = formatToOnlyDate(values[EventFormFields.Date])
-      const formattedTime = formatToOnlyTime(values[EventFormFields.Time])
+      const formattedDate = formatToOnlyDate(values[EventFormFields.Date]);
+      const formattedTime = formatToOnlyTime(values[EventFormFields.Time]);
+
+      const resultValues = {
+        ...values,
+        [EventFormFields.Date]: formattedDate,
+        [EventFormFields.Time]: formattedTime,
+        [EventFormFields.Type]: (
+          values[EventFormFields.Type] as SelectOption<InviteType>
+        ).value,
+        [EventFormFields.City]: (
+          values[EventFormFields.City] as SelectOption<City>
+        ).value,
+      };
+
+      handleSubmit(resultValues, actions);
+    };
+
+    const onExtraBtnClick = async (
+      values: EventFormData,
+      actions: FormikHelpers<EventFormData>,
+    ) => {
+      const formattedDate = formatToOnlyDate(values[EventFormFields.Date]);
+      const formattedTime = formatToOnlyTime(values[EventFormFields.Time]);
 
       const resultValues = {
         ...values,
@@ -197,6 +223,8 @@ export const EventForm = observer(
         formHeading="Создать событие"
         finishButtonContent="Создать"
         onFinish={onSubmit}
+        extraButtonContent="Сохранить черновик"
+        onExtraBtnClick={onExtraBtnClick}
       />
     );
   },

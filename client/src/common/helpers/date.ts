@@ -48,6 +48,12 @@ export const wordFormatDate = (date: string | undefined, time: string | undefine
   return formatter.format(resultDate);
 }
 
+export const isInThePast = (date: string): boolean => {
+  const currentDate = new Date().toISOString();
+  
+  return Date.parse(currentDate) > Date.parse(date);
+};
+
 export const formatDate = (date: Date) => {
   var formatter = new Intl.DateTimeFormat('ru', { day: 'numeric', month: 'numeric', year: 'numeric' });
 

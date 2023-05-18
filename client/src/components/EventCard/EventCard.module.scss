@@ -16,7 +16,15 @@
   display: flex;
   flex-direction: column;
   row-gap: 20px;
-  width: 215px;
+  width: 210px;
+  justify-content: space-between;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 210px;
 }
 
 .eventImage {
@@ -28,11 +36,10 @@
 
 .date {
   display: flex;
-  column-gap: 7px;
+  column-gap: 6px;
   align-items: center;
   font-weight: 400;
   font-size: 12px;
-  line-height: 0;
 }
 
 .headingDescription {
@@ -51,33 +58,36 @@
   font-weight: 300;
   font-size: 13px;
   line-height: 18px;
-  @include multiline-ellipsis(7);
-}
+  @include multiline-ellipsis(5);
 
-.users {
-  display: flex;
-  margin-left: 16px;
-
-  img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 2px solid $white-color;
-    margin-left: -16px;
-    object-fit: cover;
+  &.long {
+    @include multiline-ellipsis(7);
   }
 }
 
-.restCounter {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+.buttonsWrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: -16px;
-  background: $blue-gradient-color;
-  font-weight: 400;
-  font-size: 11px;
-  color: $white-color;
+  justify-content: space-between;
+
+  .button {
+    background: none;
+    border: none;
+
+    font-weight: 500;
+    font-size: 13px;
+
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &Red {
+      color: $red-color;
+    }
+
+    &Blue {
+      color: $blue-color;
+    }
+  }
 }

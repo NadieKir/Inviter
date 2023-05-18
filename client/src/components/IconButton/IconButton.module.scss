@@ -42,6 +42,15 @@
     }
 }
 
+.blue {
+    background: $blue-gradient-color;
+    border: none;
+
+    &:hover {
+        box-shadow: $inner-button-shadow;
+    }
+}
+
 .red {
     border: 1px solid $red-color;
 

@@ -1,9 +1,9 @@
 import { Modal, ModalProps } from 'modals';
 import { CreateInviteEventForm, EditInviteEventForm } from 'forms';
-
-import styles from './CreateEventInviteModal.module.scss';
 import { Event } from 'models';
 import { wordFormatDate } from 'common/helpers';
+
+import styles from './CreateEventInviteModal.module.scss';
 
 interface ViewInviteEventModalProps extends ModalProps {
   event: Event;
@@ -19,11 +19,8 @@ export const CreateEventInviteModal = ({
   return (
     <Modal isShowing={isShowing} onClose={onClose}>
       <div className={styles.modal}>
-        <h1 className={styles.heading}>{
-          isEdit
-            ? "Изменение ивента на основе события"
-            : "Создание ивента на основе события"
-        }
+        <h1 className={styles.heading}>
+          {isEdit ? 'Изменить инвайт' : 'Создать инвайта на основе события'}
         </h1>
         <div className={styles.eventInfo}>
           <div className={styles.eventInfoRow}>
@@ -47,9 +44,11 @@ export const CreateEventInviteModal = ({
             <span>{wordFormatDate(event.date, event.time)}</span>
           </div>
         </div>
-        {isEdit
-          ? <EditInviteEventForm event={event} onSubmit={onClose} />
-          : <CreateInviteEventForm event={event} onSubmit={onClose} />}
+        {isEdit ? (
+          <EditInviteEventForm event={event} onSubmit={onClose} />
+        ) : (
+          <CreateInviteEventForm event={event} onSubmit={onClose} />
+        )}
       </div>
     </Modal>
   );

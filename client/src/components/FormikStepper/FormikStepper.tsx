@@ -50,6 +50,10 @@ export type StepperContextType<T> = {
   setFormData: Dispatch<SetStateAction<T>>;
   stepsDescriptor: StepDescriptor[];
   finishButtonContent: JSX.Element | string | undefined;
+  extraButtonContent: JSX.Element | string | undefined;
+  onExtraBtnClick:
+    | ((values: T, actions: FormikHelpers<T>) => Promise<void>)
+    | undefined;
   handleNextStep: () => void;
   handlePreviousStep: () => void;
   handleFinish: (values: T, actions: FormikHelpers<T>) => Promise<void>;
@@ -59,6 +63,8 @@ interface FormikStepperProps<T extends FormikValues> {
   steps: IStep[];
   onFinish: (values: T, actions: FormikHelpers<T>) => Promise<void>;
   finishButtonContent?: JSX.Element | string;
+  extraButtonContent?: JSX.Element | string;
+  onExtraBtnClick?: (values: T, actions: FormikHelpers<T>) => Promise<void>;
   formHeading?: string;
 }
 
@@ -66,6 +72,8 @@ export function FormikStepper<T extends FormikValues>({
   steps,
   onFinish,
   finishButtonContent = 'Создать',
+  extraButtonContent,
+  onExtraBtnClick,
   formHeading = '',
 }: FormikStepperProps<T>) {
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -122,8 +130,8 @@ export function FormikStepper<T extends FormikValues>({
                   ? StepVariant.Confirmed
                   : stepsDescriptor[nextStepIndex].visited ||
                     nextStepIndex === i + 1
-                    ? StepVariant.Available
-                    : StepVariant.Disabled;
+                  ? StepVariant.Available
+                  : StepVariant.Disabled;
               }
             }
 
@@ -196,6 +204,8 @@ export function FormikStepper<T extends FormikValues>({
         handleNextStep,
         handlePreviousStep,
         handleFinish,
+        extraButtonContent,
+        onExtraBtnClick,
       }}
     >
       <div className={styles.stepper}>

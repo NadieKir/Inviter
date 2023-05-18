@@ -7,7 +7,7 @@ export const CurrentEvents = () => {
   return (
     <ul className={styles.сards}>
       {mockedEvents.map((event) => (
-        <EventCard key={event._id} event={event} />
+        <EventCard key={event._id} event={event} isAdmin />
       ))}
     </ul>
   );

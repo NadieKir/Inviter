@@ -5,7 +5,9 @@ import { PrivateRoute, inviteTabs } from 'components';
 import { AuthorizationForm, RegistrationForm } from 'forms';
 import {
   AdminEventsPage,
+  AdminInvitesPage,
   AdminProfilePage,
+  AdminUsersPage,
   ContactsPage,
   ErrorFallback,
   EventPage,
@@ -87,8 +89,8 @@ function App() {
               />
             ))}
           </Route>
-          <Route path="invites" element={<div>i</div>} />
-          <Route path="users" element={<div>u</div>} />
+          <Route path="invites" element={<AdminInvitesPage />} />
+          <Route path="users" element={<AdminUsersPage />} />
         </Route>
 
         <Route path="/" element={<LoginLayout />}>

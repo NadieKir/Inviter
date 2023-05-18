@@ -18,7 +18,7 @@ interface StepContentProps {
   isLast: boolean;
   isFirst: boolean;
   stepDescriptor: IStep;
-  formHeading?: string,
+  formHeading?: string;
   formClassName?: string;
   setConfirmed: (flag: boolean) => void;
 }
@@ -42,6 +42,9 @@ export const StepContent = ({
     handleFinish,
     handleNextStep,
     handlePreviousStep,
+    //  TODO what to do with that next
+    extraButtonContent,
+    onExtraBtnClick,
   } = useContext(StepperContext) as StepperContextType<any>;
 
   const navigate = useNavigate();
@@ -84,7 +87,6 @@ export const StepContent = ({
   };
 
   const renderSubmitFormButton = (props: FormikProps<FormikValues>) => {
-
     return (
       <Button
         type="submit"
