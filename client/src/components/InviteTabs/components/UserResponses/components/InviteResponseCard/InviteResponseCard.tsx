@@ -9,6 +9,7 @@ import { InviteModalType } from 'modals';
 
 import styles from './InviteResponseCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
   invite: Invite;
@@ -32,7 +33,10 @@ export function InviteResponseCard({ invite }: Props) {
             {getInviteCompanionsInfoString(invite)}
           </span>
         </div>
-        <div className={styles.creator}>
+        <NavLink
+          to={`/user/${invite.creator.login}`}
+          className={styles.creator}
+        >
           <img
             className={styles.creatorImage}
             src={invite.creator.image}
@@ -41,7 +45,7 @@ export function InviteResponseCard({ invite }: Props) {
           <span className={styles.creatorInfo}>
             {concatUserNameAndAge(invite.creator)}
           </span>
-        </div>
+        </NavLink>
       </div>
       <div className={styles.actions}>
         <Button

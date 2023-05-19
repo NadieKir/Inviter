@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { Button, ButtonType, ButtonVariant } from 'components';
 import { Modal, ModalProps } from 'modals';
@@ -15,6 +15,7 @@ import {
 import styles from './InviteDetailsModal.module.scss';
 import calendar from './assets/calendar.svg';
 import geo from './assets/geo.svg';
+import ticket from 'assets/images/navbarIcons/ticket.svg';
 
 export enum InviteModalType {
   Response = 'response',
@@ -100,12 +101,20 @@ export const InviteDetailsModal = ({
             </p>
             <p className={styles.description}>{invite.description}</p>
             <div className={styles.details}>
+              {invite.event && (
+                <div className={styles.detail}>
+                  <img src={ticket} alt="Мероприятие" height={'17px'} />
+                  <Link to={`/events/${invite.event}`}>
+                    Смотреть мероприятие
+                  </Link>
+                </div>
+              )}
               <div className={styles.detail}>
-                <img src={calendar} alt="Дата и время" />
+                <img src={calendar} alt="Дата и время" height={'17px'} />
                 {wordFormatDate(invite.date, invite.time)}
               </div>
               <div className={styles.detail}>
-                <img src={geo} alt="Локация" />
+                <img src={geo} alt="Локация" height={'17px'} />
                 {invite.city} {invite.address && `, ${invite.address}`}
               </div>
             </div>

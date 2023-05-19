@@ -3,14 +3,14 @@ import { useParams } from 'react-router-dom';
 
 import { Button, InviteCard, InviteCardVariant, Loader } from 'components';
 import { EventStore } from 'stores';
-
-import styles from './EventPage.module.scss';
-import geo from 'assets/images/geo.svg';
-import calendar from 'assets/images/calendar.svg';
 import { mockedInvites } from 'models';
 import { CreateEventInviteModal } from 'modals';
 import { useModal } from 'common/hooks';
 import { wordFormatDate } from 'common/helpers';
+
+import styles from './EventPage.module.scss';
+import geo from 'assets/images/geo.svg';
+import calendar from 'assets/images/calendar.svg';
 
 export const EventPage = observer(() => {
   const { id } = useParams();
@@ -34,9 +34,7 @@ export const EventPage = observer(() => {
               alt="Фото события"
               className={styles.eventPhoto}
             />
-            <Button onClick={() => toggleCreateModal()}>
-              Создать инвайт
-            </Button>
+            <Button onClick={() => toggleCreateModal()}>Создать инвайт</Button>
           </div>
           <div className={styles.eventInfo}>
             <div className={styles.titleWrapper}>

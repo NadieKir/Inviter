@@ -7,6 +7,7 @@ import { InviteModalType } from 'modals';
 
 import styles from './InviterItem.module.scss';
 import more from 'assets/images/more.svg';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
   component?: 'div' | 'li';
@@ -20,7 +21,10 @@ export function InviterItem({ component = 'div', invite }: Props) {
     component,
     { className: styles.inviterItem },
     <>
-      <div className={styles.inviterItemInfo}>
+      <NavLink
+        to={`/user/${invite.creator.login}`}
+        className={styles.inviterItemInfo}
+      >
         <img
           className={styles.inviterItemImage}
           src={invite.creator.image}
@@ -29,7 +33,7 @@ export function InviterItem({ component = 'div', invite }: Props) {
         <span className={styles.inviterItemName}>
           {concatUserNameAndAge(invite.creator)}
         </span>
-      </div>
+      </NavLink>
       <img
         className={styles.cross}
         onClick={() => openModal(invite, InviteModalType.Delete)}

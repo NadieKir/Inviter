@@ -1,4 +1,4 @@
-import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { User } from 'models';
 import { concatUserNameAndAge } from 'common/helpers';
@@ -19,7 +19,10 @@ export function CompanionItem({
 }: Props) {
   return (
     <li title={companion.connectionMethods} className={styles.companionItem}>
-      <div className={styles.companionItemInfo}>
+      <NavLink
+        to={`/user/${companion.login}`}
+        className={styles.companionItemInfo}
+      >
         <img
           className={styles.companionItemImage}
           src={companion.image}
@@ -28,7 +31,7 @@ export function CompanionItem({
         <span className={styles.companionItemName}>
           {concatUserNameAndAge(companion)}
         </span>
-      </div>
+      </NavLink>
       {canDelete && <img className={styles.cross} src={cross} alt={''} />}
     </li>
   );

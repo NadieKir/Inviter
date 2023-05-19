@@ -40,4 +40,5 @@ export type SearchEventFilters = {
   type?: string | null;
   city?: string | null;
   date?: string | null;
+  tabType?: 'current' | 'past' | 'draft' | null;
 }

@@ -46,77 +46,78 @@ export const getAllAnotherUsers = async (req, res) => {
   try {
     const currentDate = dayjs();
 
-    const currentDateString = currentDate.format("YYYY-MM-DD")
+    const currentDateString = currentDate.format("YYYY-MM-DD");
     const currentTimeString = currentDate.format("HH:mm");
 
-    const filters = Object
-      .entries(req.query)
-      .filter(e => e[1])
-      .reduce((acc, v) => {
-        if (v[0] == 'gender') {
-          acc['creator.gender'] = { $in: v[1] };
-        } else {
-          acc[v[0]] = v[1];
+    const filters = Object.entries(req.query)
+      .filter((e) => e[1])
+      .reduce(
+        (acc, v) => {
+          if (v[0] == "gender") {
+            acc["creator.gender"] = { $in: v[1] };
+          } else {
+            acc[v[0]] = v[1];
+          }
+
+          return acc;
+        },
+        {
+          "creator._id": { $ne: new mongoose.Types.ObjectId(req.userId) },
         }
+      );
 
-        return acc;
-      }, {
-        'creator._id': { $ne: new mongoose.Types.ObjectId(req.userId) },
-      });
-
-
-    const invites = await InviteModel
-      .aggregate([
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'creator',
-            foreignField: '_id',
-            as: 'creator',
-          }
+    const invites = await InviteModel.aggregate([
+      {
+        $sort: {
+          createdAt: -1,
         },
-        {
-          $unwind: {
-            path: "$creator"
-          },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "creator",
+          foreignField: "_id",
+          as: "creator",
         },
-        {
-          $match: {
-            $and: [
-              filters,
-              {
-                $or: [
-                  {
-                    $or: [
-                      {
-                        date: { $exists: false }
-                      },
-                      {
-                        time: { $exists: false }
-                      },
-                    ]
-                  },
-                  {
-                    $or: [
-                      {
-                        date: { $gt: currentDateString }
-                      },
-                      {
-                        time: { $gt: currentTimeString }
-                      }
-                    ]
-                  }
-                ],
-              }
-            ],
-          }
+      },
+      {
+        $unwind: {
+          path: "$creator",
         },
-        {
-          $sort: {
-            createdAt: -1,
-          }
-        }
-      ])
+      },
+      {
+        $match: {
+          $and: [
+            filters,
+            {
+              $or: [
+                {
+                  $or: [
+                    {
+                      date: { $exists: false },
+                    },
+                    {
+                      time: { $exists: false },
+                    },
+                  ],
+                },
+                {
+                  $or: [
+                    {
+                      date: { $gt: currentDateString },
+                    },
+                    {
+                      time: { $gt: currentTimeString },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ])
+      .allowDiskUse(true)
       .exec();
 
     res.json(invites);
@@ -132,7 +133,10 @@ export const getAllAnotherUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const invites = await InviteModel.find({ creator: userId }).sort({ createdAt: -1 }).populate("creator").exec();
+    const invites = await InviteModel.find({ creator: userId })
+      .sort({ createdAt: -1 })
+      .populate("creator")
+      .exec();
     res.json(invites);
   } catch (err) {
     console.log(err);
@@ -144,7 +148,10 @@ export const getAllAnotherUser = async (req, res) => {
 
 export const getAllCurrentUser = async (req, res) => {
   try {
-    const invites = await InviteModel.find({ creator: req.userId }).sort({ createdAt: -1 }).populate("creator").exec();
+    const invites = await InviteModel.find({ creator: req.userId })
+      .sort({ createdAt: -1 })
+      .populate("creator")
+      .exec();
     res.json(invites);
   } catch (err) {
     console.log(err);

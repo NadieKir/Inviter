@@ -27,7 +27,7 @@ export const AdminUsersPage = () => {
     <section className={styles.contactsSection}>
       <div className={styles.header}>
         <h1 className="heading-H1">
-          Контакты <span className="amount"> ()</span>
+          Пользователи <span className="amount"> ()</span>
         </h1>
         <Formik initialValues={{}} onSubmit={handleSearch}>
           {(props) => (

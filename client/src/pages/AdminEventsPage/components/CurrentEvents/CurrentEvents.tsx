@@ -1,12 +1,21 @@
-import { mockedEvents } from 'models';
-import { EventCard } from 'components';
+import { useLocalObservable } from 'mobx-react-lite';
+
+import { EventCard, Loader } from 'components';
+import { EventListStore } from 'stores';
 
 import styles from './CurrentEvents.module.scss';
 
 export const CurrentEvents = () => {
+  // TODO
+  const { isLoading, events } = useLocalObservable(
+    () => new EventListStore({ tabType: 'current' }),
+  );
+
+  if (isLoading) return <Loader />;
+
   return (
     <ul className={styles.сards}>
-      {mockedEvents.map((event) => (
+      {events.map((event) => (
         <EventCard key={event._id} event={event} isAdmin />
       ))}
     </ul>

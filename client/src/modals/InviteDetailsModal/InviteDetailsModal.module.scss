@@ -55,7 +55,7 @@
 }
 
 .heading {
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 
   font-weight: 600;
   font-size: 16px;
@@ -64,8 +64,8 @@
 .whoWithDescription {
   margin-bottom: 15px;
 
-  font-weight: 500;
-  font-size: 13px;
+  font-weight: 400;
+  font-size: 12px;
 }
 
 .description {
@@ -88,7 +88,12 @@
   column-gap: 8px;
 
   font-weight: 400;
-  font-size: 13px;
+  font-size: 12px;
+  color: $black-color;
+
+  a {
+    color: $blue-color;
+  }
 }
 
 .secondStepModal {

@@ -67,7 +67,10 @@ export const InviteCard = observer(
             </p>
           </div>
           {variant === InviteCardVariant.SMALL_USER && (
-            <div className={styles.creator}>
+            <NavLink
+              to={`/user/${invite.creator.login}`}
+              className={styles.creator}
+            >
               <img
                 className={styles.creatorImage}
                 src={invite.creator.image}
@@ -76,7 +79,7 @@ export const InviteCard = observer(
               <span className={styles.creatorInfo}>
                 {concatUserNameAndAge(invite.creator)}
               </span>
-            </div>
+            </NavLink>
           )}
           {userResponses
             .map((response) => response.invite._id)

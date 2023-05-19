@@ -20,27 +20,21 @@ export const CreateEventInviteModal = ({
     <Modal isShowing={isShowing} onClose={onClose}>
       <div className={styles.modal}>
         <h1 className={styles.heading}>
-          {isEdit ? 'Изменить инвайт' : 'Создать инвайта на основе события'}
+          {isEdit ? 'Изменить инвайт' : 'Создать инвайт на событие'}
         </h1>
         <div className={styles.eventInfo}>
           <div className={styles.eventInfoRow}>
-            <span className={styles.eventInfoRowTitle}>Название:</span>
+            <span className={styles.eventInfoRowTitle}>Событие:</span>
             <span>{event.name}</span>
           </div>
           <div className={styles.eventInfoRow}>
-            <span className={styles.eventInfoRowTitle}>Тип:</span>
-            <span>{event.type}</span>
+            <span className={styles.eventInfoRowTitle}>Где:</span>
+            <span>
+              {event.city}, {event.address}
+            </span>
           </div>
           <div className={styles.eventInfoRow}>
-            <span className={styles.eventInfoRowTitle}>Город:</span>
-            <span>{event.city}</span>
-          </div>
-          <div className={styles.eventInfoRow}>
-            <span className={styles.eventInfoRowTitle}>Адрес:</span>
-            <span>{event.address}</span>
-          </div>
-          <div className={styles.eventInfoRow}>
-            <span className={styles.eventInfoRowTitle}>Дата:</span>
+            <span className={styles.eventInfoRowTitle}>Когда:</span>
             <span>{wordFormatDate(event.date, event.time)}</span>
           </div>
         </div>

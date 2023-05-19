@@ -1,5 +1,6 @@
-import { Invite } from 'models';
+import { NavLink } from 'react-router-dom';
 
+import { Invite } from 'models';
 import {
   Button,
   ButtonHeight,
@@ -45,7 +46,7 @@ export function CreatedInviteCard({ invite }: Props) {
     }
 
     return responses.map((r) => (
-      <div className={styles.response}>
+      <NavLink to={`/user/${r.user.login}`} className={styles.response}>
         <img className={styles.responseImage} src={r.user.image} alt="" />
         <div className={styles.responseInfo}>
           <span className={styles.responseInfoName}>
@@ -57,7 +58,7 @@ export function CreatedInviteCard({ invite }: Props) {
           <IconButton buttonColor={IconButtonColor.Green} icon={check} />
           <IconButton buttonColor={IconButtonColor.Red} icon={cross} />
         </div>
-      </div>
+      </NavLink>
     ));
   };
 

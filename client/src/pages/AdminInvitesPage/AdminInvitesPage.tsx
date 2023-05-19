@@ -1,14 +1,17 @@
-import { useLocalObservable } from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 
 import { SearchInviteForm } from 'forms';
 import { AnotherUsersInvitesStore } from 'stores';
 import { InviteCard, Loader, NothingFound } from 'components';
 
 import styles from './AdminInvitesPage.module.scss';
+import { City } from 'models';
 
-export const AdminInvitesPage = () => {
+export const AdminInvitesPage = observer(() => {
   const { isLoading, anotherUsersInvites, getAnotherUsersInvites } =
-    useLocalObservable(() => new AnotherUsersInvitesStore());
+    useLocalObservable(
+      () => new AnotherUsersInvitesStore({ city: City.MINSK }),
+    );
 
   return (
     <section className={styles.section}>
@@ -38,4 +41,4 @@ export const AdminInvitesPage = () => {
       )}
     </section>
   );
-};
+});
