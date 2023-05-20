@@ -1,19 +1,14 @@
 import { useContext } from 'react';
 import { Form, Formik } from 'formik';
 
-import {
-  IconButton,
-  IconButtonColor,
-  Loader,
-  NotificationVariant,
-  TextField,
-} from 'components';
+import { IconButton, IconButtonColor, Loader, TextField } from 'components';
 import { UserContext } from 'common/contexts';
 import { concatUserNameAndAge } from 'common/helpers';
 
 import styles from './ContactsPage.module.scss';
 import search from 'assets/images/search.svg';
 import cross from 'assets/images/redCross.svg';
+import { NavLink } from 'react-router-dom';
 
 export const ContactsPage = () => {
   const { user, isLoading, error } = useContext(UserContext);
@@ -43,7 +38,7 @@ export const ContactsPage = () => {
         </Formik>
       </div>
       <div className={styles.contactsWrapper}>
-        <div className={styles.contactCard}>
+        <NavLink to={`TODO`} className={styles.contactCard}>
           <div className={styles.userInfo}>
             <div className={styles.contactInfo}>
               <img className={styles.contactPhoto} src={user.image} alt="" />
@@ -63,7 +58,7 @@ export const ContactsPage = () => {
             </div>
           </div>
           <IconButton icon={cross} buttonColor={IconButtonColor.Red} />
-        </div>
+        </NavLink>
       </div>
     </section>
   );

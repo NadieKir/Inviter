@@ -11,6 +11,7 @@ import {
   InviteController,
   EventController,
   InviteResponseController,
+  ContactController,
 } from "./controllers/index.js";
 
 mongoose
@@ -46,9 +47,15 @@ app.put("/users/:userId/password", checkAuth, UserController.updatePassword);
 app.get("/users/:login", UserController.getOne);
 
 app.get("/followings", checkAuth, FollowingController.getFollowings);
+app.get("/followings/followers", checkAuth, FollowingController.getFollowers);
+app.get("/followings/:userId", checkAuth, FollowingController.getAnotherUserFollowings);
+app.get("/followings/followers/:userId", checkAuth, FollowingController.getAnotherUserFollowers);
 app.get("/followings/invites", checkAuth, FollowingController.getFollowingsInvites);
 app.post("/followings", checkAuth, FollowingController.addFollowing);
 app.delete("/followings", checkAuth, FollowingController.removeFollowing);
+
+app.get("/contacts", checkAuth, ContactController.getContacts);
+app.get("/contacts/:userId", checkAuth, ContactController.getAnotherUserContacts);
 
 app.get("/invites", checkAuth, InviteController.getAll);
 app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);

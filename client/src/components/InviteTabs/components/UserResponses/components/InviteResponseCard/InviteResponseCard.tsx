@@ -1,15 +1,17 @@
+import { NavLink } from 'react-router-dom';
+
 import { Button, ButtonHeight, ButtonVariant, ButtonWidth } from 'components';
 import { Invite } from 'models';
-
-import { concatUserNameAndAge } from 'common/helpers/user';
-import { wordFormatDate } from 'common/helpers';
-import { getInviteCompanionsInfoString } from 'common/helpers/invite';
+import {
+  wordFormatDate,
+  getInviteCompanionsInfoString,
+  concatUserNameAndAge,
+} from 'common/helpers';
 import { useInviteDetailsModalContext } from 'common/contexts';
 import { InviteModalType } from 'modals';
 
 import styles from './InviteResponseCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import { NavLink } from 'react-router-dom';
 
 interface Props {
   invite: Invite;

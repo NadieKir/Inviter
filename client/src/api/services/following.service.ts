@@ -23,6 +23,24 @@ export const getFollowings = async () => {
     return followings;
 }
 
+export const getFollowers = async () => {
+    const { data: followers } = await httpClient.get<User[]>(`/followings/followers`);
+
+    return followers;
+}
+
+export const getAnotherUserFollowings = async (id: string) => {
+    const { data: followings } = await httpClient.get<User[]>(`/followings/${id}`);
+
+    return followings;
+}
+
+export const getAnotherUserFollowers = async (id: string) => {
+    const { data: followers } = await httpClient.get<User[]>(`/followings/followers/${id}`);
+
+    return followers;
+}
+
 export const getFollowingsInvites = async () => {
     const { data: invites } = await httpClient.get<Invite[]>(`/followings/invites`);
 

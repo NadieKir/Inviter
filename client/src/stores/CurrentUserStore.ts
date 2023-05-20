@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { AxiosError } from 'axios';
 
-import { getCurrentUser, getCurrentUserResponses, getFollowings, login, respondInvite } from 'api';
+import { getContacts, getCurrentUser, getCurrentUserResponses, getFollowers, getFollowings, login, respondInvite } from 'api';
 import { InviteResponse, User } from 'models';
 import { InviteRespondFormData, LoginFormData } from 'types';
 
@@ -9,6 +9,8 @@ export class CurrentUserStore {
   user: User | null = null;
   userResponses: InviteResponse[] = [];
   userFollowings: User[] = [];
+  userFollowers: User[] = [];
+  userContacts: User[] = [];
   isLoading: boolean = false;
   error: AxiosError | null = null;
 
@@ -29,6 +31,14 @@ export class CurrentUserStore {
     this.userFollowings = followings;
   }
 
+  setUserFollowers = (followers: User[]) => {
+    this.userFollowers = followers;
+  }
+
+  setUserContacts = (contacts: User[]) => {
+    this.userContacts = contacts;
+  }
+
   setIsLoading(isLoading: boolean) {
     this.isLoading = isLoading;
   }
@@ -46,6 +56,16 @@ export class CurrentUserStore {
     this.setUserFollowings(followings ?? []);
   }
 
+  loadFollowers = async () => {
+    const followers = await getFollowers();
+    this.setUserFollowers(followers ?? []);
+  }
+
+  loadContacts = async () => {
+    const contacts = await getContacts();
+    this.setUserContacts(contacts ?? []);
+  }
+
   loadUser = async () => {
     this.setIsLoading(true);
 
@@ -57,6 +77,8 @@ export class CurrentUserStore {
       this.setUserResponses(await getCurrentUserResponses());
 
       await this.loadFollowings();
+      await this.loadFollowers();
+      await this.loadContacts();
     }
     catch (error) {
       this.setError(error as AxiosError);

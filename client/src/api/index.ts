@@ -4,5 +4,6 @@ export * from './services/user.service';
 export * from './services/following.service';
 export * from './services/events.service';
 export * from './services/inviteResponses.service';
+export * from './services/contact.service';
 
 

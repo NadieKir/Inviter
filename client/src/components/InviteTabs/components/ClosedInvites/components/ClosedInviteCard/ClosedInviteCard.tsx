@@ -9,10 +9,10 @@ import {
 import { Invite } from 'models';
 import { getInviteCompanionsInfoString, wordFormatDate } from 'common/helpers';
 import { UserContext, useInviteDetailsModalContext } from 'common/contexts';
+import { InviteModalType } from 'modals';
 
 import styles from './ClosedInviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import { InviteModalType } from 'modals';
 
 interface Props {
   invite: Invite;

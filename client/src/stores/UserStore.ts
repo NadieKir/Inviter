@@ -1,12 +1,15 @@
 import { makeAutoObservable } from 'mobx';
 import { AxiosError } from 'axios';
 
-import { getAnotherUserInvites, getUser } from 'api';
+import { getAnotherUserInvites, getAnotherUserContacts, getAnotherUserFollowers, getAnotherUserFollowings, getUser } from 'api';
 import { Invite, User } from 'models';
 
 export class UserStore {
   user: User | null = null;
   userInvites: Invite[] = [];
+  userFollowings: User[] = [];
+  userFollowers: User[] = [];
+  userContacts: User[] = [];
   isLoading: boolean = false;
   error: AxiosError | null = null;
 
@@ -23,12 +26,39 @@ export class UserStore {
     this.userInvites = newUserInvites;
   }
 
+  setUserFollowings = (followings: User[]) => {
+    this.userFollowings = followings;
+  }
+
+  setUserFollowers = (followers: User[]) => {
+    this.userFollowers = followers;
+  }
+
+  setUserContacts = (contacts: User[]) => {
+    this.userContacts = contacts;
+  }
+
   setIsLoading(isLoading: boolean) {
     this.isLoading = isLoading;
   }
 
   setError(error: AxiosError) {
     this.error = error;
+  }
+
+  loadFollowings = async (id: string) => {
+    const followings = await getAnotherUserFollowings(id);
+    this.setUserFollowings(followings ?? []);
+  }
+
+  loadFollowers = async (id: string) => {
+    const followers = await getAnotherUserFollowers(id);
+    this.setUserFollowers(followers ?? []);
+  }
+
+  loadContacts = async (id: string) => {
+    const contacts = await getAnotherUserContacts(id);
+    this.setUserContacts(contacts ?? []);
   }
 
   loadUserAndInvites = async (login: string) => {
@@ -44,6 +74,10 @@ export class UserStore {
 
       const invites = await getAnotherUserInvites(user._id)
       this.setUserInvites(invites);
+ 
+      await this.loadFollowings(user._id);
+      await this.loadFollowers(user._id);
+      await this.loadContacts(user._id);
     }
     catch (error) {
       this.setError(error as AxiosError);

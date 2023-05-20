@@ -51,7 +51,52 @@ export const getFollowings = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      message: "Не удалось получить пользователя",
+      message: "Не удалось получить подписки",
+    });
+  }
+};
+
+export const getFollowers = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const followers = await FollowingModel.find({ followingUser: userId }).populate("user").exec();
+    const followingUsers = followers.map((f) => f.user).reverse();
+
+    res.json(followingUsers);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось получить подписчиков",
+    });
+  }
+};
+
+export const getAnotherUserFollowings = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const followings = await FollowingModel.find({ user: userId }).populate("followingUser").exec();
+    const followingUsers = followings.map((f) => f.followingUser).reverse();
+
+    res.json(followingUsers);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось получить подписки",
+    });
+  }
+};
+
+export const getAnotherUserFollowers = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const followers = await FollowingModel.find({ followingUser: userId }).populate("user").exec();
+    const followingUsers = followers.map((f) => f.user).reverse();
+
+    res.json(followingUsers);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось получить подписчиков",
     });
   }
 };
@@ -74,7 +119,7 @@ export const getFollowingsInvites = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      message: "Не удалось получить пользователя",
+      message: "Не удалось получить инвайты подписок",
     });
   }
 };

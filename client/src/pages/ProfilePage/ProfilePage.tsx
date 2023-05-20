@@ -15,7 +15,15 @@ import geo from 'assets/images/geo.svg';
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
-  const { user, logout, isLoading, error } = useContext(UserContext);
+  const {
+    user,
+    logout,
+    isLoading,
+    error,
+    userFollowings,
+    userFollowers,
+    userContacts,
+  } = useContext(UserContext);
 
   const [isEditProfileModalOpen, toggleEditProfileModal] = useModal();
 
@@ -111,15 +119,21 @@ export const ProfilePage = () => {
                 <div className={styles.questionnaire}>
                   <div className={styles.questionnaireRow}>
                     <span className={styles.subject}>Контакты</span>
-                    <span className={styles.description}>25</span>
+                    <span className={styles.description}>
+                      {userContacts.length}
+                    </span>
                   </div>
                   <div className={styles.questionnaireRow}>
                     <span className={styles.subject}>Подписчики</span>
-                    <span className={styles.description}>44</span>
+                    <span className={styles.description}>
+                      {userFollowers.length}
+                    </span>
                   </div>
                   <div className={styles.questionnaireRow}>
                     <span className={styles.subject}>Подписки</span>
-                    <span className={styles.description}>215</span>
+                    <span className={styles.description}>
+                      {userFollowings.length}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -135,9 +149,11 @@ export const ProfilePage = () => {
                 Интересы
               </h2>
               <div className={styles.interestsTags}>
-                {user.interests.map((interest) => {
-                  return <div className={styles.interestTag}>{interest}</div>;
-                })}
+                {user.interests.map((interest) => (
+                  <div className={styles.interestTag} key={interest}>
+                    {interest}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
