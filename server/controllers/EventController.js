@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+
 import EventModel from "../models/Event.model.js";
 
 export const getAll = async (req, res) => {
@@ -11,26 +12,58 @@ export const getAll = async (req, res) => {
     const filter = Object.entries(req.query)
       .filter((e) => e[1])
       .reduce((acc, v) => {
-        acc[v[0]] = v[1];
+        if ([v[0] === 'tabType']) {
+          switch (v[1]) {
+            case 'current': {
+              acc.push(
+                {
+                  $or: [
+                    { date: { $gt: currentDateString } },
+                    {
+                      $and: [{
+                        date: { $eq: currentDateString },
+                      }, {
+                        time: { $gte: currentTimeString }
+                      }]
+                    }
+                  ],
+                }
+              );
+
+              break;
+            }
+            case 'past': {
+              acc.push(
+                {
+                  $or: [
+                    { date: { $lt: currentDateString } },
+                    {
+                      $and: [{
+                        date: { $eq: currentDateString },
+                      }, {
+                        time: { $lte: currentTimeString }
+                      }]
+                    }
+                  ],
+                }
+              );
+
+              break;
+            }
+          }
+        } else {
+          acc.push({ [v[0]]: v[1] });
+        }
 
         return acc;
-      }, {});
+      }, []);
+
+    console.log(filter);
 
     const events = await EventModel.find({
-      $and: [
-        filter,
-        {
-          $or: [
-            {
-              date: { $gt: currentDateString },
-            },
-            {
-              time: { $gt: currentTimeString },
-            },
-          ],
-        },
-      ],
-    }).sort({ date: 1, time: 1 });
+      $and: filter,
+      isDeleted: { $eq: false },
+    }).sort({ date: 1, time: 1 }).exec();
 
     res.json(events);
   } catch (err) {
@@ -54,6 +87,19 @@ export const getOne = async (req, res) => {
   }
 };
 
+export const deleteOne = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    await EventModel.findByIdAndUpdate(eventId, { isDeleted: true });
+    res.send(200);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось удалить событие",
+    });
+  }
+};
+
 export const create = async (req, res) => {
   try {
     const document = new EventModel({
@@ -68,6 +114,7 @@ export const create = async (req, res) => {
       time: req.body.time,
       image: req.body.image,
       url: req.body.url,
+      isDeleted: 'false',
     });
 
     const event = document.save();

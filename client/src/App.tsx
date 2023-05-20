@@ -75,6 +75,7 @@ function App() {
         >
           <Route index element={<Navigate replace to="/admin/events" />} />
           <Route path="profile" element={<AdminProfilePage />} />
+          <Route path="events/:id" element={<EventPage />} />
           <Route path="events" element={<AdminEventsPage />}>
             <Route
               index

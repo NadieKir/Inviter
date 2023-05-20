@@ -53,9 +53,15 @@ export const getAllAnotherUsers = async (req, res) => {
       .filter((e) => e[1])
       .reduce(
         (acc, v) => {
-          if (v[0] == "gender") {
+          if (v[0] === "gender") {
             acc["creator.gender"] = { $in: v[1] };
-          } else {
+          } else if (v[0] === "keyWord") {
+            acc["$or"] = [
+              { "subject": { "$regex": v[1], "$options": "i" } },
+              { "description": { "$regex": v[1], "$options": "i" } },
+            ];
+          }
+          else {
             acc[v[0]] = v[1];
           }
 
@@ -103,12 +109,14 @@ export const getAllAnotherUsers = async (req, res) => {
                 },
                 {
                   $or: [
+                    { date: { $gt: currentDateString } },
                     {
-                      date: { $gt: currentDateString },
-                    },
-                    {
-                      time: { $gt: currentTimeString },
-                    },
+                      $and: [{
+                        date: { $eq: currentDateString },
+                      }, {
+                        time: { $gte: currentTimeString }
+                      }]
+                    }
                   ],
                 },
               ],

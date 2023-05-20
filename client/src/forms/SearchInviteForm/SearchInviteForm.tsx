@@ -1,9 +1,6 @@
 import { Form, Formik } from 'formik';
 
 import {
-  Button,
-  ButtonVariant,
-  ButtonWidth,
   DateTimePicker,
   GenderPicker,
   IconButton,
@@ -32,6 +29,14 @@ const inviteTypeOptions: SelectOption<string>[] = [
   ...INVITE_TYPES_OPTIONS,
 ];
 
+const cityOptions: SelectOption<string>[] = [
+  {
+    label: 'Любой',
+    value: '',
+  },
+  ...CITIES_OPTIONS,
+];
+
 type Props = {
   initialFilters?: SearchInviteFiltersFormFields;
   onSubmit?: (values: SearchInviteFilters) => void;
@@ -46,6 +51,7 @@ const formatResultValues = (
     ...values,
     type: values.type?.value ?? undefined,
     city: values.city?.value ?? undefined,
+    keyWord: values.keyWord ?? undefined,
     date: formattedDate,
     gender: values.gender ? [...values.gender] : undefined,
   };
@@ -54,7 +60,8 @@ const formatResultValues = (
 export const SearchInviteForm = ({ initialFilters, onSubmit }: Props) => {
   const initialValues = {
     type: inviteTypeOptions[0],
-    city: CITIES_OPTIONS[0],
+    city: cityOptions[0],
+    keyWord: '',
     date: null,
     gender: null,
     ...initialFilters,
@@ -83,11 +90,11 @@ export const SearchInviteForm = ({ initialFilters, onSubmit }: Props) => {
               name="city"
               getOptionLabel={(o) => o.label}
               getOptionValue={(o) => o.value}
-              options={CITIES_OPTIONS}
+              options={cityOptions}
               noVerify
             />
             <TextField
-              name="query"
+              name="keyWord"
               multiline={false}
               placeholderText="Ключевое слово"
             />

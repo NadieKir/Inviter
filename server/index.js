@@ -44,6 +44,7 @@ app.get("/auth/email/:email", populateAuth, UserController.checkEmail);
 app.patch("/users", checkAuth, UserController.update);
 app.put("/users/profile", checkAuth, UserController.updateProfile);
 app.put("/users/:userId/password", checkAuth, UserController.updatePassword);
+app.get("/users", UserController.getAll);
 app.get("/users/:login", UserController.getOne);
 
 app.get("/followings", checkAuth, FollowingController.getFollowings);
@@ -83,6 +84,7 @@ app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);
 
 app.get("/events", checkAuth, EventController.getAll);
 app.get("/events/:id", EventController.getOne);
+app.delete("/events/:id", EventController.deleteOne);
 app.post("/events", checkAuth, EventController.create);
 
 app.listen(8080, (error) => {

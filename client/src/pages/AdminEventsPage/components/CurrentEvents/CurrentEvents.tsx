@@ -1,12 +1,11 @@
-import { useLocalObservable } from 'mobx-react-lite';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 
 import { EventCard, Loader } from 'components';
 import { EventListStore } from 'stores';
 
 import styles from './CurrentEvents.module.scss';
 
-export const CurrentEvents = () => {
-  // TODO
+export const CurrentEvents = observer(() => {
   const { isLoading, events } = useLocalObservable(
     () => new EventListStore({ tabType: 'current' }),
   );
@@ -20,4 +19,4 @@ export const CurrentEvents = () => {
       ))}
     </ul>
   );
-};
+});

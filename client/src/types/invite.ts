@@ -43,6 +43,7 @@ export type InviteRespondFormData = {
 export type SearchInviteFiltersFormFields = {
   type?: SelectOption<string> | null;
   city?: SelectOption<string> | null;
+  keyWord?: string | null;
   date?: string | null;
   gender?: string[] | null;
 }
@@ -50,6 +51,7 @@ export type SearchInviteFiltersFormFields = {
 export type SearchInviteFilters = {
   type?: string | null;
   city?: string | null;
+  keyWord?: string | null;
   date?: string | null;
   gender?: string[] | null;
 }

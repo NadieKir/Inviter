@@ -48,10 +48,11 @@ export const wordFormatDate = (date: string | undefined, time: string | undefine
   return formatter.format(resultDate);
 }
 
-export const isInThePast = (date: string): boolean => {
-  const currentDate = new Date().toISOString();
-  
-  return Date.parse(currentDate) > Date.parse(date);
+export const isInThePast = (date: string, time: string): boolean => {
+  const currentDate = dayjs()
+  const providedDate = dayjs(`${date} ${time}`);
+
+  return currentDate.isAfter(providedDate);
 };
 
 export const formatDate = (date: Date) => {

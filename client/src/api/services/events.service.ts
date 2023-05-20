@@ -8,6 +8,10 @@ export const getEvent = async (id: string): Promise<Event> => {
   return event;
 };
 
+export const deleteEvent = async (id: string): Promise<void> => {
+  await httpClient.delete<Event>(`/events/${id}`);
+};
+
 export const getEvents = async (filters?: SearchEventFilters): Promise<Event[]> => {
   const filterQueryParams = buildQueryParams(filters);
   const url = decodeURI(`/events${filterQueryParams}`);

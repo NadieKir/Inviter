@@ -17,7 +17,7 @@ export const SearchEventPage = observer(() => {
   }
 
   const { isLoading, events, getEvents } = useLocalObservable(
-    () => new EventListStore({ city: user.city }),
+    () => new EventListStore({ city: user.city, tabType: 'current' }),
   );
 
   return (
@@ -28,7 +28,10 @@ export const SearchEventPage = observer(() => {
           initialFilters={{
             city: createOption(user.city),
           }}
-          onSubmit={getEvents}
+          onSubmit={(filters) => getEvents({
+            ...filters,
+            tabType: 'current',
+          })}
         />
       </div>
       {isLoading ? (

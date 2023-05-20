@@ -13,6 +13,19 @@ export const getUser = async (login: string): Promise<User> => {
   return user;
 };
 
+export const getUsers = async (nameOrLogin?: string): Promise<User[]> => {
+  let url = '/users';
+
+  if (nameOrLogin) {
+    url += `?nameOrLogin=${nameOrLogin}`;
+  }
+
+  const { data: users } = await httpClient.get<User[]>(url);
+
+  return users;
+};
+
+
 export const updateUser = async (
   user: User,
 ): Promise<User> => {

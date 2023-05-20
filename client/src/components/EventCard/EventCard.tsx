@@ -6,20 +6,22 @@ import { isInThePast, wordFormatDate } from 'common/helpers';
 import styles from './EventCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
 import classNames from 'classnames';
+import { deleteEvent } from 'api';
+import { useLocalObservable } from 'mobx-react-lite';
+import { EventListStore } from 'stores';
 
 interface EventCardProps {
   event: Event;
   isAdmin?: boolean;
+  onDelete?: (eventId: string) => void;
 }
 
-export const EventCard = ({ event, isAdmin = false }: EventCardProps) => {
-  const handleEdit = () => {};
-
-  const handleDelete = () => {};
+export const EventCard = ({ event, isAdmin = false, onDelete }: EventCardProps) => {
+  const handleEdit = () => { };
 
   return (
     <li>
-      <NavLink to={`/events/${event._id}`}>
+      <NavLink to={`/admin/events/${event._id}`}>
         <article className={styles.card}>
           <div className={styles.infoWrapper}>
             <div className={styles.wrapper}>
@@ -41,17 +43,26 @@ export const EventCard = ({ event, isAdmin = false }: EventCardProps) => {
 
             {isAdmin && (
               <div className={styles.buttonsWrapper}>
-                {/* TODO onclick and event.date change */}
-                {isInThePast(event.date) && (
+                {!isInThePast(event.date, event.time) && (
                   <button
-                    onClick={handleEdit}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      handleEdit();
+                    }}
                     className={classNames(styles.button, styles.buttonBlue)}
                   >
                     Редактировать
                   </button>
                 )}
                 <button
-                  onClick={handleDelete}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    onDelete?.(event._id);
+                  }}
                   className={classNames(styles.button, styles.buttonRed)}
                 >
                   Удалить
