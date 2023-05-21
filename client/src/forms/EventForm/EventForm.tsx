@@ -38,6 +38,8 @@ interface EventFormProps {
     actions: FormikHelpers<EventFormData>,
   ) => Promise<void>;
   touchedNotRequired?: boolean;
+  formHeading?: string;
+  formSubmitButtonTitle?: string;
 }
 
 const requiredFieldsSchema = Yup.object().shape({
@@ -155,6 +157,8 @@ export const EventForm = observer(
     initialValuesAdditionalStep,
     handleSubmit,
     touchedNotRequired = false,
+    formHeading = 'Создать событие',
+    formSubmitButtonTitle = 'Создать'
   }: EventFormProps) => {
     const steps: IStep[] = [
       {
@@ -195,36 +199,34 @@ export const EventForm = observer(
       handleSubmit(resultValues, actions);
     };
 
-    const onExtraBtnClick = async (
-      values: EventFormData,
-      actions: FormikHelpers<EventFormData>,
-    ) => {
-      const formattedDate = formatToOnlyDate(values[EventFormFields.Date]);
-      const formattedTime = formatToOnlyTime(values[EventFormFields.Time]);
+    // const onExtraBtnClick = async (
+    //   values: EventFormData,
+    //   actions: FormikHelpers<EventFormData>,
+    // ) => {
+    //   const formattedDate = formatToOnlyDate(values[EventFormFields.Date]);
+    //   const formattedTime = formatToOnlyTime(values[EventFormFields.Time]);
 
-      const resultValues = {
-        ...values,
-        [EventFormFields.Date]: formattedDate,
-        [EventFormFields.Time]: formattedTime,
-        [EventFormFields.Type]: (
-          values[EventFormFields.Type] as SelectOption<InviteType>
-        ).value,
-        [EventFormFields.City]: (
-          values[EventFormFields.City] as SelectOption<City>
-        ).value,
-      };
+    //   const resultValues = {
+    //     ...values,
+    //     [EventFormFields.Date]: formattedDate,
+    //     [EventFormFields.Time]: formattedTime,
+    //     [EventFormFields.Type]: (
+    //       values[EventFormFields.Type] as SelectOption<InviteType>
+    //     ).value,
+    //     [EventFormFields.City]: (
+    //       values[EventFormFields.City] as SelectOption<City>
+    //     ).value,
+    //   };
 
-      handleSubmit(resultValues, actions);
-    };
+    //   handleSubmit(resultValues, actions);
+    // };
 
     return (
       <FormikStepper
         steps={steps}
-        formHeading="Создать событие"
-        finishButtonContent="Создать"
+        formHeading={formHeading}
+        finishButtonContent={formSubmitButtonTitle}
         onFinish={onSubmit}
-        extraButtonContent="Сохранить черновик"
-        onExtraBtnClick={onExtraBtnClick}
       />
     );
   },

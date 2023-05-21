@@ -1,13 +1,14 @@
 import { makeAutoObservable } from 'mobx';
 import { AxiosError } from 'axios';
 
-import { Event } from 'models';
-import { getEvent } from 'api';
+import { Event, Invite } from 'models';
+import { getEvent, getEventInvites } from 'api';
 
 export class EventStore {
   event: Event | null = null;
   isLoading: boolean = false;
   error: AxiosError | null = null;
+  eventInvites?: Invite[] | null = null;
 
   constructor(id: string) {
     makeAutoObservable(this);
@@ -16,6 +17,10 @@ export class EventStore {
 
   setEvent(newEvent: Event | null) {
     this.event = newEvent;
+  }
+
+  setEventInvites(invites: Invite[]) {
+    this.eventInvites = invites;
   }
 
   setIsLoading(isLoading: boolean) {
@@ -31,11 +36,12 @@ export class EventStore {
 
     try {
       this.setEvent(await getEvent(id));
+      this.setEventInvites(await getEventInvites(id));
     }
     catch (error) {
       this.setError(error as AxiosError);
       throw this.error;
-    } 
+    }
     finally {
       this.setIsLoading(false);
     }

@@ -16,6 +16,8 @@ import styles from './InviteDetailsModal.module.scss';
 import calendar from './assets/calendar.svg';
 import geo from './assets/geo.svg';
 import ticket from 'assets/images/navbarIcons/ticket.svg';
+import { deleteInvite } from 'api';
+import { usePushNotification } from 'common/hooks';
 
 export enum InviteModalType {
   Response = 'response',
@@ -26,20 +28,36 @@ export enum InviteModalType {
 interface ViewInviteModalProps extends ModalProps {
   invite: Invite;
   modalType?: InviteModalType;
+  onInviteAction?: (inviteId: string) => void;
 }
 
 export const InviteDetailsModal = ({
   isShowing,
+  onInviteAction,
   onClose,
   invite,
   modalType = InviteModalType.Response,
 }: ViewInviteModalProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
+  const { pushSuccess, pushError } = usePushNotification();
+
   const onModalClose = () => {
     onClose();
     setCurrentStep(0);
   };
+
+  const onInviteDelete = async () => {
+    try {
+      await deleteInvite(invite._id);
+    } catch (e) {
+      pushError("Не удалось удалить инвайт");
+    }
+
+    pushSuccess("Инвайт успешно удален")
+    onInviteAction?.(invite._id);
+    onClose();
+  }
 
   const renderActions = () => {
     switch (modalType) {
@@ -54,6 +72,7 @@ export const InviteDetailsModal = ({
           <Button
             buttonType={ButtonType.Danger}
             variant={ButtonVariant.Secondary}
+            onClick={onInviteDelete}
           >
             Удалить
           </Button>
@@ -65,6 +84,7 @@ export const InviteDetailsModal = ({
             <Button
               buttonType={ButtonType.Danger}
               variant={ButtonVariant.Secondary}
+              onClick={onInviteDelete}
             >
               Удалить
             </Button>

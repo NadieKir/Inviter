@@ -53,12 +53,12 @@ export const DateTimePicker = ({
 
         const excludeProps = excludePastDateTime
           ? {
-              minDate: now,
-              minTime: new Date(
-                now.setHours(minTimeHour, minTimeMinutes, 0, 0),
-              ),
-              maxTime: new Date(now.setHours(23, 59, 0, 0)),
-            }
+            minDate: now,
+            minTime: new Date(
+              now.setHours(minTimeHour, minTimeMinutes, 0, 0),
+            ),
+            maxTime: new Date(now.setHours(23, 59, 0, 0)),
+          }
           : undefined;
 
         const handleChange = (date: Date | null): void => {
@@ -92,7 +92,10 @@ export const DateTimePicker = ({
             locale="ru-RU"
             timeCaption="Время"
             name={name}
-            selected={value}
+            selected={value
+              ? new Date(value)
+              : null
+            }
             onChange={handleChange}
             onBlur={() => setFieldTouched(name, true, true)}
             showTimeSelect={showTimeSelect}

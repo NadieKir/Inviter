@@ -1,27 +1,32 @@
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 
 import { Event } from 'models';
 import { isInThePast, wordFormatDate } from 'common/helpers';
 
 import styles from './EventCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import classNames from 'classnames';
-import { deleteEvent } from 'api';
-import { useLocalObservable } from 'mobx-react-lite';
-import { EventListStore } from 'stores';
 
 interface EventCardProps {
   event: Event;
   isAdmin?: boolean;
+  onEdit?: (event: Event) => void;
   onDelete?: (eventId: string) => void;
 }
 
-export const EventCard = ({ event, isAdmin = false, onDelete }: EventCardProps) => {
-  const handleEdit = () => { };
+export const EventCard = ({
+  event,
+  onDelete,
+  onEdit,
+  isAdmin = false,
+}: EventCardProps) => {
+  const eventLink = isAdmin
+    ? `/admin/events/${event._id}`
+    : `/events/${event._id}`
 
   return (
     <li>
-      <NavLink to={`/admin/events/${event._id}`}>
+      <NavLink to={eventLink}>
         <article className={styles.card}>
           <div className={styles.infoWrapper}>
             <div className={styles.wrapper}>
@@ -49,7 +54,7 @@ export const EventCard = ({ event, isAdmin = false, onDelete }: EventCardProps) 
                       e.preventDefault();
                       e.stopPropagation();
 
-                      handleEdit();
+                      onEdit?.(event);
                     }}
                     className={classNames(styles.button, styles.buttonBlue)}
                   >

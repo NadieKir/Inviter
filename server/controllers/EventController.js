@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import EventModel from "../models/Event.model.js";
+import InviteModel from "../models/Invite.model.js";
 
 export const getAll = async (req, res) => {
   try {
@@ -58,8 +59,6 @@ export const getAll = async (req, res) => {
         return acc;
       }, []);
 
-    console.log(filter);
-
     const events = await EventModel.find({
       $and: filter,
       isDeleted: { $eq: false },
@@ -79,6 +78,30 @@ export const getOne = async (req, res) => {
     const eventId = req.params.id;
     const event = await EventModel.findById(eventId);
     res.json(event);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось получить событие",
+    });
+  }
+};
+
+export const getEventInvites = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const eventId = req.params.id;
+    const eventInvites = await InviteModel.find({
+      $and: [
+        {
+          creator: { $ne: userId },
+        },
+        {
+          event: { $exists: true, $eq: eventId }
+        }
+      ]
+    }).populate('creator');
+
+    res.json(eventInvites);
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -120,6 +143,33 @@ export const create = async (req, res) => {
     const event = document.save();
 
     res.json(event);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось создать событие",
+    });
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+
+    const newEvent = await EventModel.findByIdAndUpdate(eventId, {
+      name: req.body.name,
+      creator: req.userId,
+      lastEditor: req.userId,
+      description: req.body.description,
+      type: req.body.type,
+      city: req.body.city,
+      address: req.body.address,
+      date: req.body.date,
+      time: req.body.time,
+      image: req.body.image,
+      url: req.body.url,
+    }).exec();
+
+    res.json(newEvent);
   } catch (err) {
     console.log(err);
     res.status(500).json({

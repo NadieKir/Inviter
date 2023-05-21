@@ -49,9 +49,9 @@ app.get("/users/:login", UserController.getOne);
 
 app.get("/followings", checkAuth, FollowingController.getFollowings);
 app.get("/followings/followers", checkAuth, FollowingController.getFollowers);
+app.get("/followings/invites", checkAuth, FollowingController.getFollowingsInvites);
 app.get("/followings/:userId", checkAuth, FollowingController.getAnotherUserFollowings);
 app.get("/followings/followers/:userId", checkAuth, FollowingController.getAnotherUserFollowers);
-app.get("/followings/invites", checkAuth, FollowingController.getFollowingsInvites);
 app.post("/followings", checkAuth, FollowingController.addFollowing);
 app.delete("/followings", checkAuth, FollowingController.removeFollowing);
 
@@ -63,6 +63,7 @@ app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
 app.get("/invites/another/:userId", checkAuth, InviteController.getAllAnotherUser);
 app.get("/invites/current", checkAuth, InviteController.getAllCurrentUser);
 app.get("/invites/:id", checkAuth, InviteController.getOne);
+app.delete("/invites/:id", checkAuth, InviteController.deleteOne);
 app.post(
   "/invites",
   checkAuth,
@@ -83,9 +84,11 @@ app.get("/invite-responses/current", checkAuth, InviteResponseController.getAllC
 app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);
 
 app.get("/events", checkAuth, EventController.getAll);
-app.get("/events/:id", EventController.getOne);
-app.delete("/events/:id", EventController.deleteOne);
+app.get("/events/:id", checkAuth, EventController.getOne);
+app.get("/events/:id/invites", checkAuth, EventController.getEventInvites);
+app.delete("/events/:id", checkAuth, EventController.deleteOne);
 app.post("/events", checkAuth, EventController.create);
+app.put("/events/:id", checkAuth, EventController.update);
 
 app.listen(8080, (error) => {
   if (error) {

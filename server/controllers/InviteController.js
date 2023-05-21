@@ -93,6 +93,7 @@ export const getAllAnotherUsers = async (req, res) => {
       },
       {
         $match: {
+          isDeleted: { $eq: false },
           $and: [
             filters,
             {
@@ -178,6 +179,20 @@ export const getOne = async (req, res) => {
     console.log(err);
     res.status(400).json({
       message: "Не удалось получить инвайт",
+    });
+  }
+};
+
+export const deleteOne = async (req, res) => {
+  try {
+    const inviteId = req.params.id;
+    await InviteModel.findByIdAndUpdate(inviteId, { isDeleted: true }).exec();
+
+    res.send(200);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось удалить инвайт",
     });
   }
 };

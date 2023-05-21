@@ -6,48 +6,62 @@ import {
   EventFormData,
   EventFormFields,
   RequiredEventFields,
+  createOption,
 } from 'types';
 import { usePushNotification } from 'common/hooks';
+import { Event } from 'models';
 
 import { EventForm } from '../EventForm';
 import { CreateOrEditEventFormProps } from './types';
+import { updateEvent } from 'api';
 
-export const EditEventForm = observer(
-  ({ onSubmit }: CreateOrEditEventFormProps) => {
-    const { pushSuccess } = usePushNotification();
+type EditEventFormProps = CreateOrEditEventFormProps & {
+  event: Event;
+}
 
-    const initialValuesRequiredStep: RequiredEventFields = {
-      [EventFormFields.Name]: '',
-      [EventFormFields.Description]: '',
-      [EventFormFields.Type]: null,
-      [EventFormFields.City]: null,
-      [EventFormFields.Address]: '',
-      [EventFormFields.Date]: '',
-      [EventFormFields.Time]: '',
-    };
+export const EditEventForm = observer(({
+  onSubmit,
+  event,
+}: EditEventFormProps) => {
+  const { pushSuccess } = usePushNotification();
 
-    const initialValuesAdditionalStep: AdditionalEventFields = {
-      [EventFormFields.Image]: undefined,
-      [EventFormFields.Url]: undefined,
-    };
+  console.log(new Date(`${event.date} ${event.time}`));
 
-    const handleSubmit = async (
-      values: EventFormData,
-      actions: FormikHelpers<EventFormData>,
-    ) => {
-      //await createEvent(values);
+  const initialValuesRequiredStep: RequiredEventFields = {
+    [EventFormFields.Name]: event.name,
+    [EventFormFields.Description]: event.description,
+    [EventFormFields.Type]: createOption(event.type),
+    [EventFormFields.City]: createOption(event.city),
+    [EventFormFields.Address]: event.address,
+    [EventFormFields.Date]: event.date,
+    [EventFormFields.Time]: new Date(`${event.date} ${event.time}`)
+  };
 
-      actions.setSubmitting(false);
-      pushSuccess('Событие успешно создано');
-      onSubmit();
-    };
+  const initialValuesAdditionalStep: AdditionalEventFields = {
+    [EventFormFields.Image]: event.image,
+    [EventFormFields.Url]: event.url,
+  };
 
-    return (
-      <EventForm
-        initialValuesRequiredStep={initialValuesRequiredStep}
-        initialValuesAdditionalStep={initialValuesAdditionalStep}
-        handleSubmit={handleSubmit}
-      />
-    );
-  },
+  const handleSubmit = async (
+    values: EventFormData,
+    actions: FormikHelpers<EventFormData>,
+  ) => {
+    await updateEvent(event._id, values);
+
+    actions.setSubmitting(false);
+    pushSuccess('Событие успешно обновлено');
+    onSubmit();
+  };
+
+  return (
+    <EventForm
+      initialValuesRequiredStep={initialValuesRequiredStep}
+      initialValuesAdditionalStep={initialValuesAdditionalStep}
+      handleSubmit={handleSubmit}
+      formHeading='Редактировать событие'
+      formSubmitButtonTitle='Редактировать'
+      touchedNotRequired
+    />
+  );
+},
 );

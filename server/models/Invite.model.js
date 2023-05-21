@@ -49,6 +49,9 @@ const InviteSchema = new mongoose.Schema(
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "InviteResponse" }],
       default: [],
     },
+    isDeleted: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
