@@ -177,7 +177,7 @@ export const mockedInvites: Invite[] = [
   {
     _id: "invite1",
     creator: getRandomItem(mockedUsers),
-    event: mockedEvents[0],
+    // event: mockedEvents[0],
     subject: "Coffee talk",
     description: "Let's catch up over some coffee and croissants!",
     city: "San Francisco",
@@ -194,7 +194,7 @@ export const mockedInvites: Invite[] = [
   {
     _id: "invite2",
     creator: getRandomItem(mockedUsers),
-    event: mockedEvents[0],
+    // event: mockedEvents[0],
     subject: "Movie night",
     description: "Let's watch some classic movies and have some popcorn!",
     city: "Los Angeles",
@@ -210,7 +210,7 @@ export const mockedInvites: Invite[] = [
   {
     _id: "invite3",
     creator: getRandomItem(mockedUsers),
-    event: mockedEvents[1],
+    // event: mockedEvents[1],
     subject: "Hiking adventure",
     description: "Let's explore the beautiful trails and views of Yosemite!",
     city: "Fresno",

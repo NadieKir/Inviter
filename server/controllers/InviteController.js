@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import dayjs from "dayjs";
 import InviteModel from "../models/Invite.model.js";
+import { capitalizeFirstLetter } from "../utils/string.js";
 
 export const create = async (req, res) => {
   try {
     const doc = new InviteModel({
-      subject: req.body.subject,
+      subject: capitalizeFirstLetter(req.body.subject),
       description: req.body.description,
       creator: req.userId,
       event: req.body.eventId,
@@ -57,11 +58,10 @@ export const getAllAnotherUsers = async (req, res) => {
             acc["creator.gender"] = { $in: v[1] };
           } else if (v[0] === "keyWord") {
             acc["$or"] = [
-              { "subject": { "$regex": v[1], "$options": "i" } },
-              { "description": { "$regex": v[1], "$options": "i" } },
+              { subject: { $regex: v[1], $options: "i" } },
+              { description: { $regex: v[1], $options: "i" } },
             ];
-          }
-          else {
+          } else {
             acc[v[0]] = v[1];
           }
 
@@ -112,12 +112,15 @@ export const getAllAnotherUsers = async (req, res) => {
                   $or: [
                     { date: { $gt: currentDateString } },
                     {
-                      $and: [{
-                        date: { $eq: currentDateString },
-                      }, {
-                        time: { $gte: currentTimeString }
-                      }]
-                    }
+                      $and: [
+                        {
+                          date: { $eq: currentDateString },
+                        },
+                        {
+                          time: { $gte: currentTimeString },
+                        },
+                      ],
+                    },
                   ],
                 },
               ],

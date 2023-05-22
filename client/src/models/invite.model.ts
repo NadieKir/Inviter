@@ -23,7 +23,7 @@ export enum InviteStatus {
 export interface Invite {
   _id: string;
   creator: User;
-  event?: Event | null;
+  event?: Event | string | null;
   subject: string;
   description: string;
   status?: InviteStatus,
@@ -34,7 +34,6 @@ export interface Invite {
   time?: string;
   companionAge?: string;
   companionGender: Gender[];
-  // companionsAmount: number;
   companions: User[];
   responses: InviteResponse[];
 }

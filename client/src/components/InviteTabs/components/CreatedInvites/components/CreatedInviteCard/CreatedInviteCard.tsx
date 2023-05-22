@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Invite } from 'models';
+import { Event, Invite } from 'models';
 import {
   Button,
   ButtonHeight,
@@ -14,6 +14,7 @@ import {
 import {
   concatUserNameAndAge,
   getInviteCompanionsInfoString,
+  lowercaseFirstLetter,
 } from 'common/helpers';
 import { useInviteDetailsModalContext } from 'common/contexts';
 import { InviteModalType } from 'modals';
@@ -33,7 +34,7 @@ export function CreatedInviteCard({ invite }: Props) {
 
   const { companions, responses } = invite;
 
-  const event = invite.event;
+  const event = invite.event as Event;
 
   const companionsAmount = companions?.length ?? 0;
   const responsesAmount = responses?.length ?? 0;
@@ -74,11 +75,17 @@ export function CreatedInviteCard({ invite }: Props) {
             <span className={styles.subject}>
               {event ? (
                 <>
-                  Событие: <span className={styles.blue}>{event.name}</span>
+                  Посетить{' '}
+                  <span className={styles.blue}>
+                    {lowercaseFirstLetter(event.name)}
+                  </span>
                 </>
               ) : (
                 <>
-                  Хочет <span className={styles.blue}>{invite.subject}</span>
+                  Хочет{' '}
+                  <span className={styles.blue}>
+                    {lowercaseFirstLetter(invite.subject)}
+                  </span>
                 </>
               )}
             </span>

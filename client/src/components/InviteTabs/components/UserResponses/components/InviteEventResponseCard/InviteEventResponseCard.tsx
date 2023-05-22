@@ -1,7 +1,7 @@
 import { Divider, InviterItem } from 'components';
 import { InviteEventResponse } from 'models';
 
-import { wordFormatDate } from 'common/helpers';
+import { lowercaseFirstLetter, wordFormatDate } from 'common/helpers';
 
 import styles from './InviteEventResponseCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
@@ -13,6 +13,7 @@ interface Props {
 export function InviteEventResponseCard({ inviteEventResponse }: Props) {
   const event = inviteEventResponse.event!;
   const inviters = inviteEventResponse.inviters;
+  const inviteInfo = inviters[0];
   const invitersAmount = inviters?.length ?? 0;
 
   return (
@@ -21,10 +22,13 @@ export function InviteEventResponseCard({ inviteEventResponse }: Props) {
         <div className={styles.headingInfo}>
           <span className={styles.date}>
             <img src={calendar} alt="calendar" height="13px" />
-            {wordFormatDate(event.date, event.time)}
+            {wordFormatDate(inviteInfo.date, inviteInfo.time)}
           </span>
           <span className={styles.subject}>
-            Хочет <span className="blue">{event.name}</span>
+            Хочет{' '}
+            <span className="blue">
+              {lowercaseFirstLetter(inviteInfo.subject)}
+            </span>
           </span>
         </div>
         <Divider />

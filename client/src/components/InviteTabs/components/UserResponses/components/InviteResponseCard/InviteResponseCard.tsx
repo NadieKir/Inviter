@@ -6,6 +6,7 @@ import {
   wordFormatDate,
   getInviteCompanionsInfoString,
   concatUserNameAndAge,
+  lowercaseFirstLetter,
 } from 'common/helpers';
 import { useInviteDetailsModalContext } from 'common/contexts';
 import { InviteModalType } from 'modals';
@@ -29,7 +30,8 @@ export function InviteResponseCard({ invite }: Props) {
             {wordFormatDate(invite.date, invite.time)}
           </span>
           <span className={styles.subject}>
-            Хочет <span className="blue">{invite.subject}</span>
+            Хочет{' '}
+            <span className="blue">{lowercaseFirstLetter(invite.subject)}</span>
           </span>
           <span className={styles.companionsInfo}>
             {getInviteCompanionsInfoString(invite)}

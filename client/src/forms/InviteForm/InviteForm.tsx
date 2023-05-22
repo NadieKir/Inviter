@@ -71,9 +71,6 @@ const additionalFieldsSchema = Yup.object().shape({
   [InviteFormFields.Address]: Yup.string(),
   [InviteFormFields.CompanionAge]: ageRangeValidationSchema,
   [InviteFormFields.CompanionGender]: Yup.array().of(Yup.string()),
-  // [InviteFormFields.CompanionsAmount]: Yup.number()
-  //   .min(formConstraints[InviteFormFields.CompanionsAmount][0])
-  //   .max(formConstraints[InviteFormFields.CompanionsAmount][1]),
 });
 
 const renderRequiredFields = () => (
@@ -179,12 +176,6 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
           labelText="Пол"
           inputType="checkbox"
         />
-        {/* <NumberField
-          name={InviteFormFields.CompanionsAmount}
-          labelText="Количество"
-          min={formConstraints[InviteFormFields.CompanionsAmount][0]}
-          max={formConstraints[InviteFormFields.CompanionsAmount][1]}
-        /> */}
       </div>
     </>
   );

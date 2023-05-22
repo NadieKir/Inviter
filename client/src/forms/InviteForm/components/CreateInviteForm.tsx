@@ -27,7 +27,6 @@ export const CreateInviteForm = observer(
       [InviteFormFields.Time]: '',
       [InviteFormFields.CompanionAge]: '',
       [InviteFormFields.CompanionGender]: [],
-      // [InviteFormFields.CompanionsAmount]: 1,
     };
 
     const handleSubmit = async (

@@ -5,8 +5,6 @@ import { getContacts, getCurrentUser, getCurrentUserInvites, getCurrentUserRespo
 import { Invite, InviteResponse, User } from 'models';
 import { InviteRespondFormData, LoginFormData } from 'types';
 
-// type UserContactsWithInvites = {contact: string, invites: Invite[]};
-
 export class CurrentUserStore {
   user: User | null = null;
   userInvites: Invite[] = [];

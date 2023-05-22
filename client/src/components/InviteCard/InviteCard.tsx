@@ -10,6 +10,7 @@ import { InviteDetailsModal, InviteModalType } from 'modals';
 import {
   concatUserNameAndAge,
   getInviteCompanionsInfoString,
+  lowercaseFirstLetter,
   wordFormatDate,
 } from 'common/helpers';
 import { UserContext } from 'common/contexts';
@@ -40,8 +41,6 @@ export const InviteCard = observer(
     const [isShowingModal, toggleModal] = useModal();
     const { userResponses } = useContext(UserContext);
 
-    console.log(invite, userResponses);
-
     return (
       <>
         <li
@@ -69,7 +68,10 @@ export const InviteCard = observer(
               {wordFormatDate(invite.date, invite.time)}
             </div>
             <h3 className={styles.heading}>
-              Хочет <span className={styles.blue}>{invite.subject}</span>
+              {invite.event ? 'Посетить ' : 'Хочет '}
+              <span className={styles.blue}>
+                {lowercaseFirstLetter(invite.subject)}
+              </span>
             </h3>
             <p className={styles.description}>
               {getInviteCompanionsInfoString(invite)}

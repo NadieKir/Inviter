@@ -9,6 +9,7 @@ import { InviteResponseForm } from 'forms';
 import {
   concatUserNameAndAge,
   getInviteCompanionsInfoString,
+  lowercaseFirstLetter,
   wordFormatDate,
 } from 'common/helpers';
 
@@ -51,13 +52,13 @@ export const InviteDetailsModal = ({
     try {
       await deleteInvite(invite._id);
     } catch (e) {
-      pushError("Не удалось удалить инвайт");
+      pushError('Не удалось удалить инвайт');
     }
 
-    pushSuccess("Инвайт успешно удален")
+    pushSuccess('Инвайт успешно удален');
     onInviteAction?.(invite._id);
     onClose();
-  }
+  };
 
   const renderActions = () => {
     switch (modalType) {
@@ -114,7 +115,10 @@ export const InviteDetailsModal = ({
           </NavLink>
           <div className={styles.inviteInfo}>
             <h1 className={styles.heading}>
-              Хочет <span className="blue">{invite.subject}</span>
+              Хочет{' '}
+              <span className="blue">
+                {lowercaseFirstLetter(invite.subject)}
+              </span>
             </h1>
             <p className={styles.whoWithDescription}>
               {getInviteCompanionsInfoString(invite)}

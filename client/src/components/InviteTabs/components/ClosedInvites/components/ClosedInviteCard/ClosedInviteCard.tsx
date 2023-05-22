@@ -7,7 +7,11 @@ import {
   Divider,
 } from 'components';
 import { Invite } from 'models';
-import { getInviteCompanionsInfoString, wordFormatDate } from 'common/helpers';
+import {
+  getInviteCompanionsInfoString,
+  lowercaseFirstLetter,
+  wordFormatDate,
+} from 'common/helpers';
 import { UserContext, useInviteDetailsModalContext } from 'common/contexts';
 import { InviteModalType } from 'modals';
 
@@ -33,7 +37,10 @@ export function ClosedInviteCard({ invite }: Props) {
               {wordFormatDate(invite.date, invite.time)}
             </span>
             <span className={styles.subject}>
-              Хочет <span className="blue">{invite.subject}</span>
+              Хочет{' '}
+              <span className="blue">
+                {lowercaseFirstLetter(invite.subject)}
+              </span>
             </span>
             <span className={styles.companionsInfo}>
               {getInviteCompanionsInfoString(invite)}

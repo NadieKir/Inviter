@@ -9,6 +9,6 @@ export interface InviteResponse {
 }
 
 export interface InviteEventResponse {
-  event: Event;
+  event: string;
   inviters: Invite[];
 }
