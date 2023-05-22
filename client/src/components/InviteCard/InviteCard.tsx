@@ -33,6 +33,8 @@ export const InviteCard = observer(
     const [isShowingModal, toggleModal] = useModal();
     const { userResponses } = useContext(UserContext);
 
+    console.log(invite, userResponses);
+
     return (
       <>
         <li

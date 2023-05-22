@@ -1,4 +1,6 @@
 import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+import { NavLink } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 
 import { IconButton, IconButtonColor, Loader, TextField } from 'components';
@@ -8,21 +10,32 @@ import { concatUserNameAndAge } from 'common/helpers';
 import styles from './ContactsPage.module.scss';
 import search from 'assets/images/search.svg';
 import cross from 'assets/images/redCross.svg';
-import { NavLink } from 'react-router-dom';
 
-export const ContactsPage = () => {
-  const { user, isLoading, error } = useContext(UserContext);
+export const ContactsPage = observer(() => {
+  const {
+    user,
+    isLoading,
+    error,
+    userContacts,
+    userInvites,
+    contactToInvites,
+  } = useContext(UserContext);
 
   if (isLoading) return <Loader />;
   if (!user) throw error;
 
   const handleSearch = () => {};
 
+  const handleDelete = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <section className={styles.contactsSection}>
       <div className={styles.header}>
         <h1 className="heading-H1">
-          Контакты <span className="amount"> ()</span>
+          Контакты <span className="amount"> ({userContacts.length})</span>
         </h1>
         <Formik initialValues={{}} onSubmit={handleSearch}>
           {(props) => (
@@ -38,28 +51,42 @@ export const ContactsPage = () => {
         </Formik>
       </div>
       <div className={styles.contactsWrapper}>
-        <NavLink to={`TODO`} className={styles.contactCard}>
-          <div className={styles.userInfo}>
-            <div className={styles.contactInfo}>
-              <img className={styles.contactPhoto} src={user.image} alt="" />
-              <div className={styles.contactInfoText}>
-                <h3 className={styles.name}>{concatUserNameAndAge(user)}</h3>
-                <p className="paragraph">{user.connectionMethods}</p>
+        {userContacts.map((contact) => (
+          <NavLink to={`/user/${contact.login}`} className={styles.contactCard}>
+            <div className={styles.userInfo}>
+              <div className={styles.contactInfo}>
+                <img
+                  className={styles.contactPhoto}
+                  src={contact.image}
+                  alt=""
+                />
+                <div className={styles.contactInfoText}>
+                  <h3 className={styles.name}>
+                    {concatUserNameAndAge(contact)}
+                  </h3>
+                  <p className="paragraph">{contact.connectionMethods}</p>
+                </div>
               </div>
-            </div>
-            <div className={styles.invites}>
-              <h4 className={styles.invitesHeading}>Ваши инвайты</h4>
-              <div className={styles.invitesWrapper}>
-                <div className={styles.invite}>
-                  <span className={styles.date}>21.08.2022</span>
-                  <span>Сходить в кин rtvk ir joes kidо</span>
+              <div className={styles.invites}>
+                <h4 className={styles.invitesHeading}>Ваши инвайты</h4>
+                <div className={styles.invitesWrapper}>
+                  {contactToInvites.get(contact).map((i: any) => (
+                    <div className={styles.invite}>
+                      <span>{i.subject}</span>
+                      {i.date && <span className={styles.date}>{i.date}</span>}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-          <IconButton icon={cross} buttonColor={IconButtonColor.Red} />
-        </NavLink>
+            <IconButton
+              icon={cross}
+              buttonColor={IconButtonColor.Red}
+              onClick={(e) => handleDelete}
+            />
+          </NavLink>
+        ))}
       </div>
     </section>
   );
-};
+});

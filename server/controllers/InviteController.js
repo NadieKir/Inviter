@@ -148,7 +148,9 @@ export const getAllAnotherUser = async (req, res) => {
 
 export const getAllCurrentUser = async (req, res) => {
   try {
-    const invites = await InviteModel.find({ creator: req.userId })
+    const invites = await InviteModel.find({
+      $or: [{ creator: req.userId }, { companions: { $in: [req.userId] } }],
+    })
       .sort({ createdAt: -1 })
       .populate("creator")
       .exec();

@@ -48,9 +48,10 @@ app.get("/users/:login", UserController.getOne);
 
 app.get("/followings", checkAuth, FollowingController.getFollowings);
 app.get("/followings/followers", checkAuth, FollowingController.getFollowers);
+app.get("/followings/invites", checkAuth, FollowingController.getFollowingsInvites);
 app.get("/followings/:userId", checkAuth, FollowingController.getAnotherUserFollowings);
 app.get("/followings/followers/:userId", checkAuth, FollowingController.getAnotherUserFollowers);
-app.get("/followings/invites", checkAuth, FollowingController.getFollowingsInvites);
+
 app.post("/followings", checkAuth, FollowingController.addFollowing);
 app.delete("/followings", checkAuth, FollowingController.removeFollowing);
 

@@ -1,12 +1,15 @@
 import { makeAutoObservable } from 'mobx';
 import { AxiosError } from 'axios';
 
-import { getContacts, getCurrentUser, getCurrentUserResponses, getFollowers, getFollowings, login, respondInvite } from 'api';
-import { InviteResponse, User } from 'models';
+import { getContacts, getCurrentUser, getCurrentUserInvites, getCurrentUserResponses, getFollowers, getFollowings, login, respondInvite } from 'api';
+import { Invite, InviteResponse, User } from 'models';
 import { InviteRespondFormData, LoginFormData } from 'types';
+
+// type UserContactsWithInvites = {contact: string, invites: Invite[]};
 
 export class CurrentUserStore {
   user: User | null = null;
+  userInvites: Invite[] = [];
   userResponses: InviteResponse[] = [];
   userFollowings: User[] = [];
   userFollowers: User[] = [];
@@ -21,6 +24,10 @@ export class CurrentUserStore {
 
   setUser(newUser: User | null) {
     this.user = newUser;
+  }
+
+  setUserInvites(invites: Invite[]) {
+    this.userInvites = invites;
   }
 
   setUserResponses(newUserResponses: InviteResponse[]) {
@@ -66,6 +73,43 @@ export class CurrentUserStore {
     this.setUserContacts(contacts ?? []);
   }
 
+  loadInvites = async () => {
+    const invites = await getCurrentUserInvites();
+    this.setUserInvites(invites ?? []);
+  }
+
+  loadResponses = async () => {
+    const responses = await getCurrentUserResponses();
+    this.setUserResponses(responses ?? []);
+  }
+
+  get userIsCreatorInvites() {
+    return this.userInvites.filter(invite => invite.creator._id === this.user?._id)
+  }
+
+  get userIsCompanionInvites() {
+    return this.userInvites
+    .filter(invite => invite.companions
+      .map(companion => companion._id)
+      .includes(this.user!._id))
+  }
+
+  get contactToInvites() {
+    let map = new Map();
+
+    this.userContacts.forEach(contact => map.set(contact, this.userInvites
+      .filter(
+        (invite) =>
+          invite.creator._id === contact._id ||
+          invite.companions
+            .map((c) => c._id)
+            .includes(contact._id),
+      ))
+    )
+
+    return map;
+  }
+
   loadUser = async () => {
     this.setIsLoading(true);
 
@@ -74,8 +118,9 @@ export class CurrentUserStore {
       if (!savedUserToken) return;
 
       this.setUser(await getCurrentUser());
-      this.setUserResponses(await getCurrentUserResponses());
 
+      await this.loadInvites();
+      await this.loadResponses();
       await this.loadFollowings();
       await this.loadFollowers();
       await this.loadContacts();

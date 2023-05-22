@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import FollowingModel from "../models/Following.model.js";
 import InviteModel from "../models/Invite.model.js";
 
@@ -87,6 +88,8 @@ export const getAnotherUserFollowings = async (req, res) => {
 };
 
 export const getAnotherUserFollowers = async (req, res) => {
+  console.log("Followings", userId);
+
   try {
     const userId = req.params.userId;
     const followers = await FollowingModel.find({ followingUser: userId }).populate("user").exec();
@@ -104,6 +107,7 @@ export const getAnotherUserFollowers = async (req, res) => {
 export const getFollowingsInvites = async (req, res) => {
   try {
     const userId = req.userId;
+
     const followings = await FollowingModel.find(
       { user: userId },
       { followingUser: 1, _id: 0 }

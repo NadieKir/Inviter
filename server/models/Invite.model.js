@@ -5,7 +5,6 @@ const InviteSchema = new mongoose.Schema(
     subject: {
       type: String,
       required: true,
-      lowercase: true,
     },
     description: {
       type: String,

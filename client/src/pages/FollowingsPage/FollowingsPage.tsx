@@ -25,7 +25,9 @@ export const FollowingsPage = () => {
   if (isLoading || isFollowingsLoading) return <Loader />;
   if (!user) throw error;
 
-  const handleSearch = () => { };
+  const handleSearch = () => {};
+
+  console.log(followingInvites);
 
   return (
     <section className={styles.followingsSection}>
@@ -49,7 +51,7 @@ export const FollowingsPage = () => {
             )}
           </Formik>
           <div className={styles.followings}>
-            {userFollowings.map(f => (
+            {userFollowings.map((f) => (
               <NavLink to={`/user/${f.login}`} className={styles.following}>
                 <img className={styles.followingPhoto} src={f.image} alt="" />
                 <div className={styles.followingInfo}>
