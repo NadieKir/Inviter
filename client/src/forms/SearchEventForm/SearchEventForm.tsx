@@ -32,6 +32,14 @@ const evenTypeOptions: SelectOption<string>[] = [
   ...INVITE_TYPES_OPTIONS,
 ];
 
+const cityOptions: SelectOption<string>[] = [
+  {
+    label: 'Любой',
+    value: ''
+  },
+  ...CITIES_OPTIONS,
+];
+
 type Props = {
   initialFilters?: SearchEventFiltersFormFields;
   onSubmit?: (values: SearchEventFilters) => void;
@@ -43,7 +51,7 @@ export const SearchEventForm = ({
 }: Props) => {
   const initialValues = {
     type: evenTypeOptions[0],
-    city: CITIES_OPTIONS[0],
+    city: cityOptions[0],
     date: '',
     ...initialFilters,
   };
@@ -69,7 +77,7 @@ export const SearchEventForm = ({
                 name="city"
                 getOptionLabel={o => o.label}
                 getOptionValue={o => o.value}
-                options={CITIES_OPTIONS}
+                options={cityOptions}
                 noVerify
               />
               <div className={styles.dateInputWrapper}>

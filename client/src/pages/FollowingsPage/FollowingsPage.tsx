@@ -9,7 +9,6 @@ import {
   Loader,
   TextField,
 } from 'components';
-import { mockedInvites } from 'models';
 import { UserContext } from 'common/contexts';
 import { concatUserNameAndAge } from 'common/helpers';
 import { useFollowingsInvites } from 'common/hooks/useFollowingsInvites';
@@ -17,17 +16,76 @@ import { useFollowingsInvites } from 'common/hooks/useFollowingsInvites';
 import styles from './FollowingsPage.module.scss';
 import search from 'assets/images/search.svg';
 import at from 'assets/images/at.svg';
+import { useUsers } from 'common/hooks/useUsers';
 
 export const FollowingsPage = () => {
   const { user, isLoading, error, userFollowings } = useContext(UserContext);
   const { followingInvites, isFollowingsLoading } = useFollowingsInvites();
 
+  const [filter, setFilter] = useState<string | undefined>(undefined);
+  const { users, isUsersLoading } = useUsers(filter);
+
   if (isLoading || isFollowingsLoading) return <Loader />;
   if (!user) throw error;
 
-  const handleSearch = () => {};
+  const renderFollowingsAndUsers = () => {
+    if (isUsersLoading) {
+      return <Loader />;
+    }
 
-  console.log(followingInvites);
+    const userFollowingsToShow = userFollowings.filter((u) => {
+      const filterToUse = filter?.toLowerCase() ?? '';
+
+      return (
+        u.name.toLowerCase().includes(filterToUse) ||
+        u.login.toLowerCase().includes(filterToUse)
+      );
+    });
+
+    const userFollowingsIds = userFollowingsToShow.map((u) => u._id);
+
+    const usersToShow = users.filter((u) => !userFollowingsIds.includes(u._id));
+
+    if (userFollowingsToShow.length === 0 && usersToShow.length === 0) {
+      return <span>Пользователи не найдены</span>;
+    }
+
+    return (
+      <>
+        {userFollowingsToShow.map((f) => (
+          <NavLink to={`/user/${f.login}`} className={styles.following}>
+            <img className={styles.followingPhoto} src={f.image} alt="" />
+            <div className={styles.followingInfo}>
+              <h3 className={styles.followingName}>
+                {concatUserNameAndAge(f)}
+              </h3>
+              <div className={styles.loginWrapper}>
+                <img src={at} alt="" height={'10px'} />
+                <span>{f.login}</span>
+              </div>
+            </div>
+          </NavLink>
+        ))}
+        {usersToShow.length === 0 || (
+          <span className={styles.otherUsersLabel}>Другие пользователи:</span>
+        )}
+        {usersToShow?.map((u) => (
+          <NavLink to={`/user/${u.login}`} className={styles.following}>
+            <img className={styles.followingPhoto} src={u.image} alt="" />
+            <div className={styles.followingInfo}>
+              <h3 className={styles.followingName}>
+                {concatUserNameAndAge(u)}
+              </h3>
+              <div className={styles.loginWrapper}>
+                <img src={at} alt="" height={'10px'} />
+                <span>{u.login}</span>
+              </div>
+            </div>
+          </NavLink>
+        ))}
+      </>
+    );
+  };
 
   return (
     <section className={styles.followingsSection}>
@@ -38,11 +96,16 @@ export const FollowingsPage = () => {
       </div>
       <div className={styles.mainWrapper}>
         <div className={styles.followingsWrapper}>
-          <Formik initialValues={{}} onSubmit={handleSearch}>
+          <Formik
+            initialValues={{
+              nameOrFilter: '',
+            }}
+            onSubmit={(values) => setFilter(values.nameOrFilter)}
+          >
             {(props) => (
               <Form className={styles.searchForm}>
                 <TextField
-                  name="query"
+                  name="nameOrFilter"
                   multiline={false}
                   placeholderText="Введите имя или логин"
                 />
@@ -50,22 +113,7 @@ export const FollowingsPage = () => {
               </Form>
             )}
           </Formik>
-          <div className={styles.followings}>
-            {userFollowings.map((f) => (
-              <NavLink to={`/user/${f.login}`} className={styles.following}>
-                <img className={styles.followingPhoto} src={f.image} alt="" />
-                <div className={styles.followingInfo}>
-                  <h3 className={styles.followingName}>
-                    {concatUserNameAndAge(f)}
-                  </h3>
-                  <div className={styles.loginWrapper}>
-                    <img src={at} alt="" height={'10px'} />
-                    <span>{f.login}</span>
-                  </div>
-                </div>
-              </NavLink>
-            ))}
-          </div>
+          <div className={styles.followings}>{renderFollowingsAndUsers()}</div>
         </div>
         <div className={styles.invitesWrapper}>
           {followingInvites?.map((i) => (

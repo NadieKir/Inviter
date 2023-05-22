@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import { TabDescriptor, Tabs } from 'components';
-import { CurrentEvents, DraftEvents, PastEvents } from './components';
+import { CurrentEvents, PastEvents } from './components';
 
 import styles from './AdminEventsPage.module.scss';
 
@@ -15,11 +15,6 @@ export const eventsTabs: TabDescriptor[] = [
     label: 'Прошедшие',
     link: 'past',
     component: <PastEvents />,
-  },
-  {
-    label: 'Черновики',
-    link: 'drafts',
-    component: <DraftEvents />,
   },
 ];
 

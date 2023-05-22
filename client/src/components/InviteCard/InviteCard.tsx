@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { Button, ButtonHeight, ButtonVariant } from 'components';
 import { Invite } from 'models';
 import { useModal } from 'common/hooks';
-import { InviteDetailsModal } from 'modals';
+import { InviteDetailsModal, InviteModalType } from 'modals';
 import {
   concatUserNameAndAge,
   getInviteCompanionsInfoString,
@@ -26,10 +26,17 @@ export enum InviteCardVariant {
 interface InviteCardProps {
   invite: Invite;
   variant?: InviteCardVariant;
+  onInviteAction?: (eventId: string) => void;
+  isAdmin?: boolean;
 }
 
 export const InviteCard = observer(
-  ({ invite, variant = InviteCardVariant.BIG_USER }: InviteCardProps) => {
+  ({
+    invite,
+    onInviteAction,
+    variant = InviteCardVariant.BIG_USER,
+    isAdmin = false,
+  }: InviteCardProps) => {
     const [isShowingModal, toggleModal] = useModal();
     const { userResponses } = useContext(UserContext);
 
@@ -84,7 +91,7 @@ export const InviteCard = observer(
             </NavLink>
           )}
           {userResponses
-            .map((response) => response.invite._id)
+            .map((response) => response.invite?._id)
             .includes(invite._id) ? (
             <Button
               variant={ButtonVariant.Secondary}
@@ -108,6 +115,8 @@ export const InviteCard = observer(
           invite={invite}
           isShowing={isShowingModal}
           onClose={toggleModal}
+          onInviteAction={onInviteAction}
+          modalType={isAdmin ? InviteModalType.Delete : undefined}
         />
       </>
     );

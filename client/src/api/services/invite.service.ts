@@ -38,3 +38,6 @@ export const createInvite = async (
   return createdInvite;
 };
 
+export const deleteInvite = async (inviteId: string): Promise<void> => {
+  await httpClient.delete<Invite>(`/invites/${inviteId}`);
+};

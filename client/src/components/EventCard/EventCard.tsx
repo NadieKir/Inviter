@@ -1,25 +1,32 @@
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 
 import { Event } from 'models';
 import { isInThePast, wordFormatDate } from 'common/helpers';
 
 import styles from './EventCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import classNames from 'classnames';
 
 interface EventCardProps {
   event: Event;
   isAdmin?: boolean;
+  onEdit?: (event: Event) => void;
+  onDelete?: (eventId: string) => void;
 }
 
-export const EventCard = ({ event, isAdmin = false }: EventCardProps) => {
-  const handleEdit = () => {};
-
-  const handleDelete = () => {};
+export const EventCard = ({
+  event,
+  onDelete,
+  onEdit,
+  isAdmin = false,
+}: EventCardProps) => {
+  const eventLink = isAdmin
+    ? `/admin/events/${event._id}`
+    : `/events/${event._id}`
 
   return (
     <li>
-      <NavLink to={`/events/${event._id}`}>
+      <NavLink to={eventLink}>
         <article className={styles.card}>
           <div className={styles.infoWrapper}>
             <div className={styles.wrapper}>
@@ -41,17 +48,26 @@ export const EventCard = ({ event, isAdmin = false }: EventCardProps) => {
 
             {isAdmin && (
               <div className={styles.buttonsWrapper}>
-                {/* TODO onclick and event.date change */}
-                {isInThePast(event.date) && (
+                {!isInThePast(event.date, event.time) && (
                   <button
-                    onClick={handleEdit}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      onEdit?.(event);
+                    }}
                     className={classNames(styles.button, styles.buttonBlue)}
                   >
                     Редактировать
                   </button>
                 )}
                 <button
-                  onClick={handleDelete}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    onDelete?.(event._id);
+                  }}
                   className={classNames(styles.button, styles.buttonRed)}
                 >
                   Удалить

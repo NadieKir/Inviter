@@ -137,6 +137,40 @@ export const getOne = async (req, res) => {
   }
 };
 
+export const getAll = async (req, res) => {
+  try {
+    const userLoginOrName = req.query.nameOrLogin;
+    let filters = undefined;
+
+    if (userLoginOrName) {
+      filters = {
+        $or: [
+          {
+            login: { "$regex": userLoginOrName, "$options": "i" }
+          }, {
+            name: { "$regex": userLoginOrName, "$options": "i" }
+          }
+        ],
+        $and: [
+          {
+            role: 'Пользователь',
+          }
+        ]
+      }
+    }
+
+    const users = await UserModel.find(filters);
+
+    res.json(users);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось получить пользователей по имени или логину",
+    });
+  }
+};
+
+
 export const update = async (req, res) => {
   try {
     const userId = req.userId;

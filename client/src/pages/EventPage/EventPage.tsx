@@ -1,28 +1,38 @@
+import { useContext } from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 
 import { Button, InviteCard, InviteCardVariant, Loader } from 'components';
 import { EventStore } from 'stores';
-import { mockedInvites } from 'models';
 import { CreateEventInviteModal } from 'modals';
 import { useModal } from 'common/hooks';
-import { wordFormatDate } from 'common/helpers';
+import { getOverlapPercent, wordFormatDate } from 'common/helpers';
+import { UserContext } from 'common/contexts';
 
 import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
 import calendar from 'assets/images/calendar.svg';
+import { sortBy } from 'lodash';
+
 
 export const EventPage = observer(() => {
   const { id } = useParams();
 
-  const { event, error, isLoading } = useLocalObservable(
+  const { user } = useContext(UserContext);
+
+  const { event, eventInvites, error, isLoading } = useLocalObservable(
     () => new EventStore(id!),
   );
 
   const [isCreateModalOpen, toggleCreateModal] = useModal();
 
   if (isLoading) return <Loader />;
-  if (!event) throw error;
+  if (!event || !eventInvites || !user) throw error;
+
+  const invitesWithOverlapPercent = eventInvites.map(i => ({ invite: i, overlapPercent: getOverlapPercent(user.interests, i.creator.interests) }));
+  const sortedInvites = sortBy(invitesWithOverlapPercent, (i) => i.overlapPercent).reverse().map(i => i.invite);
+
+  console.log(sortedInvites);
 
   return (
     <>
@@ -58,16 +68,18 @@ export const EventPage = observer(() => {
 
         <div className={styles.invitersSection}>
           <h2 className={styles.invitersHeading}>
-            Вас приглашают <span className="amount">(4)</span>
+            Вас приглашают <span className="amount">({isLoading ? '...' : eventInvites.length})</span>
           </h2>
           <div className={styles.invitersCards}>
-            {mockedInvites.map((i) => (
-              <InviteCard
-                key={i._id}
-                invite={i}
-                variant={InviteCardVariant.SMALL_USER}
-              />
-            ))}
+            {eventInvites.length !== 0
+              ? sortedInvites.map((i) => (
+                <InviteCard
+                  key={i._id}
+                  invite={i}
+                  variant={InviteCardVariant.SMALL_USER}
+                />
+              ))
+              : <span>Инвайтов события не найдено</span>}
           </div>
         </div>
       </section>

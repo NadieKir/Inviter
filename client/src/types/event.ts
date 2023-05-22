@@ -19,8 +19,8 @@ export type RequiredEventFields = {
   [EventFormFields.Type]: InviteType | SelectOption<InviteType> | null,
   [EventFormFields.City]: City | SelectOption<City> | null,
   [EventFormFields.Address]: string,
-  [EventFormFields.Date]: string,
-  [EventFormFields.Time]: string,
+  [EventFormFields.Date]: Date | string,
+  [EventFormFields.Time]: Date | string,
 }
 
 export type AdditionalEventFields = {

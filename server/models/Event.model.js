@@ -40,6 +40,9 @@ const EventSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isDeleted: {
+      type: Boolean,
+    },
     image: String,
     url: String,
   },
