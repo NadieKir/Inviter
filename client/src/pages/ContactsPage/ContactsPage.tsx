@@ -12,14 +12,8 @@ import search from 'assets/images/search.svg';
 import cross from 'assets/images/redCross.svg';
 
 export const ContactsPage = observer(() => {
-  const {
-    user,
-    isLoading,
-    error,
-    userContacts,
-    userInvites,
-    contactToInvites,
-  } = useContext(UserContext);
+  const { user, isLoading, error, userContacts, contactToInvites } =
+    useContext(UserContext);
 
   if (isLoading) return <Loader />;
   if (!user) throw error;

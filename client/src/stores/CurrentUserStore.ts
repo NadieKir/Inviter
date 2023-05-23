@@ -109,6 +109,8 @@ export class CurrentUserStore {
   }
 
   loadUser = async () => {
+    if (this.user) return;
+
     this.setIsLoading(true);
 
     try {
@@ -116,12 +118,8 @@ export class CurrentUserStore {
       if (!savedUserToken) return;
 
       this.setUser(await getCurrentUser());
-
-      await this.loadInvites();
-      await this.loadResponses();
-      await this.loadFollowings();
-      await this.loadFollowers();
-      await this.loadContacts();
+      
+      await Promise.all([this.loadResponses(), this.loadFollowings(), this.loadFollowers(), this.loadContacts(), this.loadInvites()])
     }
     catch (error) {
       this.setError(error as AxiosError);

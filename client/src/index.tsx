@@ -2,7 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
-import { InvitesDetailsModalProvider, NotificationsProvider, UserProvider } from 'common/contexts';
+import {
+  InvitesDetailsModalProvider,
+  NotificationsProvider,
+  UserProvider,
+} from 'common/contexts';
 
 import 'style/index.scss';
 
@@ -16,5 +20,5 @@ root.render(
         <App />
       </InvitesDetailsModalProvider>
     </NotificationsProvider>
-  </UserProvider>
+  </UserProvider>,
 );

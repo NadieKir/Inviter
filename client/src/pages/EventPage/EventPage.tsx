@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { sortBy } from 'lodash';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 
@@ -18,7 +19,6 @@ import { UserContext } from 'common/contexts';
 import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
 import calendar from 'assets/images/calendar.svg';
-import { sortBy } from 'lodash';
 
 export const EventPage = observer(() => {
   const { id } = useParams();
@@ -28,8 +28,6 @@ export const EventPage = observer(() => {
   const { event, eventInvites, error, isLoading } = useLocalObservable(
     () => new EventStore(id!),
   );
-
-  console.log(userIsCreatorInvites);
 
   const [isCreateModalOpen, toggleCreateModal] = useModal();
 
@@ -88,27 +86,25 @@ export const EventPage = observer(() => {
           </div>
         </div>
 
-        <div className={styles.invitersSection}>
-          <h2 className={styles.invitersHeading}>
-            Вас приглашают{' '}
-            <span className="amount">
-              ({isLoading ? '...' : eventInvites.length})
-            </span>
-          </h2>
-          <div className={styles.invitersCards}>
-            {eventInvites.length !== 0 ? (
-              sortedInvites.map((i) => (
+        {eventInvites.length !== 0 && (
+          <div className={styles.invitersSection}>
+            <h2 className={styles.invitersHeading}>
+              Вас приглашают{' '}
+              <span className="amount">
+                ({isLoading ? '...' : eventInvites.length})
+              </span>
+            </h2>
+            <div className={styles.invitersCards}>
+              {sortedInvites.map((i) => (
                 <InviteCard
                   key={i._id}
                   invite={i}
                   variant={InviteCardVariant.SMALL_USER}
                 />
-              ))
-            ) : (
-              <span>Инвайтов события не найдено</span>
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       <CreateEventInviteModal

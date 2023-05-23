@@ -11,12 +11,11 @@ import {
 } from 'components';
 import { UserContext } from 'common/contexts';
 import { concatUserNameAndAge } from 'common/helpers';
-import { useFollowingsInvites } from 'common/hooks/useFollowingsInvites';
+import { useFollowingsInvites, useUsers } from 'common/hooks';
 
 import styles from './FollowingsPage.module.scss';
 import search from 'assets/images/search.svg';
 import at from 'assets/images/at.svg';
-import { useUsers } from 'common/hooks/useUsers';
 
 export const FollowingsPage = () => {
   const { user, isLoading, error, userFollowings } = useContext(UserContext);
@@ -25,7 +24,6 @@ export const FollowingsPage = () => {
   const [filter, setFilter] = useState<string | undefined>(undefined);
   const { users, isUsersLoading } = useUsers(filter);
 
-  if (isLoading || isFollowingsLoading) return <Loader />;
   if (!user) throw error;
 
   const renderFollowingsAndUsers = () => {
@@ -94,33 +92,44 @@ export const FollowingsPage = () => {
           Подписки <span className="amount">({userFollowings.length})</span>
         </h1>
       </div>
-      <div className={styles.mainWrapper}>
-        <div className={styles.followingsWrapper}>
-          <Formik
-            initialValues={{
-              nameOrFilter: '',
-            }}
-            onSubmit={(values) => setFilter(values.nameOrFilter)}
-          >
-            {(props) => (
-              <Form className={styles.searchForm}>
-                <TextField
-                  name="nameOrFilter"
-                  multiline={false}
-                  placeholderText="Введите имя или логин"
-                />
-                <IconButton type="submit" icon={search} />
-              </Form>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={styles.mainWrapper}>
+          <div className={styles.followingsWrapper}>
+            <Formik
+              initialValues={{
+                nameOrFilter: '',
+              }}
+              onSubmit={(values) => setFilter(values.nameOrFilter)}
+            >
+              {(props) => (
+                <Form className={styles.searchForm}>
+                  <TextField
+                    name="nameOrFilter"
+                    multiline={false}
+                    placeholderText="Введите имя или логин"
+                  />
+                  <IconButton type="submit" icon={search} />
+                </Form>
+              )}
+            </Formik>
+            <div className={styles.followings}>
+              {renderFollowingsAndUsers()}
+            </div>
+          </div>
+
+          <div className={styles.invitesWrapper}>
+            {isFollowingsLoading ? (
+              <Loader />
+            ) : (
+              followingInvites?.map((i) => (
+                <InviteCard invite={i} variant={InviteCardVariant.SMALL_USER} />
+              ))
             )}
-          </Formik>
-          <div className={styles.followings}>{renderFollowingsAndUsers()}</div>
+          </div>
         </div>
-        <div className={styles.invitesWrapper}>
-          {followingInvites?.map((i) => (
-            <InviteCard invite={i} variant={InviteCardVariant.SMALL_USER} />
-          ))}
-        </div>
-      </div>
+      )}
     </section>
   );
 };
