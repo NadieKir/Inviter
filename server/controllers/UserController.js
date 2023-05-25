@@ -54,7 +54,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const user = await UserModel.findOne({ login: req.body.login });
+    const user = await UserModel.findOne({ login: req.body.login }).lean();
 
     if (!user) {
       return res.status(400).json({
@@ -62,7 +62,7 @@ export const login = async (req, res) => {
       });
     }
 
-    const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+    const isValidPass = await bcrypt.compare(req.body.password, user.passwordHash);
 
     if (!isValidPass) {
       return res.status(400).json({
@@ -80,7 +80,7 @@ export const login = async (req, res) => {
       }
     );
 
-    const { passwordHash, ...userData } = user._doc;
+    const { passwordHash, ...userData } = user;
 
     res.json({
       ...userData,
@@ -96,7 +96,7 @@ export const login = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.userId);
+    const user = await UserModel.findById(req.userId, { passwordHash: 0 }).lean();
 
     if (!user) {
       return res.status(400).json({
@@ -104,9 +104,7 @@ export const getMe = async (req, res) => {
       });
     }
 
-    const { passwordHash, ...userData } = user._doc;
-
-    res.json(userData);
+    res.json(user);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -118,7 +116,7 @@ export const getMe = async (req, res) => {
 export const getOne = async (req, res) => {
   try {
     const userLogin = req.params.login;
-    const user = await UserModel.findOne({ login: userLogin });
+    const user = await UserModel.findOne({ login: userLogin }).lean();
 
     if (user === null) {
       res.status(404).json({
@@ -146,20 +144,21 @@ export const getAll = async (req, res) => {
       filters = {
         $or: [
           {
-            login: { "$regex": userLoginOrName, "$options": "i" }
-          }, {
-            name: { "$regex": userLoginOrName, "$options": "i" }
-          }
+            login: { $regex: userLoginOrName, $options: "i" },
+          },
+          {
+            name: { $regex: userLoginOrName, $options: "i" },
+          },
         ],
         $and: [
           {
-            role: 'Пользователь',
-          }
-        ]
-      }
+            role: "Пользователь",
+          },
+        ],
+      };
     }
 
-    const users = await UserModel.find(filters);
+    const users = await UserModel.find(filters).lean();
 
     res.json(users);
   } catch (err) {
@@ -169,7 +168,6 @@ export const getAll = async (req, res) => {
     });
   }
 };
-
 
 export const update = async (req, res) => {
   try {
@@ -218,10 +216,6 @@ export const update = async (req, res) => {
 
       res.json(doc);
     });
-
-    // res.status(200).json({
-    //   success: true,
-    // });
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -273,10 +267,6 @@ export const updateProfile = async (req, res) => {
 
       res.json(doc);
     });
-
-    // res.status(200).json({
-    //   success: true,
-    // });
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -289,7 +279,7 @@ export const updatePassword = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const user = await UserModel.findOne({ _id: userId });
+    const user = await UserModel.findById(userId, { passwordHash: 1 }).lean();
 
     const salt = await bcrypt.genSalt(10);
 
@@ -300,7 +290,7 @@ export const updatePassword = async (req, res) => {
     if (!isValidPass) {
       res.status(400).json({
         message: "Введен неправильный старый пароль",
-      })
+      });
 
       return;
     }
@@ -314,24 +304,23 @@ export const updatePassword = async (req, res) => {
       {
         returnDocument: "after",
       }
-    )
+    ).lean();
 
     res.status(200).json(doc);
-
   } catch (err) {
     console.log(err);
     res.status(500).json({
       message: "Не удалось обновить пароль пользователя",
-    })
+    });
   }
-}
+};
 
 export const checkLogin = async (req, res) => {
   try {
     const login = req.params.login;
     const userId = req.userId;
 
-    const user = await UserModel.findOne({ login: login, _id: { $ne: userId } });
+    const user = await UserModel.findOne({ login: login, _id: { $ne: userId } }).lean();
 
     if (!user) {
       res.json(false);
@@ -344,7 +333,7 @@ export const checkLogin = async (req, res) => {
     console.log(err);
     res.status(500).json({
       message: "Не удалось проверить логин",
-    })
+    });
   }
 };
 
@@ -353,7 +342,7 @@ export const checkEmail = async (req, res) => {
     const email = req.params.email;
     const userId = req.userId;
 
-    const user = await UserModel.findOne({ email: email, _id: { $ne: userId } });
+    const user = await UserModel.findOne({ email: email, _id: { $ne: userId } }).lean();
 
     if (!user) {
       res.json(false);
@@ -368,5 +357,4 @@ export const checkEmail = async (req, res) => {
       message: "Не удалось проверить почту",
     });
   }
-}
-
+};

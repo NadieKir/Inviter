@@ -23,6 +23,7 @@ import { addFollowing, removeFollowing } from 'api';
 import styles from './UserPage.module.scss';
 import at from 'assets/images/at.svg';
 import geo from 'assets/images/geo.svg';
+import { SERVER_URL } from 'common/constants';
 
 export const UserPage = observer(() => {
   const { login } = useParams();
@@ -52,7 +53,7 @@ export const UserPage = observer(() => {
       <section className={styles.userInfo}>
         <div className={styles.briefWrapper}>
           <img
-            src={user.image}
+            src={SERVER_URL + user.image}
             alt="Фото пользователя"
             className={styles.userPhoto}
           />

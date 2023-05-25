@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import { ErrorCode, FileError, FileRejection, useDropzone } from 'react-dropzone';
+import {
+  ErrorCode,
+  FileError,
+  FileRejection,
+  useDropzone,
+} from 'react-dropzone';
 
 import { getFileSizeString } from 'common/helpers';
 import { FileWithUrl } from 'types';
@@ -58,7 +63,9 @@ export const ImageDropbox = ({
   };
 
   const handleRejectedDrop = (fileRejections: FileRejection[]): void => {
-    var tooLargeFileError = fileRejections[0].errors.find(e => e.code === ErrorCode.FileTooLarge);
+    let tooLargeFileError = fileRejections[0].errors.find(
+      (e) => e.code === ErrorCode.FileTooLarge,
+    );
     if (tooLargeFileError) {
       const formattedSize = Math.round(MAX_FILESIZE / BYTES_IN_MEGABYTE);
       tooLargeFileError.message = `Изображение больше, чем ${formattedSize} Мб`;
@@ -87,8 +94,8 @@ export const ImageDropbox = ({
     internalErrors.length > 0
       ? internalErrors
       : externalError
-        ? [externalError]
-        : [];
+      ? [externalError]
+      : [];
 
   const classList = classNames(
     styles.dropbox,

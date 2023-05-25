@@ -19,6 +19,7 @@ import { UserContext } from 'common/contexts';
 import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
 import calendar from 'assets/images/calendar.svg';
+import { SERVER_URL } from 'common/constants';
 
 export const EventPage = observer(() => {
   const { id } = useParams();
@@ -52,7 +53,7 @@ export const EventPage = observer(() => {
         <div className={styles.eventInfoSection}>
           <div className={styles.photoButtonWrapper}>
             <img
-              src={event.image}
+              src={SERVER_URL + event.image}
               alt="Фото события"
               className={styles.eventPhoto}
             />

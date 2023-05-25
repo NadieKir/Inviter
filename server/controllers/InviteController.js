@@ -31,22 +31,21 @@ export const create = async (req, res) => {
   }
 };
 
-export const getAll = async (req, res) => {
-  try {
-    const invites = await InviteModel.find().sort({ createdAt: -1 }).populate("creator").exec();
-    res.json(invites);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Не удалось получить инвайты",
-    });
-  }
-};
+// export const getAll = async (req, res) => {
+//   try {
+//     const invites = await InviteModel.find().sort({ createdAt: -1 }).populate("creator").exec();
+//     res.json(invites);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({
+//       message: "Не удалось получить инвайты",
+//     });
+//   }
+// };
 
 export const getAllAnotherUsers = async (req, res) => {
   try {
     const currentDate = dayjs();
-
     const currentDateString = currentDate.format("YYYY-MM-DD");
     const currentTimeString = currentDate.format("HH:mm");
 
@@ -73,11 +72,6 @@ export const getAllAnotherUsers = async (req, res) => {
       );
 
     const invites = await InviteModel.aggregate([
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
       {
         $lookup: {
           from: "users",
@@ -128,6 +122,11 @@ export const getAllAnotherUsers = async (req, res) => {
           ],
         },
       },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
     ])
       .allowDiskUse(true)
       .exec();
@@ -163,6 +162,7 @@ export const getAllCurrentUser = async (req, res) => {
     const invites = await InviteModel.find({
       $or: [{ creator: req.userId }, { companions: { $in: [req.userId] } }],
     })
+      .lean()
       .sort({ createdAt: -1 })
       .populate("creator")
       .exec();

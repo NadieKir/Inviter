@@ -16,6 +16,7 @@ import { useFollowingsInvites, useUsers } from 'common/hooks';
 import styles from './FollowingsPage.module.scss';
 import search from 'assets/images/search.svg';
 import at from 'assets/images/at.svg';
+import { SERVER_URL } from 'common/constants';
 
 export const FollowingsPage = () => {
   const { user, isLoading, error, userFollowings } = useContext(UserContext);
@@ -52,7 +53,11 @@ export const FollowingsPage = () => {
       <>
         {userFollowingsToShow.map((f) => (
           <NavLink to={`/user/${f.login}`} className={styles.following}>
-            <img className={styles.followingPhoto} src={f.image} alt="" />
+            <img
+              className={styles.followingPhoto}
+              src={SERVER_URL + f.image}
+              alt=""
+            />
             <div className={styles.followingInfo}>
               <h3 className={styles.followingName}>
                 {concatUserNameAndAge(f)}
@@ -69,7 +74,11 @@ export const FollowingsPage = () => {
         )}
         {usersToShow?.map((u) => (
           <NavLink to={`/user/${u.login}`} className={styles.following}>
-            <img className={styles.followingPhoto} src={u.image} alt="" />
+            <img
+              className={styles.followingPhoto}
+              src={SERVER_URL + u.image}
+              alt=""
+            />
             <div className={styles.followingInfo}>
               <h3 className={styles.followingName}>
                 {concatUserNameAndAge(u)}

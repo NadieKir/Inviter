@@ -19,6 +19,7 @@ import geo from './assets/geo.svg';
 import ticket from 'assets/images/navbarIcons/ticket.svg';
 import { deleteInvite } from 'api';
 import { usePushNotification } from 'common/hooks';
+import { SERVER_URL } from 'common/constants';
 
 export enum InviteModalType {
   Response = 'response',
@@ -108,7 +109,7 @@ export const InviteDetailsModal = ({
           >
             <img
               className={styles.userPhoto}
-              src={invite.creator.image}
+              src={SERVER_URL + invite.creator.image}
               alt="Фото пользователя"
             />
             <span>{concatUserNameAndAge(invite.creator)}</span>

@@ -10,6 +10,7 @@ import { concatUserNameAndAge } from 'common/helpers';
 import styles from './ContactsPage.module.scss';
 import search from 'assets/images/search.svg';
 import cross from 'assets/images/redCross.svg';
+import { SERVER_URL } from 'common/constants';
 
 export const ContactsPage = observer(() => {
   const { user, isLoading, error, userContacts, contactToInvites } =
@@ -51,7 +52,7 @@ export const ContactsPage = observer(() => {
               <div className={styles.contactInfo}>
                 <img
                   className={styles.contactPhoto}
-                  src={contact.image}
+                  src={SERVER_URL + contact.image}
                   alt=""
                 />
                 <div className={styles.contactInfoText}>

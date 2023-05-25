@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
+import multer from "multer";
 
 import { registerValidator, createInviteValidator } from "./validations.js";
 import { checkAuth, populateAuth, handleValidationErrors } from "./utils/index.js";
@@ -23,7 +24,20 @@ mongoose
 
 const app = express();
 
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
 app.use(express.json({ limit: "10mb" }));
+app.use("/uploads", express.static("uploads"));
+
 app.use(
   bodyParser.urlencoded({
     limit: "10mb",
@@ -34,6 +48,12 @@ app.use(
 
 app.use(cors());
 app.use(express.json());
+
+app.post("/uploads", upload.single("image"), (req, res) => {
+  res.json({
+    url: `/uploads/${req.file.originalname}`,
+  });
+});
 
 app.post("/auth/register", registerValidator, handleValidationErrors, UserController.register);
 app.post("/auth/login", handleValidationErrors, UserController.login);
@@ -58,7 +78,7 @@ app.delete("/followings", checkAuth, FollowingController.removeFollowing);
 app.get("/contacts", checkAuth, ContactController.getContacts);
 app.get("/contacts/:userId", checkAuth, ContactController.getAnotherUserContacts);
 
-app.get("/invites", checkAuth, InviteController.getAll);
+// app.get("/invites", checkAuth, InviteController.getAll);
 app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
 app.get("/invites/another/:userId", checkAuth, InviteController.getAllAnotherUser);
 app.get("/invites/current", checkAuth, InviteController.getAllCurrentUser);

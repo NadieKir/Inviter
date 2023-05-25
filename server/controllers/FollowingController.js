@@ -45,7 +45,13 @@ export const removeFollowing = async (req, res) => {
 export const getFollowings = async (req, res) => {
   try {
     const userId = req.userId;
-    const followings = await FollowingModel.find({ user: userId }).populate("followingUser").exec();
+    const followings = await FollowingModel.find({ user: userId })
+      .lean()
+      .populate("followingUser")
+      .exec();
+
+    // console.log(followings); , { login: 1, name: 1, birthday: 1, image: 1 }
+
     const followingUsers = followings.map((f) => f.followingUser).reverse();
 
     res.json(followingUsers);
@@ -60,9 +66,12 @@ export const getFollowings = async (req, res) => {
 export const getFollowers = async (req, res) => {
   try {
     const userId = req.userId;
-    const followers = await FollowingModel.find({ followingUser: userId }).populate("user").exec();
+    const followers = await FollowingModel.find({ followingUser: userId }).lean();
+    // .populate("user")
+    // .exec();
     const followingUsers = followers.map((f) => f.user).reverse();
 
+    console.log(followingUsers);
     res.json(followingUsers);
   } catch (err) {
     console.log(err);
@@ -88,8 +97,6 @@ export const getAnotherUserFollowings = async (req, res) => {
 };
 
 export const getAnotherUserFollowers = async (req, res) => {
-  console.log("Followings", userId);
-
   try {
     const userId = req.params.userId;
     const followers = await FollowingModel.find({ followingUser: userId }).populate("user").exec();
@@ -112,6 +119,7 @@ export const getFollowingsInvites = async (req, res) => {
       { user: userId },
       { followingUser: 1, _id: 0 }
     ).exec();
+    // console.log(followings);      .lean()
     const followingUserIds = followings.map((f) => f.followingUser);
 
     const followingsInvites = await InviteModel.find({ creator: { $in: followingUserIds } })

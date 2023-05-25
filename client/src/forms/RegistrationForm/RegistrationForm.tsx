@@ -51,6 +51,7 @@ import { LoginField } from './components/LoginField';
 
 import styles from './RegistrationForm.module.scss';
 import { EmailField } from './components/EmailField';
+import { httpClient } from 'api/httpClient';
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
   [RegistrationFormFields.Name]: '',
@@ -80,7 +81,7 @@ const firstStepValidationSchema = Yup.object().shape({
     .required('Введите пол'),
   [RegistrationFormFields.Password]: Yup.string()
     .required('Введите пароль')
-    .min(8, "Минимальная длина пароля - 8 символов"),
+    .min(8, 'Минимальная длина пароля - 8 символов'),
   [RegistrationFormFields.ConfirmPassword]: Yup.string()
     .oneOf(
       [Yup.ref(RegistrationFormFields.Password), null],
@@ -290,7 +291,6 @@ const thirdStepFields = () => (
   </>
 );
 
-
 export const RegistrationForm = observer(() => {
   const navigate = useNavigate();
 
@@ -300,6 +300,11 @@ export const RegistrationForm = observer(() => {
     values: RegistrationFormData,
     actions: FormikHelpers<RegistrationFormData>,
   ) => {
+    const { data } = await httpClient.post(
+      '/uploads',
+      values[RegistrationFormFields.Image],
+    );
+
     const resultValues: RegistrationFormData = {
       ...values,
       role: Role.USER,
@@ -309,7 +314,7 @@ export const RegistrationForm = observer(() => {
       ).value,
       [RegistrationFormFields.FamilyStatus]: (
         values[
-        RegistrationFormFields.FamilyStatus
+          RegistrationFormFields.FamilyStatus
         ] as SelectOption<FamilyStatus>
       ).value,
       [RegistrationFormFields.City]: (
@@ -329,7 +334,10 @@ export const RegistrationForm = observer(() => {
           Interests | string
         >[]
       ).map((o) => o.value),
+      [RegistrationFormFields.Image]: data.url,
     };
+
+    console.log(resultValues);
 
     try {
       const user = await register(resultValues);

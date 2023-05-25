@@ -17,6 +17,7 @@ import { UserContext } from 'common/contexts';
 
 import styles from './InviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
+import { SERVER_URL } from 'common/constants';
 
 export enum InviteCardVariant {
   BIG_USER = 'Big User',
@@ -56,7 +57,7 @@ export const InviteCard = observer(
             >
               <img
                 className={styles.photo}
-                src={invite.creator.image}
+                src={SERVER_URL + invite.creator.image}
                 alt="Фото"
               />
               <span>{concatUserNameAndAge(invite.creator)}</span>
@@ -84,7 +85,7 @@ export const InviteCard = observer(
             >
               <img
                 className={styles.creatorImage}
-                src={invite.creator.image}
+                src={SERVER_URL + invite.creator.image}
                 alt={invite.creator.name}
               />
               <span className={styles.creatorInfo}>

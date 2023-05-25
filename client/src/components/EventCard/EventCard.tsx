@@ -6,6 +6,7 @@ import { isInThePast, wordFormatDate } from 'common/helpers';
 
 import styles from './EventCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
+import { SERVER_URL } from 'common/constants';
 
 interface EventCardProps {
   event: Event;
@@ -22,7 +23,7 @@ export const EventCard = ({
 }: EventCardProps) => {
   const eventLink = isAdmin
     ? `/admin/events/${event._id}`
-    : `/events/${event._id}`
+    : `/events/${event._id}`;
 
   return (
     <li>
@@ -77,7 +78,7 @@ export const EventCard = ({
           </div>
           <img
             className={styles.eventImage}
-            src={event.image}
+            src={SERVER_URL + event.image}
             alt={event.name}
           />
         </article>

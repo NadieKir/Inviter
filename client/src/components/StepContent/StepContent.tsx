@@ -42,9 +42,6 @@ export const StepContent = ({
     handleFinish,
     handleNextStep,
     handlePreviousStep,
-    //  TODO what to do with that next
-    extraButtonContent,
-    onExtraBtnClick,
   } = useContext(StepperContext) as StepperContextType<any>;
 
   const navigate = useNavigate();

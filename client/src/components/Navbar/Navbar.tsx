@@ -5,7 +5,11 @@ import classNames from 'classnames';
 import 'animate.css';
 
 import { Role } from 'models';
-import { userLinksToNavItem, adminLinksToNavItem } from 'common/constants';
+import {
+  userLinksToNavItem,
+  adminLinksToNavItem,
+  SERVER_URL,
+} from 'common/constants';
 import { UserContext } from 'common/contexts';
 import {
   ActionVariant,
@@ -56,7 +60,7 @@ export const Navbar = observer(({ variant }: NavbarProps) => {
       >
         <img
           className={styles.userPhoto}
-          src={user?.image !== '' ? user?.image : defaultImage}
+          src={user?.image !== '' ? SERVER_URL + user?.image : defaultImage}
           alt="Фото пользователя"
         />
         {user.role === Role.ADMIN ? (
