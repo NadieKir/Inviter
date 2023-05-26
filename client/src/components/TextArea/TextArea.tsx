@@ -14,13 +14,15 @@ export const TextArea = ({
   const { value, className } = nativeHtmlProps;
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-adjust height of textarea
+  // TODO: doesnt work with initial values (small initial height)
   useEffect(() => {
     if (textAreaRef.current) {
       const { current: textArea } = textAreaRef;
-
       textArea.style.height = 'auto';
       const scrollHeight = textArea.scrollHeight;
+
+      console.log(scrollHeight); // 0 on init
+
       textArea.style.height = scrollHeight + 15 + 'px';
     }
   }, [textAreaRef.current, value]);

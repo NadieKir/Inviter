@@ -15,6 +15,7 @@ import styles from './AdminUsersPage.module.scss';
 import search from 'assets/images/search.svg';
 import cross from 'assets/images/redCross.svg';
 import { NavLink } from 'react-router-dom';
+import { SERVER_URL } from 'common/constants';
 
 export const AdminUsersPage = () => {
   const { user, isLoading, error } = useContext(UserContext);
@@ -47,7 +48,11 @@ export const AdminUsersPage = () => {
         <NavLink to={`TODO`} className={styles.contactCard}>
           <div className={styles.userInfo}>
             <div className={styles.contactInfo}>
-              <img className={styles.contactPhoto} src={user.image} alt="" />
+              <img
+                className={styles.contactPhoto}
+                src={SERVER_URL + user.image}
+                alt=""
+              />
               <div className={styles.contactInfoText}>
                 <h3 className={styles.name}>{concatUserNameAndAge(user)}</h3>
                 <p className="paragraph">{user.connectionMethods}</p>

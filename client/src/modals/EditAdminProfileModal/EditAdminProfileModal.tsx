@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 
 import { UserContext } from 'common/contexts';
-import { EditProfileForm } from 'forms';
+import { EditAdminProfileForm } from 'forms';
 import { Modal, ModalProps } from 'modals';
-import { EditProfileFormData } from 'types';
+import { EditAdminProfileFormData } from 'types';
 
-import styles from './EditProfileModal.module.scss';
+import styles from './EditAdminProfileModal.module.scss';
 
 interface EditProfileModalProps extends ModalProps {}
 
-export function EditProfileModal({
+export function EditAdminProfileModal({
   isShowing,
   onClose,
 }: EditProfileModalProps) {
@@ -19,14 +19,18 @@ export function EditProfileModal({
     return null;
   }
 
-  const initialValues: EditProfileFormData = {
+  const initialValues: EditAdminProfileFormData = {
     ...user,
   };
 
   return (
     <Modal isShowing={isShowing} onClose={onClose}>
       <div className={styles.modal}>
-        <EditProfileForm initialValues={initialValues} onSubmit={onClose} />
+        <h1 className="heading-H1">Изменить данные профиля</h1>
+        <EditAdminProfileForm
+          initialValues={initialValues}
+          onSubmit={onClose}
+        />
       </div>
     </Modal>
   );

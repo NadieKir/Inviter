@@ -11,3 +11,5 @@ export * from './RegistrationForm/RegistrationForm';
 export * from './SearchEventForm/SearchEventForm';
 export * from './InviteResponseForm/InviteResponseForm';
 export * from './ChangePasswordForm/ChangePasswordForm';
+export * from './EditProfileForm/EditProfileForm';
+export * from './EditAdminProfileForm/EditAdminProfileForm';

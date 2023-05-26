@@ -90,3 +90,9 @@ export type EditProfileFormData = Pick<RegistrationFormData,
   RegistrationFormFields.PreferredAge |
   RegistrationFormFields.Image
 >;
+
+export type EditAdminProfileFormData = Pick<RegistrationFormData,
+  RegistrationFormFields.Name |
+  RegistrationFormFields.Login |
+  RegistrationFormFields.Image
+>;

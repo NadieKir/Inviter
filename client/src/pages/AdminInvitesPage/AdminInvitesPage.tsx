@@ -4,20 +4,14 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import { SearchInviteForm } from 'forms';
 import { AnotherUsersInvitesStore } from 'stores';
 import { InviteCard, Loader, NothingFound } from 'components';
-import { City } from 'models';
 import { SearchInviteFilters } from 'types';
 
 import styles from './AdminInvitesPage.module.scss';
 
-
-const defaultFilter: SearchInviteFilters = { city: City.MINSK };
-
 export const AdminInvitesPage = observer(() => {
   const { isLoading, anotherUsersInvites, getAnotherUsersInvites } =
-    useLocalObservable(
-      () => new AnotherUsersInvitesStore(defaultFilter),
-    );
-  const [currentFilters, setCurrentFilters] = useState<SearchInviteFilters>(defaultFilter);
+    useLocalObservable(() => new AnotherUsersInvitesStore());
+  const [currentFilters, setCurrentFilters] = useState<SearchInviteFilters>();
 
   return (
     <section className={styles.section}>
@@ -28,7 +22,7 @@ export const AdminInvitesPage = observer(() => {
         <SearchInviteForm
           onSubmit={(filters) => {
             setCurrentFilters(filters);
-            getAnotherUsersInvites(filters)
+            getAnotherUsersInvites(filters);
           }}
         />
       </div>

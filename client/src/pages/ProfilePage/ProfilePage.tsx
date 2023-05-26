@@ -8,11 +8,11 @@ import { concatUserNameAndAge, formatDate } from 'common/helpers';
 import { useModal } from 'common/hooks';
 import { EditProfileModal } from 'modals';
 import { ChangePasswordForm } from 'forms';
+import { SERVER_URL } from 'common/constants';
 
 import styles from './ProfilePage.module.scss';
 import at from 'assets/images/at.svg';
 import geo from 'assets/images/geo.svg';
-import { SERVER_URL } from 'common/constants';
 
 export const ProfilePage = () => {
   const navigate = useNavigate();

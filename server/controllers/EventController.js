@@ -13,41 +13,43 @@ export const getAll = async (req, res) => {
     const filter = Object.entries(req.query)
       .filter((e) => e[1])
       .reduce((acc, v) => {
-        if ([v[0] === 'tabType']) {
+        if ([v[0] === "tabType"]) {
           switch (v[1]) {
-            case 'current': {
-              acc.push(
-                {
-                  $or: [
-                    { date: { $gt: currentDateString } },
-                    {
-                      $and: [{
+            case "current": {
+              acc.push({
+                $or: [
+                  { date: { $gt: currentDateString } },
+                  {
+                    $and: [
+                      {
                         date: { $eq: currentDateString },
-                      }, {
-                        time: { $gte: currentTimeString }
-                      }]
-                    }
-                  ],
-                }
-              );
+                      },
+                      {
+                        time: { $gte: currentTimeString },
+                      },
+                    ],
+                  },
+                ],
+              });
 
               break;
             }
-            case 'past': {
-              acc.push(
-                {
-                  $or: [
-                    { date: { $lt: currentDateString } },
-                    {
-                      $and: [{
+            case "past": {
+              acc.push({
+                $or: [
+                  { date: { $lt: currentDateString } },
+                  {
+                    $and: [
+                      {
                         date: { $eq: currentDateString },
-                      }, {
-                        time: { $lte: currentTimeString }
-                      }]
-                    }
-                  ],
-                }
-              );
+                      },
+                      {
+                        time: { $lte: currentTimeString },
+                      },
+                    ],
+                  },
+                ],
+              });
 
               break;
             }
@@ -62,7 +64,9 @@ export const getAll = async (req, res) => {
     const events = await EventModel.find({
       $and: filter,
       isDeleted: { $eq: false },
-    }).sort({ date: 1, time: 1 }).exec();
+    })
+      .sort({ date: 1, time: 1 })
+      .exec();
 
     res.json(events);
   } catch (err) {
@@ -96,10 +100,10 @@ export const getEventInvites = async (req, res) => {
           creator: { $ne: userId },
         },
         {
-          event: { $exists: true, $eq: eventId }
-        }
-      ]
-    }).populate('creator');
+          event: { $exists: true, $eq: eventId },
+        },
+      ],
+    }).populate("creator");
 
     res.json(eventInvites);
   } catch (err) {
@@ -114,6 +118,7 @@ export const deleteOne = async (req, res) => {
   try {
     const eventId = req.params.id;
     await EventModel.findByIdAndUpdate(eventId, { isDeleted: true });
+    await InviteModel.updateMany({ event: eventId }, { isDeleted: true });
     res.send(200);
   } catch (err) {
     console.log(err);
@@ -137,7 +142,7 @@ export const create = async (req, res) => {
       time: req.body.time,
       image: req.body.image,
       url: req.body.url,
-      isDeleted: 'false',
+      isDeleted: "false",
     });
 
     const event = document.save();

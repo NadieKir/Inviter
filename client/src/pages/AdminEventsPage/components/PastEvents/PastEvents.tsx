@@ -3,8 +3,7 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import { EventCard, Loader } from 'components';
 import { EventListStore } from 'stores';
 import { deleteEvent } from 'api';
-import { CreateEventModal } from 'modals';
-import { useModal, usePushNotification } from 'common/hooks';
+import { usePushNotification } from 'common/hooks';
 
 import styles from './PastEvents.module.scss';
 
@@ -20,10 +19,10 @@ export const PastEvents = observer(() => {
   const onEventDelete = async (id: string) => {
     await deleteEvent(id);
 
-    const eventsWithoutDeleted = events.filter(e => e._id !== id);
+    const eventsWithoutDeleted = events.filter((e) => e._id !== id);
     setEvents(eventsWithoutDeleted);
-    pushSuccess("Событие успешно удалено")
-  }
+    pushSuccess('Событие успешно удалено');
+  };
 
   return (
     <ul className={styles.сards}>

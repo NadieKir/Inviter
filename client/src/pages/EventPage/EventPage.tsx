@@ -20,6 +20,7 @@ import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
 import calendar from 'assets/images/calendar.svg';
 import { SERVER_URL } from 'common/constants';
+import { Role } from 'models';
 
 export const EventPage = observer(() => {
   const { id } = useParams();
@@ -35,17 +36,39 @@ export const EventPage = observer(() => {
   if (isLoading) return <Loader />;
   if (!event || !eventInvites || !user) throw error;
 
-  const invitesWithOverlapPercent = eventInvites.map((i) => ({
-    invite: i,
-    overlapPercent: getOverlapPercent(user.interests, i.creator.interests),
-  }));
+  const renderInvites = () => {
+    const invitesWithOverlapPercent = eventInvites.map((i) => ({
+      invite: i,
+      overlapPercent: getOverlapPercent(user.interests, i.creator.interests),
+    }));
 
-  const sortedInvites = sortBy(
-    invitesWithOverlapPercent,
-    (i) => i.overlapPercent,
-  )
-    .reverse()
-    .map((i) => i.invite);
+    const sortedInvites = sortBy(
+      invitesWithOverlapPercent,
+      (i) => i.overlapPercent,
+    )
+      .reverse()
+      .map((i) => i.invite);
+
+    return (
+      <div className={styles.invitersSection}>
+        <h2 className={styles.invitersHeading}>
+          Вас приглашают{' '}
+          <span className="amount">
+            ({isLoading ? '...' : eventInvites.length})
+          </span>
+        </h2>
+        <div className={styles.invitersCards}>
+          {sortedInvites.map((i) => (
+            <InviteCard
+              key={i._id}
+              invite={i}
+              variant={InviteCardVariant.SMALL_USER}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -57,15 +80,16 @@ export const EventPage = observer(() => {
               alt="Фото события"
               className={styles.eventPhoto}
             />
-            {userIsCreatorInvites.map((i) => i.event).includes(event._id) ? (
-              <Button variant={ButtonVariant.Secondary} disabled>
-                Вы создали инвайт
-              </Button>
-            ) : (
-              <Button onClick={() => toggleCreateModal()}>
-                Создать инвайт
-              </Button>
-            )}
+            {user.role === Role.USER &&
+              (userIsCreatorInvites.map((i) => i.event).includes(event._id) ? (
+                <Button variant={ButtonVariant.Secondary} disabled>
+                  Вы создали инвайт
+                </Button>
+              ) : (
+                <Button onClick={() => toggleCreateModal()}>
+                  Создать инвайт
+                </Button>
+              ))}
           </div>
           <div className={styles.eventInfo}>
             <div className={styles.titleWrapper}>
@@ -87,25 +111,9 @@ export const EventPage = observer(() => {
           </div>
         </div>
 
-        {eventInvites.length !== 0 && (
-          <div className={styles.invitersSection}>
-            <h2 className={styles.invitersHeading}>
-              Вас приглашают{' '}
-              <span className="amount">
-                ({isLoading ? '...' : eventInvites.length})
-              </span>
-            </h2>
-            <div className={styles.invitersCards}>
-              {sortedInvites.map((i) => (
-                <InviteCard
-                  key={i._id}
-                  invite={i}
-                  variant={InviteCardVariant.SMALL_USER}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        {user.role === Role.USER &&
+          eventInvites.length !== 0 &&
+          renderInvites()}
       </section>
 
       <CreateEventInviteModal

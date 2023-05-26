@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import classNames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
 
 import { Button, ButtonType, ButtonVariant } from 'components';
 import { Modal, ModalProps } from 'modals';
-import { Invite } from 'models';
+import { Invite, Role } from 'models';
 import { InviteResponseForm } from 'forms';
 import {
   concatUserNameAndAge,
@@ -20,6 +20,7 @@ import ticket from 'assets/images/navbarIcons/ticket.svg';
 import { deleteInvite } from 'api';
 import { usePushNotification } from 'common/hooks';
 import { SERVER_URL } from 'common/constants';
+import { UserContext } from 'common/contexts';
 
 export enum InviteModalType {
   Response = 'response',
@@ -40,6 +41,7 @@ export const InviteDetailsModal = ({
   invite,
   modalType = InviteModalType.Response,
 }: ViewInviteModalProps) => {
+  const { user } = useContext(UserContext);
   const [currentStep, setCurrentStep] = useState(0);
 
   const { pushSuccess, pushError } = usePushNotification();
@@ -116,7 +118,7 @@ export const InviteDetailsModal = ({
           </NavLink>
           <div className={styles.inviteInfo}>
             <h1 className={styles.heading}>
-              Хочет{' '}
+              {invite.event ? 'Посетить' : 'Хочет'}{' '}
               <span className="blue">
                 {lowercaseFirstLetter(invite.subject)}
               </span>
@@ -129,7 +131,11 @@ export const InviteDetailsModal = ({
               {invite.event && (
                 <div className={styles.detail}>
                   <img src={ticket} alt="Мероприятие" height={'17px'} />
-                  <Link to={`/events/${invite.event}`}>
+                  <Link
+                    to={`/${user!.role === Role.ADMIN ? 'admin/' : ''}events/${
+                      invite.event
+                    }`}
+                  >
                     Смотреть мероприятие
                   </Link>
                 </div>

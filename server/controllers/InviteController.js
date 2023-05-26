@@ -202,35 +202,35 @@ export const deleteOne = async (req, res) => {
   }
 };
 
-export const remove = async (req, res) => {
-  try {
-    const inviteId = req.params.id;
+// export const remove = async (req, res) => {
+//   try {
+//     const inviteId = req.params.id;
 
-    InviteModel.findOneAndDelete({ _id: inviteId })
-      .then((doc) => {
-        if (!doc) {
-          return res.status(400).json({
-            message: "Инвайт не найден",
-          });
-        }
+//     InviteModel.findOneAndDelete({ _id: inviteId })
+//       .then((doc) => {
+//         if (!doc) {
+//           return res.status(400).json({
+//             message: "Инвайт не найден",
+//           });
+//         }
 
-        res.status(200).json({
-          success: true,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json({
-          message: "Не удалось удалить инвайт",
-        });
-      });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Не удалось получить инвайты",
-    });
-  }
-};
+//         res.status(200).json({
+//           success: true,
+//         });
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         return res.status(500).json({
+//           message: "Не удалось удалить инвайт",
+//         });
+//       });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({
+//       message: "Не удалось получить инвайты",
+//     });
+//   }
+// };
 
 export const update = async (req, res) => {
   try {

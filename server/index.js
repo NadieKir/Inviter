@@ -98,7 +98,7 @@ app.patch(
   handleValidationErrors,
   InviteController.update
 );
-app.delete("/invites/:id", checkAuth, InviteController.remove);
+// app.delete("/invites/:id", checkAuth, InviteController.remove);
 
 app.get("/invite-responses/current", checkAuth, InviteResponseController.getAllCurrentUser);
 app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);

@@ -1,6 +1,6 @@
 import { httpClient } from 'api/httpClient';
 import { User } from 'models';
-import { ChangePasswordFormData, EditProfileFormData } from 'types';
+import { ChangePasswordFormData, EditAdminProfileFormData, EditProfileFormData } from 'types';
 
 export type ChangePasswordPayload = {
   userId: string;
@@ -34,7 +34,7 @@ export const updateUser = async (
 };
 
 export const updateUserProfile = async (
-  profile: EditProfileFormData,
+  profile: EditProfileFormData | EditAdminProfileFormData,
 ): Promise<User> => {
   const { data: updatedProfile } = await httpClient.put<User>(`/users/profile`, profile);
 

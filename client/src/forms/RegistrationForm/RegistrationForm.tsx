@@ -300,52 +300,56 @@ export const RegistrationForm = observer(() => {
     values: RegistrationFormData,
     actions: FormikHelpers<RegistrationFormData>,
   ) => {
-    const { data } = await httpClient.post(
-      '/uploads',
-      values[RegistrationFormFields.Image],
-    );
-
-    const resultValues: RegistrationFormData = {
-      ...values,
-      role: Role.USER,
-      [RegistrationFormFields.ConfirmPassword]: undefined,
-      [RegistrationFormFields.Orientation]: (
-        values[RegistrationFormFields.Orientation] as SelectOption<Orientation>
-      ).value,
-      [RegistrationFormFields.FamilyStatus]: (
-        values[
-          RegistrationFormFields.FamilyStatus
-        ] as SelectOption<FamilyStatus>
-      ).value,
-      [RegistrationFormFields.City]: (
-        values[RegistrationFormFields.City] as SelectOption<City>
-      ).value,
-      [RegistrationFormFields.AlcoholAttitude]: (
-        values[RegistrationFormFields.AlcoholAttitude] as SelectOption<Attitude>
-      ).value,
-      [RegistrationFormFields.SmokingAttitude]: (
-        values[RegistrationFormFields.SmokingAttitude] as SelectOption<Attitude>
-      ).value,
-      [RegistrationFormFields.Languages]: (
-        values[RegistrationFormFields.Languages] as SelectOption<Language>[]
-      ).map((o) => o.value),
-      [RegistrationFormFields.Interests]: (
-        values[RegistrationFormFields.Interests] as SelectOption<
-          Interests | string
-        >[]
-      ).map((o) => o.value),
-      [RegistrationFormFields.Image]: data.url,
-    };
-
-    console.log(resultValues);
-
     try {
+      const { data } = await httpClient.post(
+        '/uploads',
+        values[RegistrationFormFields.Image],
+      );
+
+      const resultValues: RegistrationFormData = {
+        ...values,
+        role: Role.USER,
+        [RegistrationFormFields.ConfirmPassword]: undefined,
+        [RegistrationFormFields.Orientation]: (
+          values[
+            RegistrationFormFields.Orientation
+          ] as SelectOption<Orientation>
+        ).value,
+        [RegistrationFormFields.FamilyStatus]: (
+          values[
+            RegistrationFormFields.FamilyStatus
+          ] as SelectOption<FamilyStatus>
+        ).value,
+        [RegistrationFormFields.City]: (
+          values[RegistrationFormFields.City] as SelectOption<City>
+        ).value,
+        [RegistrationFormFields.AlcoholAttitude]: (
+          values[
+            RegistrationFormFields.AlcoholAttitude
+          ] as SelectOption<Attitude>
+        ).value,
+        [RegistrationFormFields.SmokingAttitude]: (
+          values[
+            RegistrationFormFields.SmokingAttitude
+          ] as SelectOption<Attitude>
+        ).value,
+        [RegistrationFormFields.Languages]: (
+          values[RegistrationFormFields.Languages] as SelectOption<Language>[]
+        ).map((o) => o.value),
+        [RegistrationFormFields.Interests]: (
+          values[RegistrationFormFields.Interests] as SelectOption<
+            Interests | string
+          >[]
+        ).map((o) => o.value),
+        [RegistrationFormFields.Image]: data.url,
+      };
+
       const user = await register(resultValues);
       userStore.setUser(user);
       localStorage.setItem('user', user.token);
       navigate('/');
-    } catch (error) {
-      alert(error);
+    } catch (e) {
+      alert(e);
     } finally {
       actions.setSubmitting(false);
     }

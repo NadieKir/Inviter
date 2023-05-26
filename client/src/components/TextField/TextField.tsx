@@ -10,7 +10,6 @@ import {
 
 import styles from './TextField.module.scss';
 
-
 type TextInputOrAreaProps = {
   placeholderText?: string;
   pattern?: string;
@@ -18,14 +17,14 @@ type TextInputOrAreaProps = {
   onBlur?: (value: string) => void;
   onChange?: (value: string) => void;
 } & (
-    | {
+  | {
       multiline: false | undefined;
     }
-    | {
+  | {
       multiline: true;
       maxLetterCount?: number;
     }
-  );
+);
 
 type TextFieldProps = InputFieldExternalProps & TextInputOrAreaProps;
 
@@ -37,15 +36,22 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
   let maxLetterCount: number | undefined;
   let pattern: string | undefined;
 
-
-
   switch (props.multiline) {
     case true:
-      ({ className, placeholderText, pattern, multiline, maxLetterCount, ...inputFieldProps } =
-        props);
+      ({
+        className,
+        placeholderText,
+        pattern,
+        multiline,
+        maxLetterCount,
+        ...inputFieldProps
+      } = props);
 
       return (
-        <InputField containerAttributes={{ className: className }} {...inputFieldProps}>
+        <InputField
+          containerAttributes={{ className: className }}
+          {...inputFieldProps}
+        >
           {({ field, className }: InputRenderProps): JSX.Element => (
             <TextArea
               {...field}
@@ -70,7 +76,10 @@ export const TextField = (props: TextFieldProps): JSX.Element => {
       ({ className, placeholderText, pattern, ...inputFieldProps } = props);
 
       return (
-        <InputField containerAttributes={{ className: className }} {...inputFieldProps}>
+        <InputField
+          containerAttributes={{ className: className }}
+          {...inputFieldProps}
+        >
           {({ field, className }: InputRenderProps): JSX.Element => (
             <Input
               {...field}
