@@ -41,7 +41,7 @@ export const InviteDetailsModal = ({
   invite,
   modalType = InviteModalType.Response,
 }: ViewInviteModalProps) => {
-  const { user } = useContext(UserContext);
+  const { user, userIsAdmin } = useContext(UserContext);
   const [currentStep, setCurrentStep] = useState(0);
 
   const { pushSuccess, pushError } = usePushNotification();
@@ -151,7 +151,9 @@ export const InviteDetailsModal = ({
             </div>
           </div>
         </div>
-        <div className={styles.actions}>{renderActions()}</div>
+        {!userIsAdmin && (
+          <div className={styles.actions}>{renderActions()}</div>
+        )}
       </section>
 
       <section

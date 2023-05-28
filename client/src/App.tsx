@@ -92,6 +92,7 @@ function App() {
           </Route>
           <Route path="invites" element={<AdminInvitesPage />} />
           <Route path="users" element={<AdminUsersPage />} />
+          <Route path="user/:login" element={<UserPage />} />
         </Route>
 
         <Route path="/" element={<LoginLayout />}>

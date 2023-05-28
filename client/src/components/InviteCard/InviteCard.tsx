@@ -40,7 +40,7 @@ export const InviteCard = observer(
     isAdmin = false,
   }: InviteCardProps) => {
     const [isShowingModal, toggleModal] = useModal();
-    const { userResponses } = useContext(UserContext);
+    const { userResponses, userIsAdmin } = useContext(UserContext);
 
     return (
       <>
@@ -52,7 +52,7 @@ export const InviteCard = observer(
         >
           {variant === InviteCardVariant.BIG_USER && (
             <NavLink
-              to={`/user/${invite.creator.login}`}
+              to={`${userIsAdmin ? '/admin' : ''}/user/${invite.creator.login}`}
               className={styles.photoNameWrapper}
             >
               <img

@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { AxiosError } from 'axios';
 
 import { getContacts, getCurrentUser, getCurrentUserInvites, getCurrentUserResponses, getFollowers, getFollowings, login, respondInvite } from 'api';
-import { Invite, InviteResponse, User } from 'models';
+import { Invite, InviteResponse, Role, User } from 'models';
 import { InviteRespondFormData, LoginFormData } from 'types';
 
 export class CurrentUserStore {
@@ -54,6 +54,10 @@ export class CurrentUserStore {
 
   get isGuest() {
     return this.user === null;
+  }
+
+  get userIsAdmin() {
+    return this.user?.role === Role.ADMIN;
   }
 
   loadFollowings = async () => {

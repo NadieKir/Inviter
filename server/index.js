@@ -66,6 +66,7 @@ app.put("/users/profile", checkAuth, UserController.updateProfile);
 app.put("/users/:userId/password", checkAuth, UserController.updatePassword);
 app.get("/users", UserController.getAll);
 app.get("/users/:login", UserController.getOne);
+app.delete("/users/:userId", UserController.deleteOne);
 
 app.get("/followings", checkAuth, FollowingController.getFollowings);
 app.get("/followings/followers", checkAuth, FollowingController.getFollowers);

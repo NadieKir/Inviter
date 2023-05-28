@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model.js";
+import InviteModel from "../models/Invite.model.js";
 
 export const register = async (req, res) => {
   try {
@@ -59,6 +60,12 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         message: "Пользователь не найден",
+      });
+    }
+
+    if (user.isDeleted) {
+      return res.status(400).json({
+        message: "Пользователь заблокирован",
       });
     }
 
@@ -138,10 +145,11 @@ export const getOne = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const userLoginOrName = req.query.nameOrLogin;
-    let filters = undefined;
+    let filters = { isDeleted: { $eq: false } };
 
     if (userLoginOrName) {
       filters = {
+        ...filters,
         $or: [
           {
             login: { $regex: userLoginOrName, $options: "i" },
@@ -355,6 +363,24 @@ export const checkEmail = async (req, res) => {
     console.log(err);
     res.status(500).json({
       message: "Не удалось проверить почту",
+    });
+  }
+};
+
+export const deleteOne = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    await UserModel.updateOne({ _id: userId }, { isDeleted: true });
+    // await UserModel.deleteOne({ _id: userId });
+    await InviteModel.updateMany({ creator: userId }, { isDeleted: true });
+
+    res.json({
+      message: "Пользователь успешно удалён",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось удалить пользователя",
     });
   }
 };

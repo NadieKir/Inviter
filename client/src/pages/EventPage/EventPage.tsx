@@ -15,12 +15,12 @@ import { CreateEventInviteModal } from 'modals';
 import { useModal } from 'common/hooks';
 import { getOverlapPercent, wordFormatDate } from 'common/helpers';
 import { UserContext } from 'common/contexts';
+import { SERVER_URL } from 'common/constants';
+import { Role } from 'models';
 
 import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
 import calendar from 'assets/images/calendar.svg';
-import { SERVER_URL } from 'common/constants';
-import { Role } from 'models';
 
 export const EventPage = observer(() => {
   const { id } = useParams();

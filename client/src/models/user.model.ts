@@ -136,6 +136,7 @@ export interface User {
   welcomeMessage: string;
   connectionMethods: string;
   preferredAge: string;
+  isDeleted: boolean;
 }
 
 export type UserWithToken = User & { token: string };

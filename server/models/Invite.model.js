@@ -36,20 +36,17 @@ const InviteSchema = new mongoose.Schema(
       type: Array,
       default: ["Мужской", "Женский"],
     },
-    // companionsAmount: {
-    //   type: Number,
-    //   default: 1,
-    // },
     companions: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       default: [],
     },
-    responses: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "InviteResponse" }],
-      default: [],
-    },
+    // responses: {
+    //   type: [{ type: mongoose.Schema.Types.ObjectId, ref: "InviteResponse" }],
+    //   default: [],
+    // },
     isDeleted: {
       type: Boolean,
+      default: false,
     },
   },
   {

@@ -60,18 +60,42 @@
   max-height: 105px;
   max-width: 105px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 100px;
 }
 
 .contactInfoText {
   display: flex;
   flex-direction: column;
   row-gap: 12px;
+  width: 100%;
 }
 
 .name {
   font-size: 16px;
   font-weight: 500;
+}
+
+.nameDataWrapper {
+  display: flex;
+  column-gap: 40px;
+}
+
+.nicknameCity {
+  display: flex;
+  column-gap: 20px;
+}
+
+.nicknameCityWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.desc {
+  @include multiline-ellipsis(5);
 }
 
 .invites {
@@ -90,8 +114,8 @@
   display: flex;
   flex-direction: column;
   row-gap: 8px;
-  max-height: 78px;
-  height: 78px;
+  max-height: 75px;
+  height: 75px;
   overflow-y: auto;
 
   font-weight: 400;

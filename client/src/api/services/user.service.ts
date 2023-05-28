@@ -13,6 +13,12 @@ export const getUser = async (login: string): Promise<User> => {
   return user;
 };
 
+export const deleteUser = async (userId: string): Promise<string> => {
+  const { data: message } = await httpClient.delete<string>(`/users/${userId}`);
+
+  return message;
+};
+
 export const getUsers = async (nameOrLogin?: string): Promise<User[]> => {
   let url = '/users';
 
@@ -24,7 +30,6 @@ export const getUsers = async (nameOrLogin?: string): Promise<User[]> => {
 
   return users;
 };
-
 
 export const updateUser = async (
   user: User,

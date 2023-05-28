@@ -32,7 +32,7 @@ export const AuthorizationForm = observer(() => {
       if (user?.role === Role.ADMIN) navigate('/admin');
       if (user?.role === Role.USER) navigate('/');
     } catch (error: any) {
-      if (error.response.status === 400) alert('Пользователь не найден');
+      if (error.response.status === 400) alert(error.response.data.message);
       else console.log(error);
     } finally {
       actions.setSubmitting(false);

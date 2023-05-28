@@ -23,6 +23,7 @@ export const mockedUsers: User[] = [
     welcomeMessage: "Привет, давай поговорим и посмотрим, что получится :)",
     connectionMethods: "Skype, Whatsapp",
     preferredAge: "20-30",
+    isDeleted: false
   },
   {
     _id: "2",
@@ -44,6 +45,7 @@ export const mockedUsers: User[] = [
     welcomeMessage: "Привет, я ищу серьезные отношения",
     connectionMethods: "Viber, Telegram",
     preferredAge: "25-35",
+    isDeleted: false
   },
   {
     _id: "3",
@@ -65,6 +67,7 @@ export const mockedUsers: User[] = [
     welcomeMessage: "Привет, я ищу собеседника для общения",
     connectionMethods: "Instagram, Snapchat",
     preferredAge: "18-25",
+    isDeleted: false
   },
   {
     _id: "4",
@@ -86,6 +89,7 @@ export const mockedUsers: User[] = [
     welcomeMessage: "Привет, я ищу новых друзей",
     connectionMethods: "Facebook, Whatsapp",
     preferredAge: "20-30",
+    isDeleted: false
   },
   {
     _id: "5",
@@ -107,6 +111,7 @@ export const mockedUsers: User[] = [
     welcomeMessage: "Привет, я ищу жизнерадостную компанию для общения",
     connectionMethods: "Skype, Telegram",
     preferredAge: "20-40",
+    isDeleted: false
   },
 ];
 

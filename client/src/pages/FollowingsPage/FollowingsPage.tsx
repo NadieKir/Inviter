@@ -12,11 +12,11 @@ import {
 import { UserContext } from 'common/contexts';
 import { concatUserNameAndAge } from 'common/helpers';
 import { useFollowingsInvites, useUsers } from 'common/hooks';
+import { SERVER_URL } from 'common/constants';
 
 import styles from './FollowingsPage.module.scss';
 import search from 'assets/images/search.svg';
 import at from 'assets/images/at.svg';
-import { SERVER_URL } from 'common/constants';
 
 export const FollowingsPage = () => {
   const { user, isLoading, error, userFollowings } = useContext(UserContext);

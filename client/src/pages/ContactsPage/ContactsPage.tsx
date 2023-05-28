@@ -5,12 +5,15 @@ import { Form, Formik } from 'formik';
 
 import { IconButton, IconButtonColor, Loader, TextField } from 'components';
 import { UserContext } from 'common/contexts';
-import { concatUserNameAndAge } from 'common/helpers';
+import { concatUserNameAndAge, wordFormatDate } from 'common/helpers';
+import { SERVER_URL } from 'common/constants';
 
 import styles from './ContactsPage.module.scss';
 import search from 'assets/images/search.svg';
 import cross from 'assets/images/redCross.svg';
-import { SERVER_URL } from 'common/constants';
+import at from 'assets/images/at.svg';
+import geo from 'assets/images/geo.svg';
+import { Invite } from 'models';
 
 export const ContactsPage = observer(() => {
   const { user, isLoading, error, userContacts, contactToInvites } =
@@ -56,19 +59,35 @@ export const ContactsPage = observer(() => {
                   alt=""
                 />
                 <div className={styles.contactInfoText}>
-                  <h3 className={styles.name}>
-                    {concatUserNameAndAge(contact)}
-                  </h3>
+                  <div className={styles.nameDataWrapper}>
+                    <h3 className={styles.name}>
+                      {concatUserNameAndAge(user)}
+                    </h3>
+                    <div className={styles.nicknameCity}>
+                      <div className={styles.nicknameCityWrapper}>
+                        <img src={at} alt="Никнейм" height="13px" />
+                        {user.login}
+                      </div>
+                      <div className={styles.nicknameCityWrapper}>
+                        <img src={geo} alt="Город" height="13px" />
+                        {user.city}
+                      </div>
+                    </div>
+                  </div>
                   <p className="paragraph">{contact.connectionMethods}</p>
                 </div>
               </div>
               <div className={styles.invites}>
                 <h4 className={styles.invitesHeading}>Ваши инвайты</h4>
                 <div className={styles.invitesWrapper}>
-                  {contactToInvites.get(contact).map((i: any) => (
-                    <div className={styles.invite}>
+                  {contactToInvites.get(contact).map((i: Invite) => (
+                    <div className={styles.invite} key={i._id}>
+                      {i.date && (
+                        <span className={styles.date}>
+                          {wordFormatDate(i.date, i.time)}
+                        </span>
+                      )}
                       <span>{i.subject}</span>
-                      {i.date && <span className={styles.date}>{i.date}</span>}
                     </div>
                   ))}
                 </div>

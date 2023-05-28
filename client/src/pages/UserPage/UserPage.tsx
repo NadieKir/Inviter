@@ -19,11 +19,11 @@ import { UserContext } from 'common/contexts';
 import { UserStore } from 'stores';
 import { Invite } from 'models';
 import { addFollowing, removeFollowing } from 'api';
+import { SERVER_URL } from 'common/constants';
 
 import styles from './UserPage.module.scss';
 import at from 'assets/images/at.svg';
 import geo from 'assets/images/geo.svg';
-import { SERVER_URL } from 'common/constants';
 
 export const UserPage = observer(() => {
   const { login } = useParams();
@@ -40,13 +40,20 @@ export const UserPage = observer(() => {
     userContacts,
   } = useLocalObservable(() => new UserStore(login!));
 
-  const { userFollowings: currentUserFollowings, loadFollowings } =
-    useContext(UserContext);
+  const {
+    userFollowings: currentUserFollowings,
+    loadFollowings,
+    userIsAdmin,
+  } = useContext(UserContext);
 
   const currentUserFollowingsIds = currentUserFollowings.map((c) => c._id);
 
   if (isLoading) return <Loader />;
   if (!user) throw error;
+
+  if (user.isDeleted) {
+    return <span>Пользователь был заблокирован</span>;
+  }
 
   return (
     <section className={styles.userPageSection}>
@@ -71,26 +78,27 @@ export const UserPage = observer(() => {
             </div>
             <p className={styles.welcomeMessage}>{user.welcomeMessage}</p>
           </div>
-          {currentUserFollowingsIds.includes(user._id) ? (
-            <Button
-              variant={ButtonVariant.Secondary}
-              onClick={async () => {
-                await removeFollowing(user._id);
-                await loadFollowings();
-              }}
-            >
-              Отписаться
-            </Button>
-          ) : (
-            <Button
-              onClick={async () => {
-                await addFollowing(user._id);
-                await loadFollowings();
-              }}
-            >
-              Подписаться
-            </Button>
-          )}
+          {!userIsAdmin &&
+            (currentUserFollowingsIds.includes(user._id) ? (
+              <Button
+                variant={ButtonVariant.Secondary}
+                onClick={async () => {
+                  await removeFollowing(user._id);
+                  await loadFollowings();
+                }}
+              >
+                Отписаться
+              </Button>
+            ) : (
+              <Button
+                onClick={async () => {
+                  await addFollowing(user._id);
+                  await loadFollowings();
+                }}
+              >
+                Подписаться
+              </Button>
+            ))}
         </div>
 
         <div className={styles.questionnaireInterestsWrapper}>
@@ -173,15 +181,17 @@ export const UserPage = observer(() => {
                 return <div className={styles.interestTag}>{interest}</div>;
               })}
             </div>
-            <p className={styles.matchRate}>
-              Совпадение интересов:{' '}
-              <span className="blue">
-                {getOverlapPercent(
-                  user.interests,
-                  currentUserStore.user!.interests,
-                )}
-              </span>
-            </p>
+            {!userIsAdmin && (
+              <p className={styles.matchRate}>
+                Совпадение интересов:{' '}
+                <span className="blue">
+                  {getOverlapPercent(
+                    user.interests,
+                    currentUserStore.user!.interests,
+                  )}
+                </span>
+              </p>
+            )}
           </div>
         </div>
       </section>

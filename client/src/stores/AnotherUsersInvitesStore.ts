@@ -40,6 +40,24 @@ export class AnotherUsersInvitesStore {
       this.setIsLoading(false);
     }
   }
+
+  get usersToInvites() {
+    let map = new Map();
+
+    this.anotherUsersInvites.forEach(invite => {
+      if (map.has(invite.creator._id)) {
+        let arr = map.get(invite.creator._id);
+        arr.push(invite);
+        map.set(invite.creator._id, arr)
+      } else {
+        let arr = [];
+        arr.push(invite)
+        map.set(invite.creator._id, arr)
+      }
+    })
+
+    return map;
+  }
 }
 
 
