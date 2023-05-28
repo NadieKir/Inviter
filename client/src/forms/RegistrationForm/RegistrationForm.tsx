@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormikHelpers, FormikProps, FormikValues } from 'formik';
 import * as Yup from 'yup';
+import dayjs from 'dayjs';
 
 import {
   AgeRangeField,
@@ -46,18 +47,27 @@ import {
 } from 'common/constants';
 import { UserContext } from 'common/contexts';
 import { getAge } from 'common/helpers';
+import { httpClient } from 'api/httpClient';
 
 import { LoginField } from './components/LoginField';
+import { EmailField } from './components/EmailField';
 
 import styles from './RegistrationForm.module.scss';
-import { EmailField } from './components/EmailField';
-import { httpClient } from 'api/httpClient';
+
+
+const getDefaultPossibleDate = () => {
+  const currentDate = dayjs();
+  const possibleYear = currentDate.get('year') - 16;
+  const possibleDate = currentDate.set("year", possibleYear);
+
+  return possibleDate.toDate();
+}
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
   [RegistrationFormFields.Name]: '',
   [RegistrationFormFields.Login]: '',
   [RegistrationFormFields.Email]: '',
-  [RegistrationFormFields.Birthday]: null,
+  [RegistrationFormFields.Birthday]: getDefaultPossibleDate().toDateString(),
   [RegistrationFormFields.Gender]: null,
   [RegistrationFormFields.Password]: '',
   [RegistrationFormFields.ConfirmPassword]: '',
@@ -110,7 +120,7 @@ const firstStepFields = (formikProps: FormikProps<FormikValues>) => {
             showYearDropdown: true,
             scrollableYearDropdown: true,
             yearDropdownItemNumber: 30,
-            maxDate: new Date(),
+            maxDate: getDefaultPossibleDate(),
           }}
         />
         <GenderPicker
@@ -264,6 +274,9 @@ const thirdStepValidationSchema = Yup.object().shape({
   [RegistrationFormFields.PreferredAge]: ageRangeValidationSchema.required(
     'Введите предпочитаемый возраст пользователей',
   ),
+  [RegistrationFormFields.Image]: Yup.string().required(
+    'Загрузите свое изображение'
+  ),
 });
 
 const thirdStepFields = () => (
@@ -312,12 +325,12 @@ export const RegistrationForm = observer(() => {
         [RegistrationFormFields.ConfirmPassword]: undefined,
         [RegistrationFormFields.Orientation]: (
           values[
-            RegistrationFormFields.Orientation
+          RegistrationFormFields.Orientation
           ] as SelectOption<Orientation>
         ).value,
         [RegistrationFormFields.FamilyStatus]: (
           values[
-            RegistrationFormFields.FamilyStatus
+          RegistrationFormFields.FamilyStatus
           ] as SelectOption<FamilyStatus>
         ).value,
         [RegistrationFormFields.City]: (
@@ -325,12 +338,12 @@ export const RegistrationForm = observer(() => {
         ).value,
         [RegistrationFormFields.AlcoholAttitude]: (
           values[
-            RegistrationFormFields.AlcoholAttitude
+          RegistrationFormFields.AlcoholAttitude
           ] as SelectOption<Attitude>
         ).value,
         [RegistrationFormFields.SmokingAttitude]: (
           values[
-            RegistrationFormFields.SmokingAttitude
+          RegistrationFormFields.SmokingAttitude
           ] as SelectOption<Attitude>
         ).value,
         [RegistrationFormFields.Languages]: (

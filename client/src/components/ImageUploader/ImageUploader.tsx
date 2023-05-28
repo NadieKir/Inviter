@@ -1,4 +1,4 @@
-import { FieldProps } from 'formik';
+import { FieldProps, FormikValues, useFormikContext } from 'formik';
 import axios from 'axios';
 
 import { readFileAsBase64 } from 'common/helpers';
@@ -20,7 +20,7 @@ type ImageUploaderProps = InputFieldExternalProps & {
 };
 
 export type ImageContextType = {
-  imageData: File | null;
+  imageData: File | string | null;
 };
 
 export const ImageContext = createContext<ImageContextType | null>(null);
@@ -30,7 +30,9 @@ export const ImageUploader = ({
   placeholderText = 'картинку',
   ...inputFieldProps
 }: ImageUploaderProps): JSX.Element => {
-  const [imageData, setImageData] = useState<File | null>(null);
+  const { values } = useFormikContext<FormikValues>();
+  const imageValue = values[inputFieldProps.name] as File | string;
+  const [imageData, setImageData] = useState<File | string | null>(imageValue);
 
   return (
     <ImageContext.Provider
@@ -47,7 +49,7 @@ export const ImageUploader = ({
           const image = value;
 
           const setImage = async (image: File | null): Promise<void> => {
-            if (image === null) setFieldValue(name, null);
+            if (image === null) setFieldValue(name, '');
             else {
               const formData = new FormData();
               formData.append('image', image);

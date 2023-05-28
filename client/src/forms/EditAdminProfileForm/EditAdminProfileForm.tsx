@@ -1,15 +1,16 @@
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useContext } from 'react';
 
 import { Button, ButtonVariant, ImageUploader, TextField } from 'components';
 import { EditAdminProfileFormData, RegistrationFormFields } from 'types';
-
-import styles from './EditAdminProfileForm.module.scss';
 import { LoginField } from 'forms/RegistrationForm/components/LoginField';
 import { httpClient } from 'api/httpClient';
 import { updateUserProfile } from 'api';
-import { useContext } from 'react';
 import { UserContext } from 'common/contexts';
+
+import styles from './EditAdminProfileForm.module.scss';
+
 
 interface EditAdminProfileFormProps {
   initialValues: EditAdminProfileFormData;
@@ -34,17 +35,23 @@ export const EditAdminProfileForm = ({
     actions: FormikHelpers<EditAdminProfileFormData>,
   ) => {
     try {
-      const { data } = await httpClient.post(
-        '/uploads',
-        values[RegistrationFormFields.Image],
-      );
+      let resultValues: EditAdminProfileFormData = {
+        ...values,
+      };
+
+      if (typeof values[RegistrationFormFields.Image] !== 'string') {
+        const { data } = await httpClient.post(
+          '/uploads',
+          values[RegistrationFormFields.Image],
+        );
+
+        resultValues = {
+          ...values,
+          [RegistrationFormFields.Image]: data.url,
+        };
+      }
 
       actions.setSubmitting(true);
-
-      const resultValues: EditAdminProfileFormData = {
-        ...values,
-        [RegistrationFormFields.Image]: data.url,
-      };
 
       const user = await updateUserProfile(resultValues);
       userStore.setUser(user);
