@@ -29,3 +29,19 @@ export const getAnotherUserContacts = async (req, res) => {
     });
   }
 };
+
+export const deleteContact = async (req, res) => {
+  try {
+    const contactId = req.params.userId;
+    await ContactModel.deleteOne({ contact: contactId, user: req.userId });
+
+    res.json({
+      message: "Контакт успешно удалён",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось удалить контакт",
+    });
+  }
+};

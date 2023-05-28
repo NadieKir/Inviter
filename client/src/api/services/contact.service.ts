@@ -12,3 +12,9 @@ export const getAnotherUserContacts = async (id: string) => {
 
     return contacts;
 }
+
+export const deleteContact = async (id: string) => {
+    const { data: message } = await httpClient.delete<string>(`/contacts/${id}`);
+
+    return message;
+}

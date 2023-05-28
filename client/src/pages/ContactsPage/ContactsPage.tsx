@@ -7,26 +7,48 @@ import { IconButton, IconButtonColor, Loader, TextField } from 'components';
 import { UserContext } from 'common/contexts';
 import { concatUserNameAndAge, wordFormatDate } from 'common/helpers';
 import { SERVER_URL } from 'common/constants';
+import { Invite } from 'models';
+import { usePushNotification } from 'common/hooks';
 
 import styles from './ContactsPage.module.scss';
 import search from 'assets/images/search.svg';
 import cross from 'assets/images/redCross.svg';
 import at from 'assets/images/at.svg';
 import geo from 'assets/images/geo.svg';
-import { Invite } from 'models';
+import { deleteContact } from 'api';
 
 export const ContactsPage = observer(() => {
-  const { user, isLoading, error, userContacts, contactToInvites } =
-    useContext(UserContext);
+  const { pushSuccess, pushError } = usePushNotification();
+
+  const {
+    user,
+    isLoading,
+    error,
+    userContacts,
+    contactToInvites,
+    loadContacts,
+  } = useContext(UserContext);
 
   if (isLoading) return <Loader />;
   if (!user) throw error;
 
   const handleSearch = () => {};
 
-  const handleDelete = (e: Event) => {
+  const handleDelete = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    userId: string,
+  ) => {
     e.preventDefault();
     e.stopPropagation();
+
+    try {
+      await deleteContact(userId);
+      loadContacts();
+      pushSuccess('Контакт успешно удален');
+    } catch (e) {
+      console.log(e);
+      pushError('Не удалось удалить контакт');
+    }
   };
 
   return (
@@ -61,16 +83,16 @@ export const ContactsPage = observer(() => {
                 <div className={styles.contactInfoText}>
                   <div className={styles.nameDataWrapper}>
                     <h3 className={styles.name}>
-                      {concatUserNameAndAge(user)}
+                      {concatUserNameAndAge(contact)}
                     </h3>
                     <div className={styles.nicknameCity}>
                       <div className={styles.nicknameCityWrapper}>
                         <img src={at} alt="Никнейм" height="13px" />
-                        {user.login}
+                        {contact.login}
                       </div>
                       <div className={styles.nicknameCityWrapper}>
                         <img src={geo} alt="Город" height="13px" />
-                        {user.city}
+                        {contact.city}
                       </div>
                     </div>
                   </div>
@@ -96,7 +118,7 @@ export const ContactsPage = observer(() => {
             <IconButton
               icon={cross}
               buttonColor={IconButtonColor.Red}
-              onClick={(e) => handleDelete}
+              onClick={(e) => handleDelete(e, contact._id)}
             />
           </NavLink>
         ))}

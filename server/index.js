@@ -78,6 +78,7 @@ app.delete("/followings", checkAuth, FollowingController.removeFollowing);
 
 app.get("/contacts", checkAuth, ContactController.getContacts);
 app.get("/contacts/:userId", checkAuth, ContactController.getAnotherUserContacts);
+app.delete("/contacts/:userId", checkAuth, ContactController.deleteContact);
 
 // app.get("/invites", checkAuth, InviteController.getAll);
 app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
