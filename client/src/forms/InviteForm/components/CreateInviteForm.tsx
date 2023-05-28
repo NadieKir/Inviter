@@ -1,5 +1,6 @@
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { FormikHelpers } from 'formik';
+import { useContext } from 'react';
 
 import { City, InviteType } from 'models';
 import {
@@ -7,18 +8,28 @@ import {
   InviteFormData,
   InviteFormFields,
   RequiredInviteFields,
+  createOption,
 } from 'types';
 import { InviteForm } from 'forms';
-import { CreateOrEditInviteFormProps } from './types';
 import { createInvite } from 'api';
+import { UserContext } from 'common/contexts';
+
+import { CreateOrEditInviteFormProps } from './types';
+
 
 export const CreateInviteForm = observer(
   ({ onSubmit }: CreateOrEditInviteFormProps) => {
+    const { user } = useContext(UserContext);
+
+    if (!user) {
+      return null;
+    }
+
     const initialValuesRequiredStep: RequiredInviteFields = {
       [InviteFormFields.Subject]: '',
       [InviteFormFields.Description]: '',
-      [InviteFormFields.City]: City.BREST,
-      [InviteFormFields.Type]: InviteType.ENTERTAINMENT,
+      [InviteFormFields.City]: createOption(user?.city),
+      [InviteFormFields.Type]: createOption(InviteType.ENTERTAINMENT),
     };
 
     const initialValuesAdditionalStep: AdditionalInviteFields = {

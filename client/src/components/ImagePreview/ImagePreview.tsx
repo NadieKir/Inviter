@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { convertStringToFileWithUrl, getFileSizeString } from 'common/helpers';
+import { getFileSizeString } from 'common/helpers';
 
 import styles from './ImagePreview.module.scss';
 import { ReactComponent as ImagePlaceholder } from './assets/image-placeholder.svg';
@@ -28,8 +28,12 @@ export const ImagePreview = ({
   variant = ImagePreviewMode.Thumbnail,
   image,
   onClear,
-}: ImagePreviewProps): JSX.Element => {
+}: ImagePreviewProps) => {
   const { imageData } = useContext(ImageContext) as ImageContextType;
+  const isFileImage = typeof imageData !== 'string'
+  const imageUrl = isFileImage
+    ? URL.createObjectURL(imageData!)
+    : SERVER_URL + imageData;
 
   const handleClear = (): void => {
     onClear();
@@ -38,20 +42,19 @@ export const ImagePreview = ({
   return (
     <div className={classNames(styles.preview, styles[variant])}>
       <figure className={styles.image}>
-        {/* TODO: TAKE URL OUT OF IMAGEDATA and size */}
         {imageData ? (
-          <img src={SERVER_URL + imageData} alt="Загруженное изображение" />
+          <img src={imageUrl} alt="Загруженное изображение" />
         ) : (
           <ImagePlaceholder className={styles.placeholder} />
         )}
       </figure>
-      {/* {variant === ImagePreviewMode.Thumbnail && (
+      {isFileImage && variant === ImagePreviewMode.Thumbnail && (
         <div className={styles.info}>
           <p className={styles.fileSize}>
-            Размер файла: {getFileSizeString(size, 1)}
+            Размер файла: {getFileSizeString(imageData!.size, 1)}
           </p>
         </div>
-      )} */}
+      )}
       <button className={styles.clearBtn} onClick={handleClear}>
         {variant === ImagePreviewMode.Thumbnail ? (
           <CloseIcon />

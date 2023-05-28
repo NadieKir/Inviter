@@ -56,7 +56,7 @@ export type RegistrationThirdStepFormData = {
   [RegistrationFormFields.WelcomeMessage]: string,
   [RegistrationFormFields.ConnectionMethods]: string,
   [RegistrationFormFields.PreferredAge]: string,
-  [RegistrationFormFields.Image]: string,
+  [RegistrationFormFields.Image]: string | null | File,
 }
 
 export type RegistrationFormData = RegistrationFirstStepFormData & RegistrationSecondStepFormData & RegistrationThirdStepFormData & {
