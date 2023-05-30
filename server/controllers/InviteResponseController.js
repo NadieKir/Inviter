@@ -1,5 +1,6 @@
 import InviteResponseModel from "../models/InviteResponse.model.js";
 import InviteModel from "../models/Invite.model.js";
+import ContactModel from "../models/Contact.model.js";
 
 export const create = async (req, res) => {
   try {
@@ -10,7 +11,6 @@ export const create = async (req, res) => {
     });
 
     const response = await doc.save();
-    await InviteModel.findByIdAndUpdate(req.params.id, { $push: { responses: response } });
 
     res.json(response);
   } catch (err) {
@@ -21,10 +21,85 @@ export const create = async (req, res) => {
   }
 };
 
+export const approve = async (req, res) => {
+  try {
+    const deletedResponse = await InviteResponseModel.findByIdAndDelete(req.params.responseId);
+
+    console.log(deletedResponse);
+
+    await InviteModel.findByIdAndUpdate(deletedResponse.invite, { $push: { companions: deletedResponse.user } });
+
+    let userToResponderContact = await ContactModel.findOne({
+      user: req.userId,
+      contact: deletedResponse.user,
+    });
+
+    if (userToResponderContact === null) {
+      userToResponderContact = new ContactModel({
+        user: req.userId,
+        contact: deletedResponse.user,
+      });
+
+      await userToResponderContact.save();
+    }
+
+    let responderToUserContact = await ContactModel.findOne({
+      user: deletedResponse.user,
+      contact: req.userId,
+    });
+
+    if (responderToUserContact === null) {
+      responderToUserContact = new ContactModel({
+        user: deletedResponse.user,
+        contact: req.userId,
+      });
+
+      await responderToUserContact.save();
+    }
+
+    res.send(200);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось утвердить ответ на инвайт",
+    });
+  }
+};
+
+export const deleteOther = async (req, res) => {
+  try {
+    await InviteResponseModel.findByIdAndDelete(req.params.responseId);
+
+    res.send(200);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось удалить ответ на инвайт",
+    });
+  }
+};
+
+export const deleteOne = async (req, res) => {
+  try {
+    const deletedResponse = await InviteResponseModel.findOneAndDelete({ invite: req.params.id, user: req.userId });
+
+    res.send(200);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Не удалось удалить ответ на инвайт",
+    });
+  }
+};
+
 export const getAllCurrentUser = async (req, res) => {
   try {
     const responses = await InviteResponseModel.find({ user: req.userId })
-      .populate("invite")
+      .populate(
+        {
+          path: 'invite',
+          populate: ['creator', 'companions']
+        })
       .exec();
 
     res.json(responses);

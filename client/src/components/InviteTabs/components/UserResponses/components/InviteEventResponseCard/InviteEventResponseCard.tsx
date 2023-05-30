@@ -39,7 +39,7 @@ export function InviteEventResponseCard({ inviteEventResponse }: Props) {
         </span>
         <ul className={styles.inviters}>
           {inviters.map((i) => (
-            <InviterItem invite={i} />
+            <InviterItem key={i._id} invite={i} />
           ))}
         </ul>
       </div>

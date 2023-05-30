@@ -85,7 +85,11 @@ app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
 app.get("/invites/another/:userId", checkAuth, InviteController.getAllAnotherUser);
 app.get("/invites/current", checkAuth, InviteController.getAllCurrentUser);
 app.get("/invites/:id", checkAuth, InviteController.getOne);
+app.put("/invites/:id", checkAuth, InviteController.updateOne);
+app.patch("/invites/:id/approve", checkAuth, InviteController.approve);
+app.patch("/invites/:id/markAsPast", checkAuth, InviteController.markAsPast);
 app.delete("/invites/:id", checkAuth, InviteController.deleteOne);
+app.delete("/invites/:id/companions/:companionId", checkAuth, InviteController.deleteCompanion);
 app.post(
   "/invites",
   checkAuth,
@@ -104,6 +108,9 @@ app.patch(
 
 app.get("/invite-responses/current", checkAuth, InviteResponseController.getAllCurrentUser);
 app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);
+app.patch("/invite-responses/:responseId/approve", checkAuth, InviteResponseController.approve);
+app.delete("/invite-responses/:responseId/delete", checkAuth, InviteResponseController.deleteOther);
+app.delete("/invite-responses/:id", checkAuth, InviteResponseController.deleteOne);
 
 app.get("/events", checkAuth, EventController.getAll);
 app.get("/events/:id", checkAuth, EventController.getOne);

@@ -28,6 +28,10 @@ const InviteSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      required: true,
+    },
     address: String,
     date: String,
     time: String,
@@ -47,6 +51,7 @@ const InviteSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    strict: false,
   }
 );
 

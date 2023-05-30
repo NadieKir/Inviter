@@ -10,7 +10,7 @@ import { createOption } from 'types';
 import styles from './SearchInvitePage.module.scss';
 
 export const SearchInvitePage = observer(() => {
-  const { user } = useContext(UserContext);
+  const { user, loadResponses } = useContext(UserContext);
 
   if (!user) {
     return null;
@@ -38,7 +38,7 @@ export const SearchInvitePage = observer(() => {
             <NothingFound />
           ) : (
             anotherUsersInvites.map((invite) => (
-              <InviteCard key={invite._id} invite={invite} />
+              <InviteCard key={invite._id} invite={invite} onInviteAction={loadResponses} />
             ))
           )}
         </ul>

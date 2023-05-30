@@ -12,6 +12,18 @@ export const getInvites = async (): Promise<Invite[]> => {
   return invites;
 };
 
+export const approveInvite = async (inviteId: string): Promise<Invite> => {
+  const { data: invites } = await httpClient.patch<Invite>(`/invites/${inviteId}/approve`);
+
+  return invites;
+};
+
+export const markInviteAsPast = async (inviteId: string): Promise<Invite> => {
+  const { data: invite } = await httpClient.patch<Invite>(`/invites/${inviteId}/markAsPast`);
+
+  return invite;
+};
+
 export const getAnotherUsersInvites = async (filters?: SearchInviteFilters): Promise<Invite[]> => {
   const filtersQueryParams = buildQueryParams(filters);
 
@@ -38,6 +50,20 @@ export const createInvite = async (
   return createdInvite;
 };
 
+export const updateInvite = async (
+  inviteId: string,
+  updateInvite: InvitePayload,
+): Promise<Invite> => {
+  const { data: updatedInvite } = await httpClient.put<Invite>(`/invites/${inviteId}`, updateInvite);
+
+  return updatedInvite;
+};
+
+
 export const deleteInvite = async (inviteId: string): Promise<void> => {
   await httpClient.delete<Invite>(`/invites/${inviteId}`);
+};
+
+export const deleteInviteCompanion = async (inviteId: string, companionId: string): Promise<void> => {
+  await httpClient.delete<Invite>(`/invites/${inviteId}/companions/${companionId}`);
 };

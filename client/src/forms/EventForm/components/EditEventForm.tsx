@@ -25,8 +25,6 @@ export const EditEventForm = observer(({
 }: EditEventFormProps) => {
   const { pushSuccess } = usePushNotification();
 
-  console.log(new Date(`${event.date} ${event.time}`));
-
   const initialValuesRequiredStep: RequiredEventFields = {
     [EventFormFields.Name]: event.name,
     [EventFormFields.Description]: event.description,

@@ -8,6 +8,7 @@ import { InviteModalType } from 'modals';
 import styles from './InviterItem.module.scss';
 import more from 'assets/images/more.svg';
 import { NavLink } from 'react-router-dom';
+import { SERVER_URL } from 'common/constants';
 
 type Props = {
   component?: 'div' | 'li';
@@ -27,7 +28,7 @@ export function InviterItem({ component = 'div', invite }: Props) {
       >
         <img
           className={styles.inviterItemImage}
-          src={invite.creator.image}
+          src={SERVER_URL + invite.creator.image}
           alt={invite.creator.name}
         />
         <span className={styles.inviterItemName}>
@@ -36,7 +37,7 @@ export function InviterItem({ component = 'div', invite }: Props) {
       </NavLink>
       <img
         className={styles.cross}
-        onClick={() => openModal(invite, InviteModalType.Delete)}
+        onClick={() => openModal(invite, InviteModalType.DeleteResponse)}
         src={more}
         alt={''}
       />

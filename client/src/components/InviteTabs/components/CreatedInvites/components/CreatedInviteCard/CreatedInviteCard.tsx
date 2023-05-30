@@ -24,17 +24,23 @@ import styles from './CreatedInviteCard.module.scss';
 import check from 'assets/images/greenCheck.svg';
 import cross from 'assets/images/redCross.svg';
 import calendar from 'assets/images/calendar.svg';
+import { SERVER_URL } from 'common/constants';
+import { approveInvite, approveOtherInviteResponse, deleteOtherInviteResponse } from 'api';
 
 interface Props {
   invite: Invite;
+  onAction?: () => void;
 }
 
-export function CreatedInviteCard({ invite }: Props) {
+export function CreatedInviteCard({
+  invite,
+  onAction,
+}: Props) {
   const { openModal } = useInviteDetailsModalContext();
 
   const { companions, responses } = invite;
 
-  const event = invite.event as Event;
+  const event = invite.event as string;
 
   const companionsAmount = companions?.length ?? 0;
   const responsesAmount = responses?.length ?? 0;
@@ -48,7 +54,7 @@ export function CreatedInviteCard({ invite }: Props) {
 
     return responses.map((r) => (
       <NavLink to={`/user/${r.user.login}`} className={styles.response}>
-        <img className={styles.responseImage} src={r.user.image} alt="" />
+        <img className={styles.responseImage} src={SERVER_URL + r.user.image} alt="" />
         <div className={styles.responseInfo}>
           <span className={styles.responseInfoName}>
             {concatUserNameAndAge(r.user)}
@@ -56,8 +62,30 @@ export function CreatedInviteCard({ invite }: Props) {
           <span>{r.message}</span>
         </div>
         <div className={styles.responseActions}>
-          <IconButton buttonColor={IconButtonColor.Green} icon={check} />
-          <IconButton buttonColor={IconButtonColor.Red} icon={cross} />
+          <IconButton
+            onClick={async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              await approveOtherInviteResponse(r._id);
+
+              onAction?.();
+            }}
+            buttonColor={IconButtonColor.Green}
+            icon={check}
+          />
+          <IconButton
+            onClick={async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              await deleteOtherInviteResponse(r._id);
+
+              onAction?.();
+            }}
+            buttonColor={IconButtonColor.Red}
+            icon={cross}
+          />
         </div>
       </NavLink>
     ));
@@ -73,21 +101,11 @@ export function CreatedInviteCard({ invite }: Props) {
               {wordFormatDate(invite.date, invite.time)}
             </span>
             <span className={styles.subject}>
-              {event ? (
-                <>
-                  Посетить{' '}
-                  <span className={styles.blue}>
-                    {lowercaseFirstLetter(event.name)}
-                  </span>
-                </>
-              ) : (
-                <>
-                  Хочет{' '}
-                  <span className={styles.blue}>
-                    {lowercaseFirstLetter(invite.subject)}
-                  </span>
-                </>
-              )}
+
+              {event ? 'Посетить ' : 'Хочет '}
+              <span className={styles.blue}>
+                {lowercaseFirstLetter(invite.subject)}
+              </span>
             </span>
             <span className={styles.companionsInfo}>
               {getInviteCompanionsInfoString(invite)}
@@ -107,6 +125,7 @@ export function CreatedInviteCard({ invite }: Props) {
               variant={ButtonVariant.Primary}
               width={ButtonWidth.Small}
               height={ButtonHeight.Small}
+              disabled={companionsAmount === 0}
             >
               Утвердить
             </Button>
@@ -119,7 +138,12 @@ export function CreatedInviteCard({ invite }: Props) {
           </span>
           <ul className={styles.companionsUsers}>
             {(companions ?? []).map((c) => (
-              <CompanionItem companion={c} canDelete />
+              <CompanionItem
+                invite={invite}
+                companion={c}
+                canDelete
+                onDelete={onAction}
+              />
             ))}
           </ul>
         </div>
@@ -136,6 +160,12 @@ export function CreatedInviteCard({ invite }: Props) {
             variant={ButtonVariant.Primary}
             width={ButtonWidth.Small}
             height={ButtonHeight.Small}
+            disabled={companionsAmount === 0}
+            onClick={async () => {
+              await approveInvite(invite._id);
+
+              onAction?.();
+            }}
           >
             Утвердить
           </Button>

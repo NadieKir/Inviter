@@ -4,6 +4,8 @@ import { ClosedInvites } from './components/ClosedInvites/ClosedInvites';
 import { UserResponses } from './components/UserResponses/UserResponses';
 
 import styles from './InviteTabs.module.scss';
+import { InvitesDetailsModalProvider } from 'common/contexts';
+import { PastInvites } from './components';
 
 export const inviteTabs: TabDescriptor[] = [
   {
@@ -24,15 +26,17 @@ export const inviteTabs: TabDescriptor[] = [
   {
     label: 'Прошедшие',
     link: 'past',
-    component: <ClosedInvites />,
+    component: <PastInvites />,
   },
 ];
 
 export const InviteTabs = () => {
   return (
-    <div className={styles.tabsWrapper}>
-      <h1 className="heading-H1">Мои инвайты</h1>
-      <Tabs descriptor={inviteTabs} />
-    </div>
+    <InvitesDetailsModalProvider>
+      <div className={styles.tabsWrapper}>
+        <h1 className="heading-H1">Мои инвайты</h1>
+        <Tabs descriptor={inviteTabs} />
+      </div>
+    </InvitesDetailsModalProvider>
   );
 };

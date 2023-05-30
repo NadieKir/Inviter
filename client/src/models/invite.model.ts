@@ -16,8 +16,9 @@ export enum InviteType {
 }
 
 export enum InviteStatus {
-  CONFIRMED = 'Утверждённые',
-  PAST = 'Прошедшие',
+  CREATED = 'Создан',
+  CLOSED = 'Закрыт',
+  PAST = 'Прошел'
 }
 
 export interface Invite {

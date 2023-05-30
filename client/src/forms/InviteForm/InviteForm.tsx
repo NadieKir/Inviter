@@ -17,8 +17,6 @@ import {
   FormikStepper,
   GenderPicker,
   IStep,
-  IconButton,
-  NumberField,
   Select,
   TextField,
 } from 'components';
@@ -44,11 +42,9 @@ interface InviteFormProps {
     actions: FormikHelpers<InviteFormData>,
   ) => Promise<void>;
   touchedNotRequired?: boolean;
+  formHeading?: string;
+  formSubmitButtonTitle?: string;
 }
-
-// const formConstraints = {
-//   [InviteFormFields.CompanionsAmount]: [1, 3],
-// };
 
 const requiredFieldsSchema = Yup.object().shape({
   [InviteFormFields.Subject]: Yup.string()
@@ -115,10 +111,6 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
     ? new Date(new Date().setHours(23, 59, 59))
     : undefined;
 
-  if (minTime && time && time < minTime) {
-    setFieldValue(InviteFormFields.Time, '');
-  }
-
   return (
     <>
       <div className={styles.wrapper}>
@@ -128,6 +120,15 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
             labelText="Дата"
             excludePastDateTime={true}
             showTimeSelect={false}
+            customHandleChange={(date) => {
+              setFieldValue(InviteFormFields.Date, date);
+
+              console.log(formatToOnlyTime(time), formatToOnlyTime(minTime!))
+
+              if (minTime && time && formatToOnlyTime(time) < formatToOnlyTime(minTime)) {
+                setFieldValue(InviteFormFields.Time, '');
+              }
+            }}
           />
           <img
             src={cross}
@@ -187,6 +188,8 @@ export const InviteForm = observer(
     initialValuesAdditionalStep,
     handleSubmit,
     touchedNotRequired = false,
+    formHeading = 'Создать инвайт',
+    formSubmitButtonTitle = 'Создать'
   }: InviteFormProps) => {
     const steps: IStep[] = [
       {
@@ -243,7 +246,8 @@ export const InviteForm = observer(
     return (
       <FormikStepper
         steps={steps}
-        formHeading="Создать инвайт"
+        formHeading={formHeading}
+        finishButtonContent={formSubmitButtonTitle}
         onFinish={onSubmit}
       />
     );

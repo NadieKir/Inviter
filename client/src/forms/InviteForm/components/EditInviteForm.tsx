@@ -2,66 +2,81 @@ import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { usePushNotification } from 'common/hooks';
-import { City, InviteType } from 'models';
+import { City, Invite, InviteType } from 'models';
 import {
   AdditionalInviteFields,
   InviteFormData,
   InviteFormFields,
   RequiredInviteFields,
+  createOption,
 } from 'types';
 import { FormikHelpers } from 'formik';
 import { InviteForm } from 'forms';
 import { CreateOrEditInviteFormProps } from './types';
+import dayjs from 'dayjs';
+import { updateInvite } from 'api';
 
-export const EditInviteForm = observer(
-  ({ onSubmit }: CreateOrEditInviteFormProps) => {
-    const navigate = useNavigate();
-    const { pushSuccess } = usePushNotification();
+type EditInviteFormProps = CreateOrEditInviteFormProps & {
+  invite: Invite;
+}
 
-    // const userStore = useContext(UserContext);
-    // const { meetup, isLoading, error, publishMeetup } = useLocalObservable(
-    //   () => new MeetupStore(id!, userStore),
-    // );
+export const EditInviteForm = observer(({
+  invite,
+  onSubmit
+}: EditInviteFormProps) => {
+  const navigate = useNavigate();
+  const { pushSuccess } = usePushNotification();
 
-    // if (isLoading) return <FormattedMessage id="loading" />;
-    // if (!meetup) throw error;
+  // const userStore = useContext(UserContext);
+  // const { meetup, isLoading, error, publishMeetup } = useLocalObservable(
+  //   () => new MeetupStore(id!, userStore),
+  // );
 
-    const initialValuesRequiredStep: RequiredInviteFields = {
-      [InviteFormFields.Subject]: '',
-      [InviteFormFields.Description]: '',
-      [InviteFormFields.City]: City.BREST,
-      [InviteFormFields.Type]: InviteType.ENTERTAINMENT,
+  // if (isLoading) return <FormattedMessage id="loading" />;
+  // if (!meetup) throw error;
+
+  const initialValuesRequiredStep: RequiredInviteFields = {
+    [InviteFormFields.Subject]: invite.subject,
+    [InviteFormFields.Description]: invite.description,
+    [InviteFormFields.City]: createOption(invite.city as City),
+    [InviteFormFields.Type]: createOption(invite.type),
+  };
+
+  const initialValuesAdditionalStep: AdditionalInviteFields = {
+    [InviteFormFields.Address]: invite.address,
+    [InviteFormFields.Date]: invite.date ?? '',
+    [InviteFormFields.Time]: invite.date && invite.time
+      ? dayjs(new Date(`${invite.date} ${invite.time}`)).format("YYYY-MM-DD HH:mm:ss")
+      : '',
+    [InviteFormFields.CompanionAge]: invite.companionAge,
+    [InviteFormFields.CompanionGender]: invite.companionGender,
+  };
+
+  const handleSubmit = async (
+    values: InviteFormData,
+    actions: FormikHelpers<InviteFormData>,
+  ) => {
+    const resultValues = {
+      event: invite.event,
+      ...values,
     };
 
-    const initialValuesAdditionalStep: AdditionalInviteFields = {
-      [InviteFormFields.Address]: '',
-      [InviteFormFields.Date]: '',
-      [InviteFormFields.Time]: '',
-      [InviteFormFields.CompanionAge]: '',
-      [InviteFormFields.CompanionGender]: [],
-      // [InviteFormFields.CompanionsAmount]: 1,
-    };
+    await updateInvite(invite._id, resultValues);
 
-    const handleSubmit = async (
-      values: InviteFormData,
-      actions: FormikHelpers<InviteFormData>,
-    ) => {
-      //await publishMeetup(values);
-      alert(JSON.stringify(values));
+    actions.setSubmitting(false);
+    pushSuccess('Инвайт успешно изменен');
+    onSubmit();
+  };
 
-      actions.setSubmitting(false);
-      pushSuccess('Инвайт успешно создан');
-      onSubmit();
-      //close modal
-    };
-
-    return (
-      <InviteForm
-        initialValuesRequiredStep={initialValuesRequiredStep}
-        initialValuesAdditionalStep={initialValuesAdditionalStep}
-        handleSubmit={handleSubmit}
-        touchedNotRequired
-      />
-    );
-  },
+  return (
+    <InviteForm
+      initialValuesRequiredStep={initialValuesRequiredStep}
+      initialValuesAdditionalStep={initialValuesAdditionalStep}
+      handleSubmit={handleSubmit}
+      touchedNotRequired
+      formHeading='Редактирование инвайта'
+      formSubmitButtonTitle='Редактировать'
+    />
+  );
+},
 );

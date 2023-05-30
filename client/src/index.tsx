@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 
 import App from './App';
 import {
-  InvitesDetailsModalProvider,
   NotificationsProvider,
   UserProvider,
 } from 'common/contexts';
@@ -16,9 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <UserProvider>
     <NotificationsProvider>
-      <InvitesDetailsModalProvider>
-        <App />
-      </InvitesDetailsModalProvider>
+      <App />
     </NotificationsProvider>
   </UserProvider>,
 );

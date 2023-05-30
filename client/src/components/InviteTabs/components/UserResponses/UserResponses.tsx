@@ -1,19 +1,27 @@
 import { groupBy } from 'lodash';
+import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { InviteEventResponse, mockedInviteResponses } from 'models';
+import { UserContext } from 'common/contexts';
 
 import { InviteResponseCard } from './components/InviteResponseCard/InviteResponseCard';
 import { InviteEventResponseCard } from './components/InviteEventResponseCard/InviteEventResponseCard';
 
 import styles from './UserResponses.module.scss';
 
-export function UserResponses() {
-  const eventResponses = mockedInviteResponses.filter((r) => r.invite.event);
+export const UserResponses = observer(() => {
+  const { userResponses } = useContext(UserContext);
+
+  console.log(userResponses);
+
+  const eventResponses = userResponses.filter((r) => r.invite.event);
 
   const groupedEventResponses = groupBy(
     eventResponses,
     (r) => r.invite.event as string,
   );
+
   const inviteEventResponses: InviteEventResponse[] = Object.values(
     groupedEventResponses,
   ).map((gr) => ({
@@ -21,7 +29,13 @@ export function UserResponses() {
     inviters: gr.flatMap((r) => r.invite),
   }));
 
-  const responses = [...mockedInviteResponses, ...inviteEventResponses].sort(
+  console.log(inviteEventResponses);
+
+  const inviteEventIds = inviteEventResponses.flatMap(i => i.inviters).map(i => i._id);
+
+  const filteredResponses = userResponses.filter(r => !inviteEventIds.includes(r.invite._id))
+
+  const responses = [...filteredResponses, ...inviteEventResponses].sort(
     (a, b) => {
       let aDate: string | number;
       let bDate: string | number;
@@ -53,4 +67,4 @@ export function UserResponses() {
       )}
     </div>
   );
-}
+});

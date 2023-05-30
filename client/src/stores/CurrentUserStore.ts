@@ -91,9 +91,9 @@ export class CurrentUserStore {
 
   get userIsCompanionInvites() {
     return this.userInvites
-    .filter(invite => invite.companions
-      .map(companion => companion._id)
-      .includes(this.user!._id))
+      .filter(invite => invite.companions
+        .map(companion => companion._id)
+        .includes(this.user!._id))
   }
 
   get contactToInvites() {
@@ -113,7 +113,7 @@ export class CurrentUserStore {
   }
 
   loadUser = async () => {
-    if (this.user) return;
+    // if (this.user) return;
 
     this.setIsLoading(true);
 
@@ -122,7 +122,7 @@ export class CurrentUserStore {
       if (!savedUserToken) return;
 
       this.setUser(await getCurrentUser());
-      
+
       await Promise.all([this.loadResponses(), this.loadFollowings(), this.loadFollowers(), this.loadContacts(), this.loadInvites()])
     }
     catch (error) {
@@ -151,10 +151,8 @@ export class CurrentUserStore {
       this.setIsLoading(true);
 
       const user = await login(values);
-
-      this.setUser(user);
       localStorage.setItem('user', user.token);
-      this.loadFollowings();
+      await this.loadUser();
     } catch (error) {
       this.setError(error as AxiosError);
       throw this.error;

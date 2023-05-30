@@ -13,6 +13,7 @@ import { InviteModalType } from 'modals';
 
 import styles from './InviteResponseCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
+import { SERVER_URL } from 'common/constants';
 
 interface Props {
   invite: Invite;
@@ -43,7 +44,7 @@ export function InviteResponseCard({ invite }: Props) {
         >
           <img
             className={styles.creatorImage}
-            src={invite.creator.image}
+            src={SERVER_URL + invite.creator.image}
             alt={invite.creator.name}
           />
           <span className={styles.creatorInfo}>
@@ -56,7 +57,7 @@ export function InviteResponseCard({ invite }: Props) {
           variant={ButtonVariant.Secondary}
           width={ButtonWidth.Small}
           height={ButtonHeight.Small}
-          onClick={() => openModal(invite, InviteModalType.Delete)}
+          onClick={() => openModal(invite, InviteModalType.DeleteResponse)}
         >
           Подробнее
         </Button>

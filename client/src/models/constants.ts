@@ -263,16 +263,19 @@ export const mockedInvites: Invite[] = [
 
 export const mockedInviteResponses: InviteResponse[] = [
   {
+    _id: '1',
     user: mockedUsers[0],
     invite: mockedInvites[1],
     message: 'hello',
   },
   {
+    _id: '2',
     user: mockedUsers[0],
     invite: mockedInvites[1],
     message: 'hello',
   },
   {
+    _id: '3',
     user: mockedUsers[1],
     invite: mockedInvites[2],
     message: 'hello',
