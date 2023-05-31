@@ -12,16 +12,21 @@ export const PastEvents = observer(() => {
     () => new EventListStore({ tabType: 'past' }),
   );
 
-  const { pushSuccess } = usePushNotification();
+  const { pushSuccess, pushError } = usePushNotification();
 
   if (isLoading) return <Loader />;
 
   const onEventDelete = async (id: string) => {
-    await deleteEvent(id);
+    try {
+      await deleteEvent(id);
 
-    const eventsWithoutDeleted = events.filter((e) => e._id !== id);
-    setEvents(eventsWithoutDeleted);
-    pushSuccess('Событие успешно удалено');
+      const eventsWithoutDeleted = events.filter((e) => e._id !== id);
+      setEvents(eventsWithoutDeleted);
+      pushSuccess('Событие успешно удалено');
+    } catch (e) {
+      console.log(e);
+      pushError('Событие не было удалено');
+    }
   };
 
   return (

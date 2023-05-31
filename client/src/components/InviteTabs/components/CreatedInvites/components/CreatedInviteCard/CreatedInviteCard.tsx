@@ -19,23 +19,24 @@ import {
 import { useInviteDetailsModalContext } from 'common/contexts';
 import { InviteModalType } from 'modals';
 import { wordFormatDate } from 'common/helpers';
+import { SERVER_URL } from 'common/constants';
+import {
+  approveInvite,
+  approveOtherInviteResponse,
+  deleteOtherInviteResponse,
+} from 'api';
 
 import styles from './CreatedInviteCard.module.scss';
 import check from 'assets/images/greenCheck.svg';
 import cross from 'assets/images/redCross.svg';
 import calendar from 'assets/images/calendar.svg';
-import { SERVER_URL } from 'common/constants';
-import { approveInvite, approveOtherInviteResponse, deleteOtherInviteResponse } from 'api';
 
 interface Props {
   invite: Invite;
   onAction?: () => void;
 }
 
-export function CreatedInviteCard({
-  invite,
-  onAction,
-}: Props) {
+export function CreatedInviteCard({ invite, onAction }: Props) {
   const { openModal } = useInviteDetailsModalContext();
 
   const { companions, responses } = invite;
@@ -54,7 +55,11 @@ export function CreatedInviteCard({
 
     return responses.map((r) => (
       <NavLink to={`/user/${r.user.login}`} className={styles.response}>
-        <img className={styles.responseImage} src={SERVER_URL + r.user.image} alt="" />
+        <img
+          className={styles.responseImage}
+          src={SERVER_URL + r.user.image}
+          alt=""
+        />
         <div className={styles.responseInfo}>
           <span className={styles.responseInfoName}>
             {concatUserNameAndAge(r.user)}
@@ -101,7 +106,6 @@ export function CreatedInviteCard({
               {wordFormatDate(invite.date, invite.time)}
             </span>
             <span className={styles.subject}>
-
               {event ? 'Посетить ' : 'Хочет '}
               <span className={styles.blue}>
                 {lowercaseFirstLetter(invite.subject)}

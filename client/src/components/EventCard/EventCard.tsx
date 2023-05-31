@@ -3,10 +3,10 @@ import classNames from 'classnames';
 
 import { Event } from 'models';
 import { isInThePast, wordFormatDate } from 'common/helpers';
+import { SERVER_URL } from 'common/constants';
 
 import styles from './EventCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import { SERVER_URL } from 'common/constants';
 
 interface EventCardProps {
   event: Event;

@@ -107,8 +107,8 @@
 .responses {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 70%;
+    gap: 25px;
+    width: 65%;
     overflow-y: auto;
 
     font-size: 15px;
@@ -127,19 +127,24 @@
     max-height: 140px;
 
     &Image {
-        width: 140px;
-        height: 140px;
+        width: 110px;
+        height: 110px;
+        max-width: 110px;
+        max-height: 110px;
+        object-fit: fill;
         border-radius: 12px;
     }
 
     &Info {
         width: 75%;
         height: 100%;
-        padding: 20px 0;
+        // padding: 20px 0;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        align-items: start;
+
+        font-weight: 300;
+        font-size: 14px;
 
         &Name {
             font-weight: 500;

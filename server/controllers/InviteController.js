@@ -60,6 +60,7 @@ export const getAllAnotherUsers = async (req, res) => {
         {
           "creator._id": { $ne: new mongoose.Types.ObjectId(req.userId) },
           companions: { $nin: [new mongoose.Types.ObjectId(req.userId)] },
+          status: { $eq: "Создан" },
         }
       );
 
@@ -136,28 +137,123 @@ export const getAllAnotherUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const invites = await InviteModel.find({ creator: userId })
-      .sort({ createdAt: -1 })
-      .populate("creator")
+    const currentDate = dayjs();
+    const currentDateString = currentDate.format("YYYY-MM-DD");
+    const currentTimeString = currentDate.format("HH:mm");
+
+    const filters = Object.entries(req.query)
+      .filter((e) => e[1])
+      .reduce(
+        (acc, v) => {
+          if (v[0] === "gender") {
+            acc["creator.gender"] = { $in: v[1] };
+          } else if (v[0] === "keyWord") {
+            acc["$or"] = [
+              { subject: { $regex: v[1], $options: "i" } },
+              { description: { $regex: v[1], $options: "i" } },
+            ];
+          } else {
+            acc[v[0]] = v[1];
+          }
+
+          return acc;
+        },
+        {
+          "creator._id": { $ne: new mongoose.Types.ObjectId(userId) },
+          status: { $eq: "Создан" },
+        }
+      );
+
+    const invites = await InviteModel.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "creator",
+          foreignField: "_id",
+          as: "creator",
+        },
+      },
+      {
+        $unwind: {
+          path: "$creator",
+        },
+      },
+      {
+        $match: {
+          isDeleted: { $eq: false },
+          $and: [
+            filters,
+            {
+              $or: [
+                {
+                  $or: [
+                    {
+                      date: { $exists: false },
+                    },
+                    {
+                      time: { $exists: false },
+                    },
+                  ],
+                },
+                {
+                  $or: [
+                    { date: { $gt: currentDateString } },
+                    {
+                      $and: [
+                        {
+                          date: { $eq: currentDateString },
+                        },
+                        {
+                          time: { $gte: currentTimeString },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+    ])
+      .allowDiskUse(true)
       .exec();
-
-    // invites.forEach(async (i) => {
-    //   const inviteResponses = await InviteResponseModel.find({ invite: i._id })
-    //     .select(['user', 'message'])
-    //     .populate('user')
-    //     .lean()
-    //     .exec();
-
-    //   i.responses = inviteResponses;
-    // })
 
     res.json(invites);
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Не удалось получить инвайты этого пользователя",
+      message: "Не удалось получить инвайты",
     });
   }
+  // try {
+  //   const invites = await InviteModel.find({ creator: userId })
+  //     .sort({ createdAt: -1 })
+  //     .populate("creator")
+  //     .exec();
+
+  //   // invites.forEach(async (i) => {
+  //   //   const inviteResponses = await InviteResponseModel.find({ invite: i._id })
+  //   //     .select(['user', 'message'])
+  //   //     .populate('user')
+  //   //     .lean()
+  //   //     .exec();
+
+  //   //   i.responses = inviteResponses;
+  //   // })
+
+  //   res.json(invites);
+  // } catch (err) {
+  //   console.log(err);
+  //   res.status(500).json({
+  //     message: "Не удалось получить инвайты этого пользователя",
+  //   });
+  // }
 };
 
 export const getAllCurrentUser = async (req, res) => {
@@ -307,36 +403,6 @@ export const deleteCompanion = async (req, res) => {
     });
   }
 };
-
-// export const remove = async (req, res) => {
-//   try {
-//     const inviteId = req.params.id;
-
-//     InviteModel.findOneAndDelete({ _id: inviteId })
-//       .then((doc) => {
-//         if (!doc) {
-//           return res.status(400).json({
-//             message: "Инвайт не найден",
-//           });
-//         }
-
-//         res.status(200).json({
-//           success: true,
-//         });
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         return res.status(500).json({
-//           message: "Не удалось удалить инвайт",
-//         });
-//       });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({
-//       message: "Не удалось получить инвайты",
-//     });
-//   }
-// };
 
 export const update = async (req, res) => {
   try {

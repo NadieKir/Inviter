@@ -8,7 +8,7 @@ import { Event } from 'models';
 import { CreateEventModal } from 'modals';
 import { deleteEvent } from 'api';
 import { SearchEventFilters } from 'types';
-import { useModal } from 'common/hooks';
+import { useModal, usePushNotification } from 'common/hooks';
 
 import styles from './CurrentEvents.module.scss';
 
@@ -18,6 +18,7 @@ export const CurrentEvents = observer(() => {
   const { isLoading, events, setEvents, getEvents } = useLocalObservable(
     () => new EventListStore(defaultFilter),
   );
+  const { pushSuccess, pushError } = usePushNotification();
 
   const [isEditEventModalOpen, toggleEditEventModal] = useModal();
   const [eventToEdit, setEventToEdit] = useState<Event | null>(null);
@@ -27,14 +28,20 @@ export const CurrentEvents = observer(() => {
   const onEventEdit = (event: Event) => {
     setEventToEdit(event);
     toggleEditEventModal();
-  }
+  };
 
   const onEventDelete = async (id: string) => {
-    await deleteEvent(id);
+    try {
+      await deleteEvent(id);
 
-    const eventsWithoutDeleted = events.filter(e => e._id !== id);
-    setEvents(eventsWithoutDeleted);
-  }
+      const eventsWithoutDeleted = events.filter((e) => e._id !== id);
+      setEvents(eventsWithoutDeleted);
+      pushSuccess('Событие успешно удалено');
+    } catch (e) {
+      console.log(e);
+      pushError('Событие не было удалено');
+    }
+  };
 
   return (
     <>
@@ -54,11 +61,12 @@ export const CurrentEvents = observer(() => {
           isShowing={isEditEventModalOpen}
           onClose={async () => {
             await getEvents(defaultFilter);
-            toggleEditEventModal()
+            toggleEditEventModal();
           }}
           event={eventToEdit}
           isEdit
-        />)}
+        />
+      )}
     </>
   );
 });

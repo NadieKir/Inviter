@@ -29,9 +29,16 @@ export function ClosedInviteCard({ invite, onAction }: Props) {
 
   const { openModal } = useInviteDetailsModalContext();
 
-  const canMarkAsPast = !invite.date && invite.status !== InviteStatus.PAST;
+  const canMarkAsPast =
+    invite.creator._id === user?._id &&
+    !invite.date &&
+    invite.status !== InviteStatus.PAST;
 
-  const companions = invite.companions.filter(c => c._id !== user?._id);
+  const companions = invite.companions.filter((c) => c._id !== user?._id);
+
+  const isInvitePast =
+    invite.status === InviteStatus.PAST ||
+    (invite.date ? new Date(invite.date) < new Date() : false);
 
   return (
     <div className={styles.card}>
@@ -70,33 +77,35 @@ export function ClosedInviteCard({ invite, onAction }: Props) {
               <CompanionItem
                 invite={invite}
                 companion={c}
-                canDelete={user?._id === invite.creator._id}
+                canDelete={user?._id === invite.creator._id && !isInvitePast}
               />
             ))}
           </ul>
         </div>
       </div>
-      {canMarkAsPast && (
+      <div className={styles.actionsWrapper}>
+        {canMarkAsPast && (
+          <Button
+            className={styles.button}
+            height={ButtonHeight.Small}
+            variant={ButtonVariant.Primary}
+            onClick={async () => {
+              await markInviteAsPast(invite._id);
+              onAction?.(invite._id);
+            }}
+          >
+            Отметить прошедшим
+          </Button>
+        )}
         <Button
           className={styles.button}
           height={ButtonHeight.Small}
-          variant={ButtonVariant.Primary}
-          onClick={async () => {
-            await markInviteAsPast(invite._id);
-            onAction?.(invite._id);
-          }}
+          variant={ButtonVariant.Secondary}
+          onClick={() => openModal(invite, InviteModalType.Delete)}
         >
-          Пометить как "Прошедший"
+          Подробнее
         </Button>
-      )}
-      <Button
-        className={styles.button}
-        height={ButtonHeight.Small}
-        variant={ButtonVariant.Secondary}
-        onClick={() => openModal(invite, InviteModalType.Delete)}
-      >
-        Подробнее
-      </Button>
+      </div>
     </div>
   );
 }

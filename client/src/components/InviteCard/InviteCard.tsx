@@ -119,7 +119,7 @@ export const InviteCard = observer(
           isShowing={isShowingModal}
           onClose={toggleModal}
           onInviteAction={onInviteAction}
-          modalType={isAdmin ? InviteModalType.Delete : undefined}
+          modalType={userIsAdmin ? InviteModalType.Delete : undefined}
         />
       </>
     );

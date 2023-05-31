@@ -97,8 +97,6 @@ export class CurrentUserStore {
   }
   
   loadUser = async () => {
-    // if (this.user) return;
-
     this.setIsLoading(true);
 
     try {

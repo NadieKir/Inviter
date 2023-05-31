@@ -59,7 +59,7 @@ export const ContactsPage = observer(() => {
 
     try {
       await deleteContact(userId);
-      loadContacts();
+      await loadContacts();
       pushSuccess('Контакт успешно удален');
     } catch (e) {
       console.log(e);

@@ -12,12 +12,12 @@ export const getAll = async (req, res) => {
 
     const filter = Object.entries(req.query)
       .filter((e) => e[1])
-      .reduce((acc, v) => {
-        if ([v[0] === "tabType"]) {
-          switch (v[1]) {
-            case "current": {
-              acc.push({
-                $or: [
+      .reduce(
+        (acc, v) => {
+          if (v[0] === "tabType") {
+            switch (v[1]) {
+              case "current": {
+                acc["$or"].push(
                   { date: { $gt: currentDateString } },
                   {
                     $and: [
@@ -28,15 +28,13 @@ export const getAll = async (req, res) => {
                         time: { $gte: currentTimeString },
                       },
                     ],
-                  },
-                ],
-              });
+                  }
+                );
 
-              break;
-            }
-            case "past": {
-              acc.push({
-                $or: [
+                break;
+              }
+              case "past": {
+                acc["$or"].push(
                   { date: { $lt: currentDateString } },
                   {
                     $and: [
@@ -47,23 +45,25 @@ export const getAll = async (req, res) => {
                         time: { $lte: currentTimeString },
                       },
                     ],
-                  },
-                ],
-              });
+                  }
+                );
 
-              break;
+                break;
+              }
             }
+          } else {
+            acc[v[0]] = v[1];
           }
-        } else {
-          acc.push({ [v[0]]: v[1] });
-        }
 
-        return acc;
-      }, []);
+          return acc;
+        },
+        { isDeleted: { $eq: false }, $or: [] }
+      );
+
+    console.log(filter);
 
     const events = await EventModel.find({
-      $and: filter,
-      isDeleted: { $eq: false },
+      $and: [filter],
     })
       .sort({ date: 1, time: 1 })
       .exec();

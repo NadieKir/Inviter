@@ -75,9 +75,7 @@ export class UserStore {
       const invites = await getAnotherUserInvites(user._id)
       this.setUserInvites(invites);
  
-      await this.loadFollowings(user._id);
-      await this.loadFollowers(user._id);
-      await this.loadContacts(user._id);
+      await Promise.all([this.loadFollowings(user._id), this.loadFollowers(user._id), this.loadContacts(user._id)])
     }
     catch (error) {
       this.setError(error as AxiosError);

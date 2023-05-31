@@ -3,7 +3,12 @@ import classNames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
 
 import { Button, ButtonType, ButtonVariant } from 'components';
-import { CreateEventInviteModal, CreateInviteModal, Modal, ModalProps } from 'modals';
+import {
+  CreateEventInviteModal,
+  CreateInviteModal,
+  Modal,
+  ModalProps,
+} from 'modals';
 import { Invite, Role } from 'models';
 import { InviteResponseForm } from 'forms';
 import {
@@ -42,7 +47,8 @@ export const InviteDetailsModal = ({
   invite,
   modalType = InviteModalType.Response,
 }: ViewInviteModalProps) => {
-  const { user, userIsAdmin, loadResponses, loadInvites } = useContext(UserContext);
+  const { user, userIsAdmin, loadResponses, loadInvites } =
+    useContext(UserContext);
   const [currentStep, setCurrentStep] = useState(0);
 
   const { pushSuccess, pushError } = usePushNotification();
@@ -149,7 +155,8 @@ export const InviteDetailsModal = ({
             onModalClose();
           }}
           isEdit
-        />);
+        />
+      );
     }
 
     return (
@@ -164,7 +171,7 @@ export const InviteDetailsModal = ({
         isEdit
       />
     );
-  }
+  };
 
   return (
     <>
@@ -202,8 +209,9 @@ export const InviteDetailsModal = ({
                   <div className={styles.detail}>
                     <img src={ticket} alt="Мероприятие" height={'17px'} />
                     <Link
-                      to={`/${user!.role === Role.ADMIN ? 'admin/' : ''}events/${invite.event
-                        }`}
+                      to={`/${
+                        user!.role === Role.ADMIN ? 'admin/' : ''
+                      }events/${invite.event}`}
                       onClick={onModalClose}
                     >
                       Смотреть мероприятие
@@ -221,9 +229,8 @@ export const InviteDetailsModal = ({
               </div>
             </div>
           </div>
-          {!userIsAdmin && (
-            <div className={styles.actions}>{renderActions()}</div>
-          )}
+
+          <div className={styles.actions}>{renderActions()}</div>
         </section>
 
         <section
@@ -236,7 +243,10 @@ export const InviteDetailsModal = ({
             Заявки с прикреплённым сообщением имеют больший шанс быть выбранными
           </p>
 
-          <InviteResponseForm inviteId={invite._id} onModalClose={onModalClose} />
+          <InviteResponseForm
+            inviteId={invite._id}
+            onModalClose={onModalClose}
+          />
         </section>
       </Modal>
 

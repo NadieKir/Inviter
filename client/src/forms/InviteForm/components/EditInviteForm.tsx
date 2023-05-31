@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { FormikHelpers } from 'formik';
+import dayjs from 'dayjs';
 
 import { usePushNotification } from 'common/hooks';
-import { City, Invite, InviteType } from 'models';
+import { City, Invite } from 'models';
 import {
   AdditionalInviteFields,
   InviteFormData,
@@ -12,7 +13,6 @@ import {
 } from 'types';
 import { InviteForm } from 'forms';
 import { CreateOrEditInviteFormProps } from './types';
-import dayjs from 'dayjs';
 import { updateInvite } from 'api';
 
 type EditInviteFormProps = CreateOrEditInviteFormProps & {
@@ -22,14 +22,6 @@ type EditInviteFormProps = CreateOrEditInviteFormProps & {
 export const EditInviteForm = observer(
   ({ invite, onSubmit }: EditInviteFormProps) => {
     const { pushSuccess } = usePushNotification();
-
-    // const userStore = useContext(UserContext);
-    // const { meetup, isLoading, error, publishMeetup } = useLocalObservable(
-    //   () => new MeetupStore(id!, userStore),
-    // );
-
-    // if (isLoading) return <FormattedMessage id="loading" />;
-    // if (!meetup) throw error;
 
     const initialValuesRequiredStep: RequiredInviteFields = {
       [InviteFormFields.Subject]: invite.subject,

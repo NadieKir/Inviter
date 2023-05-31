@@ -34,11 +34,13 @@ export type SearchEventFiltersFormFields = {
   type?: SelectOption<string> | null;
   city?: SelectOption<string> | null;
   date?: string | null;
+  keyWord?: string | null;
 }
 
 export type SearchEventFilters = {
   type?: string | null;
   city?: string | null;
   date?: string | null;
+  keyWord?: string | null;
   tabType?: 'current' | 'past' | 'draft' | null;
 }
