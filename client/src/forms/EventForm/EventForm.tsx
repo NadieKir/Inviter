@@ -158,7 +158,7 @@ export const EventForm = observer(
     handleSubmit,
     touchedNotRequired = false,
     formHeading = 'Создать событие',
-    formSubmitButtonTitle = 'Создать'
+    formSubmitButtonTitle = 'Создать',
   }: EventFormProps) => {
     const steps: IStep[] = [
       {
@@ -198,28 +198,6 @@ export const EventForm = observer(
 
       handleSubmit(resultValues, actions);
     };
-
-    // const onExtraBtnClick = async (
-    //   values: EventFormData,
-    //   actions: FormikHelpers<EventFormData>,
-    // ) => {
-    //   const formattedDate = formatToOnlyDate(values[EventFormFields.Date]);
-    //   const formattedTime = formatToOnlyTime(values[EventFormFields.Time]);
-
-    //   const resultValues = {
-    //     ...values,
-    //     [EventFormFields.Date]: formattedDate,
-    //     [EventFormFields.Time]: formattedTime,
-    //     [EventFormFields.Type]: (
-    //       values[EventFormFields.Type] as SelectOption<InviteType>
-    //     ).value,
-    //     [EventFormFields.City]: (
-    //       values[EventFormFields.City] as SelectOption<City>
-    //     ).value,
-    //   };
-
-    //   handleSubmit(resultValues, actions);
-    // };
 
     return (
       <FormikStepper

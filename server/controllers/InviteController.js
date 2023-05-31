@@ -34,18 +34,6 @@ export const create = async (req, res) => {
   }
 };
 
-// export const getAll = async (req, res) => {
-//   try {
-//     const invites = await InviteModel.find().sort({ createdAt: -1 }).populate("creator").exec();
-//     res.json(invites);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({
-//       message: "Не удалось получить инвайты",
-//     });
-//   }
-// };
-
 export const getAllAnotherUsers = async (req, res) => {
   try {
     const currentDate = dayjs();
@@ -153,7 +141,6 @@ export const getAllAnotherUser = async (req, res) => {
       .populate("creator")
       .exec();
 
-
     // invites.forEach(async (i) => {
     //   const inviteResponses = await InviteResponseModel.find({ invite: i._id })
     //     .select(['user', 'message'])
@@ -175,26 +162,31 @@ export const getAllAnotherUser = async (req, res) => {
 
 export const getAllCurrentUser = async (req, res) => {
   try {
-    const invites = await InviteModel.find({
-      isDeleted: { $ne: true },
-      $or: [
-        { creator: req.userId },
-        { companions: req.userId },
-      ],
-    }, {}, { strict: false })
+    const invites = await InviteModel.find(
+      {
+        isDeleted: { $ne: true },
+        $or: [{ creator: req.userId }, { companions: req.userId }],
+      },
+      {},
+      { strict: false }
+    )
       .sort({ createdAt: -1 })
       .populate(["creator", "companions"])
       .lean()
       .exec();
 
     for (let i of invites) {
-      const inviteResponses = await InviteResponseModel.find({ invite: i._id }, {}, { strict: false })
-        .select(['user', 'message'])
-        .populate('user')
+      const inviteResponses = await InviteResponseModel.find(
+        { invite: i._id },
+        {},
+        { strict: false }
+      )
+        .select(["user", "message"])
+        .populate("user")
         .lean()
         .exec();
 
-      console.log(inviteResponses)
+      console.log(inviteResponses);
 
       i.responses = inviteResponses;
     }
@@ -225,7 +217,6 @@ export const updateOne = async (req, res) => {
   try {
     const inviteId = req.params.id;
 
-
     const newInvite = await InviteModel.findByIdAndUpdate(inviteId, {
       subject: capitalizeFirstLetter(req.body.subject),
       description: req.body.description,
@@ -255,7 +246,11 @@ export const approve = async (req, res) => {
   try {
     const inviteId = req.params.id;
 
-    const invite = await InviteModel.findByIdAndUpdate(inviteId, { status: InviteStatus.CLOSED }, { new: true });
+    const invite = await InviteModel.findByIdAndUpdate(
+      inviteId,
+      { status: InviteStatus.CLOSED },
+      { new: true }
+    );
 
     res.json(invite);
   } catch (err) {
@@ -269,7 +264,11 @@ export const approve = async (req, res) => {
 export const markAsPast = async (req, res) => {
   try {
     const inviteId = req.params.id;
-    const invite = await InviteModel.findByIdAndUpdate(inviteId, { status: InviteStatus.PAST }, { new: true }).exec();
+    const invite = await InviteModel.findByIdAndUpdate(
+      inviteId,
+      { status: InviteStatus.PAST },
+      { new: true }
+    ).exec();
     res.json(invite);
   } catch (err) {
     console.log(err);

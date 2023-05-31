@@ -55,6 +55,9 @@ export const ChangePasswordForm = ({ user }: ChangePasswordFormProps) => {
     try {
       setIsLoading(true);
       await updateUserPassword(payload);
+
+      pushSuccess('Пароль успешно обновлен');
+      action.resetForm();
     } catch (e) {
       const error = e as AxiosError<{ message: string }>;
       console.log(error);
@@ -63,9 +66,6 @@ export const ChangePasswordForm = ({ user }: ChangePasswordFormProps) => {
     } finally {
       setIsLoading(false);
     }
-
-    pushSuccess('Пароль успешно обновлен');
-    action.resetForm();
   };
 
   return (

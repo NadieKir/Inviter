@@ -8,6 +8,7 @@ import { UserContext } from 'common/contexts';
 
 import styles from './InviteResponseForm.module.scss';
 import info from './info.svg';
+import { usePushNotification } from 'common/hooks';
 
 interface InviteResponseFormProps {
   inviteId: string;
@@ -16,6 +17,7 @@ interface InviteResponseFormProps {
 
 export const InviteResponseForm = observer(
   ({ inviteId, onModalClose }: InviteResponseFormProps) => {
+    const { pushSuccess, pushError } = usePushNotification();
     const { respondInvite } = useContext(UserContext);
 
     const initialValues: InviteRespondFormData = {
@@ -28,9 +30,14 @@ export const InviteResponseForm = observer(
     ) => {
       try {
         await respondInvite(inviteId, values);
+        pushSuccess(
+          'Вы откликнулись на инвайт',
+          'Не забывайте проверять вкладку "Мои инвайты" для отслеживания статуса заявки',
+        );
         onModalClose();
       } catch (error) {
         console.log(error);
+        pushError('Отклик не был создан');
       } finally {
         actions.setSubmitting(false);
       }

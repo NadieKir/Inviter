@@ -1,6 +1,5 @@
 import { body } from "express-validator";
 
-// export const loginValidator = [body("email", "Неверный формат почты").isEmail()];
 export const registerValidator = [body("email", "Неверный формат почты").isEmail()];
 
 export const createInviteValidator = [

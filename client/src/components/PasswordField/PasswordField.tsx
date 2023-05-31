@@ -32,7 +32,7 @@ export const PasswordField = (props: PasswordFieldProps): JSX.Element => {
         <div className={styles.passwordField}>
           <Input
             {...field}
-            className={classNames(className)}
+            className={classNames(className, styles.passwordInput)}
             placeholder={placeholderText}
             type={isPasswordRevealed ? InputType.Text : InputType.Password}
           />
@@ -48,4 +48,3 @@ export const PasswordField = (props: PasswordFieldProps): JSX.Element => {
     </InputField>
   );
 };
-// };

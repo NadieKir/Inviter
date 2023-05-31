@@ -43,6 +43,7 @@ import { useContext } from 'react';
 import { UserContext } from 'common/contexts';
 import { updateUserProfile } from 'api';
 import { FormikHelpers } from 'formik';
+import { usePushNotification } from 'common/hooks';
 
 interface EditProfileFormProps {
   initialValues: EditProfileFormData;
@@ -206,6 +207,7 @@ export function EditProfileForm({
   onSubmit,
 }: EditProfileFormProps) {
   const userStore = useContext(UserContext);
+  const { pushSuccess, pushError } = usePushNotification();
 
   const firstStepInitialValues = {
     [RegistrationFormFields.Name]: initialValues.name,
@@ -305,12 +307,18 @@ export function EditProfileForm({
       ).map((o) => o.value),
     };
 
-    const user = await updateUserProfile(resultValues);
-    userStore.setUser(user);
+    try {
+      const user = await updateUserProfile(resultValues);
+      userStore.setUser(user);
 
-    actions.setSubmitting(false);
-
-    onSubmit();
+      pushSuccess('Данные профиля успешно изменены');
+    } catch (e) {
+      console.log(e);
+      pushError('Данные профиля не были изменены');
+    } finally {
+      actions.setSubmitting(false);
+      onSubmit();
+    }
   };
 
   return (

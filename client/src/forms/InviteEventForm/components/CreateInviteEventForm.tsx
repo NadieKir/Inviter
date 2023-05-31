@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { FormikHelpers } from 'formik';
 
-import { InviteEventFields, InviteEventFormFields } from 'types/inviteEvent';
+import { InviteEventFields, InviteEventFormFields } from 'types';
 import { usePushNotification } from 'common/hooks';
 import { InvitePayload, createInvite } from 'api';
 
@@ -10,7 +10,7 @@ import { InviteEventForm } from '../InviteEventForm';
 
 export const CreateInviteEventForm = observer(
   ({ event, onSubmit }: CreateOrEditInviteEventFormProps) => {
-    const { pushSuccess } = usePushNotification();
+    const { pushSuccess, pushError } = usePushNotification();
 
     const initialValues: InviteEventFields = {
       [InviteEventFormFields.Subject]: '',
@@ -36,11 +36,19 @@ export const CreateInviteEventForm = observer(
         companionGender: values.companionGender,
       };
 
-      await createInvite(invite);
-
-      actions.setSubmitting(false);
-      pushSuccess('Инвайт успешно создан');
-      onSubmit();
+      try {
+        await createInvite(invite);
+        pushSuccess(
+          'Инвайт на это событие успешно создан',
+          'Не забывайте проверять вкладку "Мои инвайты" для подбора компании',
+        );
+      } catch (e) {
+        console.log(e);
+        pushError('При создании инвайта произошла ошибка');
+      } finally {
+        actions.setSubmitting(false);
+        onSubmit();
+      }
     };
 
     return (

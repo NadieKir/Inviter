@@ -56,11 +56,6 @@ export const ImageUploader = ({
 
               setFieldValue(name, formData);
               setImageData(image);
-              console.log(image);
-              // const { data } = await httpClient.post('/uploads', formData);
-
-              // setImageSrc(data.url);
-              // setFieldValue(name, data.url);
             }
           };
 

@@ -286,13 +286,11 @@ export const updateProfile = async (req, res) => {
 export const updatePassword = async (req, res) => {
   try {
     const userId = req.params.userId;
-
     const user = await UserModel.findById(userId, { passwordHash: 1 }).lean();
 
     const salt = await bcrypt.genSalt(10);
 
     const oldPassword = req.body.oldPassword;
-
     const isValidPass = await bcrypt.compare(oldPassword, user.passwordHash);
 
     if (!isValidPass) {
@@ -370,8 +368,8 @@ export const checkEmail = async (req, res) => {
 export const deleteOne = async (req, res) => {
   try {
     const userId = req.params.userId;
+
     await UserModel.updateOne({ _id: userId }, { isDeleted: true });
-    // await UserModel.deleteOne({ _id: userId });
     await InviteModel.updateMany({ creator: userId }, { isDeleted: true });
 
     res.json({

@@ -1,8 +1,8 @@
-import { observer, useLocalObservable } from 'mobx-react-lite';
-import { FormikHelpers } from 'formik';
 import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+import { FormikHelpers } from 'formik';
 
-import { City, InviteType } from 'models';
+import { InviteType } from 'models';
 import {
   AdditionalInviteFields,
   InviteFormData,
@@ -13,12 +13,12 @@ import {
 import { InviteForm } from 'forms';
 import { createInvite } from 'api';
 import { UserContext } from 'common/contexts';
-
 import { CreateOrEditInviteFormProps } from './types';
-
+import { usePushNotification } from 'common/hooks';
 
 export const CreateInviteForm = observer(
   ({ onSubmit }: CreateOrEditInviteFormProps) => {
+    const { pushSuccess, pushError } = usePushNotification();
     const { user } = useContext(UserContext);
 
     if (!user) {
@@ -46,9 +46,14 @@ export const CreateInviteForm = observer(
     ) => {
       try {
         await createInvite(values);
+        pushSuccess(
+          'Инвайт успешно создан',
+          'Не забывайте проверять вкладку "Мои инвайты" для подбора компании',
+        );
         onSubmit();
       } catch (error) {
         console.log(error);
+        pushError('Инвайт не был создан');
       } finally {
         actions.setSubmitting(false);
       }

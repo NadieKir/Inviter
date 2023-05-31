@@ -11,7 +11,6 @@ import { UserContext } from 'common/contexts';
 
 import styles from './EditAdminProfileForm.module.scss';
 
-
 interface EditAdminProfileFormProps {
   initialValues: EditAdminProfileFormData;
   onSubmit: () => void;
@@ -27,8 +26,6 @@ export const EditAdminProfileForm = ({
     [RegistrationFormFields.Name]: Yup.string().required('Введите имя'),
     [RegistrationFormFields.Login]: Yup.string().required('Введите логин'),
   });
-
-  // TODO: make it work))
 
   const handleProfileChange = async (
     values: EditAdminProfileFormData,

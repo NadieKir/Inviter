@@ -35,10 +35,10 @@ export const ContactsPage = observer(() => {
     loadContacts,
   } = useContext(UserContext);
 
-  const [contactsToShow, setContactsToShow] = useState(userContacts);
-
   if (isLoading) return <Loader />;
   if (!user) throw error;
+
+  const [contactsToShow, setContactsToShow] = useState(userContacts);
 
   const handleSearch = (values: { query: string }) => {
     setContactsToShow(

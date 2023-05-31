@@ -80,7 +80,6 @@ app.get("/contacts", checkAuth, ContactController.getContacts);
 app.get("/contacts/:userId", checkAuth, ContactController.getAnotherUserContacts);
 app.delete("/contacts/:userId", checkAuth, ContactController.deleteContact);
 
-// app.get("/invites", checkAuth, InviteController.getAll);
 app.get("/invites/another", checkAuth, InviteController.getAllAnotherUsers);
 app.get("/invites/another/:userId", checkAuth, InviteController.getAllAnotherUser);
 app.get("/invites/current", checkAuth, InviteController.getAllCurrentUser);
@@ -104,7 +103,6 @@ app.patch(
   handleValidationErrors,
   InviteController.update
 );
-// app.delete("/invites/:id", checkAuth, InviteController.remove);
 
 app.get("/invite-responses/current", checkAuth, InviteResponseController.getAllCurrentUser);
 app.post("/invite-responses/:id", checkAuth, InviteResponseController.create);

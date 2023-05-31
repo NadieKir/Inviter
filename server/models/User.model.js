@@ -80,18 +80,6 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    // contacts: {
-    //   type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    //   default: [],
-    // },
-    // followers: {
-    //   type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    //   default: [],
-    // },
-    // followings: {
-    //   type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    //   default: [],
-    // },
   },
   {
     timestamps: true,
