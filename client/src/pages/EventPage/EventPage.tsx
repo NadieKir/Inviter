@@ -25,7 +25,7 @@ import calendar from 'assets/images/calendar.svg';
 export const EventPage = observer(() => {
   const { id } = useParams();
 
-  const { user, userIsCreatorInvites } = useContext(UserContext);
+  const { user, userIsCreatorInvites, loadInvites } = useContext(UserContext);
 
   const { event, eventInvites, error, isLoading } = useLocalObservable(
     () => new EventStore(id!),
@@ -117,9 +117,14 @@ export const EventPage = observer(() => {
       </section>
 
       <CreateEventInviteModal
-        event={event}
+        event={event._id}
         isShowing={isCreateModalOpen}
         onClose={toggleCreateModal}
+        onSubmit={async () => {
+          toggleCreateModal();
+
+          await loadInvites();
+        }}
       />
     </>
   );

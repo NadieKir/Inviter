@@ -16,5 +16,5 @@ export const useEvent = (eventId: string) => {
         })()
     }, [eventId]);
 
-    return { followingInvites: event, isFollowingsLoading: isEventLoading };
+    return { event, isEventLoading };
 }

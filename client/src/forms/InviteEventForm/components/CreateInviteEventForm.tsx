@@ -3,11 +3,10 @@ import { FormikHelpers } from 'formik';
 
 import { InviteEventFields, InviteEventFormFields } from 'types/inviteEvent';
 import { usePushNotification } from 'common/hooks';
+import { InvitePayload, createInvite } from 'api';
 
 import { CreateOrEditInviteEventFormProps } from './types';
 import { InviteEventForm } from '../InviteEventForm';
-import { InvitePayload, createInvite } from 'api';
-import { InviteFormData } from 'types';
 
 export const CreateInviteEventForm = observer(
   ({ event, onSubmit }: CreateOrEditInviteEventFormProps) => {

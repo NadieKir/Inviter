@@ -25,6 +25,7 @@ interface InviteEventFormProps {
     values: InviteEventFields,
     actions: FormikHelpers<InviteEventFields>,
   ) => Promise<void>;
+  formSubmitLabel?: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -40,6 +41,7 @@ export const InviteEventForm = observer(
   ({
     initialValues,
     handleSubmit,
+    formSubmitLabel = 'Создать'
   }: InviteEventFormProps) => {
     const onSubmit = async (
       values: InviteEventFields,
@@ -90,7 +92,7 @@ export const InviteEventForm = observer(
                 width={ButtonWidth.Small}
                 disabled={!props.isValid || !props.dirty}
               >
-                Создать
+                {formSubmitLabel}
               </Button>
             </Form>
           )

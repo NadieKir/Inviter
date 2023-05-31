@@ -12,7 +12,13 @@ import { observer } from 'mobx-react-lite';
 export const ClosedInvites = observer(() => {
   const { user, userInvites, loadInvites } = useContext(UserContext);
 
-  let invites = userInvites.filter(i => i.status === InviteStatus.CLOSED || i.companions.map(c => c._id).includes(user?._id!));
+  let invites = userInvites.filter(i => {
+    if (i.date) {
+      return i.status === InviteStatus.CLOSED && new Date(i.date) > new Date();
+    }
+
+    return i.status === InviteStatus.CLOSED || i.companions.map(c => c._id).includes(user?._id!)
+  });
 
   return (
     <ul className={styles.closedInvites}>

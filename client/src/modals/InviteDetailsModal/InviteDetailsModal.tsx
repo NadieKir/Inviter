@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
 
 import { Button, ButtonType, ButtonVariant } from 'components';
-import { CreateInviteModal, Modal, ModalProps } from 'modals';
+import { CreateEventInviteModal, CreateInviteModal, Modal, ModalProps } from 'modals';
 import { Invite, Role } from 'models';
 import { InviteResponseForm } from 'forms';
 import {
@@ -132,6 +132,40 @@ export const InviteDetailsModal = ({
     }
   };
 
+  const renderModal = () => {
+    if (!invite) {
+      return null;
+    }
+
+    if (invite.event) {
+      return (
+        <CreateEventInviteModal
+          invite={invite}
+          event={invite.event as string}
+          isShowing={isEditInviteModalOpen}
+          onClose={toggleEditInviteModal}
+          onSubmit={async () => {
+            await loadInvites();
+            onModalClose();
+          }}
+          isEdit
+        />);
+    }
+
+    return (
+      <CreateInviteModal
+        invite={invite}
+        isShowing={isEditInviteModalOpen}
+        onClose={toggleEditInviteModal}
+        onSubmit={async () => {
+          await loadInvites();
+          onModalClose();
+        }}
+        isEdit
+      />
+    );
+  }
+
   return (
     <>
       <Modal isShowing={isShowing} onClose={onModalClose}>
@@ -170,6 +204,7 @@ export const InviteDetailsModal = ({
                     <Link
                       to={`/${user!.role === Role.ADMIN ? 'admin/' : ''}events/${invite.event
                         }`}
+                      onClick={onModalClose}
                     >
                       Смотреть мероприятие
                     </Link>
@@ -205,18 +240,7 @@ export const InviteDetailsModal = ({
         </section>
       </Modal>
 
-      {invite && (
-        <CreateInviteModal
-          invite={invite}
-          isShowing={isEditInviteModalOpen}
-          onClose={toggleEditInviteModal}
-          onSubmit={async () => {
-            await loadInvites();
-            onModalClose();
-          }}
-          isEdit
-        />
-      )}
+      {renderModal()}
     </>
   );
 };
