@@ -8,16 +8,31 @@ import { ClosedInviteCard } from './components/ClosedInviteCard/ClosedInviteCard
 import styles from './ClosedInvites.module.scss';
 import { observer } from 'mobx-react-lite';
 
-
 export const ClosedInvites = observer(() => {
   const { user, userInvites, loadInvites } = useContext(UserContext);
 
-  let invites = userInvites.filter(i => {
+  // let invites = userInvites.filter(i => {
+  //   if (i.date) {
+  //     return i.status === InviteStatus.CLOSED && new Date(i.date) > new Date();
+  //   }
+
+  //   return i.status === InviteStatus.CLOSED || i.companions.map(c => c._id).includes(user?._id!)
+  // });
+  let invites = userInvites.filter((i) => {
     if (i.date) {
-      return i.status === InviteStatus.CLOSED && new Date(i.date) > new Date();
+      return (
+        (i.status === InviteStatus.CLOSED && new Date(i.date) > new Date()) ||
+        (i.status === InviteStatus.CLOSED &&
+          new Date(i.date) > new Date() &&
+          i.companions.map((c) => c._id).includes(user?._id!))
+      );
     }
 
-    return i.status === InviteStatus.CLOSED || i.companions.map(c => c._id).includes(user?._id!)
+    return (
+      (i.status === InviteStatus.CLOSED &&
+        i.companions.map((c) => c._id).includes(user?._id!)) ||
+      i.status === InviteStatus.CLOSED
+    );
   });
 
   return (

@@ -2,7 +2,7 @@ import { groupBy } from 'lodash';
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { InviteEventResponse, mockedInviteResponses } from 'models';
+import { InviteEventResponse } from 'models';
 import { UserContext } from 'common/contexts';
 
 import { InviteResponseCard } from './components/InviteResponseCard/InviteResponseCard';
@@ -12,8 +12,6 @@ import styles from './UserResponses.module.scss';
 
 export const UserResponses = observer(() => {
   const { userResponses } = useContext(UserContext);
-
-  console.log(userResponses);
 
   const eventResponses = userResponses.filter((r) => r.invite.event);
 
@@ -29,11 +27,13 @@ export const UserResponses = observer(() => {
     inviters: gr.flatMap((r) => r.invite),
   }));
 
-  console.log(inviteEventResponses);
+  const inviteEventIds = inviteEventResponses
+    .flatMap((i) => i.inviters)
+    .map((i) => i._id);
 
-  const inviteEventIds = inviteEventResponses.flatMap(i => i.inviters).map(i => i._id);
-
-  const filteredResponses = userResponses.filter(r => !inviteEventIds.includes(r.invite._id))
+  const filteredResponses = userResponses.filter(
+    (r) => !inviteEventIds.includes(r.invite._id),
+  );
 
   const responses = [...filteredResponses, ...inviteEventResponses].sort(
     (a, b) => {

@@ -164,6 +164,8 @@ export const getAllAnotherUser = async (req, res) => {
         }
       );
 
+    console.log(filters);
+
     const invites = await InviteModel.aggregate([
       {
         $lookup: {

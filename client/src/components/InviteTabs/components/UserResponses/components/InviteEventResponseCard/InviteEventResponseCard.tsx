@@ -25,7 +25,7 @@ export function InviteEventResponseCard({ inviteEventResponse }: Props) {
             {wordFormatDate(inviteInfo.date, inviteInfo.time)}
           </span>
           <span className={styles.subject}>
-            Хочет{' '}
+            Посетить{' '}
             <span className="blue">
               {lowercaseFirstLetter(inviteInfo.subject)}
             </span>
