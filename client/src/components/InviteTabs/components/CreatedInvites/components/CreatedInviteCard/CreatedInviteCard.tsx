@@ -41,7 +41,7 @@ export function CreatedInviteCard({ invite, onAction }: Props) {
 
   const { companions, responses } = invite;
 
-  const event = invite.event as string;
+  const event = invite.event;
 
   const companionsAmount = companions?.length ?? 0;
   const responsesAmount = responses?.length ?? 0;

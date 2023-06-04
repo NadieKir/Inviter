@@ -11,9 +11,13 @@ import styles from './CreatedInvites.module.scss';
 export const CreatedInvites = observer(() => {
   const { user, userInvites, loadInvites } = useContext(UserContext);
 
-  const createdInvites = userInvites.filter(i => i.creator._id === user?._id && i.status === InviteStatus.CREATED);
+  const createdInvites = userInvites.filter(i => {
+    if (i.date) {
+      return i.creator._id === user?._id && i.status === InviteStatus.CREATED && new Date(i.date) > new Date()
+    }
 
-  console.log(createdInvites);
+    return i.creator._id === user?._id && i.status === InviteStatus.CREATED
+  });
 
   return (
     <ul className={styles.createdInvites}>

@@ -42,6 +42,10 @@ export const InviteCard = observer(
     const [isShowingModal, toggleModal] = useModal();
     const { userResponses, userIsAdmin } = useContext(UserContext);
 
+    const inviteSubject = invite.event ? invite.event.name : invite.subject;
+    const inviteDate = invite.event ? invite.event.date : invite.date;
+    const inviteTime = invite.event ? invite.event.time : invite.time;
+
     return (
       <>
         <li
@@ -66,12 +70,12 @@ export const InviteCard = observer(
           <div className={styles.inviteInfo}>
             <div className={styles.dateWrapper}>
               <img src={calendar} alt="Календарь" width={'13px'} />
-              {wordFormatDate(invite.date, invite.time)}
+              {wordFormatDate(inviteDate, inviteTime)}
             </div>
             <h3 className={styles.heading}>
               {invite.event ? 'Посетить ' : 'Хочет '}
               <span className={styles.blue}>
-                {lowercaseFirstLetter(invite.subject)}
+                {lowercaseFirstLetter(inviteSubject)}
               </span>
             </h3>
             <p className={styles.description}>

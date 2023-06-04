@@ -119,7 +119,7 @@ export const getFollowingsInvites = async (req, res) => {
 
     const followingsInvites = await InviteModel.find({ creator: { $in: followingUserIds } })
       .sort({ createdAt: -1 })
-      .populate("creator")
+      .populate(["creator", "event"])
       .exec();
 
     res.json(followingsInvites);

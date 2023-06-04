@@ -1,3 +1,4 @@
+import { Event } from "./event.model";
 import { Invite } from "./invite.model";
 import { User } from "./user.model";
 
@@ -9,6 +10,6 @@ export interface InviteResponse {
 }
 
 export interface InviteEventResponse {
-  event: string;
+  event: Event;
   inviters: Invite[];
 }

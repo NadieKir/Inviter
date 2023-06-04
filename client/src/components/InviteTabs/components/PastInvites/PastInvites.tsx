@@ -13,17 +13,14 @@ export function PastInvites() {
   const invites = userInvites.filter((i) => {
     if (i.date) {
       return (
-        ((i.status === InviteStatus.CLOSED || new Date(i.date) < new Date()) &&
-          i.companions.map((c) => c._id).includes(user?._id!)) ||
-        i.status === InviteStatus.CLOSED ||
-        new Date(i.date) < new Date()
+        (new Date(i.date) < new Date() && i.companions.map((c) => c._id).includes(user?._id!)) ||
+        (new Date(i.date) < new Date() && i.creator._id === user?._id && i.companions.length > 0)
       );
     }
 
     return (
-      (i.status === InviteStatus.PAST &&
-        i.companions.map((c) => c._id).includes(user?._id!)) ||
-      i.status === InviteStatus.PAST
+      (i.status === InviteStatus.PAST && i.companions.map((c) => c._id).includes(user?._id!)) ||
+      (i.status === InviteStatus.PAST && i.creator._id === user?._id && i.companions.length > 0)
     );
   });
 

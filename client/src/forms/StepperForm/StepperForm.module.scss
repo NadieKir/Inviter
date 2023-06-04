@@ -31,5 +31,6 @@
 }
 
 form div.hide {
-  display: none;
+  height: 0;
+  overflow-y: scroll;
 }

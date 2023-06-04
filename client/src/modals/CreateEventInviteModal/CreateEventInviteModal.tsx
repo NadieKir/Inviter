@@ -4,11 +4,9 @@ import { Event, Invite } from 'models';
 import { wordFormatDate } from 'common/helpers';
 
 import styles from './CreateEventInviteModal.module.scss';
-import { useEvent } from 'common/hooks';
-import { Loader } from 'components';
 
 interface ViewInviteEventModalProps extends ModalProps {
-  event: string;
+  event: Event;
   invite?: Invite;
   isEdit?: boolean;
   onSubmit?: () => void;
@@ -22,15 +20,6 @@ export const CreateEventInviteModal = ({
   invite,
   isEdit = false,
 }: ViewInviteEventModalProps) => {
-  const { event: eventModel, isEventLoading } = useEvent(event as string);
-
-  if (!eventModel) {
-    return null;
-  }
-
-  if (isEventLoading) {
-    return <Loader />;
-  }
 
   return (
     <Modal isShowing={isShowing} onClose={onClose}>
@@ -41,23 +30,23 @@ export const CreateEventInviteModal = ({
         <div className={styles.eventInfo}>
           <div className={styles.eventInfoRow}>
             <span className={styles.eventInfoRowTitle}>Событие:</span>
-            <span>{eventModel.name}</span>
+            <span>{event.name}</span>
           </div>
           <div className={styles.eventInfoRow}>
             <span className={styles.eventInfoRowTitle}>Где:</span>
             <span>
-              {eventModel.city}, {eventModel.address}
+              {event.city}, {event.address}
             </span>
           </div>
           <div className={styles.eventInfoRow}>
             <span className={styles.eventInfoRowTitle}>Когда:</span>
-            <span>{wordFormatDate(eventModel.date, eventModel.time)}</span>
+            <span>{wordFormatDate(event.date, event.time)}</span>
           </div>
         </div>
         {isEdit ? (
-          <EditInviteEventForm event={eventModel} invite={invite!} onSubmit={() => onSubmit?.()} />
+          <EditInviteEventForm event={event} invite={invite!} onSubmit={() => onSubmit?.()} />
         ) : (
-          <CreateInviteEventForm event={eventModel} onSubmit={() => onSubmit?.()} />
+          <CreateInviteEventForm event={event} onSubmit={() => onSubmit?.()} />
         )}
       </div>
     </Modal>

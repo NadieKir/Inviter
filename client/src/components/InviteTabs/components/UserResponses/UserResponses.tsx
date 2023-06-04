@@ -15,15 +15,19 @@ export const UserResponses = observer(() => {
 
   const eventResponses = userResponses.filter((r) => r.invite.event);
 
+  console.log(eventResponses);
+
   const groupedEventResponses = groupBy(
     eventResponses,
-    (r) => r.invite.event as string,
+    (r) => r.invite.event?._id
   );
+
+  console.log(groupedEventResponses);
 
   const inviteEventResponses: InviteEventResponse[] = Object.values(
     groupedEventResponses,
   ).map((gr) => ({
-    event: gr[0].invite.event as string,
+    event: gr[0].invite.event!,
     inviters: gr.flatMap((r) => r.invite),
   }));
 
@@ -41,13 +45,13 @@ export const UserResponses = observer(() => {
       let bDate: string | number;
 
       if ('inviters' in a) {
-        aDate = a.inviters[0].date!;
+        aDate = a.event.date!;
       } else {
         aDate = a.invite.date ?? 0;
       }
 
       if ('inviters' in b) {
-        bDate = b.inviters[0].date!;
+        bDate = b.event.date!;
       } else {
         bDate = b.invite.date ?? 0;
       }
@@ -60,7 +64,7 @@ export const UserResponses = observer(() => {
     <div className={styles.userResponses}>
       {responses.map((r) =>
         'inviters' in r ? (
-          <InviteEventResponseCard key={r.event} inviteEventResponse={r} />
+          <InviteEventResponseCard key={r.event._id} inviteEventResponse={r} />
         ) : (
           <InviteResponseCard key={r.invite._id} invite={r.invite} />
         ),

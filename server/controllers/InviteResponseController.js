@@ -98,7 +98,7 @@ export const getAllCurrentUser = async (req, res) => {
       .populate(
         {
           path: 'invite',
-          populate: ['creator', 'companions']
+          populate: ['creator', 'companions', 'event']
         })
       .exec();
 

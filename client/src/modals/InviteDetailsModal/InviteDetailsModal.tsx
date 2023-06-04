@@ -147,7 +147,7 @@ export const InviteDetailsModal = ({
       return (
         <CreateEventInviteModal
           invite={invite}
-          event={invite.event as string}
+          event={invite.event}
           isShowing={isEditInviteModalOpen}
           onClose={toggleEditInviteModal}
           onSubmit={async () => {
@@ -173,6 +173,12 @@ export const InviteDetailsModal = ({
     );
   };
 
+  const inviteSubject = invite.event ? invite.event.name : invite.subject;
+  const inviteDate = invite.event ? invite.event.date : invite.date;
+  const inviteTime = invite.event ? invite.event.time : invite.time;
+  const inviteCity = invite.event ? invite.event.city : invite.city;
+  const inviteAddress = invite.event ? invite.event.address : invite.address;
+
   return (
     <>
       <Modal isShowing={isShowing} onClose={onModalClose}>
@@ -197,7 +203,7 @@ export const InviteDetailsModal = ({
               <h1 className={styles.heading}>
                 {invite.event ? 'Посетить' : 'Хочет'}{' '}
                 <span className="blue">
-                  {lowercaseFirstLetter(invite.subject)}
+                  {lowercaseFirstLetter(inviteSubject)}
                 </span>
               </h1>
               <p className={styles.whoWithDescription}>
@@ -209,9 +215,7 @@ export const InviteDetailsModal = ({
                   <div className={styles.detail}>
                     <img src={ticket} alt="Мероприятие" height={'17px'} />
                     <Link
-                      to={`/${
-                        user!.role === Role.ADMIN ? 'admin/' : ''
-                      }events/${invite.event}`}
+                      to={`/${user!.role === Role.ADMIN ? 'admin/' : ''}events/${invite.event}`}
                       onClick={onModalClose}
                     >
                       Смотреть мероприятие
@@ -220,11 +224,11 @@ export const InviteDetailsModal = ({
                 )}
                 <div className={styles.detail}>
                   <img src={calendar} alt="Дата и время" height={'17px'} />
-                  {wordFormatDate(invite.date, invite.time)}
+                  {wordFormatDate(inviteDate, inviteTime)}
                 </div>
                 <div className={styles.detail}>
                   <img src={geo} alt="Локация" height={'17px'} />
-                  {invite.city} {invite.address && `, ${invite.address}`}
+                  {inviteCity} {inviteAddress && `, ${inviteAddress}`}
                 </div>
               </div>
             </div>

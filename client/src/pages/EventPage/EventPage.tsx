@@ -81,7 +81,7 @@ export const EventPage = observer(() => {
               className={styles.eventPhoto}
             />
             {user.role === Role.USER &&
-              (userIsCreatorInvites.map((i) => i.event).includes(event._id) ? (
+              (userIsCreatorInvites.map((i) => i.event?._id).includes(event._id) ? (
                 <Button variant={ButtonVariant.Secondary} disabled>
                   Вы создали инвайт
                 </Button>
@@ -117,7 +117,7 @@ export const EventPage = observer(() => {
       </section>
 
       <CreateEventInviteModal
-        event={event._id}
+        event={event}
         isShowing={isCreateModalOpen}
         onClose={toggleCreateModal}
         onSubmit={async () => {

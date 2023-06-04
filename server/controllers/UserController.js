@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model.js";
@@ -145,7 +146,10 @@ export const getOne = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const userLoginOrName = req.query.nameOrLogin;
-    let filters = { isDeleted: { $eq: false } };
+    let filters = {
+      isDeleted: { $eq: false },
+      creator: { $ne: req.userId },
+    };
 
     if (userLoginOrName) {
       filters = {

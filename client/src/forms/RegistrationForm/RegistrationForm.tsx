@@ -258,7 +258,7 @@ const secondStepFields = () => (
 );
 
 const thirdStepInitialValues: RegistrationThirdStepFormData = {
-  [RegistrationFormFields.WelcomeMessage]: '',
+  [RegistrationFormFields.WelcomeMessage]: 'afasdfasdfadfadfadfasdfasdfadfasdfadfasdfasdfasdfasdfasdf asdf asdf asdf asdf asdf asdf asdf asdfa d',
   [RegistrationFormFields.ConnectionMethods]: '',
   [RegistrationFormFields.PreferredAge]: '',
   [RegistrationFormFields.Image]: '',

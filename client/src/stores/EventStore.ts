@@ -36,7 +36,11 @@ export class EventStore {
 
     try {
       this.setEvent(await getEvent(id));
-      this.setEventInvites(await getEventInvites(id));
+
+      const eventInvites = await getEventInvites(id);
+      eventInvites.forEach(i => i.event = this.event as Event);
+
+      this.setEventInvites(eventInvites);
     }
     catch (error) {
       this.setError(error as AxiosError);

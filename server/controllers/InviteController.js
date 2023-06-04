@@ -76,6 +76,21 @@ export const getAllAnotherUsers = async (req, res) => {
       {
         $unwind: {
           path: "$creator",
+          preserveNullAndEmptyArrays: true
+        },
+      },
+      {
+        $lookup: {
+          from: "events",
+          localField: "event",
+          foreignField: "_id",
+          as: "event",
+        },
+      },
+      {
+        $unwind: {
+          path: "$event",
+          preserveNullAndEmptyArrays: true
         },
       },
       {
@@ -164,8 +179,6 @@ export const getAllAnotherUser = async (req, res) => {
         }
       );
 
-    console.log(filters);
-
     const invites = await InviteModel.aggregate([
       {
         $lookup: {
@@ -178,6 +191,20 @@ export const getAllAnotherUser = async (req, res) => {
       {
         $unwind: {
           path: "$creator",
+        },
+      },
+      {
+        $lookup: {
+          from: "events",
+          localField: "event",
+          foreignField: "_id",
+          as: "event",
+        },
+      },
+      {
+        $unwind: {
+          path: "$event",
+          preserveNullAndEmptyArrays: true
         },
       },
       {
@@ -269,7 +296,7 @@ export const getAllCurrentUser = async (req, res) => {
       { strict: false }
     )
       .sort({ createdAt: -1 })
-      .populate(["creator", "companions"])
+      .populate(["creator", "companions", "event"])
       .lean()
       .exec();
 

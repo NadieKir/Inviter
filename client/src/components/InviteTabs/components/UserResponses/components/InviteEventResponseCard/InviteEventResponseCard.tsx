@@ -13,7 +13,6 @@ interface Props {
 export function InviteEventResponseCard({ inviteEventResponse }: Props) {
   const event = inviteEventResponse.event!;
   const inviters = inviteEventResponse.inviters;
-  const inviteInfo = inviters[0];
   const invitersAmount = inviters?.length ?? 0;
 
   return (
@@ -22,12 +21,12 @@ export function InviteEventResponseCard({ inviteEventResponse }: Props) {
         <div className={styles.headingInfo}>
           <span className={styles.date}>
             <img src={calendar} alt="calendar" height="13px" />
-            {wordFormatDate(inviteInfo.date, inviteInfo.time)}
+            {wordFormatDate(event.date, event.time)}
           </span>
           <span className={styles.subject}>
             Посетить{' '}
             <span className="blue">
-              {lowercaseFirstLetter(inviteInfo.subject)}
+              {lowercaseFirstLetter(event.name)}
             </span>
           </span>
         </div>
