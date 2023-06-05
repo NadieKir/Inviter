@@ -37,7 +37,6 @@ export const AdminInvitesPage = observer(() => {
               <InviteCard
                 key={invite._id}
                 invite={invite}
-                isAdmin
                 onInviteAction={() => getAnotherUsersInvites(currentFilters)}
               />
             ))

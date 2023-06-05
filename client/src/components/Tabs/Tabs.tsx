@@ -9,6 +9,7 @@ export type TabDescriptor = {
   label: string;
   link: string;
   component: JSX.Element;
+  description?: string;
 };
 
 interface TabsProps {
@@ -22,6 +23,7 @@ export const Tabs = ({ descriptor }: TabsProps) => {
         <NavLink
           key={tab.link}
           to={tab.link}
+          title={tab.description}
           className={({ isActive }) =>
             classNames(styles.tab, {
               [styles.active]: isActive,

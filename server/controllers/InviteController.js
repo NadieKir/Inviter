@@ -76,7 +76,7 @@ export const getAllAnotherUsers = async (req, res) => {
       {
         $unwind: {
           path: "$creator",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -90,7 +90,7 @@ export const getAllAnotherUsers = async (req, res) => {
       {
         $unwind: {
           path: "$event",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -101,14 +101,7 @@ export const getAllAnotherUsers = async (req, res) => {
             {
               $or: [
                 {
-                  $or: [
-                    {
-                      date: { $exists: false },
-                    },
-                    {
-                      time: { $exists: false },
-                    },
-                  ],
+                  date: { $exists: false },
                 },
                 {
                   $or: [
@@ -204,7 +197,7 @@ export const getAllAnotherUser = async (req, res) => {
       {
         $unwind: {
           path: "$event",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -215,14 +208,7 @@ export const getAllAnotherUser = async (req, res) => {
             {
               $or: [
                 {
-                  $or: [
-                    {
-                      date: { $exists: false },
-                    },
-                    {
-                      time: { $exists: false },
-                    },
-                  ],
+                  date: { $exists: false },
                 },
                 {
                   $or: [

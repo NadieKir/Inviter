@@ -10,26 +10,27 @@ import { InviteDetailsModal, InviteModalType } from 'modals';
 import {
   concatUserNameAndAge,
   getInviteCompanionsInfoString,
+  getOverlapPercent,
   lowercaseFirstLetter,
   wordFormatDate,
 } from 'common/helpers';
 import { UserContext } from 'common/contexts';
+import { SERVER_URL } from 'common/constants';
 
 import styles from './InviteCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
-import { SERVER_URL } from 'common/constants';
 
 export enum InviteCardVariant {
   BIG_USER = 'Big User',
   NO_USER = 'No User',
   SMALL_USER = 'Small User',
+  EVENT_INVITE = 'Event Invite',
 }
 
 interface InviteCardProps {
   invite: Invite;
   variant?: InviteCardVariant;
   onInviteAction?: (eventId: string) => void;
-  isAdmin?: boolean;
 }
 
 export const InviteCard = observer(
@@ -37,14 +38,99 @@ export const InviteCard = observer(
     invite,
     onInviteAction,
     variant = InviteCardVariant.BIG_USER,
-    isAdmin = false,
   }: InviteCardProps) => {
     const [isShowingModal, toggleModal] = useModal();
-    const { userResponses, userIsAdmin } = useContext(UserContext);
+    const { user, userResponses, userIsAdmin } = useContext(UserContext);
 
     const inviteSubject = invite.event ? invite.event.name : invite.subject;
     const inviteDate = invite.event ? invite.event.date : invite.date;
     const inviteTime = invite.event ? invite.event.time : invite.time;
+
+    console.log(user!.interests, invite.creator.interests);
+
+    if (variant === InviteCardVariant.EVENT_INVITE)
+      return (
+        <>
+          <li
+            className={classNames(
+              styles.card,
+              styles.cardWide,
+              styles.cardWithoutUser,
+            )}
+          >
+            <div className={styles.wrapper}>
+              <div className={styles.userCommonWrapper}>
+                <NavLink
+                  to={`/user/${invite.creator.login}`}
+                  className={styles.creator}
+                >
+                  <img
+                    className={styles.creatorImage}
+                    src={SERVER_URL + invite.creator.image}
+                    alt={invite.creator.name}
+                  />
+                  <span className={styles.creatorInfo}>
+                    {concatUserNameAndAge(invite.creator)}
+                  </span>
+                </NavLink>
+                <div className={styles.commonWrapper}>
+                  <span className={styles.bold}>
+                    {getOverlapPercent(
+                      invite.creator.interests,
+                      user!.interests,
+                    )}
+                  </span>
+                  <span>общего</span>
+                </div>
+              </div>
+
+              <div className={styles.inviteInfo}>
+                <h3 className={styles.heading}>
+                  Посетит{' '}
+                  <span className="blue">
+                    {getInviteCompanionsInfoString(invite).toLowerCase()}
+                  </span>
+                </h3>
+                <p
+                  className={classNames(
+                    styles.description,
+                    styles.inviteDescription,
+                  )}
+                >
+                  {invite.description}
+                </p>
+              </div>
+            </div>
+            {userResponses
+              .map((response) => response.invite?._id)
+              .includes(invite._id) ? (
+              <Button
+                variant={ButtonVariant.Secondary}
+                height={ButtonHeight.Small}
+                disabled
+              >
+                Вы откликнулись
+              </Button>
+            ) : (
+              <Button
+                variant={ButtonVariant.Secondary}
+                height={ButtonHeight.Small}
+                onClick={toggleModal}
+              >
+                Посмотреть инвайт
+              </Button>
+            )}
+          </li>
+
+          <InviteDetailsModal
+            invite={invite}
+            isShowing={isShowingModal}
+            onClose={toggleModal}
+            onInviteAction={onInviteAction}
+            modalType={userIsAdmin ? InviteModalType.Delete : undefined}
+          />
+        </>
+      );
 
     return (
       <>

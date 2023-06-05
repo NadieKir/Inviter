@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { sortBy } from 'lodash';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
@@ -16,7 +16,7 @@ import { useModal } from 'common/hooks';
 import { getOverlapPercent, wordFormatDate } from 'common/helpers';
 import { UserContext } from 'common/contexts';
 import { SERVER_URL } from 'common/constants';
-import { Role } from 'models';
+import { Gender, Invite, Role } from 'models';
 
 import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
@@ -24,6 +24,8 @@ import calendar from 'assets/images/calendar.svg';
 
 export const EventPage = observer(() => {
   const { id } = useParams();
+  const [suitableOnly, setSuitableOnly] = useState(false);
+  const [sortedInvites, setSortedInvites] = useState<Invite[]>([]);
 
   const { user, userIsCreatorInvites, loadInvites } = useContext(UserContext);
 
@@ -33,22 +35,45 @@ export const EventPage = observer(() => {
 
   const [isCreateModalOpen, toggleCreateModal] = useModal();
 
+  useEffect(() => {
+    let invitesWithOverlapPercent: {
+      invite: Invite;
+      overlapPercent: string;
+    }[] = [];
+
+    if (eventInvites && user) {
+      if (suitableOnly) {
+        invitesWithOverlapPercent = eventInvites
+          .filter((i) => i.companionGender.includes(Gender.FEMALE))
+          .map((i) => ({
+            invite: i,
+            overlapPercent: getOverlapPercent(
+              i.creator.interests,
+              user.interests,
+            ),
+          }));
+      } else {
+        invitesWithOverlapPercent = eventInvites.map((i) => ({
+          invite: i,
+          overlapPercent: getOverlapPercent(
+            i.creator.interests,
+            user.interests,
+          ),
+        }));
+      }
+    }
+
+    const invites = sortBy(invitesWithOverlapPercent, (i) => i.overlapPercent)
+      .reverse()
+      .map((i) => i.invite);
+
+    setSortedInvites(invites);
+  }, [suitableOnly, eventInvites]);
+
   if (isLoading) return <Loader />;
   if (!event || !eventInvites || !user) throw error;
 
   const renderInvites = () => {
-    const invitesWithOverlapPercent = eventInvites.map((i) => ({
-      invite: i,
-      overlapPercent: getOverlapPercent(user.interests, i.creator.interests),
-    }));
-
-    const sortedInvites = sortBy(
-      invitesWithOverlapPercent,
-      (i) => i.overlapPercent,
-    )
-      .reverse()
-      .map((i) => i.invite);
-
     return (
       <div className={styles.invitersSection}>
         <h2 className={styles.invitersHeading}>
@@ -57,12 +82,21 @@ export const EventPage = observer(() => {
             ({isLoading ? '...' : eventInvites.length})
           </span>
         </h2>
+
+        {suitableOnly ? (
+          <button onClick={() => setSuitableOnly(false)}>Показать все</button>
+        ) : (
+          <button onClick={() => setSuitableOnly(true)}>
+            Показать только подходящие
+          </button>
+        )}
+
         <div className={styles.invitersCards}>
           {sortedInvites.map((i) => (
             <InviteCard
               key={i._id}
               invite={i}
-              variant={InviteCardVariant.SMALL_USER}
+              variant={InviteCardVariant.EVENT_INVITE}
             />
           ))}
         </div>
@@ -81,7 +115,9 @@ export const EventPage = observer(() => {
               className={styles.eventPhoto}
             />
             {user.role === Role.USER &&
-              (userIsCreatorInvites.map((i) => i.event?._id).includes(event._id) ? (
+              (userIsCreatorInvites
+                .map((i) => i.event?._id)
+                .includes(event._id) ? (
                 <Button variant={ButtonVariant.Secondary} disabled>
                   Вы создали инвайт
                 </Button>

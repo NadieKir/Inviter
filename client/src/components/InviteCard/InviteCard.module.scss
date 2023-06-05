@@ -31,14 +31,14 @@
   align-items: center;
 
   &Image {
-      width: 25px;
-      height: 25px;
-      border-radius: 50px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
   }
 
   &Info {
-      font-weight: 400;
-      font-size: 12px;
+    font-weight: 400;
+    font-size: 12px;
   }
 }
 
@@ -109,4 +109,37 @@
   font-size: 11px;
   
   color: $black-color;
+}
+
+
+.userCommonWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commonWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0px;
+  align-items: center;
+
+  font-weight: 400;
+  font-size: 10px;
+  color: $blue-color;
+}
+
+.bold {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.inviteDescription {
+  @include multiline-ellipsis(6);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
 }
