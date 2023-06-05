@@ -80,11 +80,41 @@
 
 .invitersHeading {
   @include base-wrapper();
-  padding: 15px;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
 
-  font-weight: 500;
-  font-size: 16px;
-  text-align: center;
+  // text-align: center;
+  & > div:first-child {
+    margin-right: auto;
+    visibility: hidden;
+    width: 25%;
+  }
+
+  .heading {
+    font-weight: 500;
+    font-size: 16px;
+    width: 50%; 
+    text-align: center;
+  }
+
+  .btn {
+    color: $blue-color;
+    margin-left: auto;
+    width: 25%;
+    text-align: right;
+    background: transparent;
+    border: none;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .invitersCards {

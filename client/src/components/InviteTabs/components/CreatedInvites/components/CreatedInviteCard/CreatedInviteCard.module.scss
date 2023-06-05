@@ -129,16 +129,15 @@
     &Image {
         width: 110px;
         height: 110px;
-        max-width: 110px;
-        max-height: 110px;
-        object-fit: fill;
+        min-width: 110px;
+        min-height: 110px;
+        object-fit: cover;
         border-radius: 12px;
     }
 
     &Info {
         width: 75%;
         height: 100%;
-        // padding: 20px 0;
         display: flex;
         flex-direction: column;
         gap: 10px;

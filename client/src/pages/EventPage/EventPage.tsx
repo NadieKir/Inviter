@@ -13,7 +13,12 @@ import {
 import { EventStore } from 'stores';
 import { CreateEventInviteModal } from 'modals';
 import { useModal } from 'common/hooks';
-import { getOverlapPercent, wordFormatDate } from 'common/helpers';
+import {
+  getAge,
+  getOverlapPercent,
+  isAgeSuitable,
+  wordFormatDate,
+} from 'common/helpers';
 import { UserContext } from 'common/contexts';
 import { SERVER_URL } from 'common/constants';
 import { Gender, Invite, Role } from 'models';
@@ -44,7 +49,13 @@ export const EventPage = observer(() => {
     if (eventInvites && user) {
       if (suitableOnly) {
         invitesWithOverlapPercent = eventInvites
-          .filter((i) => i.companionGender.includes(Gender.FEMALE))
+          .filter(
+            (i) =>
+              i.companionGender.includes(user.gender) &&
+              (i.companionAge
+                ? isAgeSuitable(getAge(new Date(user.birthday)), i.companionAge)
+                : true),
+          )
           .map((i) => ({
             invite: i,
             overlapPercent: getOverlapPercent(
@@ -76,20 +87,31 @@ export const EventPage = observer(() => {
   const renderInvites = () => {
     return (
       <div className={styles.invitersSection}>
-        <h2 className={styles.invitersHeading}>
-          Вас приглашают{' '}
-          <span className="amount">
-            ({isLoading ? '...' : eventInvites.length})
-          </span>
-        </h2>
+        <div className={styles.invitersHeading}>
+          <div></div>
+          <h2 className={styles.heading}>
+            Вас приглашают{' '}
+            <span className="amount">
+              ({isLoading ? '...' : sortedInvites.length})
+            </span>
+          </h2>
 
-        {suitableOnly ? (
-          <button onClick={() => setSuitableOnly(false)}>Показать все</button>
-        ) : (
-          <button onClick={() => setSuitableOnly(true)}>
-            Показать только подходящие
-          </button>
-        )}
+          {suitableOnly ? (
+            <button
+              className={styles.btn}
+              onClick={() => setSuitableOnly(false)}
+            >
+              Показать все
+            </button>
+          ) : (
+            <button
+              className={styles.btn}
+              onClick={() => setSuitableOnly(true)}
+            >
+              Показать только подходящие
+            </button>
+          )}
+        </div>
 
         <div className={styles.invitersCards}>
           {sortedInvites.map((i) => (

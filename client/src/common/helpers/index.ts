@@ -6,3 +6,4 @@ export * from './number';
 export * from './getOverlapPercent';
 export * from './invite';
 export * from './user';
+export * from './isAgeSuitable';

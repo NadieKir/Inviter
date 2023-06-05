@@ -46,8 +46,6 @@ export const InviteCard = observer(
     const inviteDate = invite.event ? invite.event.date : invite.date;
     const inviteTime = invite.event ? invite.event.time : invite.time;
 
-    console.log(user!.interests, invite.creator.interests);
-
     if (variant === InviteCardVariant.EVENT_INVITE)
       return (
         <>
