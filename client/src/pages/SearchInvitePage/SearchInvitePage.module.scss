@@ -33,3 +33,23 @@
     align-self: center;
   }
 }
+
+.headingBtnWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  color: $blue-color;
+  text-align: right;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
