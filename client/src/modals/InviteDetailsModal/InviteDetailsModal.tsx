@@ -17,21 +17,22 @@ import {
   lowercaseFirstLetter,
   wordFormatDate,
 } from 'common/helpers';
+import { deleteInvite, deleteInviteResponse } from 'api';
+import { useModal, usePushNotification } from 'common/hooks';
+import { SERVER_URL } from 'common/constants';
+import { UserContext } from 'common/contexts';
 
 import styles from './InviteDetailsModal.module.scss';
 import calendar from './assets/calendar.svg';
 import geo from './assets/geo.svg';
 import ticket from 'assets/images/navbarIcons/ticket.svg';
-import { deleteInvite, deleteInviteResponse } from 'api';
-import { useModal, usePushNotification } from 'common/hooks';
-import { SERVER_URL } from 'common/constants';
-import { UserContext } from 'common/contexts';
 
 export enum InviteModalType {
   Response = 'response',
   Delete = 'Delete',
   DeleteResponse = 'DeleteResponse',
   Edit = 'Edit',
+  View = 'View',
 }
 
 interface ViewInviteModalProps extends ModalProps {
@@ -215,7 +216,9 @@ export const InviteDetailsModal = ({
                   <div className={styles.detail}>
                     <img src={ticket} alt="Мероприятие" height={'17px'} />
                     <Link
-                      to={`/${user!.role === Role.ADMIN ? 'admin/' : ''}events/${invite.event}`}
+                      to={`/${
+                        user!.role === Role.ADMIN ? 'admin/' : ''
+                      }events/${invite.event}`}
                       onClick={onModalClose}
                     >
                       Смотреть мероприятие
@@ -234,7 +237,9 @@ export const InviteDetailsModal = ({
             </div>
           </div>
 
-          <div className={styles.actions}>{renderActions()}</div>
+          <div className={styles.actions}>
+            {modalType !== InviteModalType.View && renderActions()}
+          </div>
         </section>
 
         <section

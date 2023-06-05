@@ -31,6 +31,8 @@ export const ClosedInvites = observer(() => {
     );
   });
 
+  if (!invites.length) return <div>Здесь пока ничего нет</div>;
+
   return (
     <ul className={styles.closedInvites}>
       {invites.map((i) => (

@@ -58,7 +58,7 @@
   font-weight: 300;
   font-size: 13px;
   line-height: 18px;
-  @include multiline-ellipsis(5);
+  @include multiline-ellipsis(4);
 
   &.long {
     @include multiline-ellipsis(6);

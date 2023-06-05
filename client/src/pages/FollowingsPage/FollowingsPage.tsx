@@ -69,27 +69,29 @@ export const FollowingsPage = () => {
             </div>
           </NavLink>
         ))}
-        {usersToShow.length === 0 || (
+        {usersToShow.filter((u) => u._id !== user._id).length === 0 || (
           <span className={styles.otherUsersLabel}>Другие пользователи:</span>
         )}
-        {usersToShow?.map((u) => (
-          <NavLink to={`/user/${u.login}`} className={styles.following}>
-            <img
-              className={styles.followingPhoto}
-              src={SERVER_URL + u.image}
-              alt=""
-            />
-            <div className={styles.followingInfo}>
-              <h3 className={styles.followingName}>
-                {concatUserNameAndAge(u)}
-              </h3>
-              <div className={styles.loginWrapper}>
-                <img src={at} alt="" height={'10px'} />
-                <span>{u.login}</span>
+        {usersToShow
+          ?.filter((u) => u._id !== user._id)
+          .map((u) => (
+            <NavLink to={`/user/${u.login}`} className={styles.following}>
+              <img
+                className={styles.followingPhoto}
+                src={SERVER_URL + u.image}
+                alt=""
+              />
+              <div className={styles.followingInfo}>
+                <h3 className={styles.followingName}>
+                  {concatUserNameAndAge(u)}
+                </h3>
+                <div className={styles.loginWrapper}>
+                  <img src={at} alt="" height={'10px'} />
+                  <span>{u.login}</span>
+                </div>
               </div>
-            </div>
-          </NavLink>
-        ))}
+            </NavLink>
+          ))}
       </>
     );
   };

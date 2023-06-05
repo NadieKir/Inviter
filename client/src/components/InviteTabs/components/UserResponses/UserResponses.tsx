@@ -19,10 +19,8 @@ export const UserResponses = observer(() => {
 
   const groupedEventResponses = groupBy(
     eventResponses,
-    (r) => r.invite.event?._id
+    (r) => r.invite.event?._id,
   );
-
-  console.log(groupedEventResponses);
 
   const inviteEventResponses: InviteEventResponse[] = Object.values(
     groupedEventResponses,
@@ -59,6 +57,8 @@ export const UserResponses = observer(() => {
       return new Date(aDate).getTime() - new Date(bDate).getTime();
     },
   );
+
+  if (!responses.length) return <div>Здесь пока ничего нет</div>;
 
   return (
     <div className={styles.userResponses}>

@@ -40,7 +40,7 @@ export function CompanionItem({
         <img
           className={styles.cross}
           src={cross}
-          alt={''}
+          alt={'Удалить'}
           onClick={async (e) => {
             e.preventDefault();
             e.stopPropagation();

@@ -149,28 +149,10 @@ export const getAllAnotherUser = async (req, res) => {
     const currentDateString = currentDate.format("YYYY-MM-DD");
     const currentTimeString = currentDate.format("HH:mm");
 
-    const filters = Object.entries(req.query)
-      .filter((e) => e[1])
-      .reduce(
-        (acc, v) => {
-          if (v[0] === "gender") {
-            acc["creator.gender"] = { $in: v[1] };
-          } else if (v[0] === "keyWord") {
-            acc["$or"] = [
-              { subject: { $regex: v[1], $options: "i" } },
-              { description: { $regex: v[1], $options: "i" } },
-            ];
-          } else {
-            acc[v[0]] = v[1];
-          }
-
-          return acc;
-        },
-        {
-          "creator._id": { $ne: new mongoose.Types.ObjectId(userId) },
-          status: { $eq: "Создан" },
-        }
-      );
+    const filters = {
+      "creator._id": { $eq: new mongoose.Types.ObjectId(userId) },
+      status: { $eq: "Создан" },
+    };
 
     const invites = await InviteModel.aggregate([
       {
@@ -385,7 +367,18 @@ export const deleteCompanion = async (req, res) => {
     const inviteId = req.params.id;
     const companionId = req.params.companionId;
 
-    await InviteModel.findByIdAndUpdate(inviteId, { $pull: { companions: companionId } });
+    const updatedInvite = await InviteModel.findByIdAndUpdate(
+      inviteId,
+      {
+        $pull: { companions: companionId },
+      },
+      { returnDocument: "after" }
+    );
+
+    if (updatedInvite.companions.length === 0)
+      await InviteModel.findByIdAndUpdate(inviteId, {
+        status: "Создан",
+      });
 
     res.send(200);
   } catch (err) {

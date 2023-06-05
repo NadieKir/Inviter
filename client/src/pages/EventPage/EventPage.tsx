@@ -33,7 +33,8 @@ export const EventPage = observer(() => {
   const [suitableOnly, setSuitableOnly] = useState(false);
   const [sortedInvites, setSortedInvites] = useState<Invite[]>([]);
 
-  const { user, userIsCreatorInvites, loadInvites } = useContext(UserContext);
+  const { user, userIsCreatorInvites, loadInvites, userIsAdmin } =
+    useContext(UserContext);
 
   const { event, eventInvites, error, isLoading } = useLocalObservable(
     () => new EventStore(id!),
@@ -42,44 +43,49 @@ export const EventPage = observer(() => {
   const [isCreateModalOpen, toggleCreateModal] = useModal();
 
   useEffect(() => {
-    let invitesWithOverlapPercent: {
-      invite: Invite;
-      overlapPercent: string;
-    }[] = [];
+    if (!userIsAdmin) {
+      let invitesWithOverlapPercent: {
+        invite: Invite;
+        overlapPercent: string;
+      }[] = [];
 
-    if (eventInvites && user) {
-      if (suitableOnly) {
-        invitesWithOverlapPercent = eventInvites
-          .filter(
-            (i) =>
-              i.companionGender.includes(user.gender) &&
-              (i.companionAge
-                ? isAgeSuitable(getAge(new Date(user.birthday)), i.companionAge)
-                : true),
-          )
-          .map((i) => ({
+      if (eventInvites && user) {
+        if (suitableOnly) {
+          invitesWithOverlapPercent = eventInvites
+            .filter(
+              (i) =>
+                i.companionGender.includes(user.gender) &&
+                (i.companionAge
+                  ? isAgeSuitable(
+                      getAge(new Date(user.birthday)),
+                      i.companionAge,
+                    )
+                  : true),
+            )
+            .map((i) => ({
+              invite: i,
+              overlapPercent: getOverlapPercent(
+                i.creator.interests,
+                user.interests,
+              ),
+            }));
+        } else {
+          invitesWithOverlapPercent = eventInvites.map((i) => ({
             invite: i,
             overlapPercent: getOverlapPercent(
               i.creator.interests,
               user.interests,
             ),
           }));
-      } else {
-        invitesWithOverlapPercent = eventInvites.map((i) => ({
-          invite: i,
-          overlapPercent: getOverlapPercent(
-            i.creator.interests,
-            user.interests,
-          ),
-        }));
+        }
       }
+
+      const invites = sortBy(invitesWithOverlapPercent, (i) => i.overlapPercent)
+        .reverse()
+        .map((i) => i.invite);
+
+      setSortedInvites(invites);
     }
-
-    const invites = sortBy(invitesWithOverlapPercent, (i) => i.overlapPercent)
-      .reverse()
-      .map((i) => i.invite);
-
-    setSortedInvites(invites);
   }, [suitableOnly, eventInvites]);
 
   if (isLoading) return <Loader />;
