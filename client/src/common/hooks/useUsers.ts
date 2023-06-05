@@ -15,8 +15,8 @@ export const useUsers = (nameOrLogin?: string) => {
 
         (async () => {
             setIsUsersLoading(true);
-            const invites = await getUsers(nameOrLogin)
-            setUsers(invites);
+            const users = await getUsers(nameOrLogin)
+            setUsers(users.filter(user => !user.isDeleted));
             setIsUsersLoading(false);
         })()
     }, [nameOrLogin]);

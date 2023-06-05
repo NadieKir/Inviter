@@ -19,6 +19,12 @@ export const deleteUser = async (userId: string): Promise<string> => {
   return message;
 };
 
+export const unlockUser = async (userId: string): Promise<string> => {
+  const { data: message } = await httpClient.put<string>(`/users/${userId}/unlock`);
+
+  return message;
+};
+
 export const getUsers = async (nameOrLogin?: string): Promise<User[]> => {
   let url = '/users';
 
@@ -35,6 +41,7 @@ export const updateUser = async (
   user: User,
 ): Promise<User> => {
   const { data: updatedUser } = await httpClient.patch<User>(`/users`, user);
+
   return updatedUser;
 };
 

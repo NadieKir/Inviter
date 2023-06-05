@@ -145,12 +145,6 @@ export const ContactsPage = observer(() => {
             Удалить у всех
           </Button>
         </div>
-
-        {/* <IconButton
-            icon={cross}
-            buttonColor={IconButtonColor.Red}
-            onClick={(e) => handleDelete(e, entry[0]._id)}
-          /> */}
       </NavLink>
     ));
   };

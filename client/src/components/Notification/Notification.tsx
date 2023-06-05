@@ -31,8 +31,8 @@ export interface INotification {
   message?: string;
 }
 
-const idleDuration = 3200;
-const animationDuration = 600;
+const idleDuration = 3800;
+const animationDuration = 500;
 
 export const Notification = () => {
   const { notification, cancelNotification } = useNotificationsContext();

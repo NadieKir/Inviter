@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model.js";
 import InviteModel from "../models/Invite.model.js";
+import InviteResponseModel from "../models/InviteResponse.model.js";
 
 export const register = async (req, res) => {
   try {
@@ -146,14 +147,10 @@ export const getOne = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const userLoginOrName = req.query.nameOrLogin;
-    let filters = {
-      isDeleted: { $eq: false },
-      creator: { $ne: req.userId },
-    };
-
+    let filters = {};
+    // ...filters,
     if (userLoginOrName) {
       filters = {
-        ...filters,
         $or: [
           {
             login: { $regex: userLoginOrName, $options: "i" },
@@ -375,6 +372,24 @@ export const deleteOne = async (req, res) => {
 
     await UserModel.updateOne({ _id: userId }, { isDeleted: true });
     await InviteModel.updateMany({ creator: userId }, { isDeleted: true });
+    await InviteResponseModel.deleteMany({ user: userId });
+
+    res.json({
+      message: "Пользователь успешно удалён",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Не удалось удалить пользователя",
+    });
+  }
+};
+
+export const unlockOne = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    await UserModel.updateOne({ _id: userId }, { isDeleted: false });
 
     res.json({
       message: "Пользователь успешно удалён",

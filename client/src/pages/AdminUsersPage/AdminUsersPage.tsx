@@ -14,13 +14,14 @@ import {
 import { concatUserNameAndAge, wordFormatDate } from 'common/helpers';
 import { SERVER_URL } from 'common/constants';
 import { AnotherUsersInvitesStore, UserListStore } from 'stores';
-import { deleteUser } from 'api';
+import { deleteUser, unlockUser } from 'api';
 import { usePushNotification } from 'common/hooks';
 import { Invite, User } from 'models';
 
 import styles from './AdminUsersPage.module.scss';
 import search from 'assets/images/search.svg';
-import cross from 'assets/images/redCross.svg';
+import block from './assets/block.svg';
+import unlock from './assets/unlock.svg';
 import at from 'assets/images/at.svg';
 import geo from 'assets/images/geo.svg';
 
@@ -35,7 +36,7 @@ export const AdminUsersPage = observer(() => {
     () => new AnotherUsersInvitesStore(),
   );
 
-  const [usersToShow, setUsersToShow] = useState<User[]>([]);
+  const [usersToShow, setUsersToShow] = useState<User[]>(usersWithoutAdmins);
 
   useEffect(() => {
     setUsersToShow(usersWithoutAdmins);
@@ -63,10 +64,27 @@ export const AdminUsersPage = observer(() => {
     try {
       await deleteUser(userId);
       getUsers();
-      pushSuccess('Пользователь успешно удален');
+      pushSuccess('Пользователь заблокирован');
     } catch (e) {
       console.log(e);
-      pushError('Не удалось удалить пользователя');
+      pushError('Не удалось заблокировать пользователя');
+    }
+  };
+
+  const handleUnlock = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    userId: string,
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      await unlockUser(userId);
+      getUsers();
+      pushSuccess('Пользователь разблокирован');
+    } catch (e) {
+      console.log(e);
+      pushError('Не удалось разблокировать пользователя');
     }
   };
 
@@ -146,11 +164,18 @@ export const AdminUsersPage = observer(() => {
                   )}
                 </div>
               </div>
-              <IconButton
-                icon={cross}
-                buttonColor={IconButtonColor.Red}
-                onClick={(e) => handleDelete(e, user._id)}
-              />
+              {user.isDeleted ? (
+                <IconButton
+                  icon={unlock}
+                  onClick={(e) => handleUnlock(e, user._id)}
+                />
+              ) : (
+                <IconButton
+                  icon={block}
+                  buttonColor={IconButtonColor.Red}
+                  onClick={(e) => handleDelete(e, user._id)}
+                />
+              )}
             </NavLink>
           ))
         ) : (
