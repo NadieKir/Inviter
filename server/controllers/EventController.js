@@ -60,8 +60,6 @@ export const getAll = async (req, res) => {
         { isDeleted: { $eq: false }, $or: [] }
       );
 
-    console.log(filter);
-
     const events = await EventModel.find({
       $and: [filter],
     })

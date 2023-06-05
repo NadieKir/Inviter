@@ -4,6 +4,11 @@ import { NavLink } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 
 import {
+  Button,
+  ButtonHeight,
+  ButtonType,
+  ButtonVariant,
+  ButtonWidth,
   IconButton,
   IconButtonColor,
   Loader,
@@ -26,16 +31,15 @@ import geo from 'assets/images/geo.svg';
 export const ContactsPage = observer(() => {
   const { pushSuccess, pushError } = usePushNotification();
 
-  const {
-    user,
-    isLoading,
-    error,
-    userContacts,
-  } = useContext(UserContext);
+  const { user, isLoading, error, userContacts } = useContext(UserContext);
 
   const [filter, setFilter] = useState<string>();
 
-  const { contactsInvites, isLoading: isContactInvitesLoading, loadContactInvites } = useContactsInvites(filter);
+  const {
+    contactsInvites,
+    isLoading: isContactInvitesLoading,
+    loadContactInvites,
+  } = useContactsInvites(filter);
 
   if (isLoading) return <Loader />;
   if (!user) throw error;
@@ -47,13 +51,14 @@ export const ContactsPage = observer(() => {
   const handleDelete = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     userId: string,
+    shouldDeleteFromAll = 'false',
   ) => {
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      await deleteContact(userId);
-      await loadContactInvites()
+      await deleteContact(userId, shouldDeleteFromAll);
+      await loadContactInvites();
       pushSuccess('Контакт успешно удален');
     } catch (e) {
       console.log(e);
@@ -76,63 +81,79 @@ export const ContactsPage = observer(() => {
       return <NothingFound />;
     }
 
-    return (
-      contactsToShow.map(entry => (
-        <NavLink
-          to={`/user/${entry[0].login}`}
-          className={styles.contactCard}
-        >
-          <div className={styles.userInfo}>
-            <div className={styles.contactInfo}>
-              <img
-                className={styles.contactPhoto}
-                src={SERVER_URL + entry[0].image}
-                alt=""
-              />
-              <div className={styles.contactInfoText}>
-                <div className={styles.nameDataWrapper}>
-                  <h3 className={styles.name}>
-                    {concatUserNameAndAge(entry[0])}
-                  </h3>
-                  <div className={styles.nicknameCity}>
-                    <div className={styles.nicknameCityWrapper}>
-                      <img src={at} alt="Никнейм" height="13px" />
-                      {entry[0].login}
-                    </div>
-                    <div className={styles.nicknameCityWrapper}>
-                      <img src={geo} alt="Город" height="13px" />
-                      {entry[0].city}
-                    </div>
+    return contactsToShow.map((entry) => (
+      <NavLink to={`/user/${entry[0].login}`} className={styles.contactCard}>
+        <div className={styles.userInfo}>
+          <div className={styles.contactInfo}>
+            <img
+              className={styles.contactPhoto}
+              src={SERVER_URL + entry[0].image}
+              alt=""
+            />
+            <div className={styles.contactInfoText}>
+              <div className={styles.nameDataWrapper}>
+                <h3 className={styles.name}>
+                  {concatUserNameAndAge(entry[0])}
+                </h3>
+                <div className={styles.nicknameCity}>
+                  <div className={styles.nicknameCityWrapper}>
+                    <img src={at} alt="Никнейм" height="13px" />
+                    {entry[0].login}
+                  </div>
+                  <div className={styles.nicknameCityWrapper}>
+                    <img src={geo} alt="Город" height="13px" />
+                    {entry[0].city}
                   </div>
                 </div>
-                <p className="paragraph">{entry[0].connectionMethods}</p>
               </div>
-            </div>
-            <div className={styles.invites}>
-              <h4 className={styles.invitesHeading}>Ваши инвайты</h4>
-              <div className={styles.invitesWrapper}>
-                {entry[1].map((i: Invite) => (
-                  <div className={styles.invite} key={i._id}>
-                    {i.date && (
-                      <span className={styles.date}>
-                        {wordFormatDate(i.date, i.time)}
-                      </span>
-                    )}
-                    <span>{i.subject}</span>
-                  </div>
-                ))}
-              </div>
+              <p className="paragraph">{entry[0].connectionMethods}</p>
             </div>
           </div>
-          <IconButton
+          <div className={styles.invites}>
+            <h4 className={styles.invitesHeading}>Ваши инвайты</h4>
+            <div className={styles.invitesWrapper}>
+              {entry[1].map((i: Invite) => (
+                <div className={styles.invite} key={i._id}>
+                  {i.date && (
+                    <span className={styles.date}>
+                      {wordFormatDate(i.date, i.time)}
+                    </span>
+                  )}
+                  <span>{i.subject}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className={styles.a}>
+          <Button
+            width={ButtonWidth.Small}
+            variant={ButtonVariant.Secondary}
+            buttonType={ButtonType.Danger}
+            height={ButtonHeight.Small}
+            onClick={(e) => handleDelete(e, entry[0]._id)}
+          >
+            Удалить у меня
+          </Button>
+          <Button
+            width={ButtonWidth.Small}
+            variant={ButtonVariant.Secondary}
+            buttonType={ButtonType.Danger}
+            height={ButtonHeight.Small}
+            onClick={(e) => handleDelete(e, entry[0]._id, 'true')}
+          >
+            Удалить у всех
+          </Button>
+        </div>
+
+        {/* <IconButton
             icon={cross}
             buttonColor={IconButtonColor.Red}
             onClick={(e) => handleDelete(e, entry[0]._id)}
-          />
-        </NavLink>
-      ))
-    );
-  }
+          /> */}
+      </NavLink>
+    ));
+  };
 
   return (
     <section className={styles.contactsSection}>
@@ -153,9 +174,7 @@ export const ContactsPage = observer(() => {
           )}
         </Formik>
       </div>
-      <div className={styles.contactsWrapper}>
-        {renderContacts()}
-      </div>
+      <div className={styles.contactsWrapper}>{renderContacts()}</div>
     </section>
   );
 });

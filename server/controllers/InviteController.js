@@ -246,29 +246,6 @@ export const getAllAnotherUser = async (req, res) => {
       message: "Не удалось получить инвайты",
     });
   }
-  // try {
-  //   const invites = await InviteModel.find({ creator: userId })
-  //     .sort({ createdAt: -1 })
-  //     .populate("creator")
-  //     .exec();
-
-  //   // invites.forEach(async (i) => {
-  //   //   const inviteResponses = await InviteResponseModel.find({ invite: i._id })
-  //   //     .select(['user', 'message'])
-  //   //     .populate('user')
-  //   //     .lean()
-  //   //     .exec();
-
-  //   //   i.responses = inviteResponses;
-  //   // })
-
-  //   res.json(invites);
-  // } catch (err) {
-  //   console.log(err);
-  //   res.status(500).json({
-  //     message: "Не удалось получить инвайты этого пользователя",
-  //   });
-  // }
 };
 
 export const getAllCurrentUser = async (req, res) => {

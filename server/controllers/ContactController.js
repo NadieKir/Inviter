@@ -33,8 +33,12 @@ export const getAnotherUserContacts = async (req, res) => {
 
 export const deleteContact = async (req, res) => {
   try {
-    const contactId = req.params.userId;
+    const contactId = req.query.id;
     await ContactModel.deleteOne({ contact: contactId, user: req.userId });
+
+    if (req.query.shouldDeleteFromAll === "true") {
+      await ContactModel.deleteOne({ contact: req.userId, user: contactId });
+    }
 
     res.json({
       message: "Контакт успешно удалён",

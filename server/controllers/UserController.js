@@ -46,8 +46,8 @@ export const register = async (req, res) => {
     const { passwordHash, ...userData } = user._doc;
 
     res.json({ ...userData, token });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status(500).json({
       message: "Не удалось зарегистрироваться",
     });

@@ -71,12 +71,9 @@ export class CurrentUserStore {
   }
 
   loadContacts = async () => {
-    if(!this.isLoading)  this.setIsLoading(true);
-
     const contacts = await getContacts();
     this.setUserContacts(contacts ?? []);
 
-    if(this.isLoading) this.setIsLoading(false);
     return contacts;
   }
 

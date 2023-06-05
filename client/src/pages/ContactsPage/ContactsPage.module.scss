@@ -46,12 +46,12 @@
 .contactInfo {
   display: flex;
   column-gap: 25px;
-  width: 480px;
+  width: 470px;
 }
 
 .userInfo {
   display: flex;
-  column-gap: 80px;
+  column-gap: 60px;
 }
 
 .contactPhoto {
@@ -129,4 +129,10 @@
     color: $blue-color;
     font-weight: 500;
   }
+}
+
+.a {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
