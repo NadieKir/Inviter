@@ -123,9 +123,11 @@ const renderAdditionalFields = (formikProps: FormikProps<FormikValues>) => {
             customHandleChange={(date) => {
               setFieldValue(InviteFormFields.Date, date);
 
-              console.log(formatToOnlyTime(time), formatToOnlyTime(minTime!))
-
-              if (minTime && time && formatToOnlyTime(time) < formatToOnlyTime(minTime)) {
+              if (
+                minTime &&
+                time &&
+                formatToOnlyTime(time) < formatToOnlyTime(minTime)
+              ) {
                 setFieldValue(InviteFormFields.Time, '');
               }
             }}
@@ -189,7 +191,7 @@ export const InviteForm = observer(
     handleSubmit,
     touchedNotRequired = false,
     formHeading = 'Создать инвайт',
-    formSubmitButtonTitle = 'Создать'
+    formSubmitButtonTitle = 'Создать',
   }: InviteFormProps) => {
     const steps: IStep[] = [
       {

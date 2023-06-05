@@ -189,7 +189,7 @@ const thirdStepFields = () => (
       name={RegistrationFormFields.ConnectionMethods}
       placeholderText="Данные для связи, показываемые при взаимности инвайта"
       multiline
-      maxLetterCount={100}
+      maxLetterCount={200}
     />
     <AgeRangeField
       name={RegistrationFormFields.PreferredAge}

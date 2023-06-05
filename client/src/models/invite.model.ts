@@ -4,6 +4,7 @@ import { Gender, User } from "./user.model";
 
 export enum InviteType {
   SPORT = 'Спорт',
+  CONCERT = 'Концерт',
   FOOD = 'Еда',
   ENTERTAINMENT = 'Развлечения',
   TRAVELLING = 'Путешествия',

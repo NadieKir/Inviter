@@ -32,7 +32,7 @@ export const CreateInviteEventForm = observer(
         address: event.address,
         date: event.date,
         time: event.time,
-        companionAge: values.companionAge,
+        companionAge: values.companionAge || undefined,
         companionGender: values.companionGender,
       };
 

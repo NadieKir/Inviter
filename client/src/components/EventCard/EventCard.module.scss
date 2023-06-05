@@ -61,7 +61,7 @@
   @include multiline-ellipsis(5);
 
   &.long {
-    @include multiline-ellipsis(7);
+    @include multiline-ellipsis(6);
   }
 }
 

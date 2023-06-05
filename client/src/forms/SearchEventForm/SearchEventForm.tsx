@@ -5,7 +5,6 @@ import {
   IconButton,
   IconButtonColor,
   Select,
-  TextField,
 } from 'components';
 import {
   CITIES_OPTIONS,
@@ -88,11 +87,6 @@ export const SearchEventForm = ({ initialFilters, onSubmit }: Props) => {
                 options={cityOptions}
                 noVerify
               />
-              {/* <TextField
-                name="keyWord"
-                multiline={false}
-                placeholderText="Ключевое слово"
-              /> */}
               <div className={styles.dateInputWrapper}>
                 <DateTimePicker
                   name="date"

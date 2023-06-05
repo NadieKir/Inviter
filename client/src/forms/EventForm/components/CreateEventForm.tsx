@@ -9,7 +9,6 @@ import {
 } from 'types';
 import { createEvent } from 'api';
 import { usePushNotification } from 'common/hooks';
-
 import { EventForm } from '../EventForm';
 import { CreateOrEditEventFormProps } from './types';
 

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { sortBy } from 'lodash';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
+import { Link, To, useParams } from 'react-router-dom';
 
 import {
   Button,
@@ -17,11 +17,12 @@ import {
   getAge,
   getOverlapPercent,
   isAgeSuitable,
+  parseNewLine,
   wordFormatDate,
 } from 'common/helpers';
 import { UserContext } from 'common/contexts';
 import { SERVER_URL } from 'common/constants';
-import { Gender, Invite, Role } from 'models';
+import { Invite, Role } from 'models';
 
 import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
@@ -154,18 +155,25 @@ export const EventPage = observer(() => {
               <h1 className="heading-H1">{event.name}</h1>
               <div className={styles.detailsWrapper}>
                 <div className={styles.detail}>
-                  <img src={calendar} alt="" height={'14px'} />
+                  <img src={calendar} alt="" height={'15px'} />
                   <span>{wordFormatDate(event.date, event.time)}</span>
                 </div>
                 <div className={styles.detail}>
-                  <img src={geo} alt="" height={'14px'} />
+                  <img src={geo} alt="" height={'15px'} />
                   <span>
                     {event.city}, {event.address}
                   </span>
                 </div>
               </div>
             </div>
-            <p className={styles.paragraph}>{event.description}</p>
+            <div className={styles.paragraph}>
+              {parseNewLine(event.description)}
+            </div>
+            {event.url && (
+              <Link to={event.url} className={styles.link}>
+                Подробнее
+              </Link>
+            )}
           </div>
         </div>
 

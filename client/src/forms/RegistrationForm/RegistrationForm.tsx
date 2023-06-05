@@ -54,14 +54,13 @@ import { EmailField } from './components/EmailField';
 
 import styles from './RegistrationForm.module.scss';
 
-
 const getDefaultPossibleDate = () => {
   const currentDate = dayjs();
   const possibleYear = currentDate.get('year') - 16;
-  const possibleDate = currentDate.set("year", possibleYear);
+  const possibleDate = currentDate.set('year', possibleYear);
 
   return possibleDate.toDate();
-}
+};
 
 const firstStepInitialValues: RegistrationFirstStepFormData = {
   [RegistrationFormFields.Name]: '',
@@ -258,7 +257,8 @@ const secondStepFields = () => (
 );
 
 const thirdStepInitialValues: RegistrationThirdStepFormData = {
-  [RegistrationFormFields.WelcomeMessage]: 'afasdfasdfadfadfadfasdfasdfadfasdfadfasdfasdfasdfasdfasdf asdf asdf asdf asdf asdf asdf asdf asdfa d',
+  [RegistrationFormFields.WelcomeMessage]:
+    'afasdfasdfadfadfadfasdfasdfadfasdfadfasdfasdfasdfasdfasdf asdf asdf asdf asdf asdf asdf asdf asdfa d',
   [RegistrationFormFields.ConnectionMethods]: '',
   [RegistrationFormFields.PreferredAge]: '',
   [RegistrationFormFields.Image]: '',
@@ -275,7 +275,7 @@ const thirdStepValidationSchema = Yup.object().shape({
     'Введите предпочитаемый возраст пользователей',
   ),
   [RegistrationFormFields.Image]: Yup.string().required(
-    'Загрузите свое изображение'
+    'Загрузите свое изображение',
   ),
 });
 
@@ -291,7 +291,7 @@ const thirdStepFields = () => (
       name={RegistrationFormFields.ConnectionMethods}
       placeholderText="Данные для связи, показываемые при взаимности инвайта"
       multiline
-      maxLetterCount={100}
+      maxLetterCount={200}
     />
     <AgeRangeField
       name={RegistrationFormFields.PreferredAge}
@@ -325,12 +325,12 @@ export const RegistrationForm = observer(() => {
         [RegistrationFormFields.ConfirmPassword]: undefined,
         [RegistrationFormFields.Orientation]: (
           values[
-          RegistrationFormFields.Orientation
+            RegistrationFormFields.Orientation
           ] as SelectOption<Orientation>
         ).value,
         [RegistrationFormFields.FamilyStatus]: (
           values[
-          RegistrationFormFields.FamilyStatus
+            RegistrationFormFields.FamilyStatus
           ] as SelectOption<FamilyStatus>
         ).value,
         [RegistrationFormFields.City]: (
@@ -338,12 +338,12 @@ export const RegistrationForm = observer(() => {
         ).value,
         [RegistrationFormFields.AlcoholAttitude]: (
           values[
-          RegistrationFormFields.AlcoholAttitude
+            RegistrationFormFields.AlcoholAttitude
           ] as SelectOption<Attitude>
         ).value,
         [RegistrationFormFields.SmokingAttitude]: (
           values[
-          RegistrationFormFields.SmokingAttitude
+            RegistrationFormFields.SmokingAttitude
           ] as SelectOption<Attitude>
         ).value,
         [RegistrationFormFields.Languages]: (
