@@ -1,4 +1,5 @@
 import ContactModel from "../models/Contact.model.js";
+import InviteModel from "../models/Invite.model.js";
 
 export const getContacts = async (req, res) => {
   try {

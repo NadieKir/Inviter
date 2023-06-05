@@ -4,3 +4,4 @@ export * from './useCheckLogin';
 export * from './useUsers';
 export * from './useFollowingsInvites';
 export * from './useEvent';
+export * from './useContactsInvites';

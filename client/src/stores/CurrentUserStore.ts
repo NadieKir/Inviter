@@ -77,6 +77,7 @@ export class CurrentUserStore {
     this.setUserContacts(contacts ?? []);
 
     if(this.isLoading) this.setIsLoading(false);
+    return contacts;
   }
 
   loadInvites = async () => {
@@ -99,7 +100,7 @@ export class CurrentUserStore {
         .map(companion => companion._id)
         .includes(this.user!._id))
   }
-  
+
   loadUser = async () => {
     this.setIsLoading(true);
 
@@ -119,22 +120,6 @@ export class CurrentUserStore {
       this.setError(null);
       this.setIsLoading(false);
     }
-  }
-
-  get contactToInvites() {
-    let map = new Map();
-
-    this.userContacts.forEach(contact => map.set(contact, this.userInvites
-      .filter(
-        (invite) =>
-          invite.creator._id === contact._id ||
-          invite.companions
-            .map((c) => c._id)
-            .includes(contact._id),
-      ))
-    )
-
-    return map;
   }
 
   respondInvite = async (inviteId: string, values: InviteRespondFormData) => {

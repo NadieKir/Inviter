@@ -25,8 +25,6 @@ export const approve = async (req, res) => {
   try {
     const deletedResponse = await InviteResponseModel.findByIdAndDelete(req.params.responseId);
 
-    console.log(deletedResponse);
-
     await InviteModel.findByIdAndUpdate(deletedResponse.invite, { $push: { companions: deletedResponse.user } });
 
     let userToResponderContact = await ContactModel.findOne({
