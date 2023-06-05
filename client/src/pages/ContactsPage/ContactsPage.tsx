@@ -15,7 +15,7 @@ import { concatUserNameAndAge, wordFormatDate } from 'common/helpers';
 import { SERVER_URL } from 'common/constants';
 import { Invite } from 'models';
 import { deleteContact } from 'api';
-import { usePushNotification } from 'common/hooks';
+import { usePushNotification, useContactsInvites } from 'common/hooks';
 
 import styles from './ContactsPage.module.scss';
 import search from 'assets/images/search.svg';
@@ -31,23 +31,17 @@ export const ContactsPage = observer(() => {
     isLoading,
     error,
     userContacts,
-    contactToInvites,
-    loadContacts,
   } = useContext(UserContext);
+
+  const [filter, setFilter] = useState<string>();
+
+  const { contactsInvites, isLoading: isContactInvitesLoading, loadContactInvites } = useContactsInvites(filter);
 
   if (isLoading) return <Loader />;
   if (!user) throw error;
 
-  const [contactsToShow, setContactsToShow] = useState(userContacts);
-
   const handleSearch = (values: { query: string }) => {
-    setContactsToShow(
-      userContacts.filter(
-        (contact) =>
-          contact.name.toLowerCase().includes(values.query.toLowerCase()) ||
-          contact.login.toLowerCase().includes(values.query.toLowerCase()),
-      ),
-    );
+    setFilter(values.query);
   };
 
   const handleDelete = async (
@@ -59,13 +53,86 @@ export const ContactsPage = observer(() => {
 
     try {
       await deleteContact(userId);
-      await loadContacts();
+      await loadContactInvites()
       pushSuccess('Контакт успешно удален');
     } catch (e) {
       console.log(e);
       pushError('Не удалось удалить контакт');
     }
   };
+
+  const renderContacts = () => {
+    if (isLoading || isContactInvitesLoading) {
+      return <Loader />;
+    }
+
+    if (!contactsInvites) {
+      return null;
+    }
+
+    const contactsToShow = [...contactsInvites];
+
+    if (contactsToShow.length === 0) {
+      return <NothingFound />;
+    }
+
+    return (
+      contactsToShow.map(entry => (
+        <NavLink
+          to={`/user/${entry[0].login}`}
+          className={styles.contactCard}
+        >
+          <div className={styles.userInfo}>
+            <div className={styles.contactInfo}>
+              <img
+                className={styles.contactPhoto}
+                src={SERVER_URL + entry[0].image}
+                alt=""
+              />
+              <div className={styles.contactInfoText}>
+                <div className={styles.nameDataWrapper}>
+                  <h3 className={styles.name}>
+                    {concatUserNameAndAge(entry[0])}
+                  </h3>
+                  <div className={styles.nicknameCity}>
+                    <div className={styles.nicknameCityWrapper}>
+                      <img src={at} alt="Никнейм" height="13px" />
+                      {entry[0].login}
+                    </div>
+                    <div className={styles.nicknameCityWrapper}>
+                      <img src={geo} alt="Город" height="13px" />
+                      {entry[0].city}
+                    </div>
+                  </div>
+                </div>
+                <p className="paragraph">{entry[0].connectionMethods}</p>
+              </div>
+            </div>
+            <div className={styles.invites}>
+              <h4 className={styles.invitesHeading}>Ваши инвайты</h4>
+              <div className={styles.invitesWrapper}>
+                {entry[1].map((i: Invite) => (
+                  <div className={styles.invite} key={i._id}>
+                    {i.date && (
+                      <span className={styles.date}>
+                        {wordFormatDate(i.date, i.time)}
+                      </span>
+                    )}
+                    <span>{i.subject}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <IconButton
+            icon={cross}
+            buttonColor={IconButtonColor.Red}
+            onClick={(e) => handleDelete(e, entry[0]._id)}
+          />
+        </NavLink>
+      ))
+    );
+  }
 
   return (
     <section className={styles.contactsSection}>
@@ -87,64 +154,7 @@ export const ContactsPage = observer(() => {
         </Formik>
       </div>
       <div className={styles.contactsWrapper}>
-        {contactsToShow.length ? (
-          contactsToShow.map((contact) => (
-            <NavLink
-              to={`/user/${contact.login}`}
-              className={styles.contactCard}
-            >
-              <div className={styles.userInfo}>
-                <div className={styles.contactInfo}>
-                  <img
-                    className={styles.contactPhoto}
-                    src={SERVER_URL + contact.image}
-                    alt=""
-                  />
-                  <div className={styles.contactInfoText}>
-                    <div className={styles.nameDataWrapper}>
-                      <h3 className={styles.name}>
-                        {concatUserNameAndAge(contact)}
-                      </h3>
-                      <div className={styles.nicknameCity}>
-                        <div className={styles.nicknameCityWrapper}>
-                          <img src={at} alt="Никнейм" height="13px" />
-                          {contact.login}
-                        </div>
-                        <div className={styles.nicknameCityWrapper}>
-                          <img src={geo} alt="Город" height="13px" />
-                          {contact.city}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="paragraph">{contact.connectionMethods}</p>
-                  </div>
-                </div>
-                <div className={styles.invites}>
-                  <h4 className={styles.invitesHeading}>Ваши инвайты</h4>
-                  <div className={styles.invitesWrapper}>
-                    {contactToInvites.get(contact).map((i: Invite) => (
-                      <div className={styles.invite} key={i._id}>
-                        {i.date && (
-                          <span className={styles.date}>
-                            {wordFormatDate(i.date, i.time)}
-                          </span>
-                        )}
-                        <span>{i.subject}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <IconButton
-                icon={cross}
-                buttonColor={IconButtonColor.Red}
-                onClick={(e) => handleDelete(e, contact._id)}
-              />
-            </NavLink>
-          ))
-        ) : (
-          <NothingFound />
-        )}
+        {renderContacts()}
       </div>
     </section>
   );
