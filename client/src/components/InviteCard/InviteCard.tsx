@@ -40,11 +40,50 @@ export const InviteCard = observer(
     variant = InviteCardVariant.BIG_USER,
   }: InviteCardProps) => {
     const [isShowingModal, toggleModal] = useModal();
-    const { user, userResponses, userIsAdmin } = useContext(UserContext);
+    const { user, userResponses, userIsAdmin, userInvites } =
+      useContext(UserContext);
 
     const inviteSubject = invite.event ? invite.event.name : invite.subject;
     const inviteDate = invite.event ? invite.event.date : invite.date;
     const inviteTime = invite.event ? invite.event.time : invite.time;
+
+    const renderButton = () => {
+      if (
+        userResponses
+          .map((response) => response.invite?._id)
+          .includes(invite._id)
+      )
+        return (
+          <Button
+            variant={ButtonVariant.Secondary}
+            height={ButtonHeight.Small}
+            disabled
+          >
+            Вы откликнулись
+          </Button>
+        );
+
+      if (userInvites.map((i) => i._id).includes(invite._id))
+        return (
+          <Button
+            variant={ButtonVariant.Secondary}
+            height={ButtonHeight.Small}
+            disabled
+          >
+            Вы уже компаньон
+          </Button>
+        );
+
+      return (
+        <Button
+          variant={ButtonVariant.Secondary}
+          height={ButtonHeight.Small}
+          onClick={toggleModal}
+        >
+          Посмотреть инвайт
+        </Button>
+      );
+    };
 
     if (variant === InviteCardVariant.EVENT_INVITE)
       return (
@@ -99,7 +138,37 @@ export const InviteCard = observer(
                 </p>
               </div>
             </div>
-            {userResponses
+            {renderButton()}
+            {/* {userResponses
+              .map((response) => response.invite?._id)
+              .includes(invite._id) ? (
+              <Button
+                variant={ButtonVariant.Secondary}
+                height={ButtonHeight.Small}
+                disabled
+              >
+                Вы откликнулись
+              </Button>
+            ) : userInvites.map((invite) =>
+                invite.companions.map((c) => c._id).includes(user!._id),
+              ) ? (
+              <Button
+                variant={ButtonVariant.Secondary}
+                height={ButtonHeight.Small}
+                disabled
+              >
+                Вы уже компаньон
+              </Button>
+            ) : (
+              <Button
+                variant={ButtonVariant.Secondary}
+                height={ButtonHeight.Small}
+                onClick={toggleModal}
+              >
+                Посмотреть инвайт
+              </Button>
+            )} */}
+            {/* {userResponses
               .map((response) => response.invite?._id)
               .includes(invite._id) ? (
               <Button
@@ -117,7 +186,7 @@ export const InviteCard = observer(
               >
                 Посмотреть инвайт
               </Button>
-            )}
+            )} */}
           </li>
 
           <InviteDetailsModal
@@ -181,7 +250,8 @@ export const InviteCard = observer(
               </span>
             </NavLink>
           )}
-          {userResponses
+          {renderButton()}
+          {/* {userResponses
             .map((response) => response.invite?._id)
             .includes(invite._id) ? (
             <Button
@@ -191,6 +261,16 @@ export const InviteCard = observer(
             >
               Вы откликнулись
             </Button>
+          ) : userInvites.map((invite) =>
+              invite.companions.map((c) => c._id).includes(user!._id),
+            ) ? (
+            <Button
+              variant={ButtonVariant.Secondary}
+              height={ButtonHeight.Small}
+              disabled
+            >
+              Вы уже компаньон
+            </Button>
           ) : (
             <Button
               variant={ButtonVariant.Secondary}
@@ -199,7 +279,7 @@ export const InviteCard = observer(
             >
               Посмотреть инвайт
             </Button>
-          )}
+          )} */}
         </li>
 
         <InviteDetailsModal

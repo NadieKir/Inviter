@@ -16,7 +16,11 @@ import {
   TextField,
 } from 'components';
 import { UserContext } from 'common/contexts';
-import { concatUserNameAndAge, wordFormatDate } from 'common/helpers';
+import {
+  concatUserNameAndAge,
+  parseNewLine,
+  wordFormatDate,
+} from 'common/helpers';
 import { SERVER_URL } from 'common/constants';
 import { Invite } from 'models';
 import { deleteContact } from 'api';
@@ -106,7 +110,9 @@ export const ContactsPage = observer(() => {
                   </div>
                 </div>
               </div>
-              <p className="paragraph">{entry[0].connectionMethods}</p>
+              <p className="paragraph">
+                {parseNewLine(entry[0].connectionMethods)}
+              </p>
             </div>
           </div>
           <div className={styles.invites}>

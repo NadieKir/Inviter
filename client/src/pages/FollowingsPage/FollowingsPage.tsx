@@ -70,7 +70,7 @@ export const FollowingsPage = () => {
           </NavLink>
         ))}
         {usersToShow.filter((u) => u._id !== user._id).length === 0 || (
-          <span className={styles.otherUsersLabel}>Другие пользователи:</span>
+          <span className={styles.otherUsersLabel}>Возможно, вы искали:</span>
         )}
         {usersToShow
           ?.filter((u) => u._id !== user._id)
