@@ -1,8 +1,5 @@
 import { FieldProps, FormikValues, useFormikContext } from 'formik';
-import axios from 'axios';
 
-import { readFileAsBase64 } from 'common/helpers';
-import { FileWithUrl } from 'types';
 import {
   ImageDropbox,
   ImagePreview,
@@ -11,7 +8,6 @@ import {
   InputFieldExternalProps,
 } from 'components';
 import { createContext, useState } from 'react';
-import { httpClient } from 'api/httpClient';
 
 type ImageUploaderProps = InputFieldExternalProps & {
   name: string;
@@ -51,6 +47,7 @@ export const ImageUploader = ({
           const setImage = async (image: File | null): Promise<void> => {
             if (image === null) setFieldValue(name, '');
             else {
+              console.log(image);
               const formData = new FormData();
               formData.append('image', image);
 

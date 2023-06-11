@@ -59,7 +59,10 @@ export const CurrentEvents = observer(() => {
       {eventToEdit && (
         <CreateEventModal
           isShowing={isEditEventModalOpen}
-          onClose={async () => {
+          onClose={() => {
+            toggleEditEventModal();
+          }}
+          onSubmit={async () => {
             await getEvents(defaultFilter);
             toggleEditEventModal();
           }}

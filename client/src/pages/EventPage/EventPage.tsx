@@ -27,6 +27,7 @@ import { Invite, Role } from 'models';
 import styles from './EventPage.module.scss';
 import geo from 'assets/images/geo.svg';
 import calendar from 'assets/images/calendar.svg';
+import defaultImage from 'assets/images/defaultImage.png';
 
 export const EventPage = observer(() => {
   const { id } = useParams();
@@ -57,9 +58,9 @@ export const EventPage = observer(() => {
                 i.companionGender.includes(user.gender) &&
                 (i.companionAge
                   ? isAgeSuitable(
-                      getAge(new Date(user.birthday)),
-                      i.companionAge,
-                    )
+                    getAge(new Date(user.birthday)),
+                    i.companionAge,
+                  )
                   : true),
             )
             .map((i) => ({
@@ -139,7 +140,9 @@ export const EventPage = observer(() => {
         <div className={styles.eventInfoSection}>
           <div className={styles.photoButtonWrapper}>
             <img
-              src={SERVER_URL + event.image}
+              src={event.image
+                ? SERVER_URL + event.image
+                : defaultImage}
               alt="Фото события"
               className={styles.eventPhoto}
             />

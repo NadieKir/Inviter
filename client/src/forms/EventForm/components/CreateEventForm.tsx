@@ -11,6 +11,7 @@ import { createEvent } from 'api';
 import { usePushNotification } from 'common/hooks';
 import { EventForm } from '../EventForm';
 import { CreateOrEditEventFormProps } from './types';
+import { httpClient } from 'api/httpClient';
 
 export const CreateEventForm = observer(
   ({ onSubmit }: CreateOrEditEventFormProps) => {
@@ -27,7 +28,7 @@ export const CreateEventForm = observer(
     };
 
     const initialValuesAdditionalStep: AdditionalEventFields = {
-      [EventFormFields.Image]: undefined,
+      [EventFormFields.Image]: '',
       [EventFormFields.Url]: undefined,
     };
 
@@ -35,7 +36,24 @@ export const CreateEventForm = observer(
       values: EventFormData,
       actions: FormikHelpers<EventFormData>,
     ) => {
-      await createEvent(values);
+
+      let resultValues = {
+        ...values
+      };
+
+      if (values[EventFormFields.Image] && typeof values[EventFormFields.Image] !== 'string') {
+        const { data } = await httpClient.post(
+          '/uploads',
+          values[EventFormFields.Image],
+        );
+
+        resultValues = {
+          ...values,
+          [EventFormFields.Image]: data.url,
+        };
+      }
+
+      await createEvent(resultValues);
 
       actions.setSubmitting(false);
       pushSuccess('Событие успешно создано');

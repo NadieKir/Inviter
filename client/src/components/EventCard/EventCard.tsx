@@ -7,6 +7,7 @@ import { SERVER_URL } from 'common/constants';
 
 import styles from './EventCard.module.scss';
 import calendar from 'assets/images/calendar.svg';
+import defaultImage from 'assets/images/defaultImage.png';
 
 interface EventCardProps {
   event: Event;
@@ -78,7 +79,9 @@ export const EventCard = ({
           </div>
           <img
             className={styles.eventImage}
-            src={SERVER_URL + event.image}
+            src={event.image
+              ? SERVER_URL + event.image
+              : defaultImage}
             alt={event.name}
           />
         </article>

@@ -34,9 +34,15 @@ export function NavbarAction({ variant, userRole }: NavbarActionProps) {
       )}
 
       {userRole === Role.ADMIN ? (
-        <CreateEventModal isShowing={isShowingModal} onClose={toggleModal} />
+        <CreateEventModal
+          isShowing={isShowingModal}
+          onClose={toggleModal}
+          onSubmit={toggleModal}
+        />
       ) : (
-        <CreateInviteModal isShowing={isShowingModal} onClose={toggleModal} />
+        <CreateInviteModal
+          isShowing={isShowingModal}
+          onClose={toggleModal} />
       )}
     </>
   );
