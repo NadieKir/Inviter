@@ -112,6 +112,16 @@ export const getAllAnotherUsers = async (req, res) => {
                           date: { $eq: currentDateString },
                         },
                         {
+                          time: { $exists: false },
+                        },
+                      ],
+                    },
+                    {
+                      $and: [
+                        {
+                          date: { $eq: currentDateString },
+                        },
+                        {
                           time: { $gte: currentTimeString },
                         },
                       ],
@@ -195,6 +205,16 @@ export const getAllAnotherUser = async (req, res) => {
                 {
                   $or: [
                     { date: { $gt: currentDateString } },
+                    {
+                      $and: [
+                        {
+                          date: { $eq: currentDateString },
+                        },
+                        {
+                          time: { $exists: false },
+                        },
+                      ],
+                    },
                     {
                       $and: [
                         {
