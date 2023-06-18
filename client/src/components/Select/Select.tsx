@@ -21,6 +21,7 @@ type SelectProps<T> = {
   getOptionLabel?: GetOptionLabel<T>;
   getOptionValue?: GetOptionValue<T>;
   placeholderText?: string;
+  maxMenuHeight?: number;
 } & InputFieldExternalProps;
 
 export function Select<T>({
@@ -31,6 +32,7 @@ export function Select<T>({
   isMulti = false,
   placeholderText = '',
   creatable = false,
+  maxMenuHeight = 145,
   ...inputFieldProps
 }: SelectProps<T>) {
   const { setFieldValue, setFieldTouched } = useFormikContext();
@@ -39,7 +41,10 @@ export function Select<T>({
 
   return (
     <EmotionCacheProvider>
-      <InputField containerAttributes={{ className: className }} {...inputFieldProps}>
+      <InputField
+        containerAttributes={{ className: className }}
+        {...inputFieldProps}
+      >
         {({ field, className }: InputRenderProps): JSX.Element => (
           <SelectComponent
             options={options}
@@ -57,7 +62,7 @@ export function Select<T>({
               }),
             }}
             isMulti={isMulti}
-            maxMenuHeight={145}
+            maxMenuHeight={maxMenuHeight}
             defaultValue={field.value}
             value={field.value}
             getOptionLabel={getOptionLabel}

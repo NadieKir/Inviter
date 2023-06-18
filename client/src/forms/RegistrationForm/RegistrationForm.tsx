@@ -250,6 +250,7 @@ const secondStepFields = () => (
       getOptionLabel={(o) => o.value}
       getOptionValue={(o) => o.label}
       isMulti
+      maxMenuHeight={60}
       creatable
       options={INTERESTS_OPTIONS}
     />
@@ -257,8 +258,7 @@ const secondStepFields = () => (
 );
 
 const thirdStepInitialValues: RegistrationThirdStepFormData = {
-  [RegistrationFormFields.WelcomeMessage]:
-    'afasdfasdfadfadfadfasdfasdfadfasdfadfasdfasdfasdfasdfasdf asdf asdf asdf asdf asdf asdf asdf asdfa d',
+  [RegistrationFormFields.WelcomeMessage]: '',
   [RegistrationFormFields.ConnectionMethods]: '',
   [RegistrationFormFields.PreferredAge]: '',
   [RegistrationFormFields.Image]: '',

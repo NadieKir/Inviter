@@ -124,7 +124,7 @@ export const LoginLayout = () => {
             )}
             <Outlet />
           </div>
-          {location.pathname === '/login' && <div></div>}
+          <div className={styles.fakeWrapper}></div>
         </section>
       </section>
     </ErrorBoundary>
