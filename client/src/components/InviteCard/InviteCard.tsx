@@ -139,54 +139,6 @@ export const InviteCard = observer(
               </div>
             </div>
             {renderButton()}
-            {/* {userResponses
-              .map((response) => response.invite?._id)
-              .includes(invite._id) ? (
-              <Button
-                variant={ButtonVariant.Secondary}
-                height={ButtonHeight.Small}
-                disabled
-              >
-                Вы откликнулись
-              </Button>
-            ) : userInvites.map((invite) =>
-                invite.companions.map((c) => c._id).includes(user!._id),
-              ) ? (
-              <Button
-                variant={ButtonVariant.Secondary}
-                height={ButtonHeight.Small}
-                disabled
-              >
-                Вы уже компаньон
-              </Button>
-            ) : (
-              <Button
-                variant={ButtonVariant.Secondary}
-                height={ButtonHeight.Small}
-                onClick={toggleModal}
-              >
-                Посмотреть инвайт
-              </Button>
-            )} */}
-            {/* {userResponses
-              .map((response) => response.invite?._id)
-              .includes(invite._id) ? (
-              <Button
-                variant={ButtonVariant.Secondary}
-                height={ButtonHeight.Small}
-                disabled
-              >
-                Вы откликнулись
-              </Button>
-            ) : (
-              <Button
-                variant={ButtonVariant.Secondary}
-                height={ButtonHeight.Small}
-                onClick={toggleModal}
-              >
-                Посмотреть инвайт
-              </Button>
-            )} */}
           </li>
 
           <InviteDetailsModal

@@ -219,7 +219,7 @@ export function EditProfileForm({
       (initialValues.city as string) ?? '',
     ),
     [RegistrationFormFields.Orientation]: createOption(
-      (initialValues.city as string) ?? '',
+      (initialValues.orientation as string) ?? '',
     ),
     [RegistrationFormFields.FamilyStatus]: createOption(
       (initialValues.familyStatus as string) ?? '',

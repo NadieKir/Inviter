@@ -180,6 +180,7 @@ export const InviteDetailsModal = ({
   const inviteCity = invite.event ? invite.event.city : invite.city;
   const inviteAddress = invite.event ? invite.event.address : invite.address;
 
+  console.log(invite.event);
   return (
     <>
       <Modal isShowing={isShowing} onClose={onModalClose}>

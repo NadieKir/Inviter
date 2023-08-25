@@ -117,7 +117,7 @@ export const Navbar = observer(({ variant }: NavbarProps) => {
         >
           <img
             className={styles.userPhoto}
-            src={user?.image !== '' ? user?.image : defaultImage}
+            src={user?.image !== '' ? SERVER_URL + user?.image : defaultImage}
             alt="Фото пользователя"
           />
           {user.role === Role.ADMIN ? (

@@ -42,7 +42,9 @@ export function NavbarAction({ variant, userRole }: NavbarActionProps) {
       ) : (
         <CreateInviteModal
           isShowing={isShowingModal}
-          onClose={toggleModal} />
+          onClose={toggleModal}
+          onSubmit={toggleModal}
+        />
       )}
     </>
   );

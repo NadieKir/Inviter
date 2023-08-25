@@ -32,7 +32,7 @@ export const AdminProfilePage = () => {
         <div className={styles.adminInfoWrapper}>
           <img
             className={styles.image}
-            src={SERVER_URL + user.image || defaultImage}
+            src={user?.image !== '' ? SERVER_URL + user?.image : defaultImage}
             alt="Фото пользователя"
           />
           <div className={styles.infoActionWrapper}>
