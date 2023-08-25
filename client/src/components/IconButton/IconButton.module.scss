@@ -1,0 +1,64 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.buttonCustom {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
+
+    border-radius: 10px;
+
+    @include smooth-transition();
+    cursor: pointer;    
+}
+
+.default {
+    border: 1px solid $blue-color;
+
+    &:hover {
+        background-color: $blue-color;
+        
+        > * {
+            filter: brightness(0) invert(1);
+        }
+    }
+}
+
+.green {
+    border: 1px solid $green-color;
+
+    &:hover {
+        background-color: $green-color;
+        
+        > * {
+            filter: brightness(0) invert(1);
+        }
+    }
+}
+
+.blue {
+    background: $blue-gradient-color;
+    border: none;
+
+    &:hover {
+        box-shadow: $inner-button-shadow;
+    }
+}
+
+.red {
+    border: 1px solid $red-color;
+
+    &:hover {
+        background-color: $red-color;
+        
+        > * {
+            filter: brightness(0) invert(1);
+        }
+    }
+}

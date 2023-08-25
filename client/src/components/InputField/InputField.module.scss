@@ -1,0 +1,62 @@
+@use 'sass:color';
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+
+  border: 1px solid $blue-color;
+  border-radius: 4px;
+  outline: none;
+  background-color: $white-color;
+
+  @include smooth-transition();
+
+  font-family: $primary-font-family;
+  font-weight: 400;
+  font-size: 13px;
+
+  &::placeholder {
+    font-weight: 300;
+    color: $black-color;
+  }
+
+  &:hover {
+    border: 1px solid $blue-color;
+    box-shadow: $outer-button-shadow;
+  }
+
+  &:focus {
+    border: 1px solid $blue-color;
+
+    &::placeholder {
+      color: $dark-gray-color;
+    }
+  }
+}
+
+input.inputDisabled {
+  border: 1px solid $dark-gray-color;
+
+  &:hover {
+    border: 1px solid $dark-gray-color;
+    box-shadow: none;
+  }
+}
+
+.error {
+  border: 1px solid $red-color;
+}
+
+.inputLabel {
+  margin-bottom: 8px;
+}
+
+.helperText {
+  margin-top: 4px;
+}
+

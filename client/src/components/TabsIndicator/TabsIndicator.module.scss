@@ -1,0 +1,18 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.indicator {
+  position: relative;
+  left: calc(100% / var(--numOfTabs) * var(--position));
+  bottom: 2px;
+
+  width: calc(100% / var(--numOfTabs));
+  height: 2px;
+  margin-bottom: 35px;
+
+  background: $blue-color;
+
+  @include smooth-transition();
+}
+

@@ -1,0 +1,135 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.eventSection {
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+  padding-top: 40px;
+}
+
+.eventInfoSection {
+  @include base-wrapper();
+  display: flex;
+  justify-content: space-between;
+  height: calc(100% - 80px);
+}
+
+.photoButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  width: 220px;
+  height: calc(100% - 80px);
+  margin-top: -80px;
+}
+
+.eventPhoto {
+  width: 100%;
+  height: 14rem;
+  object-fit: cover;
+  
+  border: 5px solid $white-color;
+  border-radius: 15px;
+}
+
+.eventInfo {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+
+  color: $black-color;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.detailsWrapper {
+  display: flex;
+  column-gap: 25px;
+  align-items: center;
+
+  .detail {
+    display: flex;
+    column-gap: 7px;
+    align-items: center;
+
+    font-weight: 400;
+    font-size: 13px;
+  }
+}
+
+.paragraph {
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 17px;
+  color: $black-color;
+
+  & * {
+    margin-bottom: 10px;
+  }
+}
+
+
+.invitersSection {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
+.invitersHeading {
+  @include base-wrapper();
+  padding: 15px 30px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+
+  // text-align: center;
+  & > div:first-child {
+    margin-right: auto;
+    visibility: hidden;
+    width: 25%;
+  }
+
+  .heading {
+    font-weight: 500;
+    font-size: 16px;
+    width: 50%; 
+    text-align: center;
+  }
+
+  .btn {
+    color: $blue-color;
+    margin-left: auto;
+    width: 25%;
+    text-align: right;
+    background: transparent;
+    border: none;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.invitersCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+}
+
+.link {
+  color: $blue-color;
+  text-decoration: underline;
+  font-size: 13px;
+}

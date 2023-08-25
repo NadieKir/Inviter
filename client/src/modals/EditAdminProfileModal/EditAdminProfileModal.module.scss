@@ -1,0 +1,12 @@
+@import '~style/mixins';
+
+.modal {
+  @include base-wrapper();
+  padding: 50px 70px;
+  width: 600px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+  

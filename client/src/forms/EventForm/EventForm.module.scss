@@ -1,0 +1,11 @@
+.date {
+    &Wrapper {
+        display: flex;
+        column-gap: 20px;
+    }
+
+    &Picker {
+        width: 50%;
+    }
+}
+  

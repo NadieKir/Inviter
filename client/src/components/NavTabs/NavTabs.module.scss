@@ -1,0 +1,20 @@
+@import '~style/colors';
+@import '~style/variables';
+
+.tabs {  
+  width: 100%;
+  min-width: $tabs-container-min-width;
+  display: flex;
+
+  border-bottom: 1px solid $light-gray-color;
+
+  cursor: pointer;
+
+  & > * {
+    width: 100%; 
+  }
+
+  & + * {
+    min-width: $tabs-container-min-width;
+  }
+}

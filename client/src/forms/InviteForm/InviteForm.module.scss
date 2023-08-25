@@ -1,0 +1,30 @@
+@import '~style/colors';
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 25px;
+}
+
+.dateWrapper {
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
+}
+
+.clearButton {
+  margin-top: 20px;
+
+  font-size: 12px;
+  font-weight: 300;
+
+  border: none;
+  background: none;
+  color: $red-color;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

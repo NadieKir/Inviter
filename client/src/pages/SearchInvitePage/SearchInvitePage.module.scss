@@ -1,0 +1,55 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.section {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+
+  @media screen and (max-width: $medium-screen-bp) {
+    margin: 0 30px;
+  }
+}
+
+.searchForm {
+  @include base-wrapper();
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  padding: 35px;
+  padding-bottom: 30px;
+}
+
+.userCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  grid-column-gap: 1.2rem;
+  grid-row-gap: 1.9rem;
+
+  list-style: none;
+
+  @media screen and (max-width: $small-screen-bp) {
+    align-self: center;
+  }
+}
+
+.headingBtnWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  color: $blue-color;
+  text-align: right;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

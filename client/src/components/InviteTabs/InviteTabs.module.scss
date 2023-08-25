@@ -1,0 +1,12 @@
+@import '~style/colors';
+@import '~style/mixins';
+
+.tabsWrapper {
+  @include base-wrapper();
+  display: flex;
+  flex-direction: column;
+  row-gap: 45px;
+  background-color: $white-color;
+  padding-top: 35px;
+  padding-bottom: 0;
+}

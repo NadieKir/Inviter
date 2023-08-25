@@ -1,0 +1,88 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.card {
+    @include base-wrapper();
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 30px;
+    gap: 20px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.responseInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+
+    button {
+        width: 100%;
+    }
+}
+
+.companionsInfo {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.creator {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    &Image {
+        width: 25px;
+        height: 25px;
+        border-radius: 50px;
+    }
+
+    &Info {
+        font-weight: 400;
+        font-size: 12px;
+    }
+}
+
+.headingInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.companionsInfo {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.date {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 400;
+    margin-bottom: 12px;
+}
+
+.subject {
+    font-weight: 600;
+    font-size: 13px;
+}

@@ -1,0 +1,33 @@
+.spaceBetweenWrapper {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 30px;
+  
+    & > * {
+      width: 100%;
+    }
+  } 
+  
+  .firstStepForm {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  
+  .genderWrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .secondStepForm {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  
+  .thirdStepForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 10px;
+  }

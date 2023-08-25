@@ -1,0 +1,133 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.contactsSection {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+.header {
+  @include base-wrapper();
+  display: flex;
+  justify-content: space-between;
+  padding: 35px;
+  padding-bottom: 30px;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+
+  input {
+    width: 210px;
+  }
+}
+
+.contactsWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.contactCard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 150px;
+
+  @include base-wrapper();
+  padding: 20px 35px;
+}
+
+.contactInfo {
+  display: flex;
+  column-gap: 25px;
+  width: 480px;
+}
+
+.userInfo {
+  display: flex;
+  column-gap: 80px;
+}
+
+.contactPhoto {
+  aspect-ratio: 1/1;
+  width: 105px;
+  max-height: 105px;
+  max-width: 105px;
+  object-fit: cover;
+  border-radius: 100px;
+}
+
+.contactInfoText {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  width: 100%;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.nameDataWrapper {
+  display: flex;
+  column-gap: 40px;
+}
+
+.nicknameCity {
+  display: flex;
+  column-gap: 20px;
+}
+
+.nicknameCityWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.desc {
+  @include multiline-ellipsis(5);
+}
+
+.invites {
+  display: flex;
+  flex-direction: column;
+  row-gap: 13px;
+  width: 250px;
+}
+
+.invitesHeading {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.invitesWrapper{
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  max-height: 75px;
+  height: 75px;
+  overflow-y: auto;
+
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.invite {
+  display: flex;
+  column-gap: 5px;
+
+  .date {
+    color: $blue-color;
+    font-weight: 500;
+  }
+}

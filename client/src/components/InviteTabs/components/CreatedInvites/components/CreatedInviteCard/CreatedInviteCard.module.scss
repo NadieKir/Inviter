@@ -1,0 +1,189 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.card {
+    @include base-wrapper();
+
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+
+    @media screen and (max-width: $large-screen-bp) {
+        flex-direction: column;
+        row-gap: 30px;
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+    width: 28%;
+    flex-wrap: wrap;
+    column-gap: 30px;
+
+    @media screen and (max-width: $large-screen-bp) {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.subject {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.companions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &Users {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 2px;
+        max-height: 125px;
+        overflow-y: auto;
+        gap: 10px;
+    }
+
+    &Amount {
+        font-weight: 500;
+        font-size: 13px;
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    @media screen and (max-width: $large-screen-bp) {
+        flex-direction: column;
+        row-gap: 15px;
+        justify-content: flex-start;
+        align-self: center;
+    }
+
+    @media screen and (max-width: 1067px) {
+        display: none;
+    }
+}
+
+.a {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.actionsSmallBp {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    @media screen and (max-width: 1067px) {
+        display: flex;
+    }
+
+}
+
+.noResponses {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: $light-gray-color;
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    min-height: 60px;
+}
+
+.responses {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 65%;
+    overflow-y: auto;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    @media screen and (max-width: $large-screen-bp) {
+        width: 100%;
+    }
+}
+
+.response {
+    display: flex;
+    gap: 25px;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 140px;
+
+    &Image {
+        width: 110px;
+        height: 110px;
+        min-width: 110px;
+        min-height: 110px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    &Info {
+        width: 75%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        font-weight: 300;
+        font-size: 14px;
+
+        &Name {
+            font-weight: 500;
+        }
+    }
+
+    &Actions {
+        width: 10%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px
+    }
+}
+
+.blue {
+    color: $blue-color;
+}
+
+.cross {
+    cursor: pointer;
+    color: $red-color;
+    width: 10px;
+}
+
+.headingInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.companionsInfo {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.date {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}

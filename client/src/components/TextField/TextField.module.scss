@@ -1,0 +1,16 @@
+@import '~style/colors';
+@import '~style/typography';
+
+.inputLabel {
+  margin-bottom: 8px;
+}
+
+.textInput {
+  margin-bottom: 4px;
+}
+
+.textArea {
+  &::placeholder {
+    color:  hsl(0, 0%, 50%);
+  }
+}

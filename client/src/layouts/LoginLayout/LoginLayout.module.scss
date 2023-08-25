@@ -1,0 +1,129 @@
+@import '~style/colors';
+@import '~style/typography';
+@import '~style/mixins';
+
+.loginSection {
+  display: flex;
+  height: 100vh;
+}
+
+.header {  
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  padding: 120px 70px 0 70px;
+
+  background: $blue-gradient-color;
+}
+
+.logoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 25px;
+  margin-bottom: 60px;
+
+  font-weight: 500;
+  font-size: 20px;
+
+  color: $white-color;
+}
+
+.promoImages {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 120px;
+
+  & img {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 18px;
+  }
+}
+
+.promoImage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 15px;
+  padding: 10px 10px 20px 10px;
+  
+  font-weight: 500;
+  font-size: 14px;
+  
+  border-radius: 20px;
+  background: $white-color;
+  color: $black-color;
+}
+
+.promoButton { 
+  display: flex;
+  align-items: center;
+  align-self: center;
+  column-gap: 10px;
+  padding: 10px 15px;
+
+  font-weight: 600;
+  font-size: 11px;
+
+  background: $white-color;
+  border-radius: 10px;
+  border: none;
+  color: $black-color;
+
+  cursor: pointer;
+
+  &:hover {
+    @include smooth-transition();
+    transform: scale(1.01);
+  }
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 80px;
+  width: 45%;
+  padding: 40px 90px;
+
+  background: $background-color;
+  
+  overflow: auto;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.links {
+  display: flex;
+  column-gap: 25px;
+
+  font-weight: 300;
+  font-size: 13px;
+
+  color: $black-color;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  row-gap: 40px;
+  width: 80%;
+}
+
+.heading {
+  font-weight: 600;
+  font-size: 24px;
+
+  color: $black-color;
+}
+
+.fakeWrapper {
+  height: 30px;
+}

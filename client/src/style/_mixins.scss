@@ -1,0 +1,24 @@
+@import 'colors.scss';
+@import 'variables.scss';
+
+@mixin base-wrapper($border-radius: 10px) {
+  background-color: $white-color;
+  border-radius: $border-radius;
+  box-shadow: $outer-shadow;
+  padding: 40px;
+}
+
+@mixin smooth-transition($transition-duration: 0.2s) {
+  transition-property: all;
+  transition-duration: $transition-duration;
+  transition-timing-function: ease;
+}
+
+@mixin multiline-ellipsis($max-lines) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $max-lines;
+}

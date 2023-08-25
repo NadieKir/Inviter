@@ -1,0 +1,104 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.card {
+    @include base-wrapper();
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px;
+
+    gap: 15px;
+    min-height: 100px;
+    max-height: 280px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.responseInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.inviters {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+
+    padding: 5px 0px;
+
+    overflow-y: auto;
+    max-height: 150px;
+
+    &Label {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    &Block {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    button {
+        width :100%;
+    }
+}
+
+.companionsInfo {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.creator {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+
+    &Image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50px;
+    }
+
+    &Info {
+        font-weight: 300;
+        font-size: 13px;
+    }
+}
+
+.headingInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.companionsInfo {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.date {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 400;
+    margin-bottom: 12px;
+}
+
+.subject {
+    font-weight: 600;
+    font-size: 13px;
+}

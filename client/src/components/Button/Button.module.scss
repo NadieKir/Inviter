@@ -1,0 +1,81 @@
+@import '~style/colors';
+@import '~style/mixins';
+@import '~style/variables';
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-family: $primary-font-family;
+  font-weight: 600;
+
+  border-radius: 10px;
+  border: none;
+
+  @include smooth-transition();
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.default {
+    color: inherit;
+  }
+
+  &.primary {
+    background: $blue-gradient-color;
+    color: $white-color;
+
+    &.danger {
+      background: $red-color;
+      border: 1px solid $red-color;
+    }
+
+    &:hover {
+      box-shadow: $inner-button-shadow;
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+
+    border: 1px solid $blue-color;
+    color: $blue-color;  
+
+    &.danger {
+      color: $red-color;
+      border: 1px solid $red-color;
+    }
+
+    &:hover {
+      box-shadow: $outer-button-shadow;
+    }
+  }
+
+  &.widthBig {
+    width: 100%;
+  }
+
+  &.widthSmall {
+    padding: 0 25px;
+  }
+
+  &.heightBig {
+    font-size: 13px;
+    height: 40px;
+  }
+
+  &.heightSmall {
+    font-size: 12px;
+    height: 35px;
+  }
+}
+
+.buttonContent {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
